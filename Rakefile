@@ -38,3 +38,4 @@ namespace :production do
   task :restart do
     system("ssh #{PRODUCTION_HOST} 'set -x; cd ~/www.rubyops.net && RACK_ENV=#{ENV['RACK_ENV']} bundle exec rake unicorn:restart --trace'")
   end
+end
