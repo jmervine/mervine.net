@@ -1,6 +1,6 @@
 Date: 13 August 2012 19:36
 Title: httperf-0.9.1 with individual connection times
-Categories: performance-testing-with-httperf
+Categories: performance-testing-with-httperf, ruby
 Summary: This past weekend I dabbled in C++ for the first time patching httperf to use display each connection's timing when using verbose mode.
 
 # httperf-0.9.1 with individual connection times
