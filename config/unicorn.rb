@@ -8,8 +8,9 @@ when 'production'
   worker_processes 8
 when 'staging'
   worker_processes 4
-  listen 8080
+  listen 9001
 else
   worker_processes 2
   listen 8080
 end
+
