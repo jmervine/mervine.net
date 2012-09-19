@@ -3,8 +3,10 @@ require 'bundler/setup'
 
 Bundler.require(:default, :test)
 
+PRODUCTION_HOST ||= "www.rubyops.net"
+ENV['RACK_ENV'] ||= "production"
+
 namespace :unicorn do
-  ENV['RACK_ENV'] ||= "production"
   APP_ROOT = File.dirname(__FILE__)
   CFG_FILE = File.join( APP_ROOT, "config", "unicorn.rb" )
 
@@ -26,7 +28,13 @@ namespace :unicorn do
   end
 end
 
-desc "deploy to production"
-task :deploy do
-  system("ssh www.rubyops.net 'set -x; cd ~/www.rubyops.net && git pull && bundle'")
-end
+namespace :production do
+  desc "deploy to production"
+  task :deploy do
+    system("ssh #{PRODUCTION_HOST} 'set -x; cd ~/www.rubyops.net && git pull && bundle'")
+  end
+
+  desc "restart production" 
+  task :restart do
+    system("ssh #{PRODUCTION_HOST} 'set -x; cd ~/www.rubyops.net && RACK_ENV=#{ENV['RACK_ENV']} bundle exec rake unicorn:restart --trace'")
+  end
