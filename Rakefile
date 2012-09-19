@@ -28,7 +28,12 @@ namespace :unicorn do
   end
 end
 
-namespace :production do
+# short cut when only a single environment
+task :deploy do
+  Rake::Task['prod:deploy'].invoke
+end
+
+namespace :prod do
   desc "deploy to production"
   task :deploy do
     system("ssh #{PRODUCTION_HOST} 'set -x; cd ~/www.rubyops.net && git pull && bundle'")
