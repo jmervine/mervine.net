@@ -16,7 +16,7 @@ module Nesta
 
     # Add new routes here.
     get '/:year/:month/:day/:path' do
-      redirect "/#{params[:path]}" 
+      redirect "/#{params[:path].gsub("_","-")}" 
     end
 
   end
