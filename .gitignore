@@ -5,4 +5,4 @@
 .sass-cache
 /vendor/
 /log/*.log
-
+/config/newrelic.yml
