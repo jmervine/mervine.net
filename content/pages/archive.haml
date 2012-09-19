@@ -1,6 +1,9 @@
 %h1 Archive
-%ul
+%ol
   - Nesta::Page.find_articles.each do |page|
     %li
       %a{ :href=>page.abspath }=page.title
+      %small
+        \--
+        = page.date.strftime("%D %H:%M")
 

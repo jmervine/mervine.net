@@ -8,13 +8,6 @@ gem 'nesta-plugin-sharethis'
 
 gem 'unicorn'
 
-group :deploy do
-  gem 'vlad'
-  gem 'vlad-git'
-  gem 'vlad-unicorn'
-  gem 'vlad-nginx'
-end
-
 group :production do
   gem 'newrelic_rpm'
 end
