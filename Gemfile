@@ -1,5 +1,7 @@
 source 'http://rubygems.org'
 
+gem 'rake'
+
 gem 'nesta', '0.9.13'
 gem 'nesta-plugin-diskcached'
 gem 'nesta-plugin-google-ads'
