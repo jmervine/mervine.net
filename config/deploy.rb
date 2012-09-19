@@ -12,7 +12,7 @@ set :deploy_to, "~/#{application}"
 
 
 task :home do
-  set :domain, "www.rubyops.net"
+  set :domain, "home.mervine.net"
 end
 
 task :live do
@@ -29,6 +29,11 @@ require "vlad"
 namespace :vlad do
   remote_task :symlink_attachments do
     run "ln -s #{shared_path}/content/attachments #{current_path}/public/attachments"
+  end
+
+  # overide vlad, which isn't working right
+  remote_task :update_symlinks do
+    run [ "ln -s #{shared_path}/log #{current_path}/log" ].join(" && ")
   end
   
   task :update do
