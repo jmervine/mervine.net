@@ -1,0 +1,27 @@
+Date: 31 May 2012 01:34
+Title: HAML link trailing whitespace sucks!
+Categories: ruby, haml
+Summary: I was having issues with whitespace at the end of links whose text is being populated by a variable...
+
+# HAML link trailing whitespace sucks!
+
+I was having issues with whitespace at the end of links whose text is being populated by a variable, example:
+
+    %a{ :href => "/foo" }
+        = my_foo
+
+Was resulting in:
+
+    <a href="/foo">
+        My Foo
+    </a>
+
+To fix this, I was able to do this...
+
+    %a{ :href => "/foo" } #{my_foo}
+
+Resulting in:
+
+    <a href="/foo">My Foo</a>
+
+Ta-Dah!! 

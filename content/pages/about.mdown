@@ -1,0 +1,25 @@
+Date: 29 May 2012 14:13
+Tags: about
+
+# About
+ 
+Welcome to RubyOps.net.
+
+I'm starting this blog as a place to "take notes" on the various different problems I encounter in supporting Ruby applications from a Dev Ops perspective. 
+
+This blog is running on [Nesta][Nesta], a simple [Sinatra](http://www.sinatrarb.com/) based blog application.
+
+I have extended [Nesta][Nesta] by writing the following plugins:
+
+1. [nesta-plugin-google-ads](http://github.com/jmervine/nesta-plugin-google-ads)
+1. [nesta-plugin-sharethis](http://github.com/jmervine/nesta-plugin-sharethis)
+1. [nesta-plugin-diskcached](http://github.com/jmervine/nesta-diskcached)
+
+Additionally you can find the source for [RubyOps.net](http://www.rubyops.net/) at [http://github.com/rubyops/www.rubyops.net](http://github.com/rubyops/www.rubyops.net).
+
+Thanks!
+
+-J 
+
+[Nesta]: http://nestacms.com/ "NestaCMS.com"
+

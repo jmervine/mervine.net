@@ -6,6 +6,7 @@ Bundler.require(:default, :test)
 begin
   require 'vlad'
   # Set :app to :passenger if you're using Phusion Passenger.
-  Vlad.load(:scm => :git, :app => nil, :web => nil)
+  Vlad.load(:scm => :git, :app => :unicorn, :web => :nginx)
 rescue LoadError
 end
+

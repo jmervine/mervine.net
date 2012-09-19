@@ -1,0 +1,6 @@
+%h1 Archive
+%ul
+  - Nesta::Page.find_articles.each do |page|
+    %li
+      %a{ :href=>page.abspath }=page.title
+

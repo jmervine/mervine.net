@@ -1,0 +1,137 @@
+Date: 01 June 2012 16:00
+Title: Killing whitespace in HAML
+Categories: ruby, haml
+Summary: HAML really like's to drop tag elements to the next line and personally, I find it a total pain. The [HAML REFERENCE](http://haml.info/docs/yardoc/file.HAML_REFERENCE.html#whitespace_removal__and_) has some examples removing whitespace, but through trial and error I was able to find a few edge-cases that weren't mentioned. 
+
+# Killing whitespace in HAML
+
+HAML really like's to drop tag elements to the next line and personally, I find it a total pain. The [HAML REFERENCE](http://haml.info/docs/yardoc/file.HAML_REFERENCE.html#whitespace_removal__and_) has some examples removing whitespace, but through trial and error I was able to find a few edge-cases that weren't mentioned. 
+
+## From the HAML Reference
+
+#### Example 1
+
+    %blockquote<
+      %div
+        Foo!
+
+
+Result
+    
+    <blockquote><div>
+      Foo!
+    </div></blockquote>
+
+
+#### Example 2
+
+    %img
+    %img>
+    %img
+
+
+Result
+    
+    <img /><img /><img />
+
+
+#### Example 3
+
+    %p<= "Foo\nBar"
+
+
+Result
+    
+    <p>Foo
+    Bar</p>
+
+
+#### Example 4
+
+    %img
+    %pre><
+      foo
+      bar
+    %img
+
+
+Result
+    
+    <img /><pre>foo
+    bar</pre><img />
+
+
+## Expanded Examples
+#### Example 1
+Let's put that all together in to some advanced example.
+
+    %div
+      %span.link<
+        %a{ :href => "/" }>=link_name
+      %span.small<= after_link
+
+
+Result
+    
+    <div>
+      <span class="link"><a href="/">Link Test</a></span>
+      <span class="small">After Link Text</span>
+    </div>
+
+
+#### Example 2
+Now let's bring everything between the _div_ on to a single link.
+
+    %div
+      %span.link<
+        %a{ :href => "/" }>=link_name
+      %span.small><
+        = after_link
+
+
+Result
+    
+    <div>
+      <span class="link"><a href="/">Link Test</a></span><span class="small">After Link Text</span>
+    </div>
+
+
+#### Example 3
+And if we have more then one set of spans, like through a loop.
+
+    - links = [ "Link Test 1", "Link Test 2" ]
+    %div
+      - links.each do |link_name| 
+        %span.link
+          %a{ :href => "/" }><=link_name
+        %span.small><=after_link
+    
+
+Result
+    
+    <div>
+      <span class="link"><a href="/">Link Test 1</a></span><span class="small">After Link Text</span><span class="link"><a href="/">Link Test 2</a></span><span class="small">After Link Text</span>
+    </div>
+
+
+#### Example 4
+And if we want to have everything on a single line.
+
+    -# example 3 
+    - links = [ "Link Test 1", "Link Test 2" ]
+    %div
+      - links.each do |link_name| 
+        %span.link>
+          %a{ :href => "/" }><=link_name
+        %span.small><
+          = after_link
+
+
+Result
+    
+    <div><span class="link"><a href="/">Link Test 1</a></span><span class="small">After Link Text</span><span class="link"><a href="/">Link Test 2</a></span><span class="small">After Link Text</span></div>
+
+
+Enjoy!
+
+

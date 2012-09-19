@@ -1,0 +1,302 @@
+Date: 29 May 2012 17:39
+Title: How-to: Setup MySQL and RoR on AWS
+Categories: nginx, aws, how-to, mysql, ruby on rails, ruby, git, bundler, ubuntu, unicorn
+Summary: I have been working on setting up RoR with MySQL on an AWS instance and ran in to some oddities, so I decided to document the steps I took and lay it all out real nice and pretty.
+
+# How-to: Setup MySQL and RoR on AWS
+
+### Warning!!
+
+When I wrote this, I misunderstood the AWS pricing models when I was originally putting this together. The following configuration would run you about $8 per month for the first year and around $16 per month each following year. Please see [Amazon's AWS Pricing page](http://aws.amazon.com/pricing/ec2/) for details.
+
+### Introduction
+
+I have been working on setting up RoR with MySQL on an AWS instance and ran in to some oddities, so I decided to document the steps I took and lay it all out real nice and pretty.
+
+
+####First, these are some details about the setup I wanted
+
+- MySQL on it's own host
+- RoR app on it's own host
+- ruby 1.9.2p280
+- git
+- sans rvm
+- bundler with gems installed in an app specific vendor/bundle director
+- AMI: ubuntu/images/ebs/ubuntu-oneiric-11.10-amd64-server-20120222 (ami-baba68d3)
+    - I used this for both the mysql and application host
+
+####Assumptions
+
+1. You've already created the AWS images.
+1. MySQL host: mysql.hostname
+1. App Host: app.hostname
+1. Username: myuser
+1. Project name: project
+
+
+####Prep your AWS images
+
+For both machines, I create a new user, as not to use 'ubuntu' or 'root' as my main user.
+
+    desktop~$ ssh -i ~/.ssh/my_aws.pem ubuntu@<aws_host>
+    awshost~$ sudo su -
+    awshost~$ useradd -G sudo -m -r --shell /bin/bash myuser \
+       && mkdir -p /home/myuser/.ssh \
+       && cp /home/ubuntu/.ssh/authorized_keys /home/myuser/.ssh/ \
+       && chown -R myuser: /home/myuser/.ssh \
+       && passwd myuser
+    ... enter new password ...
+    awshost~$ exit
+    desktop~$ ssh -i ~/.ssh/my_aws.pem myuser@<aws_host>
+    awshost~$ sudo userdel ubuntu
+
+
+## MySQL
+
+Install MySQL:
+
+    $ sudo apt-get install mysql-server mysql-client
+    ... output omitted ...
+
+Setup MySQL's basic permissions:
+
+    $ sudo mysqladmin -u root -h localhost password 'password'
+    ... output omitted ...
+    $ mysql -u root -p
+    ... output omitted ...
+    mysql> GRANT ALL PRIVILEGES ON *.* TO 'myuser'@'%' 
+         > IDENTIFIED BY "password";
+    Query OK, 0 rows affected (0.00 sec)
+
+    mysql> FLUSH PRIVILEGES;
+    Query OK, 0 rows affected (0.00 sec)
+
+    mysql> exit
+    Bye
+
+Update MySQL config to allow for external connectivity:
+
+    $ sudo vi /etc/mysql/my.cnf
+
+> Change: ``bind-address    = 127.0.0.1``
+> To: ``bind-address    = <your ip address>``
+
+Update iptables:
+
+    $ sudo /sbin/iptables -A INPUT -i eth0 -p tcp --destination-port 3306 -j ACCEPT
+    $ sudo iptables-save
+    $ sudo iptables-apply
+    $ sudo service mysql restart
+
+
+You should now be able to connect to *mysql.hostname* from an external mysql client... ``desktop~$ mysql -u myuser -h mysql.hostname -p``
+
+#### Reminder: Create Rails Database Tables
+
+    $ mysql -u myuser -h mysql.hostname -p
+
+    mysql> CREATE DATABASE 'project_development';
+    ... output omitted ...
+
+    mysql> CREATE DATABASE 'project_test';
+    ... output omitted ...
+
+    mysql> CREATE DATABASE 'project_production';
+    ... output omitted ...
+
+
+
+## Ruby and Rails Setup
+
+Install Ruby, Rubygems and dependancies:
+
+    $ sudo su -
+    $ apt-get -y update \
+      && apt-get -y install git-core \
+      && apt-get -y install ruby1.9.1 \
+      && apt-get -y install ruby1.9.1-dev \
+      && apt-get -y install build-essential \
+      && apt-get -y install mysql-client \
+      && apt-get -y install libmysqlclient-dev \
+      && gem install rubygems-update --no-ri --no-rdoc \
+      && update_rubygems \
+      && gem install bundler --no-ri --no-rdoc
+
+Checkout your Rails project:
+
+    $ cd ~
+    $ git clone git@github.com:mygituser/project.git
+    $ cd project
+
+Configure and run Bundler:
+
+    $ bundle config build.mysql --with-mysql-config=/usr/bin/mysql_config
+    $ bundle install --path ./vendor/bundle
+    ... output omitted ...
+
+Run tests:
+
+    $ bundle exec rake test
+    ... output omitted ...
+
+> Note: This should validate that everything is setup and working correctly, including your database connections. 
+
+#### Reminder: Don't forget to update your database configs:
+
+    $ vi config/database.yml 
+
+Example configuration:
+
+    development:
+      adapter: mysql
+      database: project_development
+      encoding: utf8
+      username: myuser
+      password: password
+      host: mysql.hostname
+
+    test:
+      adapter: mysql
+      database: project_test
+      encoding: utf8
+      username: myuser
+      password: password
+      host: mysql.hostname
+
+    production:
+      adapter: mysql
+      database: project_production
+      encoding: utf8
+      username: myuser
+      password: password
+      host: mysql.hostname
+
+
+
+Start Rails:
+
+    $ sudo bundle exec rails s -p 80
+
+> Note: I've only opened port 80 on my AWS image, which is why I'm using both 'sudo' and the '-p 80' flag. If you have port 3000 open, you can start rails with... ``bundle exec rails s``
+
+
+## Serving for Real
+
+In the real world, you aren’t going to be using WEBrick, or at least I would hope not. My personal preference is to use Nginx and Unicorn (although there are lots of options out there). So here’s a quick how to on Nginx and Unicorn for those that are interest.
+
+####Unicorn
+
+Install Unicorn using Bundler:
+
+    $ vi /home/myuser/project/Gemfile
+
+Add the following line:
+
+    gem 'unicorn'
+
+
+Update installed gems:
+
+> Note: this assumes you've already do the *bundle install --path ./vendor/bundle* step mentioned above.
+
+    $ cd /home/myuser/project
+    $ bundle
+    ... output omitted ...
+
+> Note: you can install Unicorn directly, without Bundler, by running the following: ``$ sudo gem install unicorn``
+
+
+Configure Unicorn:
+
+To configure unicorn, you’re going to want to create a config file for it. By default, it doesn’t need one and you can simply start it with bundle exec unicorn -p 3000 from within your project directory, exactly like WEBrick. However, this isn’t really ideal for real systems.
+
+Create a config file:
+
+    $ vi /home/myuser/project/config/unicorn.conf
+
+Example file:
+
+    worker_processes 8
+    listen "0.0.0.0:3000"
+    pid "/home/myuser/project/log/unicorn.pid"
+    stderr_path "/home/myuser/project/log/unicorn_stderr.log"
+    stdout_path "/home/myuser/log/unicorn_stdout.log"
+
+######[example file gist](https://gist.github.com/2127559)
+
+Start Unicorn:
+
+    $ cd /home/myuser/project && \ 
+    bundle exec unicorn -c /home/myuser/project/config/unicorn.conf -D
+
+> Stopping Unicorn (the dirty way): ``ps aux | grep unicorn | grep project | cut -d" " -f2 | xargs kill``
+
+
+
+####Nginx
+
+Install Nginx:
+
+    $ sudo apt-get install -y nginx
+
+
+Configure Nginx:
+
+    $ sudo vi /etc/nginx/sites-available/default
+
+> Note, I have removed all commented lines from the default configuration, except the lines I commented out myself.
+
+    server {
+
+      #root /usr/share/nginx/www;
+      root /home/myuser/blog/public;
+      index index.html index.htm;
+
+      server_name app.hostname;
+
+      location ~ ^/assets/ {
+        root /home/myuser/blog/app/assets/$1;
+      }
+
+      location / {
+        proxy_pass http://127.0.0.1:3000;
+      }
+
+      #location /doc {
+      # root /usr/share;
+      # autoindex on;
+      # allow 127.0.0.1;
+      # deny all;
+      #}
+
+      #location /images {
+      # root /usr/share;
+      # autoindex off;
+      #}
+    }
+
+######[example file gist](https://gist.github.com/2127051)
+
+Additionally, you can update your log directories to point to the rails log directory if you want, by editing /etc/nginx/nginx.conf and changing the following lines:
+
+    access_log /var/log/nginx/access.log;
+    error_log /var/log/nginx/error.log;
+
+
+## In Closing
+
+This is my guide on setting up Ruby and Rails with MySQL, using Nginx and Unicorn. I don't claim to be the foremost expert on any of these technologies, but this should work pretty well for most sites. I highly recommend running this on something better then an AWS t1.micro, however, that should get you started. Enjoy!
+
+## References
+
+* [Amazon AWS](http://aws.amazon.com/)
+* [Bundler](http://gembundler.com/)
+* [git](http://github.com/)
+* [MySQL](http://mysql.com/)
+* [Nginx](http://nginx.org/)
+* [Rails](http://rubyonrails.org/)
+* [Ruby](http://www.ruby-lang.org/en/)
+* [Rubygems](http://rubygems.org/)
+* [Ubuntu](http://www.ubuntu.com/)
+* [Unicorn](http://unicorn.bogomips.org/)
+

@@ -1,0 +1,48 @@
+Date: 29 May 2012 17:49
+Title: Sourcing and Setting Environment Variables in Ruby
+Categories: ruby, bash
+Summary: I was looking for a simple way to source and set a bash environment variable from a file, in this specific instance, I can't be 100% sure that the any steps I take to ensure that the file itself is sourced on the host before Rails is started, nor can I impact the format of the file itself (e.g. changing it to YAML).
+
+
+# Sourcing and Setting Environment Variables in Ruby
+
+I was looking for a simple way to source and set a bash environment variable from a file, in this specific instance, I can't be 100% sure that the any steps I take to ensure that the file itself is sourced on the host before Rails is started, nor can I impact the format of the file itself (e.g. changing it to YAML).
+
+Here are the best options I've found.
+
+#### File.readline
+
+This is not the method I used, but it's useful. I would use this if I needed to set multiple variables from the source file.
+
+        # assumes the following format
+        #  NAME1=value1
+        #  NAME2=value2
+        File.readline "/my/rc_file" do |line|
+                key, value = line.split "="
+                ENV[key] = value
+        end
+
+... or ...
+
+        # assumes the following format
+        #  export NAME1=value1
+        #  export NAME2=value2
+        #
+        # Note: I really don't like this for any situation 
+        # other then perhaps stand-alone scripting.
+        File.readline "/my/rc_file" do |line|
+                line.gsub(/export /, "")
+                key, value = line.split "="
+                ENV[key] = value
+        end
+
+#### Pure bash via backticks
+
+This is the method I chose, as I only needed to set a single variable and knew the name of it. Additionally, I did it this way to ensure that the variable remained "nil" if the variable wasn't set for whatever reason.
+
+        unless ENV['KEY']
+                my_key = `source /my/rc_file 2> /dev/null && echo $KEY`.chomp
+                ENV['KEY'] = my_key unless my_key.empty? 
+        end
+
+

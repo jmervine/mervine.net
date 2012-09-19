@@ -1,0 +1,200 @@
+Date: 06 July 2012 13:58
+Title: Diskcached: Simple Disk Cacheing for Ruby
+Categories: ruby, sinatra, diskcached, memcached, cache, github, httperf, mongodb
+Summary: I created [Diskcached](https://github.com/rubyops/diskcached/wiki) as a simple cacheing layer for things like html fragments and database calls. I thought about using [memcached](http://memcached.org/), but as [Ditty](http://ditty.rubyops.net/) is running on a single server, it seemed overkill. Additionally, I looked at using [rack-cache](http://rtomayko.github.com/rack-cache/), but I felt it was a bit more complex then I was looking for. So Diskcached was born (although it was origiionally released as "simple\_disk\_cache" -- for about 12 hours).
+
+# Diskcached: Simple Disk Cacheing for Ruby
+
+### Introduction
+
+I created [Diskcached](https://github.com/rubyops/diskcached/wiki) as a simple cacheing layer for things like html fragments and database calls. I thought about using [memcached](http://memcached.org/), but as [Ditty](http://ditty.rubyops.net/) is running on a single server, it seemed overkill. Additionally, I looked at using [rack-cache](http://rtomayko.github.com/rack-cache/), but I felt it was a bit more complex then I was looking for. So Diskcached was born (although it was origiionally released as "simple\_disk\_cache" -- for about 12 hours).
+
+
+### Updates
+
+##### 2012-07-10
+* [Released v1.1.0](https://github.com/rubyops/diskcached/blob/v1.1.0/HISTORY.md)
+
+##### 2012-07-09
+* To the comment: "I 'm not clear how memcached on a single server is overkill."
+  1. In some cases -- e.g. Dreamhost shared hosting and Heroku (I believe) -- it is difficult, if not impossible to install memcached. This is for those situations.
+  1. In all cases, disk space is cheaper than memory. For example, I use [myhosting.com](http://myhosting.com), which charges $1 per 20G of disk storage and $1 per 512MB of memory. So in my case, I use Diskcached instead of memcached and my memory foot print is ~300MB. While at the moment, I could very easily handle running memcached without running out of memory, using disk based cacheing allows me to scale much further before having to upgrade my hosting package. Additionally, if you [check out my blogs performance metrics](https://github.com/jmervine/ditty/wiki/Performance), you'll see that Diskcached brought me from ~140ms render times, to ~1ms render times, allowing me to scale even further.
+
+* To the comment: "If you need memcache...then use it."
+  1. I totally agree!
+
+
+### Links
+
+* [Source](https://github.com/rubyops/diskcached) on [Github](http://github.com)
+* [Wiki](https://github.com/rubyops/diskcached/wiki)
+* [rDoc](http://rubyops.github.com/diskcached/doc/index.html)
+* [Coverage](http://rubyops.github.com/diskcached/coverage/index.html)
+* [Test on Travis-ci](http://travis-ci.org/jmervine/diskcached) -- [![Build Status](https://secure.travis-ci.org/jmervine/diskcached.png?branch=master)](http://travis-ci.org/jmer
+vine/diskcached)
+* [Gem on Rubygems.org](https://rubygems.org/gems/diskcached)
+* [Issue Tracker](https://github.com/rubyops/diskcached/issues) on [Github](http://github.com)
+
+
+
+### Installation
+
+    gem install diskcached
+
+Or with [Bundler](/tag/bundler):
+
+    source :rubygems
+    gem 'diskcached'
+
+
+
+### Basic Usage
+
+#### My Style
+
+    require 'diskcached'
+    @diskcache = Diskcached.new
+
+    result = @diskcache.cache('expensive_code') do 
+      # some expensive code
+    end
+
+    puts result
+
+The above will create the cache if it doesn't exist and cache the result of block and return it. If the cache exists and isn't expired, it will read from the cache and returnwhat's stored. This allows you to passively wrap code in a cache block and not worry about checking to see if it's valid or expired. 
+
+Also worth noting, it will return "nil" if something goes wrong.
+
+
+#### Memcached Style
+
+Using Diskcached like this should allow for a "drag and drop" replacement of Memcached, should you so decide.
+
+    require 'diskcached'
+    @diskcache = Diskcached.new
+
+    begin
+      result = @diskcache.get('expensive_code')
+    rescue # Diskcached::NotFound # prevents easy replacement, but is safer.
+      result = run_expensive_code
+      @diskcache.set('expensive_code', result)
+    end
+
+    puts result
+
+It's important to note that Diskcached is quite a bit simpler then Memcached and in some ways more forgiving. If Memcached compatability is really important, refer to Memcached docs as well as Diskcached docs when implementing your code.
+
+
+### Benchamarks
+
+#### Comments
+
+Diskcached wasn't designed to be a faster solution, just a simpler
+one when compaired to Memcached. However, from these benchmarks,
+it holds up will and even should provide slightly faster reads.
+
+
+#### Ruby 1.8.7
+
+**Warning:** Tests do not pass and therefore this isn't expected 
+to actaully work on ruby 1.8.7 at this point. I'm including the
+benchmarks for it as an academic excercise.
+
+##### small string * 100000
+
+	                user     system      total        real
+	diskcached set  3.260000   5.630000   8.890000 ( 21.660488)
+	memcached  set  1.460000   1.280000   2.740000 (  4.070615)
+	diskcached get  1.800000   0.720000   2.520000 (  2.541142)
+	memcached  get  1.160000   1.410000   2.570000 (  3.609896)
+
+
+##### large hash * 100000
+
+	               user     system      total        real
+	diskcached set 17.740000   8.140000  25.880000 ( 59.677151)
+	memcached  set 13.840000   1.960000  15.800000 ( 18.235553)
+	diskcached get 11.860000   1.100000  12.960000 ( 13.003900)
+	memcached  get  9.270000   1.880000  11.150000 ( 12.346795)
+
+
+#### Ruby 1.9.2p318
+
+##### small string * 100000
+
+	                user     system      total        real
+	diskcached set  3.370000   4.980000   8.350000 ( 20.467971)
+	memcached  set  1.340000   1.300000   2.640000 (  3.962354)
+	diskcached get  1.570000   0.350000   1.920000 (  1.939561)
+	memcached  get  1.330000   1.250000   2.580000 (  3.604914)
+
+
+##### large hash * 100000
+
+	               user     system      total        real
+	diskcached set 21.460000   6.950000  28.410000 ( 58.982826)
+	memcached  set 16.510000   1.920000  18.430000 ( 20.862692)
+	diskcached get 16.570000   0.690000  17.260000 ( 17.306181)
+	memcached  get 12.120000   1.630000  13.750000 ( 14.967464)
+
+
+#### Ruby 1.9.3p194
+
+##### small string * 100000
+
+	                user     system      total        real
+	diskcached set  3.520000   5.220000   8.740000 ( 21.928190)
+	memcached  set  1.350000   1.480000   2.830000 (  4.178223)
+	diskcached get  1.830000   0.370000   2.200000 (  2.215781)
+	memcached  get  1.570000   1.710000   3.280000 (  4.662109)
+
+
+##### large hash * 100000
+
+	               user     system      total        real
+	diskcached set 20.670000   7.170000  27.840000 ( 59.877671)
+	memcached  set 15.310000   2.790000  18.100000 ( 21.132083)
+	diskcached get 14.950000   0.700000  15.650000 ( 15.720669)
+	memcached  get 14.850000   1.840000  16.690000 ( 17.971276)
+
+
+#### Sinatra Application 'httperf' results.
+
+On a development machine (Unicorn w/ 1 worker) I ran a series of [httperf](http://www.hpl.hp.com/research/linux/httperf/) tests to see how Diskcached ran in real world situations. You can [checkout the full output from multiple examples here](https://gist.github.com/3062334), but there's a taste...
+
+Using the endpoint [http://rubyops.net/](http://rubyops.net/) on my dev server and hitting it 100,000 times --
+
+##### Code Example from Test
+
+<script src="https://gist.github.com/3062334.js?file=httperf_tests_one_code.rb"></script>
+
+##### Test Results
+
+
+    httperf --client=0/1 --server=localhost --port=9001 --uri=/ --send-buffer=4096 --recv-buffer=16384 --num-conns=100000 --num-calls=1
+    httperf: warning: open file limit > FD_SETSIZE; limiting max. # of open files to FD_SETS
+
+    Maximum connect burst length: 1
+
+    Total: connections 100000 requests 100000 replies 100000 test-duration 744.646 s
+
+    Connection rate: 134.3 conn/s (7.4 ms/conn, <=1 concurrent connections)
+    Connection time [ms]: min 1.9 avg 7.4 max 398.8 median 4.5 stddev 10.5
+    Connection time [ms]: connect 0.1
+    Connection length [replies/conn]: 1.000
+
+    Request rate: 134.3 req/s (7.4 ms/req)
+    Request size [B]: 62.0
+
+    Reply rate [replies/s]: min 116.6 avg 134.3 max 147.2 stddev 6.1 (148 samples)
+    Reply time [ms]: response 6.9 transfer 0.5
+    Reply size [B]: header 216.0 content 105088.0 footer 0.0 (total 105304.0)
+    Reply status: 1xx=0 2xx=100000 3xx=0 4xx=0 5xx=0
+
+    CPU time [s]: user 287.88 system 115.60 (user 38.7% system 15.5% total 54.2%)
+    Net I/O: 13818.2 KB/s (113.2*10^6 bps)
+
+    Errors: total 0 client-timo 0 socket-timo 0 connrefused 0 connreset 0
+    Errors: fd-unavail 0 addrunavail 0 ftab-full 0 other 0
+
+

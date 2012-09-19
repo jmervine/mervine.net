@@ -1,0 +1,48 @@
+Date: 30 May 2012 00:32
+Title: Configurable Template Engine in Sinatra
+Categories: ruby, sinatra, haml, erb
+Summary: A lot of people have taken to using HAML, example "sinatra-authentication" uses it by default. I personally don't like it, but I don't judge either. So that said, I wish that more apps out there would steer away from implicitly defining haml calls in their apps. Here's an easy way to allow the template engine to be configurable in Sinatra
+
+
+# Configurable Template Engine in Sinatra
+
+A lot of people have taken to using HAML, example "sinatra-authentication" uses it by default. I personally don't like it, but I don't judge either. So that said, I wish that more apps out there would steer away from implicitly defining haml calls in their apps. Here's an easy way to allow the template engine to be configurable in Sinatra
+
+    configure do
+      set :template_engine, :haml
+    end
+    
+    get "/" do
+      send settings.template_engine, :index
+    end
+    
+    get "/no_layout" do
+      send settings.template_engine, :no_layout, :layout => false
+    end
+
+
+
+If you want to get tricky, you could also use haml if it's installed, otherwise, default to erb with this...
+
+    begin
+      require 'haml'
+      @template = :haml
+    rescue LoadError
+      @template = :erb
+    end
+    
+    configure do
+      set :template_engine, @template
+    end
+  
+#### note
+
+I'm still setting using "set", to ensure that it's available in templates for those times when you're nesting template calls
+
+    # views/some_template.erb
+    <p>
+      <%= send settings.template_engine, :nested_template, :layout => false %>
+    </p>
+
+While true that you could perhaps assume "erb" in the above example, erb is always loaded. This example would allow you manually call an "erb" include which chooses "haml" or whatever, based on your setting. Edge-case perhaps, but still.
+

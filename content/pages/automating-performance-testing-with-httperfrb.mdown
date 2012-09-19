@@ -1,0 +1,210 @@
+Date: 10 August 2012 16:14
+Title: Automating Performance Testing with httperfrb
+Categories: ruby, httperf, httperfrb, performance testing
+Summary: Here I'm going to cover basic usage for [httperfrb](https://rubygems.org/gems/httperfrb), which I wrote to assist in automating performance testing with [httperf](/tag/httperf). It's important to note that it is designed as an interface to httperf and not a full feature automation suite. 
+
+# Automating Performance Testing with httperfrb
+
+> ***Note: This has been updated to reflect the addition of [HTTPerf::Parser](http://rubyops.github.com/httperfrb/doc/HTTPerf/Parser.html), which was added in version 0.2.0.***
+
+Here I'm going to cover basic usage for [httperfrb](https://rubygems.org/gems/httperfrb), which I wrote to assist in automating performance testing with [httperf](/tag/httperf). It's important to note that it is designed as an interface to httperf and not a full feature automation suite. 
+
+Below I'm going to walk you through two examples. Both will be somewhat basic examples with a small number of queries sent to a [Sinatra](/tag/sinatra) application running locally via [Nginx](/tag/nginx) and [Unicorn](/tag/unicorn). Hopefully, these will be easily adaptable to more complex applications.
+
+**Note: For more information on httperf, see my earlier post: [Performance Testing with Httperf](http://www.rubyops.net/2012/07/30/performance_testing_with_httperf). An understanding of httperf is expected in the context of this post.**
+
+
+
+## Example 1 - A simple script
+
+First, setup a directory and install httperfrb. Here's how I roll…
+
+	$ mkdir autoperf
+	$ cd autoperf
+	$ vi Gemfile
+
+	# file:Gemfile
+	source :rubygems
+	gem 'httperfrb', '~>0.2.0'
+	
+	$ bundle install --path ./vendor/bundle
+	Fetching gem metadata from http://rubygems.org/...
+	Installing open4 (1.3.0) 
+	Installing httperfrb (0.2.0) 
+	Using bundler (1.1.4) 
+	Your bundle is complete! It was installed into ./vendor/bundle
+
+Next, create your script and create an Array of urls to get started with. 
+
+	$ vi autoperf.rb
+	
+	# file:autoperf.rb
+	require 'httperf'
+	
+	uris = %w{
+	          /
+	          /archive
+	          /2012
+	          /tag
+	          /tag/ruby
+			 }	
+	
+
+Instantiate httperfrb with a few parameters (rate and num-conns). httperfrb uses "localhost" on port "80" as it's default, so no need to explictly set it.
+
+	httperf = HTTPerf.new( "rate" => 1, "num-conns" => 2 )
+	# I'm keeping these small, as I'm breaking my most important
+	# rule when it comes to performance testing and hitting
+	# my production server for the purposes of this example.
+	
+	
+Create a loop through your *uris* array, run your tests and print your results.
+
+	uris.each do |uri|
+        httperf.update_option("uri", uri)
+        puts "Results from -- #{uri}"
+        puts "~"*80
+        puts httperf.run
+        puts "~"*80
+   	end
+
+
+Your results should look something like this:
+
+	$ bundle exec ruby ./autoperf.rb 
+	Results from -- /
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	httperf --client=0/1 --server=localhost --port=80 --uri=/ --rate=1 --send-buffer=4096 --recv-buffer=16384 --num-conns=2 --num-calls=1
+	Maximum connect burst length: 1
+	
+	Total: connections 2 requests 2 replies 2 test-duration 1.001 s
+	
+	Connection rate: 2.0 conn/s (500.4 ms/conn, <=1 concurrent connections)
+	Connection time [ms]: min 0.2 avg 0.2 max 0.3 median 0.5 stddev 0.0
+	Connection time [ms]: connect 0.1
+	Connection length [replies/conn]: 1.000
+	
+	Request rate: 2.0 req/s (500.4 ms/req)
+	Request size [B]: 62.0
+	
+	Reply rate [replies/s]: min 0.0 avg 0.0 max 0.0 stddev 0.0 (0 samples)
+	Reply time [ms]: response 0.2 transfer 0.0
+	Reply size [B]: header 215.0 content 151.0 footer 0.0 (total 366.0)
+	Reply status: 1xx=0 2xx=2 3xx=0 4xx=0 5xx=0
+	
+	CPU time [s]: user 0.22 system 0.78 (user 22.3% system 77.5% total 99.8%)
+	Net I/O: 0.8 KB/s (0.0*10^6 bps)
+	
+	Errors: total 0 client-timo 0 socket-timo 0 connrefused 0 connreset 0
+	Errors: fd-unavail 0 addrunavail 0 ftab-full 0 other 0
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	… output continues …
+	
+	
+There you have it. Simple automated test against multiple paths. But really, that doesn't do me much good, I mean a 10 line shell script could do the same thing.
+
+## Example 2 - Now let's add some parsing 
+
+In addition to plain text, I've added a parser to help us handle our results in a progrommatic way. 
+
+We'll modify a few lines to in previous script.
+
+	$ vi autoperf.rb
+	
+	#file:autoperf.rb
+	require 'httperf'
+	
+	uris = %w{
+	        /
+	        /archive
+	        /2012
+	        /tag
+	        /tag/ruby
+	}
+	
+	httperf = HTTPerf.new( "rate" => 1, "num-conns" => 2 )
+	# I'm keeping these small, as I'm breaking my most important
+	# rule when it comes to performance testing and hitting
+	# my production server for the purposes of this example.
+	
+	# enable parsing
+	httperf.parse = true
+	
+	
+	results = {}
+	uris.each do |uri|
+	        httperf.update_option("uri", uri)
+	        results[uri] = httperf.run
+	end
+	
+	results.each do |uri,result|
+	        puts "Results from -- #{uri}"
+	        puts "~"*80
+	        puts result.inspect
+	        puts "~"*80
+	end
+	
+	
+This produces a slightly more useful result. We now have a Hash contining our results. Perfect for generating graphs or emails, storing in a database, etc., etc.
+
+    Results from -- /
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    { 
+      :command=>"httperf --client=0/1 --server=localhost --port=80 --uri=/ --rate=1 --send-buffer=4096 --recv-buffer=16384 --num-conns=2 --num-calls=1",
+      :max_connect_burst_length=>"1",
+      :total_connections=>"2",
+      :total_requests=>"2",
+      :total_replies=>"2",
+      :total_test_duration=>"1.001",
+      :connection_rate_per_sec=>"2.0",
+      :connection_rate_ms_conn=>"500.4",
+      :connection_time_min=>"0.3",
+      :connection_time_avg=>"2.1",
+      :connection_time_max=>"3.9",
+      :connection_time_median=>"0.5",
+      :connection_time_stddev=>"2.6",
+      :connection_time_connect=>"0.1",
+      :connection_length=>"1.000",
+      :request_rate_per_sec=>"2.0",
+      :request_rate_ms_request=>"500.4",
+      :request_size=>"62.0",
+      :reply_rate_min=>"0.0",
+      :reply_rate_avg=>"0.0",
+      :reply_rate_max=>"0.0",
+      :reply_rate_stddev=>"0.0",
+      :reply_rate_samples=>"0",
+      :reply_time_response=>"0.2",
+      :reply_time_transfer=>"1.8",
+      :reply_size_header=>"215.0",
+      :reply_size_content=>"151.0",
+      :reply_size_footer=>"0.0",
+      :reply_size_total=>"366.0",
+      :reply_status_1xx=>"0",
+      :reply_status_2xx=>"2",
+      :reply_status_3xx=>"0",
+      :reply_status_4xx=>"0",
+      :reply_status_5xx=>"0",
+      :cpu_time_user_sec=>"0.21",
+      :cpu_time_system_sec=>"0.79",
+      :cpu_time_user_pct=>"21.1",
+      :cpu_time_system_pct=>"78.6",
+      :cpu_time_total_pct=>"99.7",
+      :net_io_kb_sec=>"0.8",
+      :net_io_bps=>"0.0*10^6",
+      :errors_total=>"0",
+      :errors_client_timeout=>"0",
+      :errors_socket_timeout=>"0",
+      :errors_conn_refused=>"0",
+      :errors_conn_reset=>"0",
+      :errors_fd_unavail=>"0",
+      :errors_addr_unavail=>"0",
+      :errors_ftab_full=>"0",
+      :errors_other=>"0"
+    }
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	… output continues …
+
+
+Enjoy!
+
+As always, comments are welcome and appreciated.  

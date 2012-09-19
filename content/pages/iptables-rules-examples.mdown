@@ -1,0 +1,27 @@
+Date: 18 September 2012 18:08
+Title: IPTables Rules Examples
+Categories: linux, iptables, security
+Summary: Links:<br> - 25 Most Frequently Used Linux IPTables Rules Examples<br> - How-To: Redirecting network traffic to a new IP using IPtables
+
+
+# IPTables Rules Examples
+
+#### [25 Most Frequently Used Linux IPTables Rules Examples](http://www.thegeekstuff.com/2011/06/iptables-rules-examples/) (external)
+
+> "At a first glance, IPTables rules might look cryptic.
+>
+> In this article, I’ve given 25 practical IPTables rules that you can copy/paste and use it for your needs.
+> 
+> These examples will act as a basic templates for you to tweak these rules to suite your specific requirement."
+
+
+#### [How-To: Redirecting network traffic to a new IP using IPtables](http://www.debuntu.org/how-to-redirecting-network-traffic-a-new-ip-using-iptables)
+
+> "While doing a server migration, it happens that some traffic still go to the old machine because the DNS servers are not yet synced or simply because some people are using the IP address instead of the domain name....
+> 
+> By using iptables and its masquerade feature, it is possible to forward all traffic to the old server to the new IP.
+> 
+> This tutorial will show which command lines are required to make this possible.
+> 
+> In this article, it is assumed that you do not have iptables running, or at least no nat table rules for chain PREROUTING and POSTROUTING."
+

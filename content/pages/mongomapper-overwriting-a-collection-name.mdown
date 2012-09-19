@@ -1,0 +1,22 @@
+Date: 02 June 2012 17:31
+Title: MongoMapper: Overwriting a Collection Name
+Categories: ruby, mongo, mongo_mapper
+
+
+# MongoMapper: Overwriting a Collection Name
+
+I found this very hard to find online, so I'm dropping a post in here with it. To overwrite a collection name when using [MongoMapper](http://mongomapper.com/) build your model like so:
+
+    require 'mongomapper'
+    class Collection
+      include MongoMapper::Document
+      # default collection name is "collections" which
+      # looks for 'db.collections' in mongo.
+
+      set_collection_name "some_collections"
+      # new collection name is "some_collections" which
+      # looks for 'db.some_collections' in mongo.
+
+      key :some_data, String
+
+    end 

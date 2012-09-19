@@ -1,0 +1,95 @@
+Date: 16 June 2012 15:48
+Title: Setting up NewRelic on Sinatra
+Categories: ruby, unicorn, sinatra, rack, rails, newrelic, rackup
+Summary: This week I spent some time setting a [NewRelic](http://newrelic.com/) application on a [Sinatra](/tag/sinatra) app. It actually turned out to be so simple that I almost hesitate to do a post on it, but hey, here it is any way.
+
+
+# Setting up NewRelic on Sinatra
+
+This week I spent some time setting a [NewRelic](http://newrelic.com/) application on a [Sinatra](/tag/sinatra) app. It actually turned out to be so simple that I almost hesitate to do a post on it, but hey, here it is any way.
+
+### Install NewRelic
+
+`gem install newrelic_rpm`
+
+#### With [Bundler](/tag/bundler)
+
+    # file: <app_root>/Gemfile
+    source :rubygems
+    
+    gem 'newrelic_rpm
+
+### Configure NewRelic
+
+This is something you'll have to [a bit of research](https://newrelic.com/docs/ruby/ruby-agent-configuration). For the most part, the [default NewRelic configuration](https://gist.github.com/2942312) (as of 2012-06-16) is setup with [Rails](/tag/rails) defaults. That said, for the most part it will work with your [Sinatra](/tag/sinatra) app. Here's and example of what I would typically start with.
+
+
+    common: &default_settings
+      license_key: '<your_newrelic_key>'
+      app_name: My Application
+      monitor_mode: true
+      developer_mode: false
+      log_level: info
+      ssl: false
+      apdex_t: 0.5
+      capture_params: false
+      transaction_tracer:
+        enabled: true
+        transaction_threshold: apdex_f
+        record_sql: obfuscated
+        stack_trace_threshold: 0.500
+      error_collector:
+        enabled: true
+        capture_source: true    
+        ignore_errors: "NoMethodError"
+
+    development:
+      <<: *default_settings
+      monitor_mode: false
+      developer_mode: true
+      log_level: debug
+
+    test:
+      <<: *default_settings
+      monitor_mode: true
+      app_name: My Application (Test)
+      log_level: debug
+
+    production:
+      <<: *default_settings
+      monitor_mode: true
+
+    staging:
+      <<: *default_settings
+      monitor_mode: true
+      app_name: My Application (Staging)
+
+
+Some important things to note; 
+
+* This configuration is keyed off of your 'RACK_ENV' setting, so be sure set it when starting your app server
+* 'log\_level: debug' dumps data in to '\<app\_root\>/log/newrelic_agent.log'
+
+### Adding NewRelic to your Application
+
+This is the part that I expected to be way more complicated then it actually was. The above is basically identical to [Rails](/tag/rails), aside from some slight tweaks to the configuration, so this is really the main divergence.
+
+
+    # file: <app_root>/config.ru
+    $:.unshift File.expand_path(File.dirname(__FILE__))
+    
+    require "app"
+    require 'newrelic_rpm'
+    NewRelic::Agent.after_fork(:force_reconnect => true)
+    
+    run App.new
+
+
+### Gotchas
+
+* It's important to note the order you load newrelic_rpm in your config.ru -- you must require your app before NewRelic for things to setup correctly.
+* The application I was setting this up for used _**rackup**_ as it's development app server, the above did not work when using [rack](/tag/rack). Once I started the application using [Unicorn](/tag/unicorn) (which is what it's using in test, stage and production) things worked as expected.
+
+
+
+That's pretty much it, start your app and enjoy! 

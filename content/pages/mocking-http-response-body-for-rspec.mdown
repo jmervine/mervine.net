@@ -1,0 +1,28 @@
+Date: 29 May 2012 17:42
+Title: Mocking HTTP Response body for rSpec
+Categories: ruby, rspec, vcr
+
+# Mocking HTTP Response body for rSpec
+
+I'm sure there are many ways to do this -- probably better ways -- but this is a simple way I've done it.
+
+    class FakeResponse
+      attr :body
+      def initialize body
+        @body = body
+      end
+    end
+
+    describe Foo" do
+      before(:each) do
+        @data = File.read "./http/response/body.txt"
+        Net::HTTP.stub!(:post_form).and_return(FakeResponse.new @data)
+      end
+      it "should return stuff" do
+        Foo.fetch( :key => "foo", :uri => "http://foobar.com/" ).should eq(@data)
+      end
+    end
+
+
+#### Note:
+> Since originally coming up with this, I found [VCR](http://rubygems.org/gems/vcr), check it out, it does this type of thing in some very cool ways.  

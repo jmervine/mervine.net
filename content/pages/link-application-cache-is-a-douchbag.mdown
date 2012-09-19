@@ -1,0 +1,10 @@
+Date: 02 July 2012 17:41
+Title: Link: Application Cache is a Douchbag
+Categories: application cache, cacheing
+
+# Link: Application Cache is a Douchbag
+
+### [Application Cache is a Douchbag](http://www.alistapart.com/articles/application-cache-is-a-douchebag/)
+
+An interesting article -- in spite of it's title -- on the pros and mostly cons of AppCache.
+

@@ -1,0 +1,52 @@
+Date: 29 May 2012 17:36
+Title: Using Nginx and AWS to proxy sub-domains
+Categories: nginx, aws
+Summary: I had been thinking on ways to use free cloud services to handle a decent amount of traffic at no cost (or perhaps low cost).<br>I have a co-worker that's using three free Heroku accounts to serve as a backend for his iPhone application, which using a random number generator, randomly connects to one of the three servers, thus allowing him to serve three connections per second, instead of the free account limit of one. (Brillant!) <br> I got to thinking, how would I do something like this if it were a web application? Well, how about using a free (for the first year at least) AWS micro image to run Nginx as a proxy or load balancer?
+
+
+# Using Nginx and AWS to proxy sub-domains
+
+I had been thinking on ways to use free cloud services to handle a decent amount of traffic at no cost (or perhaps low cost).
+
+I have a co-worker that's using three free Heroku accounts to serve as a backend for his iPhone application, which using a random number generator, randomly connects to one of the three servers, thus allowing him to serve three connections per second, instead of the free account limit of one. (Brillant!)
+
+I got to thinking, how would I do something like this if it were a web application? Well, how about using a free (for the first year at least) AWS micro image to run Nginx as a proxy or load balancer?
+
+#### Step 1: Set up your end point
+
+This is a variable. Say you wanted to point http://blog.example.com/ to a Tumblr Blog - http://example.tumblr.com/. But this is just an example. You could pretty much use anything, a free Heroku app, another AWS image, your desktop with DynDNS setup, etc., etc., etc.
+
+#### Step 2: Setup AWS with Nginx
+
+1. Create an account at http://aws.amazon.com/
+1. Spool up a new Ubuntu image.
+1. Ensure that security group allows HTTP and SSH.
+1. Under "Elastic IPs", click "Allocate New Address" and assign it to your image.
+1. Connect to your image and install nginx:
+1.1. _sudo apt-get update_
+1.1. _sudo apt-get install nginx_
+1. Configure your proxy(ies):
+
+        $ sudo cat /etc/nginx/sites-enabled/blog
+        server {
+          server_name blog.example.com;
+          location / {
+            proxy_pass http://example.tumblr.com;
+          }
+        }
+
+        $ sudo ls -al /etc/nginx/sites-enabled/blog 
+        lrwxrwxrwx 1 root root 23 2012-03-18 00:23 /etc/nginx/sites-enabled/blog 
+                                -> ../sites-available/blog
+
+1. Start Nginx with: _sudo nginx_
+
+#### Step 3: Setup your sub-domain.
+
+I use Domain Monger, which is pretty simple. You create a DNSPlus CNAME, point the sub-domain (blog.mervine.net in this case) to the ElasticIP that you've created with the AWS console above.
+
+
+#### Using Nginx as a Load Balancer
+
+The whole purpose of this idea was to load balance other applications. I realize I'm not doing that above (of course), but the same principals apply only using Nginx's LB config instead of proxy. See: http://library.linode.com/web-servers/nginx/configuration/front-end-proxy-and-software-load-balancing#sph_software-load-balancing
+
