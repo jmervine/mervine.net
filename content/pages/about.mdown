@@ -10,7 +10,6 @@ I have extended [Nesta][Nesta] by writing the following plugins:
 
 1. [nesta-plugin-google-ads](http://github.com/jmervine/nesta-plugin-google-ads)
 1. [nesta-plugin-sharethis](http://github.com/jmervine/nesta-plugin-sharethis)
-1. [nesta-plugin-diskcached](http://github.com/jmervine/nesta-diskcached)
 
 Additionally you can find the source for [RubyOps.net](http://www.rubyops.net/) at [http://github.com/rubyops/www.rubyops.net](http://github.com/rubyops/www.rubyops.net).
 
