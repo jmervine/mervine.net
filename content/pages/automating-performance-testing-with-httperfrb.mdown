@@ -1,6 +1,6 @@
 Date: 10 August 2012 16:14
 Title: Automating Performance Testing with httperfrb
-Categories: ruby, httperf, httperfrb, performance testing
+Categories: performance-testing-with-httperf
 Summary: Here I'm going to cover basic usage for [httperfrb](https://rubygems.org/gems/httperfrb), which I wrote to assist in automating performance testing with [httperf](/tag/httperf). It's important to note that it is designed as an interface to httperf and not a full feature automation suite. 
 
 # Automating Performance Testing with httperfrb

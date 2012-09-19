@@ -21,7 +21,6 @@ It's important to note that by default httperf only tests the standard http payl
 * [Testing Pages with AJAX](#testing_pages_with_ajax)
 * [Replaying Production Logs](#replaying_production_logs)
 * [Best Practices](#best_practices)
-* [Automating httperf with Ruby](#automating_with_ruby)
 
 <a name="standard_usage"></a>
 ### Standard Usage
@@ -152,7 +151,3 @@ I don't claim to be an expert in this area (**AT ALL**), however, here a few thi
 3. Generating load from an external connection can be good to test your overall network latency, but be sure your starting point connection can handle large amounts of traffic. For example, generating 100,000 connections at 100QPS from a Cable or DSL line probably isn't the best idea.
 1. Oh and **don't performance test against production!**
 
-<a name="automating_with_ruby"></a>
-### Automating with Ruby
-
-> **See: [Automating Performance Testing with httperfrb](http://www.rubyops.net/2012/08/10/automating_performance_testing_with_httperfrb)** 
