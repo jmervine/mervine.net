@@ -1,5 +1,5 @@
 set :application, 'www.rubyops.net'
-set :repository, "set this to URL of your site's repo"
+set :repository, "https://github.com/rubyops/www.rubyops.net.git"
 
 # Set :user if you want to connect (via ssh) to your server using a
 # different username. You will also need to include the user in :domain
@@ -7,9 +7,17 @@ set :repository, "set this to URL of your site's repo"
 #
 #set :user, "deploy"
 #set :domain, "#{user}@example.com"
-set :domain, "example.com"
 
-set :deploy_to, "/var/apps/#{application}"
+set :deploy_to, "~/#{application}"
+
+
+task :home do
+  set :domain, "www.rubyops.net"
+end
+
+task :live do
+  set :domain, "www.rubyops.net"
+end
 
 # ============================================================================
 # You probably don't need to worry about anything beneath this point...
@@ -28,7 +36,7 @@ namespace :vlad do
   end
 
   remote_task :bundle do
-    run "cd #{current_path} && sudo bundle install --without development test"
+    run "cd #{current_path} && sudo bundle install --path ./vendor/bundle --without development test deploy"
   end
   
   # Depending on how you host Nesta, you might want to swap :start_app
@@ -43,5 +51,5 @@ namespace :vlad do
   # If you use bundler to manage the installation of gems on your server
   # you can use this definition of the deploy task instead:
   #
-  # task :deploy => [:update, :bundle, :start_app]
+   task :deploy => [:update, :bundle, :start_app]
 end
