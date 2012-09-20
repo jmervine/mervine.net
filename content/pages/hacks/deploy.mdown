@@ -1,0 +1,16 @@
+Date: 2012-09-20 16:00
+Categories: hacks, rake, ruby
+
+# Hack: Deploying with git
+
+Add the following to your Rakefile
+
+    task :deploy do
+      ENV['PRODUCTION_HOST'] ||= "www.yourhost.com"
+      system("ssh #{PRODUCTION_HOST} 'set -x; cd /path/to/app/install && git pull && bundle'")
+    end
+
+Then run
+
+    $ bundle exec rake deploy
+
