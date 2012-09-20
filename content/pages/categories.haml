@@ -1,0 +1,19 @@
+- categories = %w{ ruby sinatra httperf nesta rack httperfrb unicorn caching }.sort
+- col1 = categories[0..(categories.size/2)-1]
+- col2 = categories[((categories.size/2))..categories.size]
+
+%h1 Category List
+
+%div{ :style=>"width: 45%; float:left" }
+  %ul
+    - col1.each do |category|
+      %li
+        %a{ :href => "/#{category}" }= category
+
+%div{ :style=>"width: 45%; float:right" }
+  %ul
+    - col2.each do |category|
+      %li
+        %a{ :href => "/#{category}" }= category
+
+

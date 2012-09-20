@@ -1,6 +1,7 @@
 /
-ruby
-sinatra
+  ruby
+  sinatra
+categories
 archive
 about
 
