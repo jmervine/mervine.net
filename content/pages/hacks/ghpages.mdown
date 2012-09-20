@@ -3,6 +3,8 @@ Categories: hacks, git, rake, ruby
 
 # Hack: Generating gh-pages
 
+### With rake
+
 Add the following to your Rakefile
 
     desc "generate and update gh-pages"
@@ -28,3 +30,28 @@ Then run
     $ bundle exec rake pages
     $ git push gh-pages
 
+### Or less ugly, with bash...
+
+Create `scripts/pages`
+
+    #!/usr/bin/env bash
+    set -xue 
+    bundle exec rspec 
+    bundle exec yardoc --protected ./lib/**/*.rb
+    mv -v ./doc /tmp 
+    mv -v ./coverage /tmp 
+    git checkout gh-pages
+    rm -rf ./doc ./coverage 
+    mv -v /tmp/doc .
+    mv -v /tmp/coverage . 
+    git add .
+    git commit --all -m 'updating doc and coverage'
+    git checkout master
+    echo "don't forget to run: git push origin gh-pages"
+
+Then run
+
+    $ chmod 755 ./scripts/pages
+    $ ./scripts/pages
+
+> Note -- I opted for the rake method because I use rake in my projects.
