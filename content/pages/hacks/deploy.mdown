@@ -3,14 +3,28 @@ Categories: hacks, rake, ruby
 
 # Hack: Deploying with git
 
+
 Add the following to your Rakefile
 
+    ENV['PRODUCTION_HOST'] ||= "www.yourhost.com"
     task :deploy do
-      ENV['PRODUCTION_HOST'] ||= "www.yourhost.com"
       system("ssh #{PRODUCTION_HOST} 'set -x; cd /path/to/app/install && git pull && bundle'")
+    end
+
+    desc "restart production" 
+    task :restart do
+      system("ssh #{PRODUCTION_HOST} 'set -x; cd /path/to/app/install && RACK_ENV=#{ENV['RACK_ENV']} bundle exec rake unicorn:restart --trace'")
     end
 
 Then run
 
     $ bundle exec rake deploy
+
+
+**Note -- This assumes the following: **
+
+* You've checked out your repo on your remote host.
+* You've setup your app and it's running on your remote server.
+* You're using using [Unicorn](https://github.com/defunkt/unicorn).
+* You're using [Bundler](http://gembundler.com/).
 
