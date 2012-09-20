@@ -6,20 +6,11 @@ I'm starting this blog as a place to "take notes" on the various different probl
 
 This blog is running on [Nesta][Nesta], a simple [Sinatra](http://www.sinatrarb.com/) based blog application.
 
-I have extended [Nesta][Nesta] by writing the following plugins:
-
-1. [nesta-plugin-google-ads](http://github.com/jmervine/nesta-plugin-google-ads)
-1. [nesta-plugin-sharethis](http://github.com/jmervine/nesta-plugin-sharethis)
-
 Additionally you can find the source for [RubyOps.net](http://www.rubyops.net/) at [http://github.com/rubyops/www.rubyops.net](http://github.com/rubyops/www.rubyops.net).
 
 ## Contributors
 
 I'm always looking for guest posters and contributors to RubyOps.net. I'm not expert, just someone who does it for fun and a living. If you want to join me, scold me, show me up, etc. Send me [an email](mailto:joshua@mervine.net) with your [github](http://github.com/) account or leave a comment and I'll get back to you.
-
-Thanks!
-
--J 
 
 [Nesta]: http://nestacms.com/ "NestaCMS.com"
 
