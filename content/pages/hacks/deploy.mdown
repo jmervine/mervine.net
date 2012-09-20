@@ -18,7 +18,12 @@ Add the following to your Rakefile
 
 Then run
 
-    $ bundle exec rake deploy
+    $ RACK_ENV=production PRODUCTION_HOST=www.foohost.com bundle exec rake deploy restart
+
+or just
+
+    $ RACK_ENV=production PRODUCTION_HOST=www.foohost.com bundle exec rake deploy
+
 
 
 **Note -- This assumes the following: **
