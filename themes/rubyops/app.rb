@@ -15,8 +15,26 @@ module Nesta
     end
 
     # Add new routes here.
+    #
+    # Handling legacy www.rubyops.net routes.
     get '/:year/:month/:day/:path' do
       redirect "/#{params[:path].gsub("_","-")}" 
+    end
+
+    get '/tags' do
+      redirect "/"
+    end
+
+    get '/tag/:tag' do
+      begin
+        if Nesta::Page.find_by_path("/"+params[:tag])
+          redirect "/"+params[:tag]
+        else
+          redirect "/"
+        end
+      rescue
+        redirect "/"
+      end
     end
 
   end
