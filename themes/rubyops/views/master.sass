@@ -3,7 +3,9 @@
 
 // Variables
 
-$content-width: 37em
+$container-width: 1000px
+$content-width: 76%
+$sidebar-width: 20%
 
 $border-style: 1px dashed $border-color
 
@@ -91,9 +93,10 @@ article, aside, footer, header, nav, section
   display: block
 
 div#container
-  width: 54em
+  width: $container-width
   margin: 0 auto
   padding: 1em 1em 0 1em
+  margin: 0 auto
 
   div#content
     position: relative
@@ -102,9 +105,10 @@ div#container
     padding: 1px 0
 
   div#sidebar
-    width: 12em
-    margin-left: 40em
-    padding: 0 1em
+    width: $sidebar-width
+    float: right
+    //margin-left: 40em
+    //padding: 0 1em
   
   footer.branding
     clear: both
