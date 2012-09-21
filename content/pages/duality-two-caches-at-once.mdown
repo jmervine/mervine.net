@@ -19,34 +19,36 @@ A few things to note:
 
 ### Installation
 
-	gem install duality 
+    gem install duality 
 	
 Or via bundler:
 
-	# file: Gemfile
-	source :rubygems
-	gem 'duality'
+    :::ruby
+    # file: Gemfile
+    source :rubygems
+    gem 'duality'
 	
 
 ### Basic Usage
 
-	require 'diskcached'
-	require 'mongocached' # or memcached if you prefer
-	require 'duality'
-	
-	$cache = Dulatiy.new(Diskcached.new, Mongocached.new( host: 'remotehost' ))
-	
-	# cache something
-	$cache.set('cache_key', 'cache_content')
-	
-	# get cache
-	puts $cache.get('cache_key') # => cache_content
-	
-	# delete something
-	$cache.delete('cache_key')
-	
-	# flush cache
-	$cache.flush
+    :::ruby
+    require 'diskcached'
+    require 'mongocached' # or memcached if you prefer
+    require 'duality'
+    
+    $cache = Dulatiy.new(Diskcached.new, Mongocached.new( host: 'remotehost' ))
+    
+    # cache something
+    $cache.set('cache_key', 'cache_content')
+    
+    # get cache
+    puts $cache.get('cache_key') # => cache_content
+    
+    # delete something
+    $cache.delete('cache_key')
+    
+    # flush cache
+    $cache.flush
 	
 ### Unimplemented Cache Methods
 
@@ -60,26 +62,27 @@ Another thing that's worth mentioning is if either cache raise an exception, it 
 
 ##### Example
 
-	# when only one cache contains requested method
-	
-	$cache.one_only_method('cache_key') 
-	# => returns implementing caches return value
-	
-	$cache.strict_one_only_method('cache_key') 
-	# => raises no method exception
-	
-	#
-	# when both caches contains requested method
-	
-	$cache.both_only_method('cache_key')
-	# => returns best match
-	
-	$cache.strict_both_only_method('cache_key')
-	# => returns best match
+    :::ruby
+    # when only one cache contains requested method
+    
+    $cache.one_only_method('cache_key') 
+    # => returns implementing caches return value
+    
+    $cache.strict_one_only_method('cache_key') 
+    # => raises no method exception
+    
+    #
+    # when both caches contains requested method
+    
+    $cache.both_only_method('cache_key')
+    # => returns best match
+    
+    $cache.strict_both_only_method('cache_key')
+    # => returns best match
 
 
 ### More Info
 
-#### [Documentation](http://rubyops.github.com/duality/doc/Duality.html) 
-#### [Coverage](http://rubyops.github.com/duality/coverage/)
-#### [Benchmarks](https://github.com/rubyops/duality/blob/master/BENCHMARK.md) 
+* [Documentation](http://rubyops.github.com/duality/doc/Duality.html) 
+* [Coverage](http://rubyops.github.com/duality/coverage/)
+* [Benchmarks](https://github.com/rubyops/duality/blob/master/BENCHMARK.md) 

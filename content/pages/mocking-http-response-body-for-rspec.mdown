@@ -6,6 +6,7 @@ Categories: ruby, rspec, vcr
 
 I'm sure there are many ways to do this -- probably better ways -- but this is a simple way I've done it.
 
+    :::ruby
     class FakeResponse
       attr :body
       def initialize body
@@ -13,7 +14,7 @@ I'm sure there are many ways to do this -- probably better ways -- but this is a
       end
     end
 
-    describe Foo" do
+    describe Foo do
       before(:each) do
         @data = File.read "./http/response/body.txt"
         Net::HTTP.stub!(:post_form).and_return(FakeResponse.new @data)

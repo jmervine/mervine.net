@@ -11,6 +11,9 @@ gem 'nesta-plugin-google-ads'
 gem 'nesta-plugin-sharethis'
 #gem 'nesta-plugin-sluggable'
 
+#gem 'coderay'
+gem "ultraviolet", :require => "uv"
+gem 'rack-codehighlighter', :require => 'rack/codehighlighter'
 gem 'unicorn'
 
 group :production do

@@ -19,86 +19,87 @@ Below I'm going to walk you through two examples. Both will be somewhat basic ex
 
 First, setup a directory and install httperfrb. Here's how I roll…
 
-	$ mkdir autoperf
-	$ cd autoperf
-	$ vi Gemfile
+    $ mkdir autoperf
+    $ cd autoperf
+    $ vi Gemfile
 
-	# file:Gemfile
-	source :rubygems
-	gem 'httperfrb', '~>0.2.0'
-	
-	$ bundle install --path ./vendor/bundle
-	Fetching gem metadata from http://rubygems.org/...
-	Installing open4 (1.3.0) 
-	Installing httperfrb (0.2.0) 
-	Using bundler (1.1.4) 
-	Your bundle is complete! It was installed into ./vendor/bundle
+    # file:Gemfile
+    source :rubygems
+    gem 'httperfrb', '~>0.2.0'
+
+    $ bundle install --path ./vendor/bundle
+    Fetching gem metadata from http://rubygems.org/...
+    Installing open4 (1.3.0) 
+    Installing httperfrb (0.2.0) 
+    Using bundler (1.1.4) 
+    Your bundle is complete! It was installed into ./vendor/bundle
 
 Next, create your script and create an Array of urls to get started with. 
 
-	$ vi autoperf.rb
-	
-	# file:autoperf.rb
-	require 'httperf'
-	
-	uris = %w{
-	          /
-	          /archive
-	          /2012
-	          /tag
-	          /tag/ruby
-			 }	
+    :::ruby 
+    # file:autoperf.rb
+    require 'httperf'
+    
+    uris = %w{
+              /
+              /archive
+              /2012
+              /tag
+              /tag/ruby
+         }	
 	
 
 Instantiate httperfrb with a few parameters (rate and num-conns). httperfrb uses "localhost" on port "80" as it's default, so no need to explictly set it.
 
-	httperf = HTTPerf.new( "rate" => 1, "num-conns" => 2 )
-	# I'm keeping these small, as I'm breaking my most important
-	# rule when it comes to performance testing and hitting
-	# my production server for the purposes of this example.
+    :::ruby
+    httperf = HTTPerf.new( "rate" => 1, "num-conns" => 2 )
+    # I'm keeping these small, as I'm breaking my most important
+    # rule when it comes to performance testing and hitting
+    # my production server for the purposes of this example.
 	
 	
 Create a loop through your *uris* array, run your tests and print your results.
 
-	uris.each do |uri|
-        httperf.update_option("uri", uri)
-        puts "Results from -- #{uri}"
-        puts "~"*80
-        puts httperf.run
-        puts "~"*80
-   	end
+    :::ruby
+    uris.each do |uri|
+          httperf.update_option("uri", uri)
+          puts "Results from -- #{uri}"
+          puts "~"*80
+          puts httperf.run
+          puts "~"*80
+      end
 
 
 Your results should look something like this:
 
-	$ bundle exec ruby ./autoperf.rb 
-	Results from -- /
-	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	httperf --client=0/1 --server=localhost --port=80 --uri=/ --rate=1 --send-buffer=4096 --recv-buffer=16384 --num-conns=2 --num-calls=1
-	Maximum connect burst length: 1
-	
-	Total: connections 2 requests 2 replies 2 test-duration 1.001 s
-	
-	Connection rate: 2.0 conn/s (500.4 ms/conn, <=1 concurrent connections)
-	Connection time [ms]: min 0.2 avg 0.2 max 0.3 median 0.5 stddev 0.0
-	Connection time [ms]: connect 0.1
-	Connection length [replies/conn]: 1.000
-	
-	Request rate: 2.0 req/s (500.4 ms/req)
-	Request size [B]: 62.0
-	
-	Reply rate [replies/s]: min 0.0 avg 0.0 max 0.0 stddev 0.0 (0 samples)
-	Reply time [ms]: response 0.2 transfer 0.0
-	Reply size [B]: header 215.0 content 151.0 footer 0.0 (total 366.0)
-	Reply status: 1xx=0 2xx=2 3xx=0 4xx=0 5xx=0
-	
-	CPU time [s]: user 0.22 system 0.78 (user 22.3% system 77.5% total 99.8%)
-	Net I/O: 0.8 KB/s (0.0*10^6 bps)
-	
-	Errors: total 0 client-timo 0 socket-timo 0 connrefused 0 connreset 0
-	Errors: fd-unavail 0 addrunavail 0 ftab-full 0 other 0
-	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	… output continues …
+    $ bundle exec ruby ./autoperf.rb 
+    Results from -- /
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    httperf --client=0/1 --server=localhost --port=80 --uri=/ --rate=1 --send-buffer=4096 --recv-buffer=16384 --num-conns=2 --num-calls=1
+    Maximum connect burst length: 1
+    
+    Total: connections 2 requests 2 replies 2 test-duration 1.001 s
+    
+    Connection rate: 2.0 conn/s (500.4 ms/conn, <=1 concurrent connections)
+    Connection time [ms]: min 0.2 avg 0.2 max 0.3 median 0.5 stddev 0.0
+    Connection time [ms]: connect 0.1
+    Connection length [replies/conn]: 1.000
+    
+    Request rate: 2.0 req/s (500.4 ms/req)
+    Request size [B]: 62.0
+    
+    Reply rate [replies/s]: min 0.0 avg 0.0 max 0.0 stddev 0.0 (0 samples)
+    Reply time [ms]: response 0.2 transfer 0.0
+    Reply size [B]: header 215.0 content 151.0 footer 0.0 (total 366.0)
+    Reply status: 1xx=0 2xx=2 3xx=0 4xx=0 5xx=0
+    
+    CPU time [s]: user 0.22 system 0.78 (user 22.3% system 77.5% total 99.8%)
+    Net I/O: 0.8 KB/s (0.0*10^6 bps)
+    
+    Errors: total 0 client-timo 0 socket-timo 0 connrefused 0 connreset 0
+    Errors: fd-unavail 0 addrunavail 0 ftab-full 0 other 0
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    … output continues …
 	
 	
 There you have it. Simple automated test against multiple paths. But really, that doesn't do me much good, I mean a 10 line shell script could do the same thing.
@@ -109,40 +110,39 @@ In addition to plain text, I've added a parser to help us handle our results in 
 
 We'll modify a few lines to in previous script.
 
-	$ vi autoperf.rb
+    :::ruby
+    #file:autoperf.rb
+    require 'httperf'
+    
+    uris = %w{
+            /
+            /archive
+            /2012
+            /tag
+            /tag/ruby
+    }
 	
-	#file:autoperf.rb
-	require 'httperf'
-	
-	uris = %w{
-	        /
-	        /archive
-	        /2012
-	        /tag
-	        /tag/ruby
-	}
-	
-	httperf = HTTPerf.new( "rate" => 1, "num-conns" => 2 )
-	# I'm keeping these small, as I'm breaking my most important
-	# rule when it comes to performance testing and hitting
-	# my production server for the purposes of this example.
-	
-	# enable parsing
-	httperf.parse = true
-	
-	
-	results = {}
-	uris.each do |uri|
-	        httperf.update_option("uri", uri)
-	        results[uri] = httperf.run
-	end
-	
-	results.each do |uri,result|
-	        puts "Results from -- #{uri}"
-	        puts "~"*80
-	        puts result.inspect
-	        puts "~"*80
-	end
+    httperf = HTTPerf.new( "rate" => 1, "num-conns" => 2 )
+    # I'm keeping these small, as I'm breaking my most important
+    # rule when it comes to performance testing and hitting
+    # my production server for the purposes of this example.
+    
+    # enable parsing
+    httperf.parse = true
+    
+    
+    results = {}
+    uris.each do |uri|
+            httperf.update_option("uri", uri)
+            results[uri] = httperf.run
+    end
+    
+    results.each do |uri,result|
+            puts "Results from -- #{uri}"
+            puts "~"*80
+            puts result.inspect
+            puts "~"*80
+    end
 	
 	
 This produces a slightly more useful result. We now have a Hash contining our results. Perfect for generating graphs or emails, storing in a database, etc., etc.
@@ -202,7 +202,7 @@ This produces a slightly more useful result. We now have a Hash contining our re
       :errors_other=>"0"
     }
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	… output continues …
+    … output continues …
 
 
 Enjoy!

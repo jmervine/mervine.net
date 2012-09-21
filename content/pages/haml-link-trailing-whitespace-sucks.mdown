@@ -7,21 +7,25 @@ Summary: I was having issues with whitespace at the end of links whose text is b
 
 I was having issues with whitespace at the end of links whose text is being populated by a variable, example:
 
+    :::haml
     %a{ :href => "/foo" }
-        = my_foo
+      =my_foo
 
 Was resulting in:
 
+    :::html
     <a href="/foo">
         My Foo
     </a>
 
 To fix this, I was able to do this...
 
+    :::haml
     %a{ :href => "/foo" } #{my_foo}
 
 Resulting in:
 
+    :::html
     <a href="/foo">My Foo</a>
 
 Ta-Dah!! 

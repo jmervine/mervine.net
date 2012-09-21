@@ -8,6 +8,7 @@ Summary: A lot of people have taken to using HAML, example "sinatra-authenticati
 
 A lot of people have taken to using HAML, example "sinatra-authentication" uses it by default. I personally don't like it, but I don't judge either. So that said, I wish that more apps out there would steer away from implicitly defining haml calls in their apps. Here's an easy way to allow the template engine to be configurable in Sinatra
 
+    :::ruby
     configure do
       set :template_engine, :haml
     end
@@ -21,9 +22,9 @@ A lot of people have taken to using HAML, example "sinatra-authentication" uses 
     end
 
 
-
 If you want to get tricky, you could also use haml if it's installed, otherwise, default to erb with this...
 
+    :::ruby
     begin
       require 'haml'
       @template = :haml

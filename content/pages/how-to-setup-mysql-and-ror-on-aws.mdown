@@ -147,6 +147,7 @@ Run tests:
 
 Example configuration:
 
+    :::yaml
     development:
       adapter: mysql
       database: project_development

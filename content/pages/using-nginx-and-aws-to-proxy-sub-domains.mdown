@@ -37,9 +37,9 @@ This is a variable. Say you wanted to point http://blog.example.com/ to a Tumblr
 
         $ sudo ls -al /etc/nginx/sites-enabled/blog 
         lrwxrwxrwx 1 root root 23 2012-03-18 00:23 /etc/nginx/sites-enabled/blog 
-                                -> ../sites-available/blog
+                            -> ../sites-available/blog
 
-1. Start Nginx with: _sudo nginx_
+1. Start Nginx with: `sudo nginx`
 
 #### Step 3: Setup your sub-domain.
 

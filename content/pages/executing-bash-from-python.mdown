@@ -27,6 +27,7 @@ Here's a summary of the ways to call external programs and the advantages and di
 
 In addition the to five above, there's one more worth noting. [pexpect](http://www.noah.org/wiki/pexpect), which is a python implementation of [Expect](http://en.wikipedia.org/wiki/Expect). Here's a simple example:
 
+    :::python
     import pexect
     child = pexpect("echo \"foo\")
     child.expect("foo", timeout=10) # timeout in seconds

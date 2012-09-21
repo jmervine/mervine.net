@@ -9,6 +9,7 @@ I was working on created a super class for use in importing various unknown data
 
 Enjoy!
 
+    :::ruby
     class Item
       def initialize item
         raise "expected Hash param" unless item.kind_of? Hash

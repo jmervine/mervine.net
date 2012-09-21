@@ -10,13 +10,13 @@ This week I spent some time setting a [NewRelic](http://newrelic.com/) applicati
 
 ### Install NewRelic
 
-`gem install newrelic_rpm`
+    gem install newrelic_rpm
 
 #### With [Bundler](/tag/bundler)
 
+    :::ruby
     # file: <app_root>/Gemfile
     source :rubygems
-    
     gem 'newrelic_rpm
 
 ### Configure NewRelic
@@ -24,6 +24,7 @@ This week I spent some time setting a [NewRelic](http://newrelic.com/) applicati
 This is something you'll have to [a bit of research](https://newrelic.com/docs/ruby/ruby-agent-configuration). For the most part, the [default NewRelic configuration](https://gist.github.com/2942312) (as of 2012-06-16) is setup with [Rails](/tag/rails) defaults. That said, for the most part it will work with your [Sinatra](/tag/sinatra) app. Here's and example of what I would typically start with.
 
 
+    :::yaml
     common: &default_settings
       license_key: '<your_newrelic_key>'
       app_name: My Application
@@ -75,6 +76,7 @@ Some important things to note;
 This is the part that I expected to be way more complicated then it actually was. The above is basically identical to [Rails](/tag/rails), aside from some slight tweaks to the configuration, so this is really the main divergence.
 
 
+    :::ruby
     # file: <app_root>/config.ru
     $:.unshift File.expand_path(File.dirname(__FILE__))
     

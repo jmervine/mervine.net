@@ -14,35 +14,38 @@ Here are the best options I've found.
 
 This is not the method I used, but it's useful. I would use this if I needed to set multiple variables from the source file.
 
-        # assumes the following format
-        #  NAME1=value1
-        #  NAME2=value2
-        File.readline "/my/rc_file" do |line|
-                key, value = line.split "="
-                ENV[key] = value
-        end
+    :::ruby
+    # assumes the following format
+    #  NAME1=value1
+    #  NAME2=value2
+    File.readline "/my/rc_file" do |line|
+        key, value = line.split "="
+        ENV[key] = value
+    end
 
 ... or ...
 
-        # assumes the following format
-        #  export NAME1=value1
-        #  export NAME2=value2
-        #
-        # Note: I really don't like this for any situation 
-        # other then perhaps stand-alone scripting.
-        File.readline "/my/rc_file" do |line|
-                line.gsub(/export /, "")
-                key, value = line.split "="
-                ENV[key] = value
-        end
+    :::ruby
+    # assumes the following format
+    #  export NAME1=value1
+    #  export NAME2=value2
+    #
+    # Note: I really don't like this for any situation 
+    # other then perhaps stand-alone scripting.
+    File.readline "/my/rc_file" do |line|
+        line.gsub(/export /, "")
+        key, value = line.split "="
+        ENV[key] = value
+    end
 
 #### Pure bash via backticks
 
 This is the method I chose, as I only needed to set a single variable and knew the name of it. Additionally, I did it this way to ensure that the variable remained "nil" if the variable wasn't set for whatever reason.
 
-        unless ENV['KEY']
-                my_key = `source /my/rc_file 2> /dev/null && echo $KEY`.chomp
-                ENV['KEY'] = my_key unless my_key.empty? 
-        end
+    :::ruby
+    unless ENV['KEY']
+        my_key = `source /my/rc_file 2> /dev/null && echo $KEY`.chomp
+        ENV['KEY'] = my_key unless my_key.empty? 
+    end
 
 

@@ -11,11 +11,13 @@ I was looking for a simple way to detect mobile devices for this blog, a Sinatra
 
 ##### Gemfile:
 
+    :::ruby
     gem 'rack-mobile-detect'
 
 
 ##### config.ru:
 
+    :::ruby
     require '<other stuff>'
     require 'rack/mobile-detect'
 
@@ -26,6 +28,7 @@ I was looking for a simple way to detect mobile devices for this blog, a Sinatra
 ##### app.rb:
 
 
+    :::ruby
     require 'sinatra'
     helpers do
       def get_layout

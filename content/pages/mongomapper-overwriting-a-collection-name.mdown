@@ -7,6 +7,7 @@ Categories: ruby, mongo, mongo_mapper
 
 I found this very hard to find online, so I'm dropping a post in here with it. To overwrite a collection name when using [MongoMapper](http://mongomapper.com/) build your model like so:
 
+    :::ruby
     require 'mongomapper'
     class Collection
       include MongoMapper::Document

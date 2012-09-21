@@ -9,30 +9,32 @@ I created [Mongocached](http://mongocached.rubyops.net/), with help from [Hector
 
 ### Installation
 
-	gem install mongocached
+    gem install mongocached
 	
 *Or with Bundler:*
 
-	source :rubygems
-	gem 'mongocached'
+    :::ruby
+    source :rubygems
+    gem 'mongocached'
 	
 
 
 ### Basic Usage
 
-	$cache = Mongocached.new()
+    :::ruby
+    $cache = Mongocached.new()
 
-	# with auth
-	# $cache = Mongocached.new({ username: 'uname', password: 'pword' })
+    # with auth
+    # $cache = Mongocached.new({ username: 'uname', password: 'pword' })
 
-	# memcached style
-	$cache.set('key', 'data')
-	$cache.get('key')
+    # memcached style
+    $cache.set('key', 'data')
+    $cache.get('key')
 
-	# block stlye
-	$cache.save('key') do
-		'data'
-	end
+    # block stlye
+    $cache.save('key') do
+      'data'
+    end
 
 
 ### Links

@@ -23,6 +23,7 @@ Install VCR
 
 Or via Gemfile
 
+    :::ruby
     # file: <app_root>/Gemfile
     sources :rubygems
     
@@ -36,6 +37,7 @@ Or via Gemfile
 
 Next add the following to your Rack config file.
 
+    :::ruby
     # file: <app_root>/config.ru
 
     # only use cache when running performance tests   
@@ -80,6 +82,7 @@ Also, I would add an expiration to your cache, which is supported in newer versi
 
 While this is untested, it should look something like this.
 
+    :::ruby
     # file: <app_root>/config.ru
     
     require 'vcr'

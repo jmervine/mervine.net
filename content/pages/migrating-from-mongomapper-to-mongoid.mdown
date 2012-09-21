@@ -19,6 +19,7 @@ The first major step -- after installing the Mongoid Gem -- was to configure the
 
 So for MongoMapper I had it's custom connection setup (easier and less code, true):
 
+    :::ruby
     MongoMapper.database = "<database name>"
     if username && password
       MongoMapper.database.authenticate(username, password)
@@ -26,6 +27,7 @@ So for MongoMapper I had it's custom connection setup (easier and less code, tru
 
 For Mongoid, I use:
 
+    :::ruby
     Monoid.configure do |config|
       config.database = Mongo::Connection.new.db("<database name>")
       if username && password
@@ -42,6 +44,7 @@ So for MongoMapper I had:
 
 [lib/ditty/post.rb](https://github.com/jmervine/ditty/blob/release_0_0_7/lib/ditty/post.rb)
 
+    :::ruby
     class Post
       include MongoMapper::Document
        
@@ -56,6 +59,7 @@ So for MongoMapper I had:
   
 [lib/ditty/tag.rb](https://github.com/jmervine/ditty/blob/release_0_0_7/lib/ditty/tag.rb)
 
+    :::ruby
     class Tag
       include MongoMapper::Document
       
@@ -78,6 +82,7 @@ The refactor for Mongoid, looks like this:
 
 [lib/ditty/post.rb](https://github.com/jmervine/ditty/blob/feature/refactor/lib/ditty/tag.rb)
 
+    :::ruby
     class Post
       include Mongoid::Document
       include Mongoid::Timestamps
@@ -90,6 +95,7 @@ The refactor for Mongoid, looks like this:
 
 [lib/ditty/post.rb](https://github.com/jmervine/ditty/blob/feature/refactor/lib/ditty/post.rb)
 
+    :::ruby
     class Tag
       include Mongoid::Document
       validates_uniqueness_of :name

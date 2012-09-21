@@ -18,21 +18,22 @@ You can easily find good basic examples in the documentation, but I'll include t
 
 Benchmark Code:
 
-	1: require 'benchmark'
-	2: n = 50000
-	3: Benchmark.bm do |x|
-	4:   x.report { for i in 1..n; a = "1"; end }
-	5:   x.report { n.times do   ; a = "1"; end }
-	6:   x.report { 1.upto(n) do ; a = "1"; end }
-	7: end
+    :::ruby
+    1: require 'benchmark'
+    2: n = 50000
+    3: Benchmark.bm do |x|
+    4:   x.report { for i in 1..n; a = "1"; end }
+    5:   x.report { n.times do   ; a = "1"; end }
+    6:   x.report { 1.upto(n) do ; a = "1"; end }
+    7: end
 	
 
 Which results in (depending on your machine specs):
 
-	    user     system      total        real
-	1.033333   0.016667   1.016667 (  0.492106)
-	1.483333   0.000000   1.483333 (  0.694605)
-	1.516667   0.000000   1.516667 (  0.711077)
+        user     system      total        real
+    1.033333   0.016667   1.016667 (  0.492106)
+    1.483333   0.000000   1.483333 (  0.694605)
+    1.516667   0.000000   1.516667 (  0.711077)
 
 
 Great, so what's it all mean?
@@ -63,63 +64,64 @@ In this example, I'll be running a benchmark of [Diskcached](/tag/diskcached), [
 
 Benchmark Code:
 
-	require 'benchmark'
-	require 'diskcached'
-	require 'mongocached'
-	require 'memcached'
-	
-	# init diskcached
-	diskcache = Diskcached.new('/tmp/bm_cache') 
-	
-	# init mongocached with defaults -- localhost
-	mongocache = Mongocached.new()
-	
-	# init memcached
-	memcache = Memcached.new("localhost:11211")
-	
-	# create a data object to be cached
-	cache_content = "some string to be saved in cached"
-	
-	# set the number of times to itterate over the cache get
-	#   I do this because these actions are very fast, so a 
-	#   single call, isn't really enough to show a difference.
-	# 
-	#   For this, I typically use 100,000, as it allows you to 
-	#   easily translate all interations into a single 
-	#   intteration. 
-	#   
-	#   1 second for all, is 1 microsecond for a single iteration
-	#   using "fuzzy logic".
-	iterations = 100000
-	
-	# set each cache, so we have something to get
-	diskcache.set("bm_key", cache_content)
-	mongocache.set("bm_key", cache_content)
-	memcache.set("bm_key", cache_content)
-	
-	# now for the meat
-	Benchmark.bm do |bm|
-		# first report - diskcached
-		bm.report('disk') do
-			(1..iterations).each do
-				diskcache.get("bm_key")
-			end
-		end
-		
-		# second report - mongocached
-		bm.report('mong') do
-			(1..iterations).each do
-				mongocache.get("bm_key")
-			end
-		end
-		
-		# third report - memcached
-		bm.report('memc') do
-			(1..iterations).each do
-				memcache.get("bm_key")
-			end
-		end
-	end
+    :::ruby
+    require 'benchmark'
+    require 'diskcached'
+    require 'mongocached'
+    require 'memcached'
+    
+    # init diskcached
+    diskcache = Diskcached.new('/tmp/bm_cache') 
+    
+    # init mongocached with defaults -- localhost
+    mongocache = Mongocached.new()
+    
+    # init memcached
+    memcache = Memcached.new("localhost:11211")
+    
+    # create a data object to be cached
+    cache_content = "some string to be saved in cached"
+    
+    # set the number of times to itterate over the cache get
+    #   I do this because these actions are very fast, so a 
+    #   single call, isn't really enough to show a difference.
+    # 
+    #   For this, I typically use 100,000, as it allows you to 
+    #   easily translate all interations into a single 
+    #   intteration. 
+    #   
+    #   1 second for all, is 1 microsecond for a single iteration
+    #   using "fuzzy logic".
+    iterations = 100000
+    
+    # set each cache, so we have something to get
+    diskcache.set("bm_key", cache_content)
+    mongocache.set("bm_key", cache_content)
+    memcache.set("bm_key", cache_content)
+    
+    # now for the meat
+    Benchmark.bm do |bm|
+      # first report - diskcached
+      bm.report('disk') do
+        (1..iterations).each do
+          diskcache.get("bm_key")
+        end
+      end
+      
+      # second report - mongocached
+      bm.report('mong') do
+        (1..iterations).each do
+          mongocache.get("bm_key")
+        end
+      end
+      
+      # third report - memcached
+      bm.report('memc') do
+        (1..iterations).each do
+          memcache.get("bm_key")
+        end
+      end
+    end
 	
 
 So what are we doing here? 
@@ -136,10 +138,10 @@ Now, the results of this test for those that are curious (and to prove it all wo
 > Note: this was run on a Debian virtual host with 8 cores.
 
 
-	      user       system    total       real
-	disk  6.130000   2.180000   8.310000 (  8.501748)
-	mong  29.650000  4.150000  33.800000 ( 49.266912)
-	memc  2.330000   2.720000   5.050000 (  9.508415)
+          user       system    total       real
+    disk  6.130000   2.180000   8.310000 (  8.501748)
+    mong  29.650000  4.150000  33.800000 ( 49.266912)
+    memc  2.330000   2.720000   5.050000 (  9.508415)
 
 	
 Okay, now what are our takeaway from this. Diskcached is quite a bit faster with reads, while mongocached and memcached are about the same.

@@ -11,30 +11,33 @@ Deploying [Sinatra](http://sinatrarb.com/) with [Vlad the Deployer](http://rubyh
 
 Install the gem: 
 
-        gem install vlad
-        gem install vlad-git
-        gem install vlad-unicorn # if you're using unicorn
+    :::ruby
+    gem install vlad
+    gem install vlad-git
+    gem install vlad-unicorn # if you're using unicorn
 
 Or via [bundler](http://gembundler.com/):
 
-        $ vi Gemfile
-        
-        gem 'vlad', :require => false
-        gem 'vlad-git', :require => false
-        gem 'vlad-unicorn', :require => false  
-        #   again, if you're using unicorn
+    :::ruby
+    $ vi Gemfile
+    
+    gem 'vlad', :require => false
+    gem 'vlad-git', :require => false
+    gem 'vlad-unicorn', :require => false  
+    #   again, if you're using unicorn
         
 
 ### Step Two - Configure Vlad
 
 First, you have make sure that [rake](http://rake.rubyforge.org/) is loading Vlad correctly, so open up your 'APP_ROOT/Rakefile' and add the following lines:
 
-        begin
-          require 'vlad'
-          Vlad.load :scm => :git, :app => :unicorn
-        rescue LoadError
-          # do nothing
-        end
+    :::ruby
+    begin
+      require 'vlad'
+      Vlad.load :scm => :git, :app => :unicorn
+    rescue LoadError
+      # do nothing
+    end
 
 Note:
 > ':scm => :git' and ':app => :unicorn' are used to to configure the plugins I've installed above. If you weren't using Unicorn, for example, you would omit ':app => :unicorn'. 
@@ -42,30 +45,32 @@ Note:
 
 Second, you have setup a _deploy.rb_ (much like Capistrano, for those that know it). Create 'APP_ROOT/config/deploy.rb' with the following data:
 
-        set :application, "ExampleApp"
-        set :domain, "www.example.com"
-        set :deploy_to, "/home/username/example_app"
-        set :repository, 'git://github.com/path_to/example_app.git'
+    :::ruby
+    set :application, "ExampleApp"
+    set :domain, "www.example.com"
+    set :deploy_to, "/home/username/example_app"
+    set :repository, 'git://github.com/path_to/example_app.git'
 
-        # unicorn if used
-        set :unicorn_pid, "#{deploy_to}/shared/log/unicorn.pid"
-        # to ensure RACK_ENV 
-        set :unicorn_command, "cd #{deploy_to}/current && RACK_ENV=production unicorn"
-        # if bundler is being used...
-        # set :unicorn_command, "cd #{deploy_to}/current && RACK_ENV=production bundle exec unicorn"
+    # unicorn if used
+    set :unicorn_pid, "#{deploy_to}/shared/log/unicorn.pid"
+    # to ensure RACK_ENV 
+    set :unicorn_command, "cd #{deploy_to}/current && RACK_ENV=production unicorn"
+    # if bundler is being used...
+    # set :unicorn_command, "cd #{deploy_to}/current && RACK_ENV=production bundle exec unicorn"
 
 Thrid, you have to ensure that you can SSH to your remote host (www.example.com per the example above). I'm not going to turn this in to a long SSH tutorial, but before running Vlad for the first time be sure you can type 'ssh hostname' with no additional params, otherwise you'll either need to update your '~/.ssh/config' file with something like:
 
-        Hostname www.example.com
-        User <your_remote_user>
-        IdentityFile ~/.ssh/<remote_id_file>
-        ForwardAgent yes
+    Hostname www.example.com
+    User <your_remote_user>
+    IdentityFile ~/.ssh/<remote_id_file>
+    ForwardAgent yes
 
 Optionally, Vlad has methods of configuring ssh params:
 
-        set :user, "username"
-        # ... and ...
-        set :domain, "#{user}@www.example.com"
+    :::ruby
+    set :user, "username"
+    # ... and ...
+    set :domain, "#{user}@www.example.com"
 
 But I find this to be less pretty, personally.
 
@@ -88,18 +93,18 @@ Note:
 
 'setup' and 'update' together creates the following tree starting at the previously set 'deploy_to' location:
 
-        ~/example_app/
-                ./current -> ~/example_app/releases/<current version datestamp>
-                ./releases/
-                ./releases/<release datestamp>
-                ./revisions.log
-                ./scm/
-                ./scm/repo/
-                ./scm/repo/<git clone contents>
-                ./shared/
-                ./shared/log/
-                ./shared/pids/
-                ./shared/system/
+    ~/example_app/
+            ./current -> ~/example_app/releases/<current version datestamp>
+            ./releases/
+            ./releases/<release datestamp>
+            ./revisions.log
+            ./scm/
+            ./scm/repo/
+            ./scm/repo/<git clone contents>
+            ./shared/
+            ./shared/log/
+            ./shared/pids/
+            ./shared/system/
 
 On each subsequent update, a new folder will be created in './releases/' and the './current' symlink will be updated to point to it.
 
@@ -108,11 +113,12 @@ On each subsequent update, a new folder will be created in './releases/' and the
 
 By default, 'rake vlad:update' will not run _bundle install_. You'll need to create a custom vlad deployment task for that by adding the following to your 'Rakefile':
 
+    :::ruby
     task "vlad:deploy" => %w[ vlad:update vlad:bundle:install ]
 
 And adding the following to the very top of your 'config/deploy.rb':
 
+    :::ruby
     require "bundler/vlad"
-
 
 You would then run... `rake vlad:deploy` ...instead of... `rake vlad:update` ...when installing your application. 

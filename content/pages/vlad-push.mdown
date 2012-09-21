@@ -24,6 +24,7 @@ To install _vlad-push_, just install the gem. It will (of course) install Vlad i
 
 If installing via [Bundler](http://gembundler.com/), I recomment that you also ':require => false', as I've heard reports that Bundler's auto require "feature" can sometime mess things up.
 
+    :::ruby
     # file: Gemfile
     source :rubygems
     group :deployment do
@@ -43,6 +44,7 @@ To make Vlad and _vlad-push_ available to Rake, you'll need to set up your Rakef
 
 In it's simplest form, you would want to add this:
 
+    :::ruby
     # file: <APP_ROOT>/Rakefile
     require 'vlad'
     Vlad.load(:scm => :push)
@@ -50,6 +52,7 @@ In it's simplest form, you would want to add this:
 
 If you want to be safer, and more importantly allow Rake to work without Vlad (and _push_) installed you'll want to do the following.
 
+    :::ruby
     # file: <APP_ROOT>/Rakefile
     begin
       require 'vlad'
@@ -85,6 +88,7 @@ If you output looks like the above, you've correctly setup Vlad and vlad-push.
 
 At this point, you can run _rake vlad:push_ with no additional configurations, however, there are a few default options that you may want to overwrite in your deploy.rb.
 
+    :::ruby
     # file: <APP_ROOT>/config/deploy.rb
     #
     # These are the defaults:
