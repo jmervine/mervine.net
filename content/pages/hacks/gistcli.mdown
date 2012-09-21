@@ -1,0 +1,35 @@
+Categories: hacks, github
+Title: Web Pasting with "gistcli"
+
+[Found this simple Python script which allows for cli gist posts](https://github.com/pranavk/gist-cli) -- (thanks to [pranavk](http://github.com/pranavk)).
+
+
+You can install it like so
+
+    $ mkdir ~/bin
+    $ echo "export PATH=~/bin:$PATH" >> ~/.zshrc
+    $ cd ~/bin
+    $ wget https://raw.github.com/pranavk/gist-cli/master/gistcli
+    $ chmod 755 gistcli
+    $ source ~/.zshrc
+
+Usage examples
+
+    # simple echo to gist
+    echo "test gist" | gistcli
+
+    # file to gist
+    gistcli -f myfile.txt
+
+    # private 
+    echo "ssssh, don't tell anyone!" | gistcli -p
+
+    # from tty, EOF from '.' on it's own line
+    gistcli -
+    Foo, bar bah bing!
+    .
+
+
+> Note: 
+> There's also a slightly more mature [Ruby](/ruby) gist cli tool at [github.com/defunkt/gist](https://github.com/defunkt/gist) but I had issues getting it to work with my RMV setup.
+
