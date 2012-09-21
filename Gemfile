@@ -3,7 +3,7 @@ source 'http://rubygems.org'
 gem 'rake'
 
 gem 'nesta', '0.9.13'
-# gem 'nesta-plugin-diskcached'
+gem 'nesta-plugin-diskcached'
 # turning this off until I either use nesta-plugin-admin for
 # all posts or add a cache clearing function to it and start 
 # using it

@@ -43,4 +43,25 @@ namespace :prod do
   task :restart do
     system("ssh #{PRODUCTION_HOST} 'set -x; cd ~/www.rubyops.net && RACK_ENV=#{ENV['RACK_ENV']} bundle exec rake unicorn:restart --trace'")
   end
+
+  task :warmup do
+    system"ssh #{PRODUCTION_HOST} 'set -x; cd ~/www.rubyops.net && bundle exec rake cache:empty cache:warmup --trace'")
+  end
 end
+
+namespace :cache do
+  desc "empty diskcached cache"
+  task :empty do
+    %x{ cd #{APP_ROOT} && rm $( cat ./config/config.yml | grep diskcached_dir | awk '{ print $2 }' )/*.cache }
+  end
+  desc "warmup diskcached cache"
+  task :warmup do
+    %x{
+      set -x
+      for url in $(curl localhost/sitemap.xml | grep "<loc>http" | sed "s/    <loc>//" | sed "s/<\\/loc>//" | sort -u ); do
+        curl $url
+      done
+    } 
+  end
+end
+
