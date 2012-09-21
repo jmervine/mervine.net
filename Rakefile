@@ -45,7 +45,7 @@ namespace :prod do
   end
 
   task :warmup do
-    system("ssh #{PRODUCTION_HOST} 'set -x;  cd ~/www.rubyops.net && WARMUP_HOST=#{PRODUCTION_HOST} bundle exec rake cache:empty cache:warmup --trace'")
+    system("ssh #{PRODUCTION_HOST} 'set -x;  cd ~/www.rubyops.net && WARMUP_HOST=#{PRODUCTION_HOST} bundle exec rake cache --trace'")
   end
 end
 
@@ -64,5 +64,9 @@ namespace :cache do
       done
     } 
   end
+end
+task :cache do
+  Rake::Task['cache:empty'].invoke
+  Rake::Task['cache:warmup'].invoke
 end
 
