@@ -45,7 +45,7 @@ namespace :prod do
   end
 
   task :warmup do
-    system("ssh #{PRODUCTION_HOST} 'set -x; cd ~/www.rubyops.net && bundle exec rake cache:empty cache:warmup --trace'")
+    system("ssh #{PRODUCTION_HOST} 'set -x; WARMUP_HOST=#{PRODUCTION_HOST} cd ~/www.rubyops.net && bundle exec rake cache:empty cache:warmup --trace'")
   end
 end
 
@@ -56,9 +56,10 @@ namespace :cache do
   end
   desc "warmup diskcached cache"
   task :warmup do
+    ENV['WARMUP_HOST'] ||= "localhost"
     %x{
       set -x
-      for url in $(curl localhost/sitemap.xml | grep "<loc>http" | sed "s/    <loc>//" | sed "s/<\\/loc>//" | sort -u ); do
+      for url in $(curl #{ENV['WARMUP_HOST']}/sitemap.xml | grep "<loc>http" | sed "s/    <loc>//" | sed "s/<\\/loc>//" | sort -u ); do
         curl $url
       done
     } 
