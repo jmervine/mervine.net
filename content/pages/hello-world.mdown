@@ -1,11 +1,11 @@
 Date: 18 July 2012 18:58
-Title: Hello World!
-Categories: git, github, programming
+Title: Github: Hello World!
+Categories: github, programming
 
-# Hello World!
+# Github: Hello World
 
-I found this while poking around on [github.com](http://github.com). It's a list of "Hello World!" applications in (what they claim to be) every programming language.
-
-> [github.com/hello-world](https://github.com/git/hello-world) 
+I found this while poking around on [github.com](http://github.com) and found a list of "Hello World!" applications in (what they claim to be) every programming language.
+> #### [github.com/git/hello-world](http://github.com/git/hello-world)
 
 Thought it was neat, thought I would share. 
+

@@ -3,12 +3,9 @@ source 'http://rubygems.org'
 gem 'rake'
 
 gem 'nesta', '0.9.13'
-# turning this off until I either use nesta-plugin-admin for
-# all posts or add a cache clearing function to it and start 
-# using it
+
 gem 'nesta-plugin-google-ads'
 gem 'nesta-plugin-sharethis'
-#gem 'nesta-plugin-sluggable'
 
 #gem 'coderay'
 gem "ultraviolet", :require => "uv"
