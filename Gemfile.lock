@@ -20,6 +20,8 @@ GEM
       nesta (>= 0.9.11)
     nesta-plugin-sharethis (0.0.2)
       nesta (>= 0.9.11)
+    nesta-plugin-smartmeta (0.0.1)
+      nesta (>= 0.9.11)
     newrelic_rpm (3.4.2.1)
     nokogiri (1.5.5)
     plist (3.1.0)
@@ -57,6 +59,7 @@ DEPENDENCIES
   nesta-plugin-diskcached
   nesta-plugin-google-ads
   nesta-plugin-sharethis
+  nesta-plugin-smartmeta
   newrelic_rpm
   rack-codehighlighter
   rake
