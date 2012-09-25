@@ -50,6 +50,7 @@ module Nesta
       keywords = ""
       keywords << keywords_from_pages(categories)
       keywords << keywords_from_pages(articles)
+      (keywords.empty? ? nil : keywords)
     end
 
     def keywords_from_pages(pages)
