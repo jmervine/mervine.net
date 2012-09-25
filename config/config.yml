@@ -33,8 +33,6 @@ cache: false
 
 content: content
 
-google_analytics_code: "UA-32343843-1"
-
 #google_ad:
   #client: "ca-pub-1003846054569915"
   #slot: "5207675864"
@@ -59,5 +57,7 @@ diskcached: false
 production:
   diskcached: true 
   diskcached_dir: diskcache
+  google_analytics_code: "UA-32343843-1"
+
   #diskcached_timeout: 3600 # default (in seconds)
 
