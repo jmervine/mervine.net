@@ -59,8 +59,8 @@ namespace :cache do
     ENV['WARMUP_HOST'] ||= "localhost"
     %x{
       set -x
-      for url in $(curl #{ENV['WARMUP_HOST']}/sitemap.xml | grep "<loc>http" | sed "s/    <loc>//" | sed "s/<\\/loc>//" | sort -u ); do
-        curl $url
+      for url in $(curl -s #{ENV['WARMUP_HOST']}/sitemap.xml | grep "<loc>http" | sed "s/    <loc>//" | sed "s/<\\/loc>//" | sort -u ); do
+        curl -s $url
       done
     } 
   end
