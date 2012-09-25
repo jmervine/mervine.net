@@ -55,8 +55,9 @@ sharethis: "80df436a-9769-4c43-a468-adcd0ae6ec70"
 #- :digg
 #- :facebook_like
 
+diskcached: false
 production:
   diskcached: true 
-  diskcached_dir: .diskcache
+  diskcached_dir: diskcache
   #diskcached_timeout: 3600 # default (in seconds)
 

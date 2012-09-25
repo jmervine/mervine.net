@@ -1,3 +1,5 @@
+Keywords: ruby, devops, rails, ruby on rails, sinatra, httperf
+
 # About
  
 Welcome to RubyOps.net.

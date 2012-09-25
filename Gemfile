@@ -6,6 +6,7 @@ gem 'nesta', '0.9.13'
 
 gem 'nesta-plugin-google-ads'
 gem 'nesta-plugin-sharethis'
+gem 'nesta-plugin-diskcached'
 
 #gem 'coderay'
 gem "ultraviolet", :require => "uv"
