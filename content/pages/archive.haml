@@ -1,9 +1,11 @@
-%h1 Archive
-%ol
-  - Nesta::Page.find_articles.each do |page|
-    %li
-      %a{ :href=>page.abspath }=page.title
-      %small
-        \--
-        = page.date.strftime("%D %H:%M")
+Categories: archive/2012
+
+%h1 Archives
+-#%ol
+  -#- Nesta::Page.find_articles.each do |page|
+    -#%li
+      -#%a{ :href=>page.abspath }=page.title
+      -#%small
+        -#\--
+        -#= page.date.strftime("%D %H:%M")
 
