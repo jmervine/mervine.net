@@ -44,7 +44,7 @@ namespace :prod do
     system("ssh #{PRODUCTION_HOST} 'set -x; cd ~/www.rubyops.net && RACK_ENV=#{ENV['RACK_ENV']} bundle exec rake unicorn:restart --trace'")
   end
 
-  task :warmup do
+  task :cache do
     system("ssh #{PRODUCTION_HOST} 'set -x;  cd ~/www.rubyops.net && WARMUP_HOST=#{PRODUCTION_HOST} bundle exec rake cache --trace'")
   end
 end
