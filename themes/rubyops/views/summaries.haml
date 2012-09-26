@@ -6,6 +6,7 @@
           %header
             %h1
               %a(href="#{url(page.abspath)}")= page.heading
+          -#- if @page.index_page? || page.summary.nil? || page.summary.empty?
           - if page.summary.nil? || page.summary.empty?
             ~ page.body(self)
           - else

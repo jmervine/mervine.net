@@ -1,7 +1,6 @@
 Date: 31 May 2012 01:34
 Title: HAML link trailing whitespace sucks!
 Categories: ruby, haml
-Summary: I was having issues with whitespace at the end of links whose text is being populated by a variable...
 
 # HAML link trailing whitespace sucks!
 

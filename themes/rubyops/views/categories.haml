@@ -1,7 +1,7 @@
 %nav.categories
   - unless @page.pages.empty? or @page.title =~ /Archives/
     %h1 
-      ="More on #{@page.title}"
+      ="More on This"
     - @page.pages.each do |page|
       %a{ :href => page.path }=page.title
 

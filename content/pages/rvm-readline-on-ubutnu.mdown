@@ -1,7 +1,6 @@
 Date: 25 September 2012 13:30
 Title: RVM, irb, readline and Ubuntu
 Categories: ruby, linux, rvm 
-Summary: How to get readline working under irb with RVM on Ubuntu.
 
 # RVM, irb, readline and Ubuntu
 
