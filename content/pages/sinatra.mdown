@@ -1,3 +1,3 @@
 # Sinatra
 
-* [Sinatrarb](http://sinatrarb.com/)
+> [Sinatrarb](http://sinatrarb.com/) is classy web-development dressed in a DSL.
