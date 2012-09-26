@@ -184,6 +184,8 @@ article
   code,
   pre
     background-color: $tint
+    margin: 1px auto 1px auto
+    overflow: auto
   code
     padding: 1px 3px
   pre
@@ -241,6 +243,8 @@ section.articles
 nav.categories
   h1
     @include adjust-font-size(1, 2, 0)
+    margin-top: 10px
+    text-decoration: underline
 
   ul.menu
     list-style: none
@@ -252,6 +256,13 @@ nav.categories
 
 div.feed
   margin: $base-vertical-margin 0
+
+hr.article_seperator
+  border-top: 1px solid lightgray
+  border-bottom: 0px
+  border-left: 1px
+  border-right: 1px
+
 
 
 @import "uv_twilight.scss"

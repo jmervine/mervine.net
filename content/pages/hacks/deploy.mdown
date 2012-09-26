@@ -6,6 +6,7 @@ Categories: hacks, rake, ruby
 
 Add the following to your Rakefile
 
+    :::shell
     ENV['PRODUCTION_HOST'] ||= "www.yourhost.com"
     task :deploy do
       system("ssh #{PRODUCTION_HOST} 'set -x; cd /path/to/app/install && git pull && bundle'")
@@ -18,10 +19,12 @@ Add the following to your Rakefile
 
 Then run
 
+    :::shell
     $ RACK_ENV=production PRODUCTION_HOST=www.foohost.com bundle exec rake deploy restart
 
 or just
 
+    :::shell
     $ RACK_ENV=production PRODUCTION_HOST=www.foohost.com bundle exec rake deploy
 
 

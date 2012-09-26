@@ -1,11 +1,16 @@
 %nav.categories
+  - unless @page.pages.empty? or @page.title =~ /Archives/
+    %h1 
+      ="More on #{@page.title}"
+    - @page.pages.each do |page|
+      %a{ :href => page.path }=page.title
+
   - if ! @menu_items.empty?
     %h1 
       Featured Categories
     - display_menu(@menu_items, :class => "menu")
 
   %h1 Joshua P. Mervine
-
   %a{:href=>"http://linkedin.com/in/mervinej"} LinkedIn
   %br
   %a{:href=>"http://twitter.com/mervinej"} Twitter

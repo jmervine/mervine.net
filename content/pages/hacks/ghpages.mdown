@@ -33,6 +33,7 @@ Then run
 
 Create `scripts/pages`
 
+    :::shell
     #!/usr/bin/env bash
     set -xue 
     bundle exec rspec 
@@ -54,3 +55,5 @@ Then run
     $ ./scripts/pages
 
 > Note -- I opted for the rake method because I use rake in my projects.
+
+
