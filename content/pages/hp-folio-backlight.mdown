@@ -1,0 +1,15 @@
+Date: 02 Octber 2012 12:30
+Title: Fixing Backlight on the HP Folio 13 when using Linux
+Categories: ubuntu, linux, hp folio 13, off topic
+
+# Fixing Backlight on the HP Folio 13 when using Linux
+
+This is something I ran in to when origionally setting up my Folio, which I did not post on. However, today a co-worker asked me how to solve this problem, so I thought I should jot it down for future reference.
+
+1. Open your grub config: `sudo vi /etc/default/grub`.
+1. Update the line containing `GRUB_CMDLINE_LINUX_DEFAULT`, adding `acpi_backlight=vendor` to the end. It should look something like this when you're done: `GRUB_CMDLINE_LINUX_DEFAULT="quiet splash acpi_backlight=vendor"`.
+1. Save and update grub with `sudo update-grub`.
+1. Reboot and you should have a display.
+
+> Note: You will need to use an external monitor or drop in to grub's preboot command line and add the above to be able to see your screen before adding the above option.
+ 
