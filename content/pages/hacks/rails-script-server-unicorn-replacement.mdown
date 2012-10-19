@@ -1,0 +1,68 @@
+Date: 19 October 2012 18:30
+Categories: rails, hacks, bash, ruby
+Title: Rails script/server Unicorn Replacement
+Summary: A script to replace `script/server` in Rails, which runs Unicorn over Webrick, because it's faster. This script is designed for **development only**!
+
+# Rails script/server Unicorn Replacement
+
+A script to replace `script/server` in Rails, which runs Unicorn over Webrick, because it's faster. This script is designed for **development only**!
+
+    :::shell
+    #!/usr/bin/env bash
+    ################################################################################
+    # Author: Joshua Mervine <joshua@mervine.net>
+    # Date:   2012-10-19
+    #
+    ################################################################################
+    # set up optional variables
+    ################################################################################
+    test "$UNICORN_ROOT" || UNICORN_ROOT="$(pwd)"
+    test "$UNICORN_HOST" || UNICORN_HOST="0.0.0.0"
+    test "$UNICORN_PORT" || UNICORN_PORT="3000"
+    test "$UNICORN_RB"   || UNICORN_RB="/tmp/unicorn.rb"
+
+    if ! test "$UNICORN_WORKERS"
+    then
+      if [[ $( uname ) == "Darwin" ]]
+      then
+        cpus="$( sysclt -a 2>/dev/null | grep "core_count" )"
+      else
+        cpus="$( ( cat /proc/cpuinfo 2>/dev/null ) | grep "^processor" | wc -l )"
+      fi
+      if [[ $cpus == "0" ]]
+      then
+        # this handles non *nix OSs
+        UNICORN_WORKERS="1"
+      else
+        # don't want to use pull all your system resources
+        UNICORN_WORKERS="$( expr $cpus - 1 )"
+      fi
+    fi
+
+    ################################################################################
+    # set up debug mode check
+    ################################################################################
+    test "$DEBUG" && set -x
+
+    ################################################################################
+    # create temp unicorn config
+    ################################################################################
+    if ! echo "" > $UNICORN_RB
+    then
+      echo "Permission denied: $UNICORN_RB"
+      echo " I can't continue with unicorn configs."
+      exit 1
+    fi
+    echo "timeout 60"                             >> $UNICORN_RB
+    echo "worker_processes $UNICORN_WORKERS"      >> $UNICORN_RB
+    echo "listen \"$UNICORN_HOST:$UNICORN_PORT\"" >> $UNICORN_RB
+    echo "preload_app true"                       >> $UNICORN_RB
+
+    ################################################################################
+    # start unicorn
+    ################################################################################
+    cd $UNICORN_ROOT
+    exec bundle exec unicorn -c $UNICORN_RB
+
+*[gist](https://gist.github.com/3921235)*
+
