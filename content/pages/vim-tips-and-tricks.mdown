@@ -16,13 +16,13 @@ My setup is based on a forked version of [spf13](https://github.com/jmervine/spf
 
 [VIM] plugins/addons I can't live without.
 
-* [gmarik/vundle](https://github.com/gmarik/vundle) - The missing plugin manager.
+* [gmarik/vundle](https://github.com/gmarik/vundle) - The missing [VIM] plugin manager.
 * [mileszs/ack.vim](http://github.com/mileszs/ack.vim) - Ack for [VIM]
 * [scrooloose/nerdtree](http://github.com/scrooloose/nerdtree) - Director and file drawer.
 * [corntrace/bufexplorer](http://github.com/corntrace/bufexplorer) - Easy buffer switching.
 * [tpope/vim-fugitive](http://github.com/tpope/vim-fugitive) - Everything you could ever want out of built in git handling and more.
 * [mattn/webapi-vim](http://github.com/mattn/webapi-vim) - Required for `vim-fugitive`.
-* [mattn/gist-vim](http://github.com/mattn/gist-vim) - Add, edit, delete gists from vim.
+* [mattn/gist-vim](http://github.com/mattn/gist-vim) - Add, edit, delete gists from [VIM].
 * [scrooloose/nerdcommenter](http://github.com/scrooloose/nerdcommenter) - Commenting made easy.
 * [tpope/vim-rails](http://github.com/tpope/vim-rails) - Ruby/Rails stuff.
 
