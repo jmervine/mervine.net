@@ -1,8 +1,9 @@
 timeout 30
+preload_app true
 stderr_path "log/unicorn_err.log"
 stdout_path "log/unicorn_out.log"
 
-case ENV['RACK_ENV'] 
+case ENV['RACK_ENV']
 when 'production'
   listen "/home/jmervine/www.rubyops.net/sockets/unicorn.sock", :backlog => 64
   worker_processes 8
