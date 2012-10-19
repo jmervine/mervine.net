@@ -14,7 +14,7 @@ An example usage would be something like:
 
     :::shell
     #!/usr/bin/env bash
-    if test "$( zsh --version | awk '{print $2}' | awk -F'.' ' $1 >= 4 && $2 >= 3 && $3 >= 17 ' )
+    if test "$( zsh --version | awk '{print $2}' | awk -F'.' ' $1 >= 4 && $2 >= 3 && $3 >= 17 ' )"
     then
         # do someting that only higher zsh versions support
     else
