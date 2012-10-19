@@ -1,0 +1,10 @@
+Date: 18 October 2012 17:45
+Title: vim-gist is cool!
+Categories: vim
+
+# vim-gist is cool!
+
+Just came across this VIM plugin which is too cool not to share. I gives you the ability to post and edit gists right from VIM. Check it out!
+
+### [mattn/gist-vim](https://github.com/mattn/gist-vim)
+
