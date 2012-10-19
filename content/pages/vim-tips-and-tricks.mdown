@@ -8,10 +8,15 @@ Summary: These are basically my notes on VIM, and some of the things I've found 
 
 These are basically my notes on [VIM], and some of the things I've found along the way. I expect that this will be something that continues to grow over time.
 
-###Amazing Plugins/Addon
+##My Setup
+
+My setup is based on a forked version of [spf13](https://github.com/jmervine/spf13-vim) (from [spf13/spf13-vim](https://github.com/spf13/spf13-vim)). You can check it out here: [jmervine/vim-config](http://github.com/jmervine/vim-config).
+
+##Amazing Plugins/Addon
 
 [VIM] plugins/addons I can't live without.
 
+* [gmarik/vundle](https://github.com/gmarik/vundle) - The missing plugin manager.
 * [mileszs/ack.vim](http://github.com/mileszs/ack.vim) - Ack for [VIM]
 * [scrooloose/nerdtree](http://github.com/scrooloose/nerdtree) - Director and file drawer.
 * [corntrace/bufexplorer](http://github.com/corntrace/bufexplorer) - Easy buffer switching.
@@ -22,7 +27,7 @@ These are basically my notes on [VIM], and some of the things I've found along t
 * [tpope/vim-rails](http://github.com/tpope/vim-rails) - Ruby/Rails stuff.
 
 
-###Code Samples
+##Code Samples
 
 ####Disable mouse mode when not in `gvim`:
 
@@ -71,6 +76,5 @@ These are basically my notes on [VIM], and some of the things I've found along t
       " - markdown
       autocmd FileType python,html,xml,markdown set ai sw=4 sts=4 et
     augroup END
-
 
 [VIM]: /vim "VIM"
