@@ -8,13 +8,13 @@ Categories: hacks, bash, zsh, linux
 The following line will print `zsh` version information if the version is greater then or equal to 4.3.17, otherwise it will return blank:
 
     :::shell
-    zsh --version | awk '{print $2}' | awk -F'.' ' $1 >= 4 && $2 >= 3 && $3 >= 17 '
+    zsh --version | awk '{print $2}' | awk -F'.' ' ( $1 > 4 || ( $1 == 4 && $2 > 3 ) || ( $1 == 4 && $2 == 3 && $3 >= 17 ) ) '
 
 An example usage would be something like:
 
     :::shell
     #!/usr/bin/env bash
-    if test "$( zsh --version | awk '{print $2}' | awk -F'.' ' $1 >= 4 && $2 >= 3 && $3 >= 17 ' )"
+    if test "$( zsh --version | awk '{print $2}' | awk -F'.' ' ( $1 > 4 || ( $1 == 4 && $2 > 3 ) || ( $1 == 4 && $2 == 3 && $3 >= 17 ) ) ' )"
     then
         # do someting that only higher zsh versions support
     else
