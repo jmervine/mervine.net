@@ -1,6 +1,8 @@
-- categories = %w{ ruby sinatra httperf nesta rack httperfrb unicorn caching }.sort
-- col1 = categories[0..(categories.size/2)-1]
-- col2 = categories[((categories.size/2))..categories.size]
+- categories = %w{ ruby sinatra httperf nesta rack httperfrb unicorn caching vim }.sort
+- col1_index = ( (categories.size % 2) == 0 ? ((categories.size/2)-1) : (categories.size/2) )
+- col2_index = ( (categories.size % 2) == 0 ? (categories.size/2)     : ((categories.size/2)+1) )
+- col1 = categories[0..col1_index]
+- col2 = categories[col2_index..categories.size]
 
 %h1 Category List
 
@@ -15,5 +17,3 @@
     - col2.each do |category|
       %li
         %a{ :href => "/#{category}" }= category
-
-
