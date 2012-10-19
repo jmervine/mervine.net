@@ -34,12 +34,13 @@ task :deploy do
 end
 
 namespace :prod do
+
   desc "deploy to production"
   task :deploy do
     system("ssh #{PRODUCTION_HOST} 'set -x; cd ~/www.rubyops.net && git pull && bundle'")
   end
 
-  desc "restart production" 
+  desc "restart production"
   task :restart do
     system("ssh #{PRODUCTION_HOST} 'set -x; cd ~/www.rubyops.net && RACK_ENV=#{ENV['RACK_ENV']} bundle exec rake unicorn:restart --trace'")
   end
@@ -48,6 +49,8 @@ namespace :prod do
     system("ssh #{PRODUCTION_HOST} 'set -x;  cd ~/www.rubyops.net && WARMUP_HOST=#{PRODUCTION_HOST} bundle exec rake cache --trace'")
   end
 end
+
+task :prod => [ "prod:deploy", "prod:restart", "prod:cache" ]
 
 namespace :cache do
   desc "empty diskcached cache"
@@ -62,7 +65,7 @@ namespace :cache do
       for url in $(curl -s #{ENV['WARMUP_HOST']}/sitemap.xml | grep "<loc>http" | sed "s/    <loc>//" | sed "s/<\\/loc>//" | sort -u ); do
         curl -s $url
       done
-    } 
+    }
   end
 end
 task :cache do
