@@ -1,8 +1,28 @@
 Date: 19 October 2012 00:30
 Title: VIM Tips and Tricks
 Categories: vim, programming
+Summary: These are basically my notes on VIM, and some of the things I've found along the way. I expect that this will be something that continues to grow over time.
+
 
 #VIM Tips and Tricks
+
+These are basically my notes on [VIM], and some of the things I've found along the way. I expect that this will be something that continues to grow over time.
+
+###Amazing Plugins/Addon
+
+[VIM] plugins/addons I can't live without.
+
+* [mileszs/ack.vim](http://github.com/mileszs/ack.vim) - Ack for [VIM]
+* [scrooloose/nerdtree](http://github.com/scrooloose/nerdtree) - Director and file drawer.
+* [corntrace/bufexplorer](http://github.com/corntrace/bufexplorer) - Easy buffer switching.
+* [tpope/vim-fugitive](http://github.com/tpope/vim-fugitive) - Everything you could ever want out of built in git handling and more.
+* [mattn/webapi-vim](http://github.com/mattn/webapi-vim) - Required for `vim-fugitive`.
+* [mattn/gist-vim](http://github.com/mattn/gist-vim) - Add, edit, delete gists from vim.
+* [scrooloose/nerdcommenter](http://github.com/scrooloose/nerdcommenter) - Commenting made easy.
+* [tpope/vim-rails](http://github.com/tpope/vim-rails) - Ruby/Rails stuff.
+
+
+###Code Samples
 
 ####Disable mouse mode when not in `gvim`:
 
@@ -52,3 +72,5 @@ Categories: vim, programming
       autocmd FileType python,html,xml,markdown set ai sw=4 sts=4 et
     augroup END
 
+
+[VIM]: /vim "VIM"
