@@ -1,5 +1,5 @@
 Date: 23 September 2012 17:35
-Categories: hacks, github
+Categories: hacks, github, linux
 Title: Web Pasting with "gistcli"
 
 # Web Pasting with "gistcli"
@@ -25,7 +25,7 @@ Usage examples
     # file to gist
     gistcli -f myfile.txt
 
-    # private 
+    # private
     echo "ssssh, don't tell anyone!" | gistcli -p
 
     # from tty, EOF from '.' on it's own line
@@ -34,6 +34,6 @@ Usage examples
     .
 
 
-> Note: 
+> Note:
 > There's also a slightly more mature [Ruby](/ruby) gist cli tool at [github.com/defunkt/gist](https://github.com/defunkt/gist) but I had issues getting it to work with my RMV setup.
 
