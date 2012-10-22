@@ -56,6 +56,5 @@ And if you need external configs...
 #### [What is Thin?](http://code.macournoyer.com/thin/)
 
 <br>
-<br>
 
 [gist]: https://gist.github.com/3928518
