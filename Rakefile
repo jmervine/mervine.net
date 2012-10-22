@@ -55,7 +55,7 @@ task :prod => [ "prod:deploy", "prod:restart", "prod:cache" ]
 namespace :cache do
   desc "empty diskcached cache"
   task :empty do
-    %x{ cd #{APP_ROOT} && rm $( cat ./config/config.yml | grep diskcached_dir | awk '{ print $2 }' )/*.cache }
+    %x{ cd #{APP_ROOT} && rm -v $( cat ./config/config.yml | grep diskcached_dir | awk '{ print $2 }' )/*.cache }
   end
   desc "warmup diskcached cache"
   task :warmup do
@@ -72,5 +72,3 @@ task :cache do
   Rake::Task['cache:empty'].invoke
   Rake::Task['cache:warmup'].invoke
 end
-
-# test two
