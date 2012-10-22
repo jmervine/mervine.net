@@ -1,0 +1,61 @@
+Date: 21 October 2012 19:30
+Categories: thin, ruby, hacks
+Title: Thin Wrapper Script
+
+# Thin Wrapper Script
+
+Their may be others, there may be better, but this is mine.
+
+    :::shell
+    # file: APP_ROOT/thin.sh
+    #
+    # Directory pathing context should be that of the thin
+    # init script sourcing this file, not this file itself.
+    #
+    # allow for overides as such
+    test "$RACK_ENV"  || RACK_ENV="production"
+    test "$THIN_PORT" || THIN_PORT="4321"
+    test "$THIN_PID"  || THIN_PID="./log/listener.pid"
+    test "$THIN_LOG"  || THIN_LOG="./log/listener.log"
+
+    # force defaults as such
+    #RACK_ENV="development"
+    #THIN_PORT="4321"
+    #THIN_PID="./log/listener.pid"
+    #THIN_LOG="./log/listener.log"
+
+    # vim: set filetype=sh
+
+*[gist]*
+
+<br>
+And if you need external configs...
+
+    :::shell
+    # file: APP_ROOT/config/thinrc
+    #
+    # Directory pathing context should be that of the thin
+    # init script sourcing this file, not this file itself.
+    #
+    # allow for overides as such
+    test "$RACK_ENV"  || RACK_ENV="production"
+    test "$THIN_PORT" || THIN_PORT="4321"
+    test "$THIN_PID"  || THIN_PID="./log/listener.pid"
+    test "$THIN_LOG"  || THIN_LOG="./log/listener.log"
+
+    # force defaults as such
+    #RACK_ENV="development"
+    #THIN_PORT="4321"
+    #THIN_PID="./log/listener.pid"
+    #THIN_LOG="./log/listener.log"
+
+    # vim: set filetype=sh
+
+*[gist]*
+
+#### [What is Thin?](http://code.macournoyer.com/thin/)
+
+<br>
+<br>
+
+[gist]: https://gist.github.com/3928518
