@@ -9,20 +9,35 @@ Their may be others, there may be better, but this is mine.
     :::shell
     # file: APP_ROOT/thin.sh
     #
-    # Directory pathing context should be that of the thin
-    # init script sourcing this file, not this file itself.
-    #
-    # allow for overides as such
-    test "$RACK_ENV"  || RACK_ENV="production"
+    #!/usr/bin/env bash
+    # source config if present
+    test -f ./config/thinrc && source ./config/thinrc
+
+    # set up primary defaults
+    test "$RACK_ENV"  || RACK_ENV="development"
     test "$THIN_PORT" || THIN_PORT="4321"
     test "$THIN_PID"  || THIN_PID="./log/listener.pid"
     test "$THIN_LOG"  || THIN_LOG="./log/listener.log"
 
-    # force defaults as such
-    #RACK_ENV="development"
-    #THIN_PORT="4321"
-    #THIN_PID="./log/listener.pid"
-    #THIN_LOG="./log/listener.log"
+    test "$DEBUG"     && set -x
+
+    if ! test "$1"
+    then
+        echo "Usage: listener start|stop|restart"
+        echo " "
+        echo "Takes the following overides as environemnt variables:"
+        echo " "
+        echo "  RACK_ENV  :: default $RACK_ENV"
+        echo "  THIN_PORT :: default $THIN_PORT"
+        echo "  THIN_PID  :: default $THIN_PID"
+        echo "  THIN_LOG  :: default $THIN_LOG"
+        echo " "
+        echo "Takes config file as './config/thinrc' with overides above. "
+        echo " "
+        exit 0
+    fi
+
+    RACK_ENV=$RACK_ENV thin --port $THIN_PORT --pid $THIN_PID --log $THIN_LOG --daemonize $1
 
     # vim: set filetype=sh
 
