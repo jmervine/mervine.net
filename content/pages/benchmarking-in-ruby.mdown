@@ -8,17 +8,16 @@ Summary: Benchmark (per [Dictionary.com](http://dictionary.reference.com/browse/
 
 Benchmark (per [Dictionary.com](http://dictionary.reference.com/browse/benchmark)) - *"an established point of reference against which computers or programs can be measured in tests comparing their performance, reliability, etc."*
 
-In my recent work with [caches](/tag/cache), I've been making sure to benchmark my code before releasing it. It's pretty evident, that anyone working with caches cares about speed and for larger sites, every millisecond (and sometimes even microsecond) can count.
+In my recent work with [caches](/caching), I've been making sure to benchmark my code before releasing it. It's pretty evident, that anyone working with caches cares about speed and for larger sites, every millisecond (and sometimes even microsecond) can count.
 
-[Ruby](/tag/ruby) has built in benchmarking capibilities (see [the API for Benchmark](http://www.ruby-doc.org/stdlib-1.9.3/libdoc/benchmark/rdoc/Benchmark.html) for details beyond what I cover here). While Benchmark has several different methods of running benchmarks, I tend to focus on *Benchmark.bm*, which is a pretty straigh forward iteration through your code samples.
+[Ruby] has built in benchmarking capibilities (see [the API for Benchmark](http://www.ruby-doc.org/stdlib-1.9.3/libdoc/benchmark/rdoc/Benchmark.html) for details beyond what I cover here). While Benchmark has several different methods of running benchmarks, I tend to focus on *Benchmark.bm*, which is a pretty straigh forward iteration through your code samples.
 
 You can easily find good basic examples in the documentation, but I'll include them here for your convience.
 
-### Basic Example 
+### Basic Example
 
 Benchmark Code:
 
-    :::ruby
     1: require 'benchmark'
     2: n = 50000
     3: Benchmark.bm do |x|
@@ -26,7 +25,7 @@ Benchmark Code:
     5:   x.report { n.times do   ; a = "1"; end }
     6:   x.report { 1.upto(n) do ; a = "1"; end }
     7: end
-	
+
 
 Which results in (depending on your machine specs):
 
@@ -56,49 +55,48 @@ So simply put, the conclusion of this test is that the *for* loop is going to be
 
 ### Advanced Example
 
-This is a simplified version of what I'm using for [Duality](/tag/duality), [Mongocached](/tag/mongocached) and [Diskcached](/tag/diskcached). All of which benchmark themselves against memcached and in some cases eachother.
+This is a simplified version of what I'm using for [Duality], [Mongocached] and [Diskcached]. All of which benchmark themselves against [Memcached] and in some cases eachother.
 
 
-In this example, I'll be running a benchmark of [Diskcached](/tag/diskcached), [Mongocached](/tag/mongocached) and [Memcached](/tag/memcached) running a cache request, or *get('some_key')*.
+In this example, I'll be running a benchmark of [Diskcached], [Mongocached] and [Memcached] running a cache request, or *get('some_key')*.
 
 
 Benchmark Code:
 
-    :::ruby
     require 'benchmark'
     require 'diskcached'
     require 'mongocached'
     require 'memcached'
-    
+
     # init diskcached
-    diskcache = Diskcached.new('/tmp/bm_cache') 
-    
+    diskcache = Diskcached.new('/tmp/bm_cache')
+
     # init mongocached with defaults -- localhost
     mongocache = Mongocached.new()
-    
+
     # init memcached
     memcache = Memcached.new("localhost:11211")
-    
+
     # create a data object to be cached
     cache_content = "some string to be saved in cached"
-    
+
     # set the number of times to itterate over the cache get
-    #   I do this because these actions are very fast, so a 
+    #   I do this because these actions are very fast, so a
     #   single call, isn't really enough to show a difference.
-    # 
-    #   For this, I typically use 100,000, as it allows you to 
-    #   easily translate all interations into a single 
-    #   intteration. 
-    #   
+    #
+    #   For this, I typically use 100,000, as it allows you to
+    #   easily translate all interations into a single
+    #   intteration.
+    #
     #   1 second for all, is 1 microsecond for a single iteration
     #   using "fuzzy logic".
     iterations = 100000
-    
+
     # set each cache, so we have something to get
     diskcache.set("bm_key", cache_content)
     mongocache.set("bm_key", cache_content)
     memcache.set("bm_key", cache_content)
-    
+
     # now for the meat
     Benchmark.bm do |bm|
       # first report - diskcached
@@ -107,14 +105,14 @@ Benchmark Code:
           diskcache.get("bm_key")
         end
       end
-      
+
       # second report - mongocached
       bm.report('mong') do
         (1..iterations).each do
           mongocache.get("bm_key")
         end
       end
-      
+
       # third report - memcached
       bm.report('memc') do
         (1..iterations).each do
@@ -122,16 +120,16 @@ Benchmark Code:
         end
       end
     end
-	
 
-So what are we doing here? 
+
+So what are we doing here?
 
 * First we setup our caches to be benchmarked by initializing them and inserting some data to be fetched.
 * Inside *Benchmark.bm* we create a report for each cache, and run *100000* cache fetches as fast as we can.
 
-It's pretty much that simple. 
+It's pretty much that simple.
 
-It should be noted that this isn't a real emualtion of how this code will preform in production, but it should make it pretty clear which is faster and possible surface any gross inefficiencies. 
+It should be noted that this isn't a real emualtion of how this code will preform in production, but it should make it pretty clear which is faster and possible surface any gross inefficiencies.
 
 
 Now, the results of this test for those that are curious (and to prove it all works):
@@ -143,7 +141,7 @@ Now, the results of this test for those that are curious (and to prove it all wo
     mong  29.650000  4.150000  33.800000 ( 49.266912)
     memc  2.330000   2.720000   5.050000 (  9.508415)
 
-	
+
 Okay, now what are our takeaway from this. Diskcached is quite a bit faster with reads, while mongocached and memcached are about the same.
 
 
@@ -153,3 +151,9 @@ This is my little write up on how I benchmark. I would love comments and feedbac
 
 Also, I have a template I use for benchmarking small samples of code in a gist -- I call it my [Benchmark A/B Test Suite](https://gist.github.com/3157875) -- enjoy!
 
+
+[Ruby]: /ruby
+[Duality]: /duality-two-caches-at-once
+[Mongocached]: /mongocached-simple-cache-using-mongodb
+[Diskcached]: /diskcached-simple-disk-cacheing-for-ruby
+[Memcached]: http://memcached.org/
