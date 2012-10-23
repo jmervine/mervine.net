@@ -18,6 +18,7 @@ You can easily find good basic examples in the documentation, but I'll include t
 
 Benchmark Code:
 
+    :::ruby
     1: require 'benchmark'
     2: n = 50000
     3: Benchmark.bm do |x|
@@ -63,6 +64,7 @@ In this example, I'll be running a benchmark of [Diskcached], [Mongocached] and 
 
 Benchmark Code:
 
+    :::ruby
     require 'benchmark'
     require 'diskcached'
     require 'mongocached'
