@@ -15,7 +15,7 @@ gem 'rack-codehighlighter', :require => 'rack/codehighlighter'
 gem 'unicorn'
 
 group :production do
-  gem 'newrelic_rpm'
+  gem 'newrelic_rpm', :require => false
   gem 'nesta-plugin-diskcached'
 end
 
