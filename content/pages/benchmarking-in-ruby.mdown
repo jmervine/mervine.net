@@ -144,7 +144,7 @@ Now, the results of this test for those that are curious (and to prove it all wo
     memc  2.330000   2.720000   5.050000 (  9.508415)
 
 
-Okay, now what are our takeaway from this. Diskcached is quite a bit faster with reads, while mongocached and memcached are about the same.
+Okay, now what are our takeaway from this. [Mongocached] is quite a bit slower with reads, while [Diskcached] and [Memcached] are about the same.
 
 
 ### Closing
