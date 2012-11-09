@@ -1,36 +1,46 @@
 # Quotes
 
-> Technology is nothing. What's important is that you have a faith in people, that they're basically good and smart, and if you give them tools, they'll do wonderful things with them.
-> - Steve Jobs (Rolling Stone Issue 684 June 16, 1994)
->
-> Be who you are and say what you feel, because those who mind don’t matter and those who matter don’t mind.
->
-> - Dr. Seuss
->
-> In times of change, the learners inherit the earth - the learned find themselves beautifully equipped to understand a world that no longer exists.
->
-> - Eric Hoffer
->
-> The greatest lesson in life is to know that even fools are right sometimes.
->
-> - Winston Churchill
->
-> I don't care about security, I care about the customers!
->
-> - VP Technology (3/2012), regarding web server security patching.
->
-> In the corporate world, you’re either bomb shelter, the sheltered or the bomb.**
->
-> - Me (3/2012)
->
-> We can't solve problems by using the same kind of thinking we used when we created them.
->
-> - Albert Einstein
->
-> Wait, the site is down?... Who broke it?... Don't make me smack a bitch!
->
-> - Rico (2012)
->
 > I fear the day that technology will surpass our human interaction. The world will have a generation of idiots.
 >
-> - Alber Einstein
+> Alber Einstein
+
+
+> Technology is nothing. What's important is that you have a faith in people, that they're basically good and smart, and if you give them tools, they'll do wonderful things with them.
+>
+> Steve Jobs (Rolling Stone Issue 684 June 16, 1994)
+
+
+> Be who you are and say what you feel, because those who mind don’t matter and those who matter don’t mind.
+>
+> Dr. Seuss
+
+
+> In times of change, the learners inherit the earth the learned find themselves beautifully equipped to understand a world that no longer exists.
+>
+> Eric Hoffer
+
+
+> The greatest lesson in life is to know that even fools are right sometimes.
+>
+> Winston Churchill
+
+
+> I don't care about security, I care about the customers!
+>
+> VP Technology (3/2012), regarding web server security patching.
+
+
+> In the corporate world, you’re either bomb shelter, the sheltered or the bomb.**
+>
+> Me (3/2012)
+
+
+> We can't solve problems by using the same kind of thinking we used when we created them.
+>
+> Albert Einstein
+
+
+> Wait, the site is down?... Who broke it?... Don't make me smack a bitch!
+>
+> Rico (2012)
+
