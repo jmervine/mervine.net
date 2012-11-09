@@ -90,7 +90,7 @@ This is the part that I expected to be way more complicated then it actually was
 ### Gotchas
 
 * It's important to note the order you load newrelic_rpm in your config.ru -- you must require your app before NewRelic for things to setup correctly.
-* The application I was setting this up for used _**rackup**_ as it's development app server, the above did not work when using [rack](/rack). Once I started the application using [Unicorn](/tag/unicorn) (which is what it's using in test, stage and production) things worked as expected.
+* The application I was setting this up for used _**rackup**_ as it's development app server, the above did not work when using [rack](/rack). Once I started the application using [Unicorn](/unicorn) (which is what it's using in test, stage and production) things worked as expected.
 
 
 
