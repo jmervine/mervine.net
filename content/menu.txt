@@ -7,4 +7,4 @@ categories
 archive
   archive/2012
 about
-
+quotes
