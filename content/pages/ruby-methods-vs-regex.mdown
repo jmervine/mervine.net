@@ -1,0 +1,40 @@
+Date: 14 November 2012 22:30
+Title: 'starts_with?', 'end_with?' and 'include?' vs. RegExp
+Categories: ruby, benchmark, benchmarking-in-ruby
+
+# 'starts_with?', 'end_with?' and 'include?' vs. RegExp
+
+A co-worker of mine pointed out today that using Ruby's native methods for string matching is actually faster then using regular expressions. This was hard for me to believe to so I benchmarked them.
+
+### Setup the [Benchmark](http://www.ruby-doc.org/stdlib-1.9.3/libdoc/benchmark/rdoc/Benchmark.html)
+
+    :::ruby
+    [1] pry(main)> require 'benchmark'
+    => true
+    [2] pry(main)> test_string = "/foo/bar/bah/bing"
+    => "/foo/bar/bah/bing"
+
+### [String#starts_with?](http://www.ruby-doc.org/core-1.9.3/String.html#method-i-start_with-3F)
+
+    :::ruby
+    [3] pry(main)> Benchmark.realtime { (1..10000).to_a.each { %r{^/foo}.match(test_string) } }
+    => 0.009987447
+    [4] pry(main)> Benchmark.realtime { (1..10000).to_a.each { test_string.start_with?("foo") } }
+    => 0.003103276
+
+### [String#end_with?](http://www.ruby-doc.org/core-1.9.3/String.html#method-i-end_with-3F)
+
+    :::ruby
+    [5] pry(main)> Benchmark.realtime { (1..10000).to_a.each { %r{bing$}.match(test_string) } }
+    => 0.015837275
+    [6] pry(main)> Benchmark.realtime { (1..10000).to_a.each { test_string.end_with?("bing") } }
+    => 0.005633547
+
+### [String#include?](http://www.ruby-doc.org/core-1.9.3/String.html#method-i-include-3F)
+
+    :::ruby
+    [7] pry(main)> Benchmark.realtime { (1..10000).to_a.each { %r{^.*bar.*$}.match(test_string) } }
+    => 0.025630178
+    [8] pry(main)> Benchmark.realtime { (1..10000).to_a.each { test_string.include?("bar") } }
+    => 0.010360719
+
