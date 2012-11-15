@@ -1,7 +1,6 @@
 source 'http://rubygems.org'
 
 gem 'rake'
-
 gem 'nesta', '0.9.13'
 
 gem 'nesta-plugin-google-ads'
@@ -19,4 +18,8 @@ group :production do
   gem 'nesta-plugin-diskcached'
 end
 
+group :development do
+  gem 'pry'
+  gem 'pry-doc'
+end
 # gem (RUBY_VERSION =~ /^1.9/) ? 'ruby-debug19': 'ruby-debug'
