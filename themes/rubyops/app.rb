@@ -18,7 +18,7 @@ module Nesta
     #
     # Handling legacy www.rubyops.net routes.
     get '/:year/:month/:day/:path' do
-      redirect "/#{params[:path].gsub("_","-")}" 
+      redirect "/#{params[:path].gsub("_","-")}"
     end
 
     get '/tags' do
