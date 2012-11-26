@@ -134,7 +134,7 @@ Now we can run our test.
 
     $ httperf --server www.rubyops.net --wlog Y,wlog.log
 	
-Note, the "Y" (or "N") switch is simply telling httperf to loop through the urls in your log file (or not).
+Note, the "Y" (or "N") switch is simply telling httperf to loop through the urls in your log file (or not). Additionally, you have to pass `--num-conns` with the number of connections your want to run, a simple way to do this is `--num-conns $( wc -l urls.log  )`.
 
 <a name="best_practices"></a>
 ### Best Practices
