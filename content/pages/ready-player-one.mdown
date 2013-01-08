@@ -1,6 +1,8 @@
 Date: 07 January 2013
 Title: Ready Player One
 
+# Ready Player One
+
 > [Ready Player One](http://www.readyplayerone.com/)
 >
 > If you're reading this blog, you're most likely a geek like me. Read this book, you won't regret it.
