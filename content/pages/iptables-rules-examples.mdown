@@ -12,7 +12,7 @@ Categories: linux, iptables, security
 > These examples will act as a basic templates for you to tweak these rules to suite your specific requirement."
 
 
-#### [How-To: Redirecting network traffic to a new IP using IPtables](http://www.debuntu.org/how-to-redirecting-network-traffic-a-new-ip-using-iptables)
+#### [How-To: Redirecting network traffic to a new IP using IPtables](http://www.debuntu.org/how-to-redirecting-network-traffic-a-new-ip-using-iptables)  (external)
 
 > "While doing a server migration, it happens that some traffic still go to the old machine because the DNS servers are not yet synced or simply because some people are using the IP address instead of the domain name....
 > By using iptables and its masquerade feature, it is possible to forward all traffic to the old server to the new IP.
