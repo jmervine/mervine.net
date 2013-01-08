@@ -4,5 +4,5 @@ Title: Ready Player One
 # [Ready Player One](http://www.readyplayerone.com/)
 
 > If you're reading this blog, you're most likely a geek like me. Read this book, you won't regret it.
-
-![ready player one](http://www.crownpublishing.com/images/readyplayerone/logo_v2.jpg)
+>
+> ![ready player one](http://www.crownpublishing.com/images/readyplayerone/logo_v2.jpg)
