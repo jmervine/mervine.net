@@ -5,7 +5,7 @@ Categories: linux, iptables, security, redis, database
 
 # Securing Redis via IPTables
 
-Here's a simple script to secure Redis via IPTables:
+Here's a simple script to secure Redis via IPTables (tested on CentOS 6.3):
 
 		:::shell
 		#!/usr/bin/env bash
