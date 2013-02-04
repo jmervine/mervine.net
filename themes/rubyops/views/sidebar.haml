@@ -1,5 +1,8 @@
 #sidebar
   = sharethis_buttons
   = haml :categories, :layout => false
-  = haml :feed, :layout => false
+  .feed
+    = haml :feed, :layout => false
+    %br
+    = haml :follow, :layout => false
 
