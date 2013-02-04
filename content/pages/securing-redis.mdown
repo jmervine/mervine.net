@@ -19,13 +19,8 @@ Here's a simple script to secure Redis via IPTables (tested on CentOS 6.3):
 
     IPADDRESS="$1"
     if ! test "$IPADDRESS"; then
-<<<<<<< Updated upstream
         echo "Please enter the IP Address you want to be able to connection to Redis."
         exit 1
-=======
-            echo "Please enter the IP Address you want to be able to connection to Redis."
-            exit 1
->>>>>>> Stashed changes
     fi
 
     sudo iptables -A INPUT -s $IPADDRESS -p tcp -m tcp --dport 6379 -j ACCEPT
