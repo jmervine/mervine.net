@@ -1,0 +1,23 @@
+Date: 3 February 2013
+Title: Installing Node.js on CentOS
+Categories: linux, centos, nodejs, rails
+
+
+# Installing Node.js on CentOS
+
+I wrote the following script to install [Node.js](http://nodejs.org/) on [CentOS](http://www.centos.org/) to handle a [Rails](http://rubyonrails.org/) missing a JavaScript runtime environment error.
+
+    :::shell
+    #!/usr/bin/env bash
+    set -ue
+    sudo echo "Ensure sudo access."
+    sudo touch /etc/yum.repos.d/naulinux-extras.repo
+    sudo sh -c "echo '[naulinux-extras]
+    name=NauLinux Extras
+    baseurl=http://downloads.naulinux.ru/pub/NauLinux/6.2/\$basearch/Extras/RPMS/
+    enabled=0
+    gpgcheck=1
+    gpgkey=http://downloads.naulinux.ru/pub/NauLinux/RPM-GPG-KEY-linux-ink
+    ' > /etc/yum.repos.d/naulinux-extras.repo"
+    sudo yum --enablerepo=naulinux-extras install nodejs
+
