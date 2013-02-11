@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'rake'
-gem 'nesta', '0.9.13'
+gem 'nesta', '~> 0.9.13'
 
 gem 'nesta-plugin-google-ads'
 gem 'nesta-plugin-sharethis'
