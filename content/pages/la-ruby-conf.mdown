@@ -2,6 +2,8 @@ Date: 14 Feburary 2013 10:30
 Title: La Ruby Conf
 Categories: ruby, off topic, conference
 
-# [LA Ruby Conf](http://www.larubyconf.com/)
+# LA Ruby Conf
+
+## [http://www.larubyconf.com/]
 
 I'll be there, say "Hello"!
