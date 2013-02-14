@@ -4,6 +4,6 @@ Categories: ruby, off topic, conference
 
 # LA Ruby Conf
 
-## [http://www.larubyconf.com/]
+## [http://www.larubyconf.com/](http://www.larubyconf.com/)
 
 I'll be there, say "Hello"!
