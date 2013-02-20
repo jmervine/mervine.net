@@ -1,0 +1,57 @@
+Date: 20 Feburary 2013 09:51
+Title: HTTPS: Creating Self-signed Certs
+Categories: nginx, https, linux, openssl
+Summary: Occasionally, I need to create self-signed certs when testing application through https. This isn't really the best way to do it, as it will require anyone visiting to confirm a security exception, but it's useful in a pinch.
+
+# HTTPS: Creating Slef-signed Certs
+
+Occasionally, I need to create self-signed certs when testing application through https. This isn't really the best way to do it, as it will require anyone visiting to confirm a security exception, but it's useful in a pinch.
+
+Here's the basics...
+
+    :::shell
+    # Generate Key
+    $ openssl genrsa -des3 -out cert.key 1024
+    => enter password
+
+    # Generate CSR
+    $ openssl req -new -key cert.key -out cert.csr
+    Country Name (2 letter code) []:CA
+    State or Province Name (full name) []:California
+    Locality Name (eg, city) [Newbury]:Sunland
+    Organization Name (eg, company) [My Company Ltd]:RubyOpsNet
+    Organizational Unit Name (eg, section) []:
+    Common Name (eg, your name or your server's hostname) []:www.rubyops.net
+    Email Address []:joshua at mervine dot net
+    Please enter the following 'extra' attributes
+    to be sent with your certificate request
+    A challenge password []:
+    An optional company name []:
+
+    # Remove Key Password
+    $ cp cert.key cert.key.org
+    $ openssl rsa -in cert.key.org -out cert.key
+
+    # Generate Self-signed Cert
+    $ openssl x509 -req -days 365 -in server.csr -signkey cert.key -out cert.crt
+
+    # Copy Files to Nginx Config 
+    $ sudo cp cert.crt /etc/nginx/
+    $ sudo cp cert.key /etc/nginx/
+
+    # Nginx Config Example (from nginx default)
+    $ sudo vim /etc/nginx/nginx.conf
+    
+    server {
+        listen       443;
+        server_name  localhost;
+
+        ssl                  on;
+        ssl_certificate      cert.pem;
+        ssl_certificate_key  cert.key;
+
+        location / {
+            root   html;
+            index  index.html index.htm;
+        }
+    }
