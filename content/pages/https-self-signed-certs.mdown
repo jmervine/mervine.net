@@ -9,11 +9,14 @@ Occasionally, I need to create self-signed certs when testing application throug
 
 Here's the basics...
 
-    # Generate Key
+### Generate Key
+
+
     $ openssl genrsa -des3 -out cert.key 1024
     => enter password
 
-    # Generate CSR
+### Generate CSR
+
     $ openssl req -new -key cert.key -out cert.csr
     Country Name (2 letter code) []:CA
     State or Province Name (full name) []:California
@@ -27,18 +30,22 @@ Here's the basics...
     A challenge password []:
     An optional company name []:
 
-    # Remove Key Password
+### Remove Key Password
+
     $ cp cert.key cert.key.org
     $ openssl rsa -in cert.key.org -out cert.key
 
-    # Generate Self-signed Cert
+### Generate Self-signed Cert
+
     $ openssl x509 -req -days 365 -in server.csr -signkey cert.key -out cert.crt
 
-    # Copy Files to Nginx Config 
+### Copy Files to Nginx Config 
+
     $ sudo cp cert.crt /etc/nginx/
     $ sudo cp cert.key /etc/nginx/
 
-    # Nginx Config Example (from nginx default)
+### Nginx Config Example (from nginx default)
+
     $ sudo vim /etc/nginx/nginx.conf
     
     server {
