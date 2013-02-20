@@ -9,7 +9,6 @@ Occasionally, I need to create self-signed certs when testing application throug
 
 Here's the basics...
 
-    :::shell
     # Generate Key
     $ openssl genrsa -des3 -out cert.key 1024
     => enter password
