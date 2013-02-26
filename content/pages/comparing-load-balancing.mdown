@@ -1,4 +1,4 @@
-Date: 26 February 2012 20:00
+Date: 26 February 2013 20:00
 Title: Comparing Load Balancing Options
 Categories: nginx, haproxy, aws, elb
 Summary: Recently I've done a bit of research on the differences between Nginx, HAProxy and AWS ELB when being used as a Load Balancer. I put together a line by line comparison for a friend of mine and thought I would share my results.
