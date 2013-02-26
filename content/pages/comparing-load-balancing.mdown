@@ -1,0 +1,79 @@
+Date: 26 February 2012 20:00
+Title: Comparing Load Balancing Options: Nginx vs. HAProxy vs. AWS ELB
+Categories: nginx, haproxy, aws, elb
+Summary: Recently I've done a bit of research on the differences between Nginx, HAProxy and AWS ELB when being used as a Load Balancer. I put together a line by line comparison for a friend of mine and thought I would share my results.
+
+# Comparing Load Balancing Options: Nginx vs. HAProxy vs. AWS ELB
+
+Recently I've done a bit of research on the differences between [Nginx], [HAProxy] and [AWS ELB] when being used as a Load Balancer. I put together a line by line comparison for a friend of mine and thought I would share my results.
+
+Below I'm going to go over load balancing talking points, discuss the pros and cons of each. I welcome comments -- especially disagreements -- in the comments section at the bottom of this post.
+
+
+### Performance
+
+In [a side by side comparison of performance response times](http://affectioncode.wordpress.com/2008/06/11/comparing-nginx-and-haproxy-for-web-applications/) between [Nginx] and [HAProxy] done in 2008, [HAProxy] clearly out performs [Nginx] for application with lower load (3 concurrent connections or less), while [Nginx] quickly becomes the clear leader under higher load (10 to 30+ concurrent connections) as [HAProxy] begins to perform very poorly. I read somewhere (but can't seem to dig up the post) that this is due to [HAProxy] not being multi-threaded nor having the capability to spawn child processes. Additionally, [HAProxy] must be run on port 80, which solidifies this limitation. 
+
+[AWS ELB] boasts being able to easily handle 20K+ concurrent connections, however, [it has been reported][1] to have issues with large scale (1000's of connections) traffic spikes.
+
+In the end, if you're using [AWS], use [ELB], otherwise from purely a performance perspective, for smaller trafficked application, [HAProxy] would be better choice. For high load, [Nginx] is the only real option unless you want to use a tiered approach in your load balancing. 
+
+
+### SSL Support
+
+[HAProxy] does not support SSL out of the box, there are work around using [Nginx], but they're clunky and why not just use [Nginx] in that case. Both [Nginx] and [AWS ELB] have SSL support.
+
+
+### Algorithm Options
+
+[HAProxy] has the most options in this arena, support Round-Robin, Least Connection, Weighted and more.
+
+[Nginx] supports Round-Robin and Weighted only.
+
+[AWS ELB] only supports Round-Robin.
+
+
+### Geo Awareness / Multi Region Proxying
+
+[Nginx] has two plug-ins -- [HttpGeoModule](http://wiki.nginx.org/HttpGeoModule) and [HttpGeoipModule](http://wiki.nginx.org/HttpGeoIPModule) -- which when used in conjunction can be used to direct traffic by geo-location. I haven't personally used this option, so I can't speak to performance or accuracy, but the folks a [Nginx] tend to do things right.
+
+[HAProxy] does not support geo-location out of the box. I found a few forum posts that mention patches or combining it with BIND and GeoDNS patching, but I didn't read too deeply in to it, as it breaks the focus of this post.
+
+[AWS ELB] by itself cannot do geo-location on it's own, but in conjunction with [AWS Route53 DNS](http://aws.amazon.com/route53/), it can be made to do so easily. This is by far the best solution if building your architecture on [AWS]. 
+
+
+### Monitoring Solutions
+
+[Nginx], being a standard web server, can easily be monitored by any log monitor (e.g. Nagios), additionally, there's a plug-in (which I haven't tried) that looks interesting called [Scout](https://scoutapp.com/plugin_urls/72-nginx-monitoring).
+
+[HAProxy] is also supported by [Scout](http://blog.scoutapp.com/articles/2011/10/21/monitoring-haproxy) and there are several other options, including log monitors like Nagios.
+
+[AWS ELB] is supported by [CloudWatch](http://aws.amazon.com/cloudwatch/), so that's probably the simplest solution over, if you're using [AWS].
+
+
+### Configuration -- clarity, simplicity
+
+All three are fairly easy to configure. [Nginx], as it has more functionality, tends be slightly more complex then [HAProxy], while [AWS ELB] would be the simplest, being purely web based. 
+
+
+## Summary
+
+Over all, I would recommend using [ELB] if you're on [AWS] -- not that I would recommend that in most cases. If you're not, I would recommend [Nginx] for most cases; it's performs better under load, it support HTTPS and if needed geo-location is always handy. As for [HAProxy], this is best suited for lower traffic thin API application, where HTTPS isn't a requirement and especially when Least Connections is preferred.
+
+
+## Sources
+
+- [Dissecting Amazon ELB : 18 things you should know][1]
+- [Comparing Nginx and HAProxy for web applications](http://affectioncode.wordpress.com/2008/06/11/comparing-nginx-and-haproxy-for-web-applications/)
+- [wiki.nginx.org/HttpUpstreamModule](http://wiki.nginx.org/HttpUpstreamModule)
+- [Load balancing in EC2 with Nginx and HAProxy](http://www.evanhoffman.com/evan/2012/01/09/load-balancing-in-ec2-with-nginx-and-haproxy/)
+- [haproxy-docs:Configuring](http://code.google.com/p/haproxy-docs/wiki/Configuring)
+
+
+[Nginx]:http://nginx.org/
+[HAProxy]:http://haproxy.1wt.eu/
+[AWS ELB]:http://aws.amazon.com/elasticloadbalancing/
+[ELB]:http://aws.amazon.com/elasticloadbalancing/
+[AWS]:http://aws.amazon.com/
+[1]:http://harish11g.blogspot.com/2012/07/aws-elastic-load-balancing-elb-amazon.html
+
