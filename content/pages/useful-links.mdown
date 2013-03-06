@@ -1,0 +1,15 @@
+# Useful Links to be Remembered
+
+## Linux
+
+### General
+
+* [Setting up a virtual machine using VirtualBox and Vagrant.](https://github.com/yesodweb/yesod/wiki/Setting-up-a-virtual-machine,-using-VirtualBox-and-Vagrant)
+* [Available Vagrant Boxes.](https://github.com/mitchellh/vagrant/wiki/Available-Vagrant-Boxes)
+
+### Ubuntu
+
+#### Virtual Box Installation
+
+* [Step by step instructions on installing virtual box correctly on Ubuntu.](https://www.virtualbox.org/wiki/Linux_Downloads)
+
