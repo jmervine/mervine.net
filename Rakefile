@@ -45,13 +45,20 @@ namespace :prod do
     system("ssh #{PRODUCTION_HOST} 'set -x; cd ~/www.rubyops.net && RACK_ENV=#{ENV['RACK_ENV']} bundle exec rake unicorn:restart --trace'")
   end
 
-  desc "clear cache on production"
-  task :cache do
-    system("ssh #{PRODUCTION_HOST} 'set -x;  cd ~/www.rubyops.net && WARMUP_HOST=#{PRODUCTION_HOST} bundle exec rake cache --trace'")
+  namespace :cache do
+    desc "clear cache on production"
+    task :empty do
+      system("ssh #{PRODUCTION_HOST} 'set -x;  cd ~/www.rubyops.net && WARMUP_HOST=#{PRODUCTION_HOST} bundle exec rake cache:empty --trace'")
+    end
+
+    desc "warmup cache on production"
+    task :warmup do
+      system("ssh #{PRODUCTION_HOST} 'set -x;  cd ~/www.rubyops.net && WARMUP_HOST=#{PRODUCTION_HOST} bundle exec rake cache:warmup --trace'")
+    end
   end
 end
 
-task :prod => [ "prod:deploy", "prod:restart", "prod:cache" ]
+task :prod => [ "prod:deploy", "prod:restart", "prod:cache:empty", "prod:cache:warmup" ]
 
 namespace :cache do
   desc "empty diskcached cache"
@@ -69,6 +76,7 @@ namespace :cache do
     }
   end
 end
+
 task :cache do
   Rake::Task['cache:empty'].invoke
   Rake::Task['cache:warmup'].invoke
