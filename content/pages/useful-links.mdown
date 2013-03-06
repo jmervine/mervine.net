@@ -17,4 +17,5 @@ Links that have been found to be helpful in DevOps tasks relating to Ruby. I int
 #### Virtual Box Installation
 
 * [Step by step instructions on installing virtual box correctly on Ubuntu.](https://www.virtualbox.org/wiki/Linux_Downloads)
+  * In addition to the instructions here, I had to do the following to get things up and running: `sudo apt-get install linux-headers-3.2.0-29-generic && sudo /etc/init.d/vboxdrv setup`.
 
