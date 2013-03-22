@@ -7,7 +7,8 @@
       %meta(name="description" content=@description)
     - if @keywords
       %meta(name="keywords" content=@keywords)
-    = sharethis_javascript
+    - if defined?(sharethis_javascript)
+      = sharethis_javascript
     %title= @title
     <!--[if ! lte IE 6]><!-->
     %link(href="#{url('/css/master.css')}" media="screen" rel="stylesheet")

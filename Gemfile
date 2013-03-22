@@ -18,6 +18,10 @@ group :production do
   gem 'nesta-plugin-diskcached'
 end
 
+group :test do
+  gem 'rack-test'
+end
+
 group :development do
   gem 'pry'
   gem 'pry-doc'
