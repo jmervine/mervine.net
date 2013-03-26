@@ -20,6 +20,7 @@
     - local_stylesheet_link_tag('local')
     %link(href="#{url('/articles.xml')}" rel="alternate" type="application/atom+xml")
     = haml :analytics, :layout => false
+
   %body
     #container
       = haml :header, :layout => false

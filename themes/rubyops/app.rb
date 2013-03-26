@@ -11,7 +11,11 @@ module Nesta
     use Rack::Static, :urls => ["/rubyops"], :root => "themes/rubyops/public"
 
     helpers do
-      # Add new helpers here.
+      def show_disqus_comment_count?(page=nil)
+        return false unless Nesta::Config.disqus_short_name
+        return true  unless page
+        return !(page.abspath == "/" || page.abspath.include?("archive"))
+      end
     end
 
     # Add new routes here.
