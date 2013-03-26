@@ -10,7 +10,7 @@ Categories: archive
           &mdash;
           - if show_disqus_comment_count?(page)
             = haml :disqus_comment, :layout => false
-            %a{ :href=>"#{page.abspath}#discus_thread" } Comments
+            %a{ :href=>"#{page.abspath}#disqus_thread" } Comments
           - else
             = page.date.strftime("%D %H:%M")
 

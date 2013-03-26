@@ -14,6 +14,7 @@ module Nesta
       def show_disqus_comment_count?(page=nil)
         return false unless Nesta::Config.disqus_short_name
         return true  unless page
+        return false unless (request.path == "/" || request.path.start_with?("/archive"))
         return !(page.abspath == "/" || page.abspath.include?("archive"))
       end
     end
