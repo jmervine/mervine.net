@@ -6,7 +6,7 @@ stdout_path "log/unicorn_out.log"
 case ENV['RACK_ENV']
 when 'production'
   listen "/home/jmervine/www.rubyops.net/sockets/unicorn.sock", :backlog => 64
-  worker_processes 8
+  worker_processes 4
 when 'staging'
   worker_processes 4
   listen 9001
