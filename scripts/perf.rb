@@ -2,8 +2,9 @@
 require 'json'
 require 'httperf'
 
-uri = ENV['HTTPERF_URI']||"/"
-conns = ENV['HTTPERF_CONNS']||10
+server = ENV['HTTPERF_HOST']  || "localhost"
+uri    = ENV['HTTPERF_URI']   || "/"
+conns  = ENV['HTTPERF_CONNS'] || 10
 
 httperf = HTTPerf.new( "num-conns" => conns, "uri" => uri, "rate" => 1, "verbose" => true, "parse" => true )
 
