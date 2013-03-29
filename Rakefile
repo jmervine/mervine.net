@@ -81,3 +81,25 @@ task :cache do
   Rake::Task['cache:empty'].invoke
   Rake::Task['cache:warmup'].invoke
 end
+
+namespace :search do
+  desc "generate search index"
+  task :index do
+    begin
+      require 'ferret'
+      Dir.mkdir("ferret_index", 0755) unless File.directory?("ferret_index")
+      index = Ferret::Index::Index.new(:path => "ferret_index")
+      Dir["content/pages/*.*"].each do |file|
+        path    = file.gsub(/\.mdown$/, "").gsub(/\.haml$/, "").gsub("content/pages/", "")
+        content = `curl -s http://www.rubyops.net/#{path}`
+        unless content.empty?
+          index << { :path => "/#{path}", :content => content }
+          puts "Indexing: /#{path}"
+        end
+      end
+    rescue LoadError
+      puts "Couldn't update index, Ferret no found."
+    end
+  end
+end
+

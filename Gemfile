@@ -3,6 +3,8 @@ source 'http://rubygems.org'
 gem 'rake'
 gem 'nesta', '~> 0.9.13'
 
+gem 'ferret'
+
 gem 'nesta-plugin-google-ads'
 gem 'nesta-plugin-sharethis'
 gem 'nesta-plugin-diskcached'

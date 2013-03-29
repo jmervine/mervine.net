@@ -1,6 +1,8 @@
 #sidebar
   - if defined? sharethis_buttons
     = sharethis_buttons
+  %p
+    = display_searchbox
   = haml :categories, :layout => false
   .feed
     = haml :feed, :layout => false

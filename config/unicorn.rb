@@ -1,5 +1,6 @@
 timeout 30
 preload_app true
+
 stderr_path "log/unicorn_err.log"
 stdout_path "log/unicorn_out.log"
 
