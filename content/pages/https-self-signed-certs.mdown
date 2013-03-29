@@ -37,7 +37,7 @@ Here's the basics...
 
 ### Generate Self-signed Cert
 
-    $ openssl x509 -req -days 365 -in server.csr -signkey cert.key -out cert.crt
+    $ openssl x509 -req -days 365 -in cert.csr -signkey cert.key -out cert.crt
 
 ### Copy Files to Nginx Config 
 
