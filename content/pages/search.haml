@@ -1,0 +1,6 @@
+%h1 Search Results
+
+- if @results.nil? || @results.size == 0
+  %h3 No articles found!
+- else
+  %section.articles= article_summaries(@results)
