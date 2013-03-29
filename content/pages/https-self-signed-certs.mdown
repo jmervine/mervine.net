@@ -53,7 +53,7 @@ Here's the basics...
         server_name  localhost;
 
         ssl                  on;
-        ssl_certificate      cert.pem;
+        ssl_certificate      cert.crt;
         ssl_certificate_key  cert.key;
 
         location / {
