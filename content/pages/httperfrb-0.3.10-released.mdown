@@ -1,4 +1,6 @@
 Date: 31 March 2013 20:00
+Categories: httperf, httperfrb, ruby, gems
+Summary: Adding `tee` support, which will print any httperf (both STDOUT and STDERR) output to STDOUT while running the process.
 
 # HTTPerf.rb 0.3.10 Released
 
