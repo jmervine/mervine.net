@@ -10,7 +10,7 @@ Simple Ruby interface for httperf.
 
 ## Installing 'httperf'
 
-Requires httperf, of course...
+Requires [httperf](/httperf), of course...
 
 #### Mac
 
