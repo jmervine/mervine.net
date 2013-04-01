@@ -4,10 +4,10 @@ Date: 2013/04/01
 
 Adding `tee` support.
 
-> Example:
->
->    :::ruby
->    require 'httperf'
->    perf = HTTPerf.new( "server" => "host", "port" => 8080, "uri" => "/foo", "tee" => true )
->    output = perf.run
+### Example:
+
+    :::ruby
+    require 'httperf'
+    perf = HTTPerf.new( "server" => "host", "port" => 8080, "uri" => "/foo", "tee" => true )
+    output = perf.run
 
