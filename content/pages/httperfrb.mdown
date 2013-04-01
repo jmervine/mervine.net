@@ -1,4 +1,4 @@
 #Httperfrb
 
-> [Httperfrb](/gems/httperfrb) - A simple Ruby interface for httperf.
+> [HTTPerf.rb](/gems/httperfrb) - A simple Ruby interface for httperf.
 
