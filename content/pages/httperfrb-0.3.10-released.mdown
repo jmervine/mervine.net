@@ -1,4 +1,4 @@
-Date: 2013/04/01
+Date: 1 April 2013 12:30
 
 # HTTPerf.rb 0.3.10 Released
 
