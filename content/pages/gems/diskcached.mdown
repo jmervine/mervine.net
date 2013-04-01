@@ -4,8 +4,7 @@ Categories: gems, diskcached, ruby, caching
 
 # Diskcached
 
-### ![Build Status](https://secure.travis-ci.org/jmervine/diskcached.png?branch=master) | [Documentation](http://rubyops.github.com/diskcached/doc/Diskcached.html) | [Coverage](http://rubyops.github.com/diskcached/coverage/index.html#_AllFiles) | [Benchmarks](https://github.com/rubyops/diskcached/wiki/Benchmark-Output)
-
+### [Documentation](http://rubyops.github.com/diskcached/doc/Diskcached.html) | [Coverage](http://rubyops.github.com/diskcached/coverage/index.html#_AllFiles) | [Benchmarks](https://github.com/rubyops/diskcached/wiki/Benchmark-Output)
 
 ## Introduction
 
