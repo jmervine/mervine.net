@@ -1,5 +1,5 @@
 %nav.categories
-  - unless @page.pages.empty? or @page.title =~ /Archives/
+  - unless @page.pages.empty? || @page.abspath == "/archive" || @page.abspath == "/gems"
     %h1 
       ="More on This"
     - @page.pages.each do |page|
