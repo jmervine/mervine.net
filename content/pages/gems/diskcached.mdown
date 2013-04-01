@@ -91,7 +91,7 @@ Using the endpoint [http://rubyops.net/](http://rubyops.net/) on my dev server a
      44     $diskcache = Diskcached.new(File.join(settings.root, 'cache'))
      45     $diskcache.flush # ensure caches are empty on startup
      46   end
-
+          ...    
      58   before do
             ...    
      61     @cache_key = cache_sha(request.path_info)
