@@ -29,7 +29,7 @@ Requires httperf, of course...
     
 #### My 'httperf'
 
-See: [httperf-0.9.1 with individual connection times](/httperf-0_9_1_with_individual_connection_times).
+See: [httperf-0.9.1 with individual connection times](/httperf-0-9-1-with-individual-connection-times).
 
 ## Install
 
