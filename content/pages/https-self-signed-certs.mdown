@@ -37,7 +37,7 @@ Here's the basics...
 
 ### Generate Self-signed Cert
 
-    $ openssl x509 -req -days 365 -in server.csr -signkey cert.key -out cert.crt
+    $ openssl x509 -req -days 365 -in cert.csr -signkey cert.key -out cert.crt
 
 ### Copy Files to Nginx Config 
 
@@ -53,7 +53,7 @@ Here's the basics...
         server_name  localhost;
 
         ssl                  on;
-        ssl_certificate      cert.pem;
+        ssl_certificate      cert.crt;
         ssl_certificate_key  cert.key;
 
         location / {
