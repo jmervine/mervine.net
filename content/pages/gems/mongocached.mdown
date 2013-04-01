@@ -4,39 +4,39 @@ Categories: gems, mongo, ruby caching
 
 # Mongocached
 
-I created [Mongocached](http://mongocached.rubyops.net/), with help from [Hector Virgen](http://www.virgentech.com/), as a simple shared cacheing layer for things like html fragments and database calls as a follow up to [Diskcached](http://mongocached.rubyops.net/). It specifically targets situations where you want to cache large amounts of data and have memory constraints. 
+I created [Mongocached](http://mongocached.rubyops.net/), with help from [Hector Virgen](http://www.virgentech.com/), as a simple shared cacheing layer for things like html fragments and database calls as a follow up to [Diskcached](http://mongocached.rubyops.net/). It specifically targets situations where you want to cache large amounts of data and have memory constraints.
 
 ### Installation
 
-  :::shell
-  gem install mongocached
-	
+    :::shell
+    gem install mongocached
+
 *Or with Bundler:*
 
-  :::ruby
-	source :rubygems
-	gem 'mongocached'
+    :::ruby
+    source :rubygems
+    gem 'mongocached'
 
 ### Basic Usage
 
-  :::ruby
-	$cache = Mongocached.new()
+    :::ruby
+    $cache = Mongocached.new()
 
-	# with auth
-	# $cache = Mongocached.new({ username: 'uname', password: 'pword' })
+    # with auth
+    # $cache = Mongocached.new({ username: 'uname', password: 'pword' })
 
-	# memcached style
-	$cache.set('key', 'data')
-	$cache.get('key')
+    # memcached style
+    $cache.set('key', 'data')
+    $cache.get('key')
 
-	# block stlye
-	$cache.save('key') do
-		'data'
-	end
+    # block stlye
+    $cache.save('key') do
+        'data'
+    end
 
 
 ### Links
 
-* [API Docs](http://rubyops.github.com/mongocached/doc/) 
-* [Coverage](http://rubyops.github.com/mongocached/coverage/) - [![Build Status](https://secure.travis-ci.org/rubyops/mongocached.png?branch=master)](http://travis-ci.org/rubyops/mongocached)
+* [API Docs](http://rubyops.github.com/mongocached/doc/)
+* [Coverage](http://rubyops.github.com/mongocached/coverage/)
 * [Benchmarks](https://github.com/rubyops/mongocached/blob/master/Benchmark.md)
