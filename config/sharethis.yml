@@ -1,0 +1,16 @@
+#delicious:     "<span class='st_delicious'></span>"
+#digg:          "<span class='st_digg'></span>"
+#dzone:         "<span class='st_dzone'></span>"
+#email:         "<span class='st_email'></span>"
+#facebook:      "<span class='st_facebook'></span>"
+#google:        "<span class='st_google'></span>"
+#google_reader: "<span class='st_google_reader'></span>"
+#tumblr:        "<span class='st_tumblr'></span>"
+
+facebook_like: "<span class='st_fblike'></span>"
+linkedin:      "<span class='st_linkedin'></span>"
+reddit:        "<span class='st_reddit'></span>"
+
+# updated for via and hash tags
+twitter:       '<span class="st_twitter" st_via="RubyOps_net"></span>'
+
