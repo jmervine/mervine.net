@@ -55,6 +55,17 @@ Some basic usage examples.
       puts perf.fork_out
     end
 
+### Teeing output
+
+Added in 0.3.10.
+
+> Adding the `tee` param will print httperf output while running the process.
+
+    :::ruby
+    require 'httperf'
+    perf = HTTPerf.new( "server" => "host", "port" => 8080, "uri" => "/foo", "tee" => true )
+    output = perf.run
+
 ### With HTTPerf::Parser
 
     :::ruby
