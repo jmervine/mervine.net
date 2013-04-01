@@ -1,5 +1,6 @@
 Title: HTTPerf.rb
 Summary: Simple Ruby interface for httperf.
+Categories: gems, ruby, httperf, httperfrb
 
 # HTTPerf.rb
 
@@ -13,28 +14,33 @@ Requires httperf, of course...
 
 #### Mac
 
+    :::shell
     sudo port install httperf
 
 #### Debian / Ubuntu
 
+    :::shell
     sudo apt-get install httperf
 
 #### Redhat / CentOS
 
+    :::shell
     sudo yum install httperf
     
 #### My 'httperf'
 
-See: [httperf-0.9.1 with individual connection times](http://www.rubyops.net/2012/08/13/httperf-0_9_1_with_individual_connection_times).
+See: [httperf-0.9.1 with individual connection times](/httperf-0_9_1_with_individual_connection_times).
 
 ## Install
 
+    :::shell
     gem install httperfrb
 
 ## Usage - HTTPerf
 
 Some basic usage examples.
 
+    :::ruby
     require 'httperf'
     perf = HTTPerf.new( "server" => "host", "port" => 8080, "uri" => "/foo" )
     puts perf.run
@@ -51,6 +57,7 @@ Some basic usage examples.
 
 ### With HTTPerf::Parser
 
+    :::ruby
     require 'httperf'
     perf = HTTPerf.new( "server" => "host", "port" => 8080, "uri" => "/foo" )
     puts perf.parse = true
@@ -62,6 +69,7 @@ Some basic usage examples.
 
 ## Useage - HTTPerf::Parser
 
+    :::ruby
     require 'httperf/parser' 
      
     # read result from a file, for example   
@@ -76,16 +84,19 @@ Something I've been playing around with, it's more of hack really. But it works 
 
 ##### To JSON file:
 
+    :::shell
     httperf --num-conns=10 --verbose | ruby -e 'require "httperf/parser"; require "json"; puts HTTPerf::Parser.parse(ARGF.read).to_json' > httperf.json
 
 ##### To YAML file:
 
+    :::shell
     httperf --num-conns=10 --verbose | ruby -e 'require "httperf/parser"; require "yaml"; puts HTTPerf::Parser.parse(ARGF.read).to_yaml' > httperf.yml
 
 
 
 ##### Parser Keys: 
 
+    :::ruby
     :command
     :max_connect_burst_length
     :total_connections
