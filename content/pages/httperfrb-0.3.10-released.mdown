@@ -2,7 +2,9 @@ Date: 2013/04/01
 
 # HTTPerf.rb 0.3.10 Released
 
-Adding `tee` support.
+Adding `tee` support, which will print any httperf (both STDOUT and STDERR) output to STDOUT while running the process.
+
+> Note: this only works with `HTTPerf#run` and not `HTTPerf#fork`.
 
 ### Example:
 
