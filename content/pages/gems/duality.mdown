@@ -1,5 +1,5 @@
-Summary: Duality is a simple cache helper for using multiple caches.
-Categories: gems, ruby, cache, mongocached, memcached, diskcached
+Summary: Duality is a simple ruby cache helper for using multiple caches.
+Categories: gems, ruby, caching, mongocached, memcached, diskcached
 
 # Duality
 
