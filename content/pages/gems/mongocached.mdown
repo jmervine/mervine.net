@@ -1,0 +1,42 @@
+Title: Mongocached
+Summary: Simple ruby mongodb based cache for things like Sinatra and Rails which is implemented much like Memcached in hopes that in some cases they're interchangeable. It's based off 'diskcached'.
+Categories: gems, mongo, ruby caching
+
+# Mongocached
+
+I created Mongocached, with help from [Hector Virgen](http://www.virgentech.com/), as a simple shared cacheing layer for things like html fragments and database calls as a follow up to [Diskcached](/gems/diskcached). It specifically targets situations where you want to cache large amounts of data and have memory constraints.
+
+### Installation
+
+    :::shell
+    gem install mongocached
+
+*Or with Bundler:*
+
+    :::ruby
+    source :rubygems
+    gem 'mongocached'
+
+### Basic Usage
+
+    :::ruby
+    $cache = Mongocached.new()
+
+    # with auth
+    # $cache = Mongocached.new({ username: 'uname', password: 'pword' })
+
+    # memcached style
+    $cache.set('key', 'data')
+    $cache.get('key')
+
+    # block stlye
+    $cache.save('key') do
+        'data'
+    end
+
+
+### Links
+
+* [API Docs](http://rubyops.github.com/mongocached/doc/)
+* [Coverage](http://rubyops.github.com/mongocached/coverage/)
+* [Benchmarks](https://github.com/rubyops/mongocached/blob/master/Benchmark.md)
