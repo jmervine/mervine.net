@@ -1,5 +1,5 @@
 - @supress_disqus ||= false
-- if short_name = Nesta::Config.disqus_short_name && !@supress_disqus
+- if (short_name = Nesta::Config.disqus_short_name) && !@supress_disqus
   #disqus_thread
     - if Sinatra::Application.environment == :development
       :javascript
