@@ -1,0 +1,9 @@
+Date: 2013-03-28 16:00
+Categories: hacks, linux, bash
+
+# Using curl to Test HTTPS with Self Signed Certs
+
+    :::shell
+    $ curl https://<domain>/path/to.html --insecure
+
+> Also see: [HTTPS: Creating Slef-signed Certs](/https-self-signed-certs).
