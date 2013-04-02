@@ -14,10 +14,12 @@ A few things to note:
 
 ### Installation
 
+    :::shell
     gem install duality 
   
 Or via bundler:
 
+    :::ruby
     # file: Gemfile
     source :rubygems
     gem 'duality'
@@ -25,6 +27,7 @@ Or via bundler:
 
 ### Basic Usage
 
+    :::ruby
     require 'diskcached'
     require 'mongocached' # or memcached if you prefer
     require 'duality'
@@ -55,6 +58,7 @@ Another thing that's worth mentioning is if either cache raise an exception, it 
 
 ##### Example
 
+    :::ruby
     # when only one cache contains requested method
     
     $cache.one_only_method('cache_key') 
