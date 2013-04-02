@@ -1,3 +1,6 @@
+Summary: Duality is a simple cache helper for using multiple caches.
+Categories: gems, ruby, cache, mongocached, memcached, diskcached
+
 # Duality
 
 Duality is a simple cache helper for using multiple caches. The idea is that you have local cache and a shared cache -- or fast and slow cache -- and want to save to both, and read from local, if present and shared if not. The idea came from [Hector Virgen](http://www.virgentech.com/) (the PHP Zend Jedi Ninja Badass) and [Zend_Cache_Backend_TwoLevels](http://framework.zend.com/manual/en/zend.cache.backends.html#zend.cache.backends.twolevels), which does basically the same thing in PHP.
