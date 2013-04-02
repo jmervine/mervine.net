@@ -4,7 +4,7 @@ Categories: gems, diskcached, ruby, caching
 
 # Diskcached
 
-> imple disk cache for things like Sinatra which is implemented much like Memcached in hopes that in some cases they're interchangeable.
+> Simple disk cache for things like Sinatra which is implemented much like Memcached in hopes that in some cases they're interchangeable.
 
 ### [Documentation](http://rubyops.github.com/diskcached/doc/Diskcached.html) | [Coverage](http://rubyops.github.com/diskcached/coverage/index.html#_AllFiles) | [Benchmarks](https://github.com/rubyops/diskcached/wiki/Benchmark-Output)
 
