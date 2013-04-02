@@ -7,7 +7,7 @@ Duality is a simple cache helper for using multiple caches. The idea is that you
 
 A few things to note:
 
-* It currently implements the methods of my other two cache projects -- [Diskcached](/tag/diskcached) and [Monogocached](/tag/mongocached), both which take their implementation from the popular [Memcached](https://rubygems.org/gems/memcached).
+* It currently implements the methods of my other two cache projects -- [Diskcached](/gems/diskcached) and [Monogocached](/gems/mongocached), both which take their implementation from the popular [Memcached](https://rubygems.org/gems/memcached).
 * ~~I'm working on a Rails implementation, which uses [ActiveSupport::Cache::Store](http://api.rubyonrails.org/classes/ActiveSupport/Cache/Store.html) -- more to come on that later.~~ I haven't had time to work on this, contributions are welcome.
 * My origional intent was to make sets asynchronous, but benchmarking shows that to be less efficent due either to my lack of knowledge in threaded development, or -- based on what I'm reading -- ruby inefficenies in threading.
 
