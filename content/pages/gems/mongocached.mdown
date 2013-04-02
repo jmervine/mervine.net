@@ -4,7 +4,7 @@ Categories: gems, mongo, ruby caching
 
 # Mongocached
 
-I created [Mongocached](http://mongocached.rubyops.net/), with help from [Hector Virgen](http://www.virgentech.com/), as a simple shared cacheing layer for things like html fragments and database calls as a follow up to [Diskcached](http://mongocached.rubyops.net/). It specifically targets situations where you want to cache large amounts of data and have memory constraints.
+I created Mongocached, with help from [Hector Virgen](http://www.virgentech.com/), as a simple shared cacheing layer for things like html fragments and database calls as a follow up to [Diskcached](/gems/diskcached). It specifically targets situations where you want to cache large amounts of data and have memory constraints.
 
 ### Installation
 
