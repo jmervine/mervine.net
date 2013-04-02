@@ -4,16 +4,17 @@ Categories: gems, diskcached, ruby, caching
 
 # Diskcached
 
+> imple disk cache for things like Sinatra which is implemented much like Memcached in hopes that in some cases they're interchangeable.
+
 ### [Documentation](http://rubyops.github.com/diskcached/doc/Diskcached.html) | [Coverage](http://rubyops.github.com/diskcached/coverage/index.html#_AllFiles) | [Benchmarks](https://github.com/rubyops/diskcached/wiki/Benchmark-Output)
 
 ## Introduction
 
-I created Diskcached as a simple cacheing layer for things like html fragments and database calls. I thought about using [memcached](http://memcached.org/), but as [Ditty](http://ditty.rubyo
-ps.net/) is running on a single server, it seemed overkill. Additionally, I looked at using [rack-cache](http://rtomayko.github.com/rack-cache/), but I felt it was a bit more complex then I was looking for. So Diskcached was born (although it was origiionally released as "simple\_disk\_cache" -- for about 12 hours).
+I created Diskcached as a simple cacheing layer for things like html fragments and database calls. I thought about using [memcached](http://memcached.org/), but as the app I was working on was running on a single server, it seemed overkill. Additionally, I looked at using [rack-cache](http://rtomayko.github.com/rack-cache/), but I felt it was a bit more complex then I was looking for. So Diskcached was born (although it was origiionally released as "simple\_disk\_cache" -- for about 12 hours).
 
-* To the comment: "I 'm not clear how memcached on a single server is overkill."
+* To the comment: "I'm not clear how memcached on a single server is overkill."
 >  1. In some cases -- e.g. Dreamhost shared hosting and Heroku (I believe) -- it is difficult, if not impossible to install memcached. This is for those situations.
->  1. In all cases, disk space is cheaper than memory. For example, I use [myhosting.com](http://myhosting.com), which charges $1 per 20G of disk storage and $1 per 512MB of memory. So in my case, I use Diskcached instead of memcached and my memory foot print is ~300MB. While at the moment, I could very easily handle running memcached without running out of memory, using disk based cacheing allows me to scale much further before having to upgrade my hosting package. Additionally, if you [check out my blogs performance metrics](https://github.com/jmervine/ditty/wiki/Performance), you'll see that Diskcached brought me from ~140ms render times, to ~1ms render times, allowing me to scale even further.
+>  1. In all cases, disk space is cheaper than memory. For example, when I used [myhosting.com](http://myhosting.com), which charges $1 per 20G of disk storage and $1 per 512MB of memory. So in my case, I use Diskcached instead of memcached and my memory foot print is ~300MB. While at the moment, I could very easily handle running memcached without running out of memory, using disk based cacheing allows me to scale much further before having to upgrade my hosting package. Additionally, if you [check out my blogs performance metrics](https://github.com/jmervine/ditty/wiki/Performance), you'll see that Diskcached brought me from ~140ms render times, to ~1ms render times, allowing me to scale even further.
 
 * To the comment: "If you need memcache...then use it."
 >  * I totally agree!
