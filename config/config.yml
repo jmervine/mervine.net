@@ -33,7 +33,7 @@ cache: false
 
 content: content
 
-exclude_from_search:
+search_ignore_list:
 - /
 - /search
 - /categories
