@@ -7,8 +7,9 @@ gem 'ferret'
 
 gem 'nesta-plugin-google-ads'
 gem 'nesta-plugin-sharethis'
-gem 'nesta-plugin-diskcached'
 gem 'nesta-plugin-smartmeta'
+
+gem 'nesta-plugin-search', :path => "/home/jmervine/Development/personal/nesta-plugin-search/"
 
 #gem 'coderay'
 gem "ultraviolet", :require => "uv"
@@ -17,7 +18,7 @@ gem 'unicorn'
 
 group :production do
   gem 'newrelic_rpm', :require => false
-  gem 'nesta-plugin-diskcached'
+  #gem 'nesta-plugin-diskcached'
 end
 
 group :test do

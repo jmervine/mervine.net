@@ -1,6 +1,5 @@
 %h1 Search Results
-
-- if @results.nil? || @results.size == 0
-  %h3 No articles found!
+- if (results = search_results( search_index, params[:q] )) && !results.empty?
+  %section.articles= article_summaries(results)
 - else
-  %section.articles= article_summaries(@results)
+  %h3 No articles found!

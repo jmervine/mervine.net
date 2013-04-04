@@ -1,12 +1,14 @@
 %nav.categories
+  %h1 Search
+  = display_searchbox
   - unless @page.pages.empty? || @page.abspath == "/archive" || @page.abspath == "/gems"
-    %h1 
+    %h1
       ="More on This"
     - @page.pages.each do |page|
       %a{ :href => page.path }=page.title
 
   - if ! @menu_items.empty?
-    %h1 
+    %h1
       Featured Categories
     - display_menu(@menu_items, :class => "menu")
 
