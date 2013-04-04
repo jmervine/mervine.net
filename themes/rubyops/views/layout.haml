@@ -20,9 +20,12 @@
     - local_stylesheet_link_tag('local')
     %link(href="#{url('/articles.xml')}" rel="alternate" type="application/atom+xml")
     = haml :analytics, :layout => false
+    = ::NewRelic::Agent.browser_timing_header rescue ""
 
   %body
     #container
       = haml :header, :layout => false
       = yield
       = haml :footer, :layout => false
+
+  = ::NewRelic::Agent.browser_timing_footer rescue ""

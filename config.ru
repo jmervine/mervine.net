@@ -3,15 +3,6 @@ require 'bundler/setup'
 
 Bundler.require(:default)
 
-begin
-  if File.exists? "./config/newrelic.yml"
-    require 'newrelic_rpm'
-    NewRelic::Agent.after_fork(:force_reconnect => true)
-  end
-rescue LoadError
-  # proceed without NewRelic
-end
-
 use Rack::ConditionalGet
 use Rack::ETag
 
@@ -26,4 +17,12 @@ use Rack::Codehighlighter, :ultraviolet, :theme => "twilight", :lines => false, 
     :element => "pre>code", :pattern => /\A:::(\w+)\s*(\n|&#x000A;)/i, :logging => false
 
 require 'nesta/app'
+
+begin
+  require 'newrelic_rpm'
+  NewRelic::Agent.after_fork(:force_reconnect => true)
+rescue LoadError
+  # proceed without NewRelic
+end
+
 run Nesta::App
