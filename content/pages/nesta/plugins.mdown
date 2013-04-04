@@ -10,6 +10,7 @@ Summary: Nesta Plugins I've created, both used and unused.
 * [nesta-plugin-sharethis](http://github.com/jmervine/nesta-plugin-sharethis)
 * [nesta-plugin-diskcached](http://github.com/jmervine/nesta-plugin-diskcached)
 * [nesta-plugin-smartmeta](http://github.com/jmervine/nesta-plugin-smartmeta)
+* [nesta-plugin-search](http://github.com/jmervine/nesta-plugin-search)
 
 ### Not Currently Used
 
