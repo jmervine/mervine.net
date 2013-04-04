@@ -8,8 +8,7 @@ gem 'ferret'
 gem 'nesta-plugin-google-ads'
 gem 'nesta-plugin-sharethis'
 gem 'nesta-plugin-smartmeta'
-
-gem 'nesta-plugin-search', :path => "/home/jmervine/Development/personal/nesta-plugin-search/"
+gem 'nesta-plugin-search'
 
 #gem 'coderay'
 gem "ultraviolet", :require => "uv"
