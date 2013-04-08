@@ -18,6 +18,7 @@ gem 'unicorn'
 
 group :production do
   gem 'newrelic_rpm', :require => false
+  gem 'mime-types' # required while loading rack-hard-copy from git
   gem 'rack-hard-copy', :git => "git://github.com/rubyops/rack-hard-copy.git"
 end
 
