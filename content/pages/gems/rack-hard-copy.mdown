@@ -9,6 +9,8 @@ rendered pages. So in other words, this is simple static cache
 which saves in a format that can be used as a backup, or to be
 loaded via a simple http server (e.g. Nginx).
 
+### [Source](https://github.com/rubyops/rack-hard-copy) | [Documentation](http://rubydoc.info/gems/rack-hard-copy) | [Benchmarks](https://github.com/rubyops/rack-hard-copy/blob/master/BENCHMARKS.md)
+
 ### Installation
 
     :::shell
