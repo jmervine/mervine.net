@@ -3,26 +3,24 @@ require 'bundler/setup'
 
 Bundler.require(:default)
 
-use Rack::ConditionalGet
-use Rack::ETag
-
 require 'nesta/env'
 Nesta::Env.root = ::File.expand_path('.', ::File.dirname(__FILE__))
 
-#use Rack::Codehighlighter, :coderay,
-      #:element => "pre>code", :markdown => true
+require 'nesta/app'
 
-#use Rack::Codehighlighter, :ultraviolet, :theme => "espresso_libre", :lines => false, :markdown => true,
 use Rack::Codehighlighter, :ultraviolet, :theme => "twilight", :lines => false, :markdown => true,
     :element => "pre>code", :pattern => /\A:::(\w+)\s*(\n|&#x000A;)/i, :logging => false
-
-require 'nesta/app'
 
 begin
   require 'newrelic_rpm'
   NewRelic::Agent.after_fork(:force_reconnect => true)
 rescue LoadError
-  # proceed without NewRelic
 end
+
+require 'rack/hard/copy'
+use Rack::Hard::Copy, :store   => "./public/static",
+                      :ignores => [ "search", "js", "png", "gif" ],
+                      :headers => false,
+                      :timeout => false
 
 run Nesta::App

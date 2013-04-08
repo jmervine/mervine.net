@@ -1,3 +1,11 @@
+GIT
+  remote: git://github.com/rubyops/rack-hard-copy.git
+  revision: bd582d5e7ac132f4e63a0d8aa22ec9d77f24fa48
+  specs:
+    rack-hard-copy (0.0.2)
+      mime-types (>= 1.22)
+      rack (>= 1.5.2)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -7,6 +15,7 @@ GEM
     haml (3.1.8)
     kgio (2.8.0)
     method_source (0.8.1)
+    mime-types (1.22)
     nesta (0.9.13)
       RedCloth (~> 4.2)
       haml (~> 3.1)
@@ -68,6 +77,7 @@ PLATFORMS
 
 DEPENDENCIES
   ferret
+  mime-types
   nesta (~> 0.9.13)
   nesta-plugin-google-ads
   nesta-plugin-search
@@ -77,6 +87,7 @@ DEPENDENCIES
   pry
   pry-doc
   rack-codehighlighter
+  rack-hard-copy!
   rack-test
   rake
   ultraviolet

@@ -4,6 +4,7 @@ gem 'rake'
 gem 'nesta', '~> 0.9.13'
 
 gem 'ferret'
+gem 'mime-types'
 
 gem 'nesta-plugin-google-ads'
 gem 'nesta-plugin-sharethis'
@@ -17,7 +18,7 @@ gem 'unicorn'
 
 group :production do
   gem 'newrelic_rpm', :require => false
-  #gem 'nesta-plugin-diskcached'
+  gem 'rack-hard-copy', :git => "git://github.com/rubyops/rack-hard-copy.git"
 end
 
 group :test do
