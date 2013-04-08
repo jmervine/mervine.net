@@ -7,11 +7,13 @@ loaded via a simple http server (e.g. Nginx).
 
 ### Installation
 
+    :::shell
     echo "gem 'rack-static-copy'" >> Gemfile
     bundle
 
 ### Usage - Basic
 
+    :::ruby
     # config.ru
     require 'rack/hard/copy'
     use Rack::Hard::Copy, :store   => "/tmp/hard_copy",
@@ -39,6 +41,7 @@ of your pages in rendered html format (other formats are supported).
 
 Exmaple:
 
+    :::ruby
     # config.ru
     require 'rack/hard/save'
     use Rack::Hard::Save, :store   => "/path/to/nginx/root/static",
@@ -91,6 +94,7 @@ be nice to dynamically generate a page, sitemaps in particular, but
 store them staticly to reduce load on your host when they're rather
 large.
 
+    :::ruby
     # config.ru
     require 'rack/hard/load'
     use Rack::Hard::Load, :store   => "./hard_copy",
@@ -99,6 +103,7 @@ large.
 
 Pregeneration examples:
 
+    :::shell
     $ curl http://yoursite.com/sitemap.xml > ./hard_copy/sitemap.xml
     $ curl http://yoursite.com/main.css > ./hard_copy/main.css
 
