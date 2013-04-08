@@ -48,37 +48,39 @@ namespace :prod do
   namespace :cache do
     desc "clear cache on production"
     task :empty do
-      system("ssh #{PRODUCTION_HOST} 'set -x;  cd ~/www.rubyops.net && WARMUP_HOST=#{PRODUCTION_HOST} bundle exec rake cache:empty --trace'")
+      system("ssh #{PRODUCTION_HOST} 'set -x;  cd ~/www.rubyops.net && bundle exec rake cache:empty --trace'")
     end
 
-    desc "warmup cache on production"
-    task :warmup do
-      system("ssh #{PRODUCTION_HOST} 'set -x;  cd ~/www.rubyops.net && WARMUP_HOST=#{PRODUCTION_HOST} bundle exec rake cache:warmup --trace'")
-    end
+    #desc "warmup cache on production"
+    #task :warmup do
+      #system("ssh #{PRODUCTION_HOST} 'set -x;  cd ~/www.rubyops.net && WARMUP_HOST=#{PRODUCTION_HOST} bundle exec rake cache:warmup --trace'")
+    #end
   end
 end
 
-task :prod => [ "prod:deploy", "prod:restart", "prod:cache:empty", "prod:cache:warmup" ]
+task :prod => [ "prod:deploy", "prod:restart", "prod:cache:empty" ] # , "prod:cache:warmup" ]
 
 namespace :cache do
-  desc "empty diskcached cache"
+  desc "empty Rack::Hard::Copy files"
   task :empty do
-    %x{ cd #{APP_ROOT} && rm -v $( cat ./config/config.yml | grep diskcached_dir | awk '{ print $2 }' )/*.cache }
+    #%x{ cd #{APP_ROOT} && rm -v $( cat ./config/config.yml | grep diskcached_dir | awk '{ print $2 }' )/*.cache }
+    %x{ cd #{APP_ROOT} && rm -rf ./public/static/ }
   end
-  desc "warmup diskcached cache"
-  task :warmup do
-    ENV['WARMUP_HOST'] ||= "localhost"
-    %x{
-      set -x
-      for url in $(curl -s #{ENV['WARMUP_HOST']}/sitemap.xml | grep "<loc>http" | sed "s/    <loc>//" | sed "s/<\\/loc>//" | sort -u ); do
-        curl -s $url
-      done
-    }
-  end
+
+  #desc "pregenerate Rack::Hard::Copy files"
+  #task :warmup do
+    #ENV['WARMUP_HOST'] ||= "localhost"
+    #%x{
+      #set -x
+      #for url in $(curl -s #{ENV['WARMUP_HOST']}/sitemap.xml | grep "<loc>http" | sed "s/    <loc>//" | sed "s/<\\/loc>//" | sort -u ); do
+        #curl -s $url
+      #done
+    #}
+  #end
 end
 
 task :cache do
   Rake::Task['cache:empty'].invoke
-  Rake::Task['cache:warmup'].invoke
+  #Rake::Task['cache:warmup'].invoke
 end
 
