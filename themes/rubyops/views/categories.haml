@@ -6,6 +6,7 @@
       ="More on This"
     - @page.pages.each do |page|
       %a{ :href => page.path }=page.title
+      %br
 
   - if ! @menu_items.empty?
     %h1

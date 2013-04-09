@@ -1,3 +1,4 @@
+Title: Duality
 Summary: Duality is a simple ruby cache helper for using multiple caches.
 Categories: gems, ruby, caching, mongocached, memcached, diskcached
 
@@ -15,15 +16,15 @@ A few things to note:
 ### Installation
 
     :::shell
-    gem install duality 
-  
+    gem install duality
+
 Or via bundler:
 
     :::ruby
     # file: Gemfile
     source :rubygems
     gem 'duality'
-	
+
 
 ### Basic Usage
 
@@ -31,24 +32,24 @@ Or via bundler:
     require 'diskcached'
     require 'mongocached' # or memcached if you prefer
     require 'duality'
-	
+
     $cache = Dulatiy.new(Diskcached.new, Mongocached.new( host: 'remotehost' ))
-	
+
     # cache something
     $cache.set('cache_key', 'cache_content')
-	
+
     # get cache
     puts $cache.get('cache_key') # => cache_content
-	
+
     # delete something
     $cache.delete('cache_key')
-	
+
     # flush cache
     $cache.flush
-	
+
 ### Unimplemented Cache Methods
 
-One thing Duality does for compatability is pass methods via #method_missing. This allows for you to access any method your cache might implement, even if Duality doesn't itself implement it. 
+One thing Duality does for compatability is pass methods via #method_missing. This allows for you to access any method your cache might implement, even if Duality doesn't itself implement it.
 
 It's important to note, though, that the this implementation does not take advantage of the get methods speed increase by returning the faster cache first, but will perform the action in a serialized fashion on one cache, then the other. Additionally, by default, it will return the value of whichever cache works, meaning that if one raises and exception, returns false or nil, but the other returns successfully, it will return the successful result. This is by design.
 
@@ -60,25 +61,25 @@ Another thing that's worth mentioning is if either cache raise an exception, it 
 
     :::ruby
     # when only one cache contains requested method
-    
-    $cache.one_only_method('cache_key') 
+
+    $cache.one_only_method('cache_key')
     # => returns implementing caches return value
-    
-    $cache.strict_one_only_method('cache_key') 
+
+    $cache.strict_one_only_method('cache_key')
     # => raises no method exception
-    
+
     #
     # when both caches contains requested method
-    
+
     $cache.both_only_method('cache_key')
     # => returns best match
-    
+
     $cache.strict_both_only_method('cache_key')
     # => returns best match
 
 
 ### More Info
 
-* [Documentation](http://rubyops.github.com/duality/doc/Duality.html) 
+* [Documentation](http://rubyops.github.com/duality/doc/Duality.html)
 * [Coverage](http://rubyops.github.com/duality/coverage/)
 * [Benchmarks](https://github.com/rubyops/duality/blob/master/BENCHMARK.md)
