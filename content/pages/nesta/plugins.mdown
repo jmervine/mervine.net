@@ -8,11 +8,11 @@ Summary: Nesta Plugins I've created, both used and unused.
 
 * [nesta-plugin-google-ads](http://github.com/jmervine/nesta-plugin-google-ads)
 * [nesta-plugin-sharethis](http://github.com/jmervine/nesta-plugin-sharethis)
-* [nesta-plugin-diskcached](http://github.com/jmervine/nesta-plugin-diskcached)
 * [nesta-plugin-smartmeta](http://github.com/jmervine/nesta-plugin-smartmeta)
 * [nesta-plugin-search](http://github.com/jmervine/nesta-plugin-search)
 
 ### Not Currently Used
 
 * [nesta-plugin-admin](http://github.com/jmervine/nesta-plugin-admin)
+* [nesta-plugin-diskcached](http://github.com/jmervine/nesta-plugin-diskcached)
 
