@@ -1,6 +1,6 @@
 Date: 9 April 2013 20:00
 Title: HTTPerf.rb Example
-Categories: ruby, gems/httperfrb, httperf, hacks
+Categories: ruby, httperfrb, gems/httperfrb, httperf, hacks
 Summary: Here's an example of a simple script using HTTPerb.rb. It's a quick and dirty script used for getting quick differences between changes.
 
 # HTTPerf.rb Example
