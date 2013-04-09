@@ -64,7 +64,7 @@ sharethis: "d70ec18a-3455-4f95-9c4c-43eb2d969408"
 
 diskcached: false
 production:
-  diskcached: true
+  #diskcached: true
   diskcached_dir: diskcache
   google_analytics_code: "UA-32343843-1"
 

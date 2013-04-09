@@ -14,7 +14,7 @@ begin
 rescue LoadError
 end
 
-unless ENV['RACK_ENV'] == "development"
+if ENV['RACK_ENV'] == "production"
   require 'rack/hard/copy'
   use Rack::Hard::Copy, :store   => "./public/static",
                         :ignores => [ "search", "js", "png", "gif" ],
