@@ -1,8 +1,8 @@
-Title: My Nesta Plugins
+Title: Nesta Plugins
 Summary: Nesta Plugins I've created, both used and unused.
 Categories: nesta, gems, about
 
-# My Nesta Plugins
+# Nesta Plugins by RubyOps
 
 ### Used on this Site
 
