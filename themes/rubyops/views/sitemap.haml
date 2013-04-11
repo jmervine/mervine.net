@@ -6,7 +6,7 @@
     %priority 1.0
     %lastmod= @last.xmlschema
   - @pages.each do |page|
-    - unless page.abspath == "/search"
+    - unless page.abspath == "/search" || page.abspath =~ /^\/error\//
       %url
         %loc= url(page.path)
         %lastmod= page.last_modified.xmlschema
