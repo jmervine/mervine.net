@@ -36,7 +36,7 @@ end
 namespace :prod do
 
   task :generate_error_pages do
-    [ 400 500 ].each do |code|
+    [ 400, 500 ].each do |code|
       sh "curl -s localhost/error/#{code}"
     end
   end
