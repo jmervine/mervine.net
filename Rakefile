@@ -37,7 +37,7 @@ namespace :prod do
 
   task :generate_error_pages do
     [ 400, 500 ].each do |code|
-      sh "curl -s localhost/error/#{code}"
+      sh "curl -s 'http://rubyops.net/error/#{code}'"
     end
   end
 
@@ -55,7 +55,7 @@ namespace :prod do
   namespace :cache do
     desc "clear cache on production"
     task :empty do
-      system("ssh #{PRODUCTION_HOST} 'set -x;  cd ~/www.rubyops.net && bundle exec rake cache:empty --trace'")
+      sh("ssh #{PRODUCTION_HOST} 'set -x;  cd ~/www.rubyops.net && bundle exec rake cache:empty --trace'")
     end
 
     #desc "warmup cache on production"
@@ -74,20 +74,27 @@ namespace :cache do
     %x{ cd #{APP_ROOT} && rm -rf ./public/static/ }
   end
 
-  #desc "pregenerate Rack::Hard::Copy files"
-  #task :warmup do
-    #ENV['WARMUP_HOST'] ||= "localhost"
+  desc "pregenerate Rack::Hard::Copy files"
+  task :warmup do
+    ENV['WARMUP_HOST'] ||= "http://rubyops.net"
+    sh %{
+      set -x;
+      for url in $(curl -s #{ENV['WARMUP_HOST']}/sitemap.xml | grep "<loc>http" | sed "s/    <loc>//" | sed "s/<\\/loc>//" | sort -u ); do
+        curl -s $url
+      done
+    }
+    Rake::Task['prod:generate_error_pages'].invoke
     #%x{
       #set -x
       #for url in $(curl -s #{ENV['WARMUP_HOST']}/sitemap.xml | grep "<loc>http" | sed "s/    <loc>//" | sed "s/<\\/loc>//" | sort -u ); do
         #curl -s $url
       #done
     #}
-  #end
+  end
 end
 
 task :cache do
   Rake::Task['cache:empty'].invoke
-  #Rake::Task['cache:warmup'].invoke
+  Rake::Task['cache:warmup'].invoke
 end
 
