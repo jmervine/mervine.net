@@ -14,10 +14,10 @@ module Nesta
     before "/search" do
       @supress_disqus = true
     end
-    
+
     before "/error/*" do
       @supress_disqus = true
-    end    
+    end
 
     # Uncomment the Rack::Static line below if your theme has assets
     # (i.e images or JavaScript).
@@ -63,5 +63,22 @@ module Nesta
         redirect "/categories"
       end
     end
+
+    not_found do
+      @supress_disqus = true
+      set_common_variables
+      @page = Nesta::Page.find_by_path('/error/500')
+      @title = @page.title
+      haml(@page.template, :layout => @page.layout)
+    end unless Nesta::App.development?
+
+    error do
+      @supress_disqus = true
+      set_common_variables
+      @page = Nesta::Page.find_by_path('/error/500')
+      @title = @page.title
+      haml(@page.template, :layout => @page.layout)
+    end unless Nesta::App.development?
+
   end
 end
