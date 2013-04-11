@@ -35,6 +35,12 @@ end
 
 namespace :prod do
 
+  task :generate_error_pages do
+    [ 400 500 ].each do |code|
+      sh "curl -s localhost/error/#{code}"
+    end
+  end
+
   desc "deploy to production"
   task :deploy do
     system("ssh #{PRODUCTION_HOST} 'set -x; cd ~/www.rubyops.net && git pull && bundle'")
@@ -43,6 +49,7 @@ namespace :prod do
   desc "restart production"
   task :restart do
     system("ssh #{PRODUCTION_HOST} 'set -x; cd ~/www.rubyops.net && RACK_ENV=#{ENV['RACK_ENV']} bundle exec rake unicorn:restart --trace'")
+    Rake::Task[:generate_error_pages].invoke
   end
 
   namespace :cache do
