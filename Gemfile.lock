@@ -18,7 +18,7 @@ GEM
       sinatra (~> 1.3)
     nesta-plugin-google-ads (0.0.1)
       nesta (>= 0.9.11)
-    nesta-plugin-search (0.0.1)
+    nesta-plugin-search (0.0.2)
       ferret (= 0.11.8.5)
     nesta-plugin-sharethis (0.0.2)
       nesta (>= 0.9.11)
