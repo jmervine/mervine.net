@@ -67,7 +67,7 @@ module Nesta
     not_found do
       @supress_disqus = true
       set_common_variables
-      @page = Nesta::Page.find_by_path('/error/500')
+      @page = Nesta::Page.find_by_path('/error/400')
       @title = @page.title
       haml(@page.template, :layout => @page.layout)
     end unless Nesta::App.development?
