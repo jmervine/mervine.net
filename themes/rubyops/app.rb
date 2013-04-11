@@ -49,7 +49,7 @@ module Nesta
     end
 
     get '/tags' do
-      redirect "/"
+      redirect "/categories"
     end
 
     get '/tag/:tag' do
@@ -57,10 +57,10 @@ module Nesta
         if Nesta::Page.find_by_path("/"+params[:tag])
           redirect "/"+params[:tag]
         else
-          redirect "/"
+          redirect "/categories"
         end
       rescue
-        redirect "/"
+        redirect "/categories"
       end
     end
   end
