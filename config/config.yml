@@ -40,6 +40,8 @@ search_ignore_list:
 - /archive
 - /archive/2012
 - /archive/2013
+- /error/400
+- /error/500
 
 #google_ad:
   #client: "ca-pub-1003846054569915"
