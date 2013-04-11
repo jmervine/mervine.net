@@ -14,6 +14,10 @@ module Nesta
     before "/search" do
       @supress_disqus = true
     end
+    
+    before "/error/*" do
+      @supress_disqus = true
+    end    
 
     # Uncomment the Rack::Static line below if your theme has assets
     # (i.e images or JavaScript).
