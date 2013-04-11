@@ -5,6 +5,7 @@
 .sass-cache
 /vendor/
 /log/*.log
+/log/*.gz
 /config/newrelic.yml
 /.diskcache/
 /diskcache/
