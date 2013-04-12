@@ -1,6 +1,7 @@
 Date: 12 April 2013 10:00
 Title: Install MySQL on CentOS 6
 Summary: A simple script to install MySQL on CentOS 6.
+Categories: centos, linux, mysql, hacks
 
 # Install MySQL on CentOS 6
 
