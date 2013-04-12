@@ -20,11 +20,11 @@ to include [HTTPerf.rb](http://rubyops.net/gems/httperfrb) as a simplification.
 
 To get started, first download & install httperf:
 
-http://www.hpl.hp.com/research/linux/httperf/
+[http://www.hpl.hp.com/research/linux/httperf/](http://www.hpl.hp.com/research/linux/httperf/)
 
 Or for HTTPerf.rb percentile support, install this fork:
 
-http://github.com/rubyops/httperf
+[http://github.com/rubyops/httperf](http://github.com/rubyops/httperf)
 
 Install Autoperf:
 
