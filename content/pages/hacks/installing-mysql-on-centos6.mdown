@@ -20,3 +20,5 @@ A simple script to install MySQL on CentOS 6.
     yum install -y MySQL-client-5.6.10-1.el6.x86_64.rpm
     yum install -y MySQL-server-5.6.10-1.el6.x86_64.rpm
     yum install -y MySQL-devel-5.6.10-1.el6.i686.rpm
+
+[Link to gist.](https://gist.github.com/jmervine/5373441)
