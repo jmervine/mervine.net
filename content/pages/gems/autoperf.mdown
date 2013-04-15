@@ -26,13 +26,13 @@ Note: Use the beta version until final release.
 
     gem install bundler
 
-    echo 'gem "autoperf", "=1.0.2beta2"' >> Gemfile
+    echo 'gem "autoperf", "=1.0.2beta3"' >> Gemfile
 
     bundle install
 
 Without bundler:
 
-    gem install autoperf -v '1.0.2beta2'
+    gem install autoperf -v '1.0.2beta3'
 
 From source:
 
