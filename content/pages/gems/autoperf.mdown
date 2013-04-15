@@ -16,13 +16,9 @@ More info on the original Autoperf: [http://www.igvita.com/2008/09/30/load-testi
 
 ### Requirements
 
-To get started, first download & install httperf:
+To get started, first download & install httperf: [http://www.hpl.hp.com/research/linux/httperf/](http://www.hpl.hp.com/research/linux/httperf/).
 
-[http://www.hpl.hp.com/research/linux/httperf/](http://www.hpl.hp.com/research/linux/httperf/)
-
-Or for HTTPerf.rb percentile support, install this fork:
-
-[http://github.com/rubyops/httperf](http://github.com/rubyops/httperf)
+Or for HTTPerf.rb percentile support, install this fork: [http://github.com/rubyops/httperf](http://github.com/rubyops/httperf).
 
 ### Installation
 
