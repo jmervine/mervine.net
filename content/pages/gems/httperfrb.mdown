@@ -159,3 +159,52 @@ Something I've been playing around with, it's more of hack really. But it works 
     :errors_ftab_full
     :errors_other
 
+##### Verbose Percentile Parser Keys:
+
+    :connection_time_75_pct
+    :connection_time_80_pct
+    :connection_time_85_pct
+    :connection_time_90_pct
+    :connection_time_95_pct
+    :connection_time_99_pct
+
+
+##### Accepted Options:
+
+- "add-header"
+- "burst-length"
+- "client"
+- "close-with-reset"
+- "debug"
+- "failure-status"
+- "hog"
+- "http-version"
+- "max-connections"
+- "max-piped-calls"
+- "method"
+- "no-host-hdr"
+- "num-calls"
+- "num-conns"
+- "period"
+- "port"
+- "print-reply"
+- "print-request"
+- "rate"
+- "recv-buffer"
+- "retry-on-failure"
+- "send-buffer"
+- "server"
+- "server-name"
+- "session-cookies"
+- "ssl"
+- "ssl-ciphers"
+- "ssl-no-reuse"
+- "think-timeout"
+- "timeout"
+- "uri"
+- "verbose"
+- "version"
+- "wlog"
+- "wsess"
+- "wsesslog"
+- "wset"
