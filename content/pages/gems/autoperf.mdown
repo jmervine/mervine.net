@@ -7,8 +7,8 @@ Summary: Autoperf is a ruby driver for httperf, designed to help you automate lo
 Autoperf is a ruby driver for [httperf](/httperf), designed to help you automate load and performance
 testing of any web application - for a single end point, or through log replay.
 
-This has been refactored from the original -- https://github.com/igrigorik/autoperf --
-to include [HTTPerf.rb](http://rubyops.net/gems/httperfrb) as a simplification and refactored and
+This has been refactored from the original -- [github.com/igrigorik/autoperf](https://github.com/igrigorik/autoperf)
+-- to include [HTTPerf.rb](http://rubyops.net/gems/httperfrb) as a simplification and refactored and
 released with permission.
 
 More info on the original Autoperf: [http://www.igvita.com/2008/09/30/load-testing-with-log-replay/](http://www.igvita.com/2008/09/30/load-testing-with-log-replay/).
