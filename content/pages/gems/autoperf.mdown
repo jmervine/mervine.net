@@ -8,8 +8,9 @@ Autoperf is a ruby driver for [httperf](/httperf), designed to help you automate
 testing of any web application - for a single end point, or through log replay.
 
 This has been refactored from the original -- [github.com/igrigorik/autoperf](https://github.com/igrigorik/autoperf)
--- to include [HTTPerf.rb](http://rubyops.net/gems/httperfrb) as a simplification and refactored and
-released with permission.
+-- to include [HTTPerf.rb](http://rubyops.net/gems/httperfrb) as a simplification and to include additional features.
+This has been refactored and released with permission from [Ilya Grigorik](http://www.igvita.com/), the origional
+author.
 
 More info on the original Autoperf: [http://www.igvita.com/2008/09/30/load-testing-with-log-replay/](http://www.igvita.com/2008/09/30/load-testing-with-log-replay/).
 
@@ -25,19 +26,24 @@ Or for HTTPerf.rb percentile support, install this fork:
 
 ### Installation
 
+Note: Use the beta version until final release.
+
     gem install bundler
 
-    # Use beta version until final release.
     echo 'gem "autoperf", "=1.0.2beta1"' >> Gemfile
 
     bundle install
 
-Or without bundler:
+Without bundler:
 
-   git clone git://github.com/rubyops/autoperf.git
-   cd autoperf
-   gem build autoperf.gemspec
-   gem install ./autoperf-VERSION.gem
+    gem install autoperf -v '1.0.2beta1'
+
+From source:
+
+    git clone git://github.com/rubyops/autoperf.git
+    cd autoperf
+    gem build autoperf.gemspec
+    gem install ./autoperf-VERSION.gem
 
 ### Usage
 
