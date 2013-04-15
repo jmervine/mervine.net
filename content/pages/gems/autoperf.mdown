@@ -11,9 +11,7 @@ This has been refactored from the original -- https://github.com/igrigorik/autop
 to include [HTTPerf.rb](http://rubyops.net/gems/httperfrb) as a simplification and refactored and
 released with permission.
 
-> ### More info on the original Autoperf.
->
-> http://www.igvita.com/2008/09/30/load-testing-with-log-replay/
+More info on the original Autoperf: [http://www.igvita.com/2008/09/30/load-testing-with-log-replay/](http://www.igvita.com/2008/09/30/load-testing-with-log-replay/).
 
 ### Requirements
 
