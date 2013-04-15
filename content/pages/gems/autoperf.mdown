@@ -4,19 +4,18 @@ Summary: Autoperf is a ruby driver for httperf, designed to help you automate lo
 
 # Autoperf (w/ HTTPerf.rb)
 
-Autoperf is a ruby driver for httperf, designed to help you automate load and performance
+Autoperf is a ruby driver for [httperf](/httperf), designed to help you automate load and performance
 testing of any web application - for a single end point, or through log replay.
 
 This has been refactored from the original -- https://github.com/igrigorik/autoperf --
-to include [HTTPerf.rb](http://rubyops.net/gems/httperfrb) as a simplification.
+to include [HTTPerf.rb](http://rubyops.net/gems/httperfrb) as a simplification and refactored and
+released with permission.
 
 > ### More info on the original Autoperf.
 >
 > http://www.igvita.com/2008/09/30/load-testing-with-log-replay/
->
-> ### Note
->
-> I will not release this as a gem until I get permission from the origional author. I've reached out to him.
+
+### Requirements
 
 To get started, first download & install httperf:
 
@@ -26,10 +25,13 @@ Or for HTTPerf.rb percentile support, install this fork:
 
 [http://github.com/rubyops/httperf](http://github.com/rubyops/httperf)
 
-Install Autoperf:
+### Installation
 
     gem install bundler
-    echo 'gem "autoperf", :git => "git://github.com/rubyops/autoperf.git"' >> Gemfile
+
+    # Use beta version until final release.
+    echo 'gem "autoperf", "=1.0.2beta1"' >> Gemfile
+
     bundle install
 
 Or without bundler:
@@ -39,6 +41,8 @@ Or without bundler:
    gem build autoperf.gemspec
    gem install ./autoperf-VERSION.gem
 
+### Usage
+
 Next, either run a simple test straight from the command line (man httperf), or create
 an execution plan for autoperf. If you want to replay an access log from your production
 environment, follow these steps:
@@ -46,7 +50,7 @@ environment, follow these steps:
     # grab last 10000 lines from nginx log, and extract a certain pattern (if needed)
     tail -n 10000 nginx.log | bundle exec make_replay_log > replay_log
 
-Next, configure your execution plan (see sample.yml), and run autoperf:
+Next, configure your execution plan (see [sample.yml](https://github.com/rubyops/autoperf/blob/master/config/sample.yml)), and run autoperf:
 
     bundle exec autoperf -c sample.yml
 
