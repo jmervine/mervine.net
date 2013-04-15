@@ -18,6 +18,8 @@ A simple script to install MySQL on CentOS 6.
     wget http://dev.mysql.com/get/Downloads/MySQL-5.6/MySQL-server-5.6.10-1.el6.x86_64.rpm/from/http://cdn.mysql.com/
     wget http://dev.mysql.com/get/Downloads/MySQL-5.6/MySQL-devel-5.6.10-1.el6.i686.rpm/from/http://cdn.mysql.com/
 
+    rpm -qa | grep mysql-libs && yum remove -y mysql-libs
+
     yum install -y MySQL-shared-5.6.10-1.el6.x86_64.rpm
     yum install -y MySQL-client-5.6.10-1.el6.x86_64.rpm
     yum install -y MySQL-server-5.6.10-1.el6.x86_64.rpm
