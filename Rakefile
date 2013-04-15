@@ -48,8 +48,7 @@ namespace :prod do
 
   desc "restart production"
   task :restart do
-    system("ssh #{PRODUCTION_HOST} 'set -x; cd ~/www.rubyops.net && RACK_ENV=#{ENV['RACK_ENV']} bundle exec rake unicorn:restart --trace'")
-    Rake::Task[:generate_error_pages].invoke
+    system("ssh #{PRODUCTION_HOST} 'set -x; cd ~/www.rubyops.net && RACK_ENV=#{ENV['RACK_ENV']} bundle exec rake unicorn:restart prod:generate_error_pages --trace'")
   end
 
   namespace :cache do
