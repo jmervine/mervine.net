@@ -103,9 +103,7 @@ Something I've been playing around with, it's more of hack really. But it works 
     :::shell
     httperf --num-conns=10 --verbose | ruby -e 'require "httperf/parser"; require "yaml"; puts HTTPerf::Parser.parse(ARGF.read).to_yaml' > httperf.yml
 
-
-
-##### Parser Keys: 
+#### Parser Keys: 
 
     :::ruby
     :command
@@ -159,7 +157,7 @@ Something I've been playing around with, it's more of hack really. But it works 
     :errors_ftab_full
     :errors_other
 
-##### Verbose Percentile Parser Keys:
+#### Verbose Percentile Parser Keys:
 
     :connection_time_75_pct
     :connection_time_80_pct
@@ -169,7 +167,7 @@ Something I've been playing around with, it's more of hack really. But it works 
     :connection_time_99_pct
 
 
-##### Accepted Options:
+#### Accepted Options:
 
 - `"add-header"`
 - `"burst-length"`
