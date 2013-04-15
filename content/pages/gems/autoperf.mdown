@@ -25,9 +25,7 @@ Or for HTTPerf.rb percentile support, install this fork: [http://github.com/ruby
 Note: Use the beta version until final release.
 
     gem install bundler
-
     echo 'gem "autoperf", "=1.0.2beta3"' >> Gemfile
-
     bundle install
 
 Without bundler:
