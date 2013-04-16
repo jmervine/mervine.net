@@ -22,7 +22,7 @@ Or for HTTPerf.rb percentile support, install this fork: [http://github.com/ruby
 
 #### Rubies
 
-It's important to note that tests pass for this on the following [Ruby](/ruby) versions, but I've only used this at lenght on 1.9.2p290.
+It's important to note that tests pass for this on the following [Ruby](/ruby) versions, but I've only used this at length on 1.9.2p290.
 
 * 1.9.2p318
 * 1.9.3p392
