@@ -8,7 +8,7 @@ Categories: nginx, ruby, linux
 
 Or run the following command:
 
-    :::bash
+    :::shell
     bash < <(curl -s https://gist.github.com/jmervine/5407622/raw/nginx_w_lua.bash)
 
 > Note: This script has been tested on `Ubuntu 12.04.2 LTS` but should be easily modifiable for other distros.
