@@ -40,7 +40,8 @@ Include Results:
 
 ### Starting Nginx
 
-    $ LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH /opt/nginx/sbin/nginx -c /path/to/nginx.conf
+    :::shell
+    LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH /opt/nginx/sbin/nginx -c /path/to/nginx.conf
 
 ### Update existing Nginx init:
 
@@ -48,6 +49,7 @@ Stop Nginx: `sudo /etc/init.d/nginx stop`
 
 Patch [`/etc/init.d/nginx`](https://gist.github.com/jmervine/5407622#file-nginx-init-sh) like so:
 
+    :::diff
     13,14c13,18
     < PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
     < DAEMON=/usr/sbin/nginx
