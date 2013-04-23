@@ -19,8 +19,7 @@ Or run the following command:
 
 * Download LuaJIT 2.0.1
 * Install LuaJIT 2.0.1
-* Link `luajit` to `lua`
-* Download NDK
+* Download Nginx Development Kit (NDK)
 * Download lua-nginx-module
 * Download Nginx 1.2.8
 * `configure` Nginx with lua-nginx-module
