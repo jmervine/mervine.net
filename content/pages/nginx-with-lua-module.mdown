@@ -2,7 +2,7 @@ Date: 18 April 2013 08:00
 Title: Installing Nginx with Lua Module
 Categories: nginx, ruby, linux
 
-# Installing Nginx with Lua Module on Ubuntu
+# Installing Nginx with Lua Module
 
 [Download the script.](https://gist.github.com/jmervine/5407622/raw/nginx_w_lua.bash)
 
@@ -11,7 +11,9 @@ Or run the following command:
     :::shell
     bash < <(curl -s https://gist.github.com/jmervine/5407622/raw/nginx_w_lua.bash)
 
-> Note: This script has been tested on `Ubuntu 12.04.2 LTS` but should be easily modifiable for other distros.
+> Note: This script has been tested on `Ubuntu 12.04.2 LTS` but should work on just about any unix based distro, as everything is compiled from source.
+>
+> Requires wget and basic build essentials.
 
 ### What's it do?
 
