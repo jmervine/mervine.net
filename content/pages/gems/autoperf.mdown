@@ -4,7 +4,7 @@ Summary: Autoperf is a ruby driver for httperf, designed to help you automate lo
 
 # Autoperf (w/ HTTPerf.rb)
 
-![Gem Version](https://badge.fury.io/rb/autoperf.png) &nbsp;&nbsp; ![Build Status](https://travis-ci.org/rubyops/autoperf.png?branch=master) &nbsp;&nbsp; ![Dependency Status](https://gemnasium.com/rubyops/autoperf.png)
+![Gem Version](https://badge.fury.io/rb/autoperf.png) &nbsp; ![Build Status](https://travis-ci.org/rubyops/autoperf.png?branch=master) &nbsp; ![Dependency Status](https://gemnasium.com/rubyops/autoperf.png)
 
 Autoperf is a ruby driver for [httperf](/httperf), designed to help you automate load and performance
 testing of any web application - for a single end point, or through log replay.
