@@ -2,7 +2,6 @@ Date: 09 May 2013 12:00
 Title: Deleting a git commit
 Categories: git
 Summary: Simple methods for deleting both local and remote git commits.
-Flags: draft
 
 # Deleting a `git commit`
 
