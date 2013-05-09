@@ -28,13 +28,18 @@ To remove multiple commits.
     :::shell
     $ git reset --hard <sha1-commit-id>
 
-> **Note:**
->
-> This will delete all commits between `HEAD` and the commit specified.
-
 
 To remove **all local commits** and reset to the remote origin.
 
     :::shell
     $ git reset --hard origin
 
+
+**If you already pushed the commits you wish to delete, you will need to do a force push to get rid of it.**
+
+    :::shell
+    $ git push origin HEAD --force
+
+> **WARNING!**
+>
+> This can wipe out large sets of changes and do very bad things.
