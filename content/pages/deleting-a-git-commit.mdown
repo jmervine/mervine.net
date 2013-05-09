@@ -15,6 +15,8 @@ Assuming you are sitting on a single commit and would like to remove it.
     :::shell
     $ git reset --hard HEAD~1
 
+> Note on the above. You can replace the number (`1`) with the number of commits you want to rewind.
+
 
 If you have an uncommited change, which needs to be cleared, use the following.
 
