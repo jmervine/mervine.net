@@ -13,20 +13,20 @@ Flags: draft
 
 Assuming you are sitting on a single commit and would like to remove it.
 
-  :::shell
-  $ git reset --hard HEAD~1
+    :::shell
+    $ git reset --hard HEAD~1
 
 
 If you have an uncommited change, which needs to be cleared, use the following.
 
-  :::shell
-  $ git reset --hard HEAD
+    :::shell
+    $ git reset --hard HEAD
 
 
 To remove multiple commits.
 
-  :::shell
-  $ git reset --hard <sha1-commit-id>
+    :::shell
+    $ git reset --hard <sha1-commit-id>
 
 > **Note:**
 >
@@ -35,6 +35,6 @@ To remove multiple commits.
 
 To remove **all local commits** and reset to the remote origin.
 
-  :::shell
-  $ git reset --hard origin
+    :::shell
+    $ git reset --hard origin
 
