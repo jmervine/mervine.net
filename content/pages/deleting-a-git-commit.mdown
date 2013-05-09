@@ -41,5 +41,6 @@ To remove **all local commits** and reset to the remote origin.
     $ git push origin HEAD --force
 
 > **WARNING!**
+> 
 > The above can and will wipe out large sets of changes and do very bad things, if you do something you did not mean to. I strongly recommend doing this on a branch, or creating a backup tag before proceeding.
 
