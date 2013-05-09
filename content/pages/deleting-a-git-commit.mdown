@@ -9,6 +9,11 @@ Summary: Simple methods for deleting both local and remote git commits.
 >
 > These methods are dangerous. They can and will completly distroy without warning.
 
+### Removing commits with `rebase`
+
+`git rebase -i` can remove commits more gracefully then `git reset`, however, I've seen some oddities using it which may be exclusive to me. See `get rebase -i` for specifics on it's usage.
+
+### Removing commits with `reset`
 
 Assuming you are sitting on a single commit and would like to remove it.
 
@@ -45,3 +50,7 @@ To remove **all local commits** and reset to the remote origin.
 > 
 > The above can and will wipe out large sets of changes and do very bad things, if you do something you did not mean to. I strongly recommend doing this on a branch, or creating a backup tag before proceeding.
 
+
+#### Source
+
+This post was inspried by [http://stackoverflow.com/questions/1338728/how-to-delete-a-git-commit](http://stackoverflow.com/questions/1338728/how-to-delete-a-git-commit) and a good portion of these example came from there.
