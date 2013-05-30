@@ -11,6 +11,8 @@ gem 'nesta-plugin-sharethis'
 gem 'nesta-plugin-smartmeta'
 gem 'nesta-plugin-search'
 
+#gem 'nesta-plugin-diskcached'
+
 #gem 'coderay'
 gem "ultraviolet", :require => "uv"
 gem 'rack-codehighlighter', :require => 'rack/codehighlighter'
