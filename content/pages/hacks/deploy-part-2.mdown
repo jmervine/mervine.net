@@ -20,7 +20,7 @@ Add the following to your Rakefile
     end
 
     remote_task :restart do
-      run "set -x; cd /path/to/app/install && RACK_ENV=#{environment} bundle exec rake unicorn:restart --trace"
+      run "set -x; cd #{app_path} && RACK_ENV=#{environment} bundle exec rake unicorn:restart --trace"
     end
 
 Then run
