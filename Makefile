@@ -22,7 +22,7 @@ cache/warmup: prod/generate_error_pages
 update:
 	git reset --hard
 	git pull
-	cp ./config/nginx.conf /etc/nginx/sites-available/mervine.net
+	sudo cp ./config/nginx.conf /etc/nginx/sites-available/mervine.net
 
 
 prod/generate_error_pages:
