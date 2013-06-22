@@ -1,22 +1,22 @@
 Date: 13 July 2012 02:19
 Title: Mongocached: Simple Cache using Mongodb
 Categories: ruby, mongo, memcached, cache, mongodb
-Summary: I created [Mongocached](http://mongocached.rubyops.net/), with help from [Hector Virgen](http://www.virgentech.com/), as a simple shared cacheing layer for things like html fragments and database calls as a follow up to [Diskcached](http://mongocached.rubyops.net/). It specifically targets situations where you want to cache large amounts of data and have memory constraints. 
+Summary: I created [Mongocached](http://mongocached.mervine.net/), with help from [Hector Virgen](http://www.virgentech.com/), as a simple shared cacheing layer for things like html fragments and database calls as a follow up to [Diskcached](http://mongocached.mervine.net/). It specifically targets situations where you want to cache large amounts of data and have memory constraints.
 
 # Mongocached: Simple Cache using Mongodb
 
-I created [Mongocached](http://mongocached.rubyops.net/), with help from [Hector Virgen](http://www.virgentech.com/), as a simple shared cacheing layer for things like html fragments and database calls as a follow up to [Diskcached](http://mongocached.rubyops.net/). It specifically targets situations where you want to cache large amounts of data and have memory constraints. 
+I created [Mongocached](http://mongocached.mervine.net/), with help from [Hector Virgen](http://www.virgentech.com/), as a simple shared cacheing layer for things like html fragments and database calls as a follow up to [Diskcached](http://mongocached.mervine.net/). It specifically targets situations where you want to cache large amounts of data and have memory constraints.
 
 ### Installation
 
     gem install mongocached
-	
+
 *Or with Bundler:*
 
     :::ruby
     source :rubygems
     gem 'mongocached'
-	
+
 
 
 ### Basic Usage
@@ -42,4 +42,4 @@ I created [Mongocached](http://mongocached.rubyops.net/), with help from [Hector
 * [Source](https://github.com/rubyops/mongocached)
 * [API Docs](http://rubyops.github.com/mongocached/doc/)
 * [Coverage](http://rubyops.github.com/mongocached/coverage/)
-* [Benchmarks](https://github.com/rubyops/mongocached/blob/master/Benchmark.md) 
+* [Benchmarks](https://github.com/rubyops/mongocached/blob/master/Benchmark.md)

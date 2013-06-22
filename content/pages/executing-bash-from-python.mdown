@@ -1,11 +1,11 @@
 Date: 15 September 2012 13:08
 Title: Executing BASH from Python
 Categories: bash, off topic, python
-Summary: While this blog is dedicated to, and focused on, DevOps for Ruby application, every good DevOps engineer has a multitude of tools in their toolbox. Recently, I've been playing with [Python], and since I also use this as a place for me to take notes, I thought I would toss up this writeup I found on executing commands via [Python] I found as a follow up to my [Executing BASH Commmands in Ruby](http://rubyops.net/2012/09/05/executing_bash_from_ruby) post.
+Summary: Recently, I've been playing with [Python], I thought I would toss up this writeup I found on executing commands via [Python] I found as a follow up to my [Executing BASH Commmands in Ruby](http://mervine.net/2012/09/05/executing_bash_from_ruby) post.
 
 # Executing BASH from Python
 
-While this blog is dedicated to, and focused on, DevOps for Ruby application, every good DevOps engineer has a multitude of tools in their toolbox. Recently, I've been playing with [Python], and since I also use this as a place for me to take notes, I thought I would toss up this writeup I found on executing commands via [Python] I found as a follow up to my [Executing BASH Commmands in Ruby](http://rubyops.net/2012/09/05/executing_bash_from_ruby) post.
+Recently, I've been playing with [Python], I thought I would toss up this writeup I found on executing commands via [Python] I found as a follow up to my [Executing BASH Commmands in Ruby](http://mervine.net/2012/09/05/executing_bash_from_ruby) post.
 
 Source: [http://stackoverflow.com/questions/89228/calling-an-external-command-in-python](http://stackoverflow.com/questions/89228/calling-an-external-command-in-python)
 
@@ -35,4 +35,4 @@ In addition the to five above, there's one more worth noting. [pexpect](http://w
     child.expect("bar", timeout=10)
     child.interact() # gives control to the user
 
-[python]: http://www.python.org/ 
+[python]: http://www.python.org/

@@ -43,7 +43,7 @@ module Nesta
 
     # Add new routes here.
     #
-    # Handling legacy www.rubyops.net routes.
+    # Handling legacy mervine.net routes.
     get '/:year/:month/:day/:path' do
       redirect "/#{params[:path].gsub("_","-")}"
     end

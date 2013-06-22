@@ -22,28 +22,28 @@ Note: the [--prefix=/usr/local] is optional and allows you to run two instances 
 
 #### Usage:
 
-Simple... use httperf as you always have with the verbose flag. 
+Simple... use httperf as you always have with the verbose flag.
 
-See: [Performance Testing with Httperf](http://www.rubyops.net/2012/07/30/performance_testing_with_httperf) for more information on using httperf.
+See: [Performance Testing with Httperf](http://mervine.net/2012/07/30/performance_testing_with_httperf) for more information on using httperf.
 
 
 #### Sample output:
 
-    httperf --verbose --client=0/1 --server=www.rubyops.net --port=80 --uri=/ --rate=1 \ 
+    httperf --verbose --client=0/1 --server=mervine.net --port=80 --uri=/ --rate=1 \
       --send-buffer=4096 --recv-buffer=16384 --num-conns=10 --num-calls=1
     httperf: warning: open file limit > FD_SETSIZE; limiting max. # of open files to FD_SETSIZE
     httperf: maximum number of open descriptors = 1024
-    Connection lifetime = 377.59  
-    Connection lifetime = 377.96  
-    Connection lifetime = 377.01  
-    Connection lifetime = 378.20  
-    Connection lifetime = 439.33  
-    reply-rate = 1.0     
-    Connection lifetime = 377.77  
-    Connection lifetime = 377.80  
-    Connection lifetime = 379.39  
-    Connection lifetime = 388.54  
-    Connection lifetime = 377.04  
+    Connection lifetime = 377.59
+    Connection lifetime = 377.96
+    Connection lifetime = 377.01
+    Connection lifetime = 378.20
+    Connection lifetime = 439.33
+    reply-rate = 1.0
+    Connection lifetime = 377.77
+    Connection lifetime = 377.80
+    Connection lifetime = 379.39
+    Connection lifetime = 388.54
+    Connection lifetime = 377.04
     Maximum connect burst length: 1
 
     Total: connections 10 requests 10 replies 10 test-duration 9.377 s
@@ -68,4 +68,4 @@ See: [Performance Testing with Httperf](http://www.rubyops.net/2012/07/30/perfor
     Errors: fd-unavail 0 addrunavail 0 ftab-full 0 other 0
 
 
-Enjoy! 
+Enjoy!

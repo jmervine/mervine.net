@@ -1,18 +1,14 @@
 Keywords: ruby, devops, rails, ruby on rails, sinatra, httperf
 
 # About
- 
-Welcome to RubyOps.net.
 
-I'm starting this blog as a place to "take notes" on the various different problems I encounter in supporting Ruby applications from a Dev Ops perspective. 
+Welcome to mervine.net.
+
+I'm starting this blog as a place to "take notes" on the various different problems I encounter in supporting web applications from a Dev Ops perspective.
 
 This blog is running on [Nesta][Nesta], a simple [Sinatra](http://www.sinatrarb.com/) based blog application.
 
-Additionally you can find the source for [RubyOps.net](http://www.rubyops.net/) at [http://github.com/rubyops/www.rubyops.net](http://github.com/rubyops/www.rubyops.net).
-
-## Contributors
-
-I'm always looking for guest posters and contributors to RubyOps.net. I'm not expert, just someone who does it for fun and a living. If you want to join me, scold me, show me up, etc. Send me [an email](mailto:joshua@mervine.net) with your [github](http://github.com/) account or leave a comment and I'll get back to you.
+Additionally you can find the source for [mervine.net](http://mervine.net/) at [http://github.com/jmervine/mervine.net](http://github.com/jmervine/mervine.net).
 
 [Nesta]: http://nestacms.com/ "NestaCMS.com"
 

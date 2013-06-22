@@ -21,9 +21,9 @@ Here's the basics...
     Country Name (2 letter code) []:CA
     State or Province Name (full name) []:California
     Locality Name (eg, city) [Newbury]:Sunland
-    Organization Name (eg, company) [My Company Ltd]:RubyOpsNet
+    Organization Name (eg, company) [My Company Ltd]:SomeCompant
     Organizational Unit Name (eg, section) []:
-    Common Name (eg, your name or your server's hostname) []:www.rubyops.net
+    Common Name (eg, your name or your server's hostname) []:mervine.net
     Email Address []:joshua at mervine dot net
     Please enter the following 'extra' attributes
     to be sent with your certificate request
@@ -39,7 +39,7 @@ Here's the basics...
 
     $ openssl x509 -req -days 365 -in cert.csr -signkey cert.key -out cert.crt
 
-### Copy Files to Nginx Config 
+### Copy Files to Nginx Config
 
     $ sudo cp cert.crt /etc/nginx/
     $ sudo cp cert.key /etc/nginx/
@@ -47,7 +47,7 @@ Here's the basics...
 ### Nginx Config Example (from nginx default)
 
     $ sudo vim /etc/nginx/nginx.conf
-    
+
     server {
         listen       443;
         server_name  localhost;

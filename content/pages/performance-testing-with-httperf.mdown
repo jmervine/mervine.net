@@ -13,7 +13,7 @@ Summary: > *"[Httperf](http://www.hpl.hp.com/research/linux/httperf/) -- a tool 
 > *Source: [Httperf Homepage](http://www.hpl.hp.com/research/linux/httperf/)*
 
 ##### Httperf's Default Scope
-It's important to note that by default httperf only tests the standard http payload of your application -- e.g. the rendered HTML of the URL you are testing. Much like "curl", it does not load assets (images, javascript or css) by default. In this document, I will be referring to this as the "**base payload**". There are ways to configure it to load additional requests as part of the same session, which I will be covering. 
+It's important to note that by default httperf only tests the standard http payload of your application -- e.g. the rendered HTML of the URL you are testing. Much like "curl", it does not load assets (images, javascript or css) by default. In this document, I will be referring to this as the "**base payload**". There are ways to configure it to load additional requests as part of the same session, which I will be covering.
 
 
 #### Sections:
@@ -27,11 +27,11 @@ It's important to note that by default httperf only tests the standard http payl
 
 **Basic command-line usage:**
 
-    $ httperf --server www.rubyops.net --port 80 --num-conns 10 --rate 1
+    $ httperf --server mervine.net --port 80 --num-conns 10 --rate 1
 
 **Results:**
 
-    httperf --client=0/1 --server=www.rubyops.net --port=80 --uri=/ --rate=1 \ 
+    httperf --client=0/1 --server=mervine.net --port=80 --uri=/ --rate=1 \
       --send-buffer=4096 --recv-buffer=16384 --num-conns=10 --num-calls=1
 
     Maximum connect burst length: 1
@@ -57,10 +57,10 @@ It's important to note that by default httperf only tests the standard http payl
     Errors: total 0 client-timo 0 socket-timo 0 connrefused 0 connreset 0
     Errors: fd-unavail 0 addrunavail 0 ftab-full 0 other 0
 
-> 
+>
 
 
-In this example, I'm running ten connections _[\-\-num-conns 10]_ through [www.rubyops.net](http://www.rubyops.net/) _[\-\-server www.rubyops.net]_ at a rate of one connection per second _[\-\-rate 1]_. 
+In this example, I'm running ten connections _[\-\-num-conns 10]_ through [mervine.net](http://mervine.net/) _[\-\-server mervine.net]_ at a rate of one connection per second _[\-\-rate 1]_.
 
 Breaking down the results, I typically focus on the following rows:
 
@@ -76,7 +76,7 @@ While my examples don't include this, using the "\-\-hog" flag when running http
 <a name="testing_pages_with_ajax"></a>
 ### Testing Pages with AJAX
 
-In more advanced usages you can create a a series of URIs to pass to emulate a single session. This is particularly useful when you're performance testing a page with several AJAX calls. 
+In more advanced usages you can create a a series of URIs to pass to emulate a single session. This is particularly useful when you're performance testing a page with several AJAX calls.
 
 To do this, you need to create a connections file with all URIs you want to hit.
 
@@ -89,12 +89,12 @@ To do this, you need to create a connections file with all URIs you want to hit.
 
 You then need specify the log file you want to use in the place of "\-\-uri" to tell 'httperf' what paths to use.
 
-	httperf --server www.rubyops.net --wsesslog 10,1,sessions.log
+	httperf --server mervine.net --wsesslog 10,1,sessions.log
 
 
-Obviously, I'm not implementing "/foo", "/bar" and "/bah" as AJAX on my site, but you get the idea. 
+Obviously, I'm not implementing "/foo", "/bar" and "/bah" as AJAX on my site, but you get the idea.
 
-So what am I doing here? With "\-\-wsesslog", the first to field is the number of connections to make, basically the same as "\-\-num-conns" from the previous example. The second field is defined as "burst-to-burst user think time", which most simply means the number of times to access the URI before moving on to the next -- e.g. 1 would be one request per cycle through the list, 0.25 would be four requests per cycle through the list. 
+So what am I doing here? With "\-\-wsesslog", the first to field is the number of connections to make, basically the same as "\-\-num-conns" from the previous example. The second field is defined as "burst-to-burst user think time", which most simply means the number of times to access the URI before moving on to the next -- e.g. 1 would be one request per cycle through the list, 0.25 would be four requests per cycle through the list.
 
 Okay, simple enough. So what does 'httperf' do with that? Well instead of trying to explain it myself, I'm going quote  [httperf's man page](http://www.hpl.hp.com/research/linux/httperf/httperf-man.txt); *"When \-\-wsess or \-\-wsesslog is specified, httperf generates and measures sessions instead of individual calls and additional statistics are printed at the end of a test."*
 
@@ -115,7 +115,7 @@ In rare caces you need to clean up a leading or trailing quote like so:
       sed 's/\"$//g' > urls.log
 
 
-So with that, we have a list of URIs from [www.rubyops.net](http://www.rubyops.net/), which we've called "urls.log". From this, we need to generate a file which is ASCII NUL separated which we'll call "wlog.log":
+So with that, we have a list of URIs from [mervine.net](http://mervine.net/), which we've called "urls.log". From this, we need to generate a file which is ASCII NUL separated which we'll call "wlog.log":
 
 Start with urls.log.
 
@@ -132,8 +132,8 @@ Convert it to wlog.log -- replace line breaks with ASCII NUL characters.
 
 Now we can run our test.
 
-    $ httperf --server www.rubyops.net --wlog Y,wlog.log
-	
+    $ httperf --server mervine.net --wlog Y,wlog.log
+
 Note, the "Y" (or "N") switch is simply telling httperf to loop through the urls in your log file (or not). Additionally, you have to pass `--num-conns` with the number of connections your want to run, a simple way to do this is `--num-conns $( wc -l urls.log  )`.
 
 <a name="best_practices"></a>

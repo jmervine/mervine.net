@@ -1,11 +1,11 @@
 Date: 11 June 2012 20:38
 Title: Migrating from MongoMapper to Mongoid
 Categories: ruby, mongo, mongomapper, mongoid, rails, database
-Summary: I recently took on the task of migrating [Ditty](http://ditty.rubyops.net/) from [MongoMapper](http://mongomapper.com/) to [Mongoid](http://mongoid.org/) and it actually wasn't that hard. Fortunately my test suite was adequate enough to catch most of the differences.
+Summary: I recently took on the task of migrating [Ditty](http://ditty.mervine.net/) from [MongoMapper](http://mongomapper.com/) to [Mongoid](http://mongoid.org/) and it actually wasn't that hard. Fortunately my test suite was adequate enough to catch most of the differences.
 
 # Migrating from MongoMapper to Mongoid
 
-I recently took on the task of migrating [Ditty](http://ditty.rubyops.net/) from [MongoMapper](http://mongomapper.com/) to [Mongoid](http://mongoid.org/) and it actually wasn't that hard. Fortunately my test suite was adequate enough to catch most of the differences.
+I recently took on the task of migrating [Ditty](http://ditty.mervine.net/) from [MongoMapper](http://mongomapper.com/) to [Mongoid](http://mongoid.org/) and it actually wasn't that hard. Fortunately my test suite was adequate enough to catch most of the differences.
 
 ### Note on Performance
 
@@ -47,24 +47,24 @@ So for MongoMapper I had:
     :::ruby
     class Post
       include MongoMapper::Document
-       
+
       key :title,    String
       key :body,     String
       key :tag_ids,  Array
-       
+
       timestamps!
-       
+
       many :tags, :in => :tag_ids
     end
-  
+
 [lib/ditty/tag.rb](https://github.com/jmervine/ditty/blob/release_0_0_7/lib/ditty/tag.rb)
 
     :::ruby
     class Tag
       include MongoMapper::Document
-      
+
       key :name,   String, :unique => true
-      
+
       # go go ugly reverse mapping code
       def posts
         Post.where(:tag_ids => self.id).sort(:update.desc).to_a
@@ -86,10 +86,10 @@ The refactor for Mongoid, looks like this:
     class Post
       include Mongoid::Document
       include Mongoid::Timestamps
-      
+
       field :title, :type => String
       field :body,  :type => String
-      
+
       has_and_belongs_to_many :tags
     end
 
@@ -99,13 +99,13 @@ The refactor for Mongoid, looks like this:
     class Tag
       include Mongoid::Document
       validates_uniqueness_of :name
-      
+
       field :name,  :type => String
-      
+
       has_and_belongs_to_many :posts
     end
 
-Simple enough. 
+Simple enough.
 
 
 ### Querying / Sorting
@@ -135,4 +135,4 @@ I figured I would take a second to discuss why I decided to migrate. I had worki
 1. Mongoid seems to be more widely accepted as the source for ActiveRecord like Mongo implementations.
 
 
-I'm done, enjoy! 
+I'm done, enjoy!

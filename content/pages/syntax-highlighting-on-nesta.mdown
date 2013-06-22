@@ -13,7 +13,7 @@ While this is geared towards [Nesta][1], this will also work for all [Rack](/rac
 
 If you take a look at [Nesta's post][5], the go over this part pretty well with [coderay][6], but that's not what I wanted. So, to get us started, I'm going to take what they have and adapt it to [Ultraviolet][4], but with less description -- examples speak for themselves IMO.
 
-#### Step 1 - Add rack-codehighlighter 
+#### Step 1 - Add rack-codehighlighter
 
 
 In your `Gemfile` add
@@ -33,14 +33,14 @@ Add the following to your `config.ru`
 
     :::ruby
     # ... omitted code above ...
-    use Rack::Codehighlighter, 
-      :ultraviolet, 
-      :theme => "twilight",  
+    use Rack::Codehighlighter,
+      :ultraviolet,
+      :theme => "twilight",
         # see ultraviolet's site for more theme options
-      :lines => false, 
+      :lines => false,
       :markdown => true,
-      :element => "pre>code", 
-      :pattern => /\A:::(\w+)\s*(\n|&#x000A;)/i, 
+      :element => "pre>code",
+      :pattern => /\A:::(\w+)\s*(\n|&#x000A;)/i,
       :logging => false
 
     require 'nesta/app'
@@ -125,7 +125,6 @@ For the best results, you'll need to tell your syntax highligher what language y
 Ruby example
 
     :::ruby
-    :::ruby
     class Foo
       def bar
         "Bazinga!"
@@ -140,10 +139,10 @@ HAML example
       %b.bar
         =bazinga
 
-      
 
-[1]: http://www.rubyops.net/nesta "NestaCMS"
-[2]: http://nestacms.org/ 
+
+[1]: http://mervine.net/nesta "NestaCMS"
+[2]: http://nestacms.org/
 [3]: https://github.com/wbzyl/rack-codehighlighter
 [4]: http://ultraviolet.rubyforge.org/
 [5]: http://nestacms.com/docs/recipes/syntax-highlighting-with-rack-codehighlighter

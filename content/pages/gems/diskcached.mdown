@@ -38,13 +38,13 @@ Or with [Bundler](/tag/bundler):
     require 'diskcached'
     @diskcache = Diskcached.new
 
-    result = @diskcache.cache('expensive_code') do 
+    result = @diskcache.cache('expensive_code') do
       # some expensive code
     end
 
     puts result
 
-The above will create the cache if it doesn't exist and cache the result of block and return it. If the cache exists and isn't expired, it will read from the cache and returnwhat's stored. This allows you to passively wrap code in a cache block and not worry about checking to see if it's valid or expired. 
+The above will create the cache if it doesn't exist and cache the result of block and return it. If the cache exists and isn't expired, it will read from the cache and returnwhat's stored. This allows you to passively wrap code in a cache block and not worry about checking to see if it's valid or expired.
 
 Also worth noting, it will return `nil` if something goes wrong.
 
@@ -81,7 +81,7 @@ it holds up will and even should provide slightly faster reads.
 
 On a development machine (Unicorn w/ 1 worker) I ran a series of [httperf](http://www.hpl.hp.com/research/linux/httperf/) tests to see how Diskcached ran in real world situations. You can [checkout the full output from multiple examples here](https://gist.github.com/3062334), but there's a taste...
 
-Using the endpoint [http://rubyops.net/](http://rubyops.net/) on my dev server and hitting it 100,000 times --
+Using the endpoint [http://mervine.net/](http://mervine.net/) on my dev server and hitting it 100,000 times --
 
 ### Code Example from Test
 

@@ -3,7 +3,7 @@ require 'bundler/setup'
 
 Bundler.require(:default, :test)
 
-PRODUCTION_HOST ||= "www.rubyops.net"
+PRODUCTION_HOST ||= "mervine.net"
 ENV['RACK_ENV'] ||= "production"
 
 namespace :unicorn do
@@ -37,29 +37,29 @@ namespace :prod do
 
   task :generate_error_pages do
     [ 400, 500 ].each do |code|
-      sh "curl -s 'http://rubyops.net/error/#{code}'"
+      sh "curl -s 'http://mervine.net/error/#{code}'"
     end
   end
 
   desc "deploy to production"
   task :deploy do
-    system("ssh #{PRODUCTION_HOST} 'set -x; cd ~/www.rubyops.net && git pull && bundle'")
+    system("ssh #{PRODUCTION_HOST} 'set -x; cd ~/mervine.net && git pull && bundle'")
   end
 
   desc "restart production"
   task :restart do
-    system("ssh #{PRODUCTION_HOST} 'set -x; cd ~/www.rubyops.net && RACK_ENV=#{ENV['RACK_ENV']} bundle exec rake unicorn:restart prod:generate_error_pages --trace'")
+    system("ssh #{PRODUCTION_HOST} 'set -x; cd ~/mervine.net && RACK_ENV=#{ENV['RACK_ENV']} bundle exec rake unicorn:restart prod:generate_error_pages --trace'")
   end
 
   namespace :cache do
     desc "clear cache on production"
     task :empty do
-      sh("ssh #{PRODUCTION_HOST} 'set -x;  cd ~/www.rubyops.net && bundle exec rake cache:empty --trace'")
+      sh("ssh #{PRODUCTION_HOST} 'set -x;  cd ~/mervine.net && bundle exec rake cache:empty --trace'")
     end
 
     #desc "warmup cache on production"
     #task :warmup do
-      #system("ssh #{PRODUCTION_HOST} 'set -x;  cd ~/www.rubyops.net && WARMUP_HOST=#{PRODUCTION_HOST} bundle exec rake cache:warmup --trace'")
+      #system("ssh #{PRODUCTION_HOST} 'set -x;  cd ~/mervine.net && WARMUP_HOST=#{PRODUCTION_HOST} bundle exec rake cache:warmup --trace'")
     #end
   end
 end
@@ -75,7 +75,7 @@ namespace :cache do
 
   desc "pregenerate Rack::Hard::Copy files"
   task :warmup do
-    ENV['WARMUP_HOST'] ||= "http://rubyops.net"
+    ENV['WARMUP_HOST'] ||= "http://mervine.net"
     sh %{
       set -x;
       for url in $(curl -s #{ENV['WARMUP_HOST']}/sitemap.xml | grep "<loc>http" | sed "s/    <loc>//" | sed "s/<\\/loc>//" | sort -u ); do
