@@ -11,6 +11,8 @@ stop:
 
 restart: stop start
 
+clean: cache/clean
+
 cache/clean:
 	rm -rf ./public/static
 
@@ -26,4 +28,20 @@ prod/generate_error_pages:
 	curl -s 'http://mervine.net/error/500'
 
 deploy: deploy cache/cleanup restart cache/warmup
+
+# nginx handlers
+nginx/start:
+	sudo /etc/init.d/nginx start
+
+nginx/stop:
+	sudo /etc/init.d/nginx start
+
+nginx/restart:
+	sudo /etc/init.d/nginx restart
+
+nginx/reload:
+	sudo /etc/init.d/nginx reload
+
+nginx/status:
+	sudo /etc/init.d/nginx status
 
