@@ -2,7 +2,7 @@ Title: Nesta Plugins
 Summary: Nesta Plugins I've created, both used and unused.
 Categories: nesta, gems, about
 
-# Nesta Plugins by RubyOps
+# My Nesta Plugins
 
 ### Used on this Site
 

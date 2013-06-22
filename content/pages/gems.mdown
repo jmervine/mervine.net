@@ -1,4 +1,4 @@
-Title: Gems by RubyOps
+Title: My Gems
 Categories: about
 
-# Gems by RubyOps
+# My Gems

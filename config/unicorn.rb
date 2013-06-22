@@ -1,6 +1,7 @@
 timeout 30
 stderr_path "log/unicorn_err.log"
 stdout_path "log/unicorn_out.log"
+pid         "log/unicorn.pid"
 
 case ENV['RACK_ENV']
 when 'production'

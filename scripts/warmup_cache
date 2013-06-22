@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -x;
+for url in $(curl -s http://mervine.net/sitemap.xml | grep "<loc>http" | sed "s/    <loc>//" | sed "s/<\\/loc>//" | sort -u ); do
+  curl -s $url
+done
+
+# vim: ft=sh:
