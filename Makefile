@@ -1,4 +1,5 @@
 SHELL=/bin/bash
+RACK_ENV=production
 
 setup:
 	bundle install --path vendor/bundle
