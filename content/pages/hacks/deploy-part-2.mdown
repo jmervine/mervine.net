@@ -1,7 +1,7 @@
 Date: 2013-06-03 21:00
 Categories: hacks, rake, ruby, deployment
 
-# Hack: Deploying with git and rake-remote_remote
+# Hack: Deploying with git and rake-remote_task
 
 > This is an update to my previous post: [Hack: Deploying with git](/hacks/deploy), replacing the use of pure [rake](/rake), for [rake-remote_task](https://github.com/seattlerb/rake-remote_task).
 
