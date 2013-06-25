@@ -7,11 +7,11 @@ Summary: This past weekend I dabbled in C++ for the first time patching httperf 
 
 This past weekend I dabbled in C++ for the first time patching httperf to use display each connection's timing when using verbose mode.
 
-You can find the source here -- [https://github.com/rubyops/httperf](https://github.com/rubyops/httperf)
+You can find the source here -- [https://github.com/jmervine/httperf](https://github.com/jmervine/httperf)
 
 #### Basic installation:
 
-    $ git clone https://github.com/rubyops/httperf
+    $ git clone https://github.com/jmervine/httperf
     $ cd httperf
     $ autoreconf -i
     $ ./configure [--prefix=/usr/local]
@@ -24,7 +24,7 @@ Note: the [--prefix=/usr/local] is optional and allows you to run two instances 
 
 Simple... use httperf as you always have with the verbose flag.
 
-See: [Performance Testing with Httperf](http://mervine.net/2012/07/30/performance_testing_with_httperf) for more information on using httperf.
+See: [Performance Testing with Httperf](http://mervine.net/performance-testing-with-httperf) for more information on using httperf.
 
 
 #### Sample output:

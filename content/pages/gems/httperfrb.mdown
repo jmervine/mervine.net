@@ -4,7 +4,7 @@ Categories: gems, ruby, httperf, httperfrb
 
 # HTTPerf.rb
 
-![Gem Version](https://badge.fury.io/rb/httperfrb.png) &nbsp; ![Build Status](https://travis-ci.org/rubyops/httperfrb.png?branch=master) &nbsp; ![Dependency Status](https://gemnasium.com/rubyops/httperfrb.png)
+![Gem Version](https://badge.fury.io/rb/httperfrb.png) &nbsp; ![Build Status](https://travis-ci.org/jmervine/httperfrb.png?branch=master)
 
 Simple Ruby interface for httperf.
 
@@ -26,7 +26,7 @@ Requires [httperf](/httperf), of course...
 
     :::shell
     sudo yum install httperf
-    
+
 #### My 'httperf'
 
 See: [httperf-0.9.1 with individual connection times](/httperf-0-9-1-with-individual-connection-times).
@@ -81,14 +81,14 @@ Added in 0.3.10.
 ## Useage - HTTPerf::Parser
 
     :::ruby
-    require 'httperf/parser' 
-     
-    # read result from a file, for example   
+    require 'httperf/parser'
+
+    # read result from a file, for example
     puts HTTPerf::Parser.parse( File.open("httperf.out", "r").read )
-    
+
     # or verbose output
     puts HTTPerf::Parser.parse( File.open("httperf_verbose.out", "r").read, true )
-    
+
 #### From the command line:
 
 Something I've been playing around with, it's more of hack really. But it works well for seralizing output to YAML or JSON:
@@ -103,7 +103,7 @@ Something I've been playing around with, it's more of hack really. But it works 
     :::shell
     httperf --num-conns=10 --verbose | ruby -e 'require "httperf/parser"; require "yaml"; puts HTTPerf::Parser.parse(ARGF.read).to_yaml' > httperf.yml
 
-#### Parser Keys: 
+#### Parser Keys:
 
     :::ruby
     :command
