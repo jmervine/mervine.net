@@ -14,7 +14,6 @@ Categories: ruby, nodejs, sinatra, express
 
 ### [Express](/tag/express)
 
-    :::javascript
     var app = require('express');
     app.get('/', function(req, res) { 
         res.send("Hello World!"); 
