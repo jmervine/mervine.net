@@ -23,8 +23,6 @@ cache/warmup: prod/generate_error_pages
 update:
 	git reset --hard
 	git pull
-	sudo cp ./config/nginx.conf /etc/nginx/sites-available/mervine.net
-
 
 prod/generate_error_pages:
 	curl -s 'http://mervine.net/error/400'
@@ -32,7 +30,7 @@ prod/generate_error_pages:
 
 deploy/soft: update cache/clean prod/generate_error_pages
 
-deploy/normal: update cache/clean restart prod/generate_error_pages
+deploy: update cache/clean restart prod/generate_error_pages
 
 deploy/full: update cache/clean restart nginx/reload prod/generate_error_pages
 
@@ -47,6 +45,7 @@ nginx/restart:
 	sudo /etc/init.d/nginx restart
 
 nginx/reload:
+	sudo cp ./config/nginx.conf /etc/nginx/sites-available/mervine.net
 	sudo /etc/init.d/nginx reload
 
 nginx/status:
