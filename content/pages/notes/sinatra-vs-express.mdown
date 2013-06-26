@@ -1,12 +1,18 @@
 Date: 01 November 2012 17:30
 Title: Hello World -- Sinatra vs. Node.js
-Categories: ruby, nodejs, sinatra
+Categories: ruby, nodejs, sinatra, express
+
+
+### [Sinatra](/tag/sinatra)
 
     :::ruby
     require 'sinatra'
     get '/' do
       "Hello World"
     end
+
+
+### [Express](/tag/express)
 
     :::javascript
     var app = require('express');
