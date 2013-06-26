@@ -15,8 +15,9 @@ Categories: notes, ruby, nodejs, sinatra, express
 
 ### [Express](/express)
 
+    :::js
     var app = require('express');
-    app.get('/', function(req, res) { 
-        res.send("Hello World!"); 
+    app.get('/', function(req, res) {
+        res.send("Hello World!");
     });
     app.listen(8000);
