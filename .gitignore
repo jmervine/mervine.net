@@ -10,3 +10,4 @@
 /.diskcache/
 /diskcache/
 themes/rubyops/public/rubyops/static/
+*.pid
