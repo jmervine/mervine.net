@@ -28,7 +28,7 @@ So for MongoMapper I had it's custom connection setup (easier and less code, tru
 For Mongoid, I use:
 
     :::ruby
-    Monoid.configure do |config|
+    Mongoid.configure do |config|
       config.database = Mongo::Connection.new.db("<database name>")
       if username && password
         config.database.authenticate(username, password)
