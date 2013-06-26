@@ -1,0 +1,16 @@
+Date: 01 November 2012 17:30
+Title: Hello World -- Sinatra vs. Node.js
+Categories: ruby, nodejs, sinatra
+
+    :::ruby
+    require 'sinatra'
+    get '/' do
+      "Hello World"
+    end
+
+    :::javascript
+    var app = require('express');
+    app.get('/', function(req, res) { 
+        res.send("Hello World!"); 
+    });
+    app.listen(8000);
