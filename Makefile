@@ -32,6 +32,8 @@ prod/generate_error_pages:
 
 deploy: update cache/clean restart prod/generate_error_pages
 
+deploy/soft: update cache/clean prod/generate_error_pages
+
 deploy/full: update cache/clean restart nginx/reload prod/generate_error_pages
 
 # nginx handlers
