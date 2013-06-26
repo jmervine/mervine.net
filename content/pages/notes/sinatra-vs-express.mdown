@@ -1,6 +1,6 @@
 Date: 26 June 2013 12:30
 Title: Hello World: Sinatra vs. Node.js
-Categories: ruby, nodejs, sinatra, express
+Categories: notes, ruby, nodejs, sinatra, express
 
 # Hello World: Sinatra vs. Node.js
 
