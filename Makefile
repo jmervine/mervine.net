@@ -30,9 +30,9 @@ prod/generate_error_pages:
 	curl -s 'http://mervine.net/error/400'
 	curl -s 'http://mervine.net/error/500'
 
-deploy: update cache/clean restart prod/generate_error_pages
-
 deploy/soft: update cache/clean prod/generate_error_pages
+
+deploy/normal: update cache/clean restart prod/generate_error_pages
 
 deploy/full: update cache/clean restart nginx/reload prod/generate_error_pages
 
