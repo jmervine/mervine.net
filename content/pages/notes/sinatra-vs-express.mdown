@@ -4,7 +4,7 @@ Categories: notes, ruby, nodejs, sinatra, express
 
 # Hello World: Sinatra vs. Node.js
 
-### [Sinatra](/tag/sinatra)
+### [Sinatra](/sinatra)
 
     :::ruby
     require 'sinatra'
@@ -13,7 +13,7 @@ Categories: notes, ruby, nodejs, sinatra, express
     end
 
 
-### [Express](/tag/express)
+### [Express](/express)
 
     var app = require('express');
     app.get('/', function(req, res) { 
