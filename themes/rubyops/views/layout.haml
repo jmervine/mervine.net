@@ -8,6 +8,7 @@
     - if @keywords
       %meta(name="keywords" content=@keywords)
     %title= @title
+    = haml :analytics, :layout => false
     <!--[if ! lte IE 6]><!-->
     %link(href="#{url('/css/master.css')}" media="screen" rel="stylesheet")
     <!--<![endif]-->
@@ -19,7 +20,6 @@
     - if defined?(sharethis_javascript)
       = sharethis_javascript
     %link(href="#{url('/articles.xml')}" rel="alternate" type="application/atom+xml")
-    = haml :analytics, :layout => false
     = ::NewRelic::Agent.browser_timing_header rescue ""
 
   %body
