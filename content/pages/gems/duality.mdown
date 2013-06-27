@@ -80,6 +80,6 @@ Another thing that's worth mentioning is if either cache raise an exception, it 
 
 ### More Info
 
-* [Documentation](http://rubyops.github.com/duality/doc/Duality.html)
-* [Coverage](http://rubyops.github.com/duality/coverage/)
-* [Benchmarks](https://github.com/rubyops/duality/blob/master/BENCHMARK.md)
+* [Documentation](http://jmervine.github.io/duality/doc/Duality.html)
+* [Coverage](http://jmervine.github.io/duality/coverage/#_AllFiles)
+* [Benchmarks](https://github.com/jmervine/duality/blob/master/BENCHMARK.md)
