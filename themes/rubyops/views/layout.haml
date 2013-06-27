@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 %html(lang="en")
   %head
-    %link{ :rel=>"icon", :href=>"/ruby.ico" }
+    %link{ :rel=>"icon", :href=>"/favicon.ico" }
     %meta(charset="utf-8")
     - if @description
       %meta(name="description" content=@description)
     - if @keywords
       %meta(name="keywords" content=@keywords)
-    - if defined?(sharethis_javascript)
-      = sharethis_javascript
     %title= @title
     <!--[if ! lte IE 6]><!-->
     %link(href="#{url('/css/master.css')}" media="screen" rel="stylesheet")
@@ -18,6 +16,8 @@
     /[if lt IE 9]
       %script(src="//html5shim.googlecode.com/svn/trunk/html5.js")
     - local_stylesheet_link_tag('local')
+    - if defined?(sharethis_javascript)
+      = sharethis_javascript
     %link(href="#{url('/articles.xml')}" rel="alternate" type="application/atom+xml")
     = haml :analytics, :layout => false
     = ::NewRelic::Agent.browser_timing_header rescue ""
