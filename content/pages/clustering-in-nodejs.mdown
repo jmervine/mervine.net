@@ -135,7 +135,7 @@ So next, I added the [`dateformat`](https://npmjs.org/package/dateformat) npm, b
 
 That's works really nicely. I get good startup messaging and the server tells me when my forks are running and when they exit.
 
-What's missing? Well, for the final touches, I wanted to make the number of workers configurable for testing on smaller development VMs and I decided to restart my forks, should the exit.
+What's missing? Well, for the final touches, I wanted to make the number of workers configurable for testing on smaller development VMs and I decided to restart my forks, should they fail.
 
     :::js
     /**
