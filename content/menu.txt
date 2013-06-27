@@ -1,10 +1,9 @@
 /
   gems
   ruby
-  sinatra
+  nodejs
+  notes
   hacks
-  nesta
-  useful-links
 categories
 archive
   archive/2013
