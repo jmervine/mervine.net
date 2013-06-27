@@ -194,7 +194,7 @@ For startup, you can simply run `node server.js` or `nohup node server.js`, but 
 
 Here's my `forever` startup command, which I've put in to a `Makefile` ([get the gist](https://gist.github.com/jmervine/5873934)) as a `start` task.
 
-    :::sh
+    :::shell
     forever -p ./logs  \
             	-l server_out.log \
             	-o ./logs/server_out.log \
