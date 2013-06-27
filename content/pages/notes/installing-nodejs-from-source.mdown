@@ -8,7 +8,7 @@ Categories: notes, nodejs, linux, centos, ubuntu
 
 Copy and save this to a script called something like `install_node.sh` and run `bash install_node.sh`. It expects `sudo` access.
 
-  :::shell
+	:::shell
 	#!/usr/bin/env bash
 	set -x
 	cd /tmp
