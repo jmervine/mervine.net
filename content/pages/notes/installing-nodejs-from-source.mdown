@@ -1,0 +1,29 @@
+Date: 26 June 2013 21:30
+Title: Installing Node.js from Source
+Categories: notes, nodejs, linux, centos, ubuntu
+
+# Installing Node.js from Source
+
+> Note: This has been tested on Ubuntu 12.01. It should also work on most CentOS (Redhat) version and Mac's, but I haven't personally tested it.
+
+Copy and save this to a script called something like `install_node.sh` and run `bash install_node.sh`. It expects `sudo` access.
+
+  :::shell
+	#!/usr/bin/env bash
+	set -x
+	cd /tmp
+	rm -rf node
+
+	set -ue
+	git clone git://github.com/joyent/node.git
+
+	cd node
+	git checkout v0.10.12
+
+	./configure --prefix=/usr
+	make
+	sudo make install
+
+	# vim: ft=sh:
+
+[Get the gist.](https://gist.github.com/jmervine/5874395)
