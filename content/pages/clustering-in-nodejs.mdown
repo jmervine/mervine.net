@@ -1,6 +1,7 @@
 Date: 26 June 2013 20:30
 Title: Clustering in Node.js
 Categories: nodejs, node, cluster
+Summary: I recently had to setup a [Node.js](/nodejs) application for production deployment...  I come from the [Ruby](/ruby) world, so I wanted my end product to be something like what you get when using [Unicorn](/unicorn). Here's a little walk through.
 
 # Clustering in Node.js
 
