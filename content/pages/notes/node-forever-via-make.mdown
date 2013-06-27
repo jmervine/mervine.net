@@ -4,15 +4,14 @@ Categories: notes, nodejs, node, make, makefile
 
 # Node.js forever handing via make
 
-    :::makefile
-    #
-	# Tasks
-	#
-	# - start   :: starts application using forever
-	# - stop    :: stops application using forever
-	# - restart :: restart application using forever
-	#
+#### Tasks
 
+* start   :: starts application using forever
+* stop    :: stops application using forever
+* restart :: restart application using forever
+
+
+	:::makefile
 	# This set's your local directory to to your NODE_PATH
 	NODE_EXEC    = NODE_PATH=.:$(NODE_PATH)
 
