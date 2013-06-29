@@ -27,6 +27,7 @@ running `autobench-config -o ./path/to/write/config.yml -s example.com -u /path/
 
 ## Installation
 
+    :::shell
     gem install autobench --pre
 
     # or...
@@ -51,7 +52,7 @@ The following three dependancies must either be in your PATH, or specified in yo
 It's recommended that you install [my version of httperf](http://mervine.net/httperf-0-9-1-with-individual-connection-times),
 however, if you choose not to, any version will give you most of the thresholds available.
 
-    :::bash
+    :::shell
     # Ubuntu
     sudo apt-get install httperf
     
