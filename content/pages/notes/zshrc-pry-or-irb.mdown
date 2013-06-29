@@ -1,0 +1,28 @@
+Title: Choosing between Pry or IRB in ZSH
+Categories: zsh, ruby, pry, notes, hacks
+
+# Choosing between Pry or IRB in ZSH
+
+Add the following to your `.zshrc`:
+
+    :::shell
+    function do_pry() {
+      PRYCMD="$(which pry)"
+      IRBCMD="$(which irb)"
+      if test -e "$(which pry)"
+      then
+        echo "Starting $PRYCMD"
+        $PRYCMD
+      else
+        echo "Starting $IRBCMD"
+        $IRBCMD
+      fi
+    }
+     
+    function irb() {
+      do_pry
+    }
+     
+    function pry() {
+      do_pry
+    }
