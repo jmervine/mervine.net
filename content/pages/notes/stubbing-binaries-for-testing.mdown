@@ -4,7 +4,7 @@ Categories: notes, bash, testing, ruby, nodejs
 
 # Stubbing Binaries for Testing
 
-Being a Dev Ops guy, I write [gems](/gems), scripts and hacks that tend to hook in to system binaries. I know, it would probably be better to write C bindings, but heretofore that hasn't been something I really want to tackle. Additionally I almost always write tests for my stuff. I've come across the problem where my tests pass locally, but not on [Travis-CI](http://travis-ci.org]. Which annoys me to no end... hences this tweet:
+Being a Dev Ops guy, I write [gems](/gems), scripts and hacks that tend to hook in to system binaries. I know, it would probably be better to write C bindings, but heretofore that hasn't been something I really want to tackle. Additionally, I almost always write tests for my stuff. I've come across the problem where my tests pass locally, but not on [Travis-CI](http://travis-ci.org]. Which annoys me to no end... hences this tweet:
 
 <blockquote class="twitter-tweet"><p>I hate it when <a href="https://twitter.com/search?q=%23travis&amp;src=hash">#travis</a>-ci breaks working tests. It becomes and obsession...</p>&mdash; Joshua Mervine (@mervinej) <a href="https://twitter.com/mervinej/statuses/351048894009966592">June 29, 2013</a></blockquote>
 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
