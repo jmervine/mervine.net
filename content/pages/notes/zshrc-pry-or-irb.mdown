@@ -1,9 +1,9 @@
-Title: Choosing between Pry or IRB in ZSH
+Title: Choosing between Pry or IRB
 Categories: zsh, ruby, pry, notes, hacks
 
-# Choosing between Pry or IRB in ZSH
+# Choosing between Pry or IRB
 
-Add the following to your `.zshrc`:
+Add the following to your `.zshrc` or `.bashrc`:
 
     :::shell
     function do_pry() {
