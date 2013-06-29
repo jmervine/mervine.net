@@ -1,0 +1,117 @@
+Title: Hosting Review
+Categories: notes, performance, httperf, httperfrb
+
+# Hosting Review
+
+#### Summary:
+
+[QuestaVOLTA](http://www.questavolta.com) out performs my previous hosting provider considerable, cutting both page load and render times in half. Not only is their network superb, but their virtual host far out performs my previous provider, rendering pages faster on 1/4 the CPUs.
+
+![Hosting Review](http://mervine.net/hosting_review.png)
+
+
+### OLD Hosting provider:
+
+- Debian GNU/Linux 6.0
+- core count: 8
+- memory: 512MB
+- unicorn workers: 8
+
+### QuestaVOLTA:
+
+- CentOS release 6.4
+- core count: 2
+- memory: 1024MB
+- unicorn workers: 4
+
+
+### Test details:
+
+- load gen method: [httperf](http://github.com/jmervine/httperf)
+- load gen script: [perf.rb](https://gist.github.com/jmervine/5258983)
+- uri: [/automating-performance-testing-with-httperfrb](/automating-performance-testing-with-httperfrb)
+- num-conns: 1000
+- rate: 1
+
+### Test Results
+
+#### OLD
+
+##### From the West Coast
+
+    Total connections:        1000
+    Connection rate per sec:  1.0
+    Connection time min:      973.7
+    Connection time avg:      1137.8
+    Connection time max:      1625.0
+    Errors total:             0
+    Connection time 85 pct:   1241.29
+    Connection time 95 pct:   1323.28
+    Connection time 99 pct:   1437.64
+
+##### From the East Coast
+
+    Total connections:        1000
+    Connection rate per sec:  1.0
+    Connection time min:      610.5
+    Connection time avg:      798.9
+    Connection time max:      1905.1
+    Errors total:             0
+    Connection time 85 pct:   904.30
+    Connection time 95 pct:   999.92
+    Connection time 99 pct:   1138.75
+
+##### From `localhost`
+
+> Note: localhost test remove network latency as a factor, testing instead the hardware.
+
+    Total connections:        1000
+    Connection rate per sec:  1.0
+    Connection time min:      402.4
+    Connection time avg:      581.1
+    Connection time max:      1587.6
+    Errors total:             0
+    Connection time 85 pct:   705.57
+    Connection time 95 pct:   776.70
+    Connection time 99 pct:   856.56
+
+#### [QuestaVOLTA]
+
+##### From West Coast
+
+    Total connections:        1000
+    Connection rate per sec:  1.0
+    Connection time min:      459.6
+    Connection time avg:      595.3
+    Connection time max:      1128.4
+    Errors total:             0
+    Connection time 85 pct:   689.76
+    Connection time 95 pct:   777.65
+    Connection time 99 pct:   866.18
+
+##### From East Coast
+
+    Total connections:        1000
+    Connection rate per sec:  1.0
+    Connection time min:      393.9
+    Connection time avg:      463.2
+    Connection time max:      871.3
+    Errors total:             0
+    Connection time 85 pct:   507.25
+    Connection time 95 pct:   577.36
+    Connection time 99 pct:   637.11
+
+##### From `localhost`
+
+> Note: localhost test remove network latency as a factor, testing instead the hardware.
+
+    Total connections:        1000
+    Connection rate per sec:  1.0
+    Connection time min:      207.4
+    Connection time avg:      305.5
+    Connection time max:      1168.8
+    Errors total:             0
+    Connection time 85 pct:   376.36
+    Connection time 95 pct:   414.86
+    Connection time 99 pct:   491.43
+
