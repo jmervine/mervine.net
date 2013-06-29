@@ -1,3 +1,4 @@
+Title: Bind MySQL to localhost
 Categories: notes, mysql, localhost, linux
 
 # Binding MySQL to localhost
