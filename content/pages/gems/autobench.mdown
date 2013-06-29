@@ -1,5 +1,5 @@
 # Autobench
 
-More coming soon, for now see: [github.com/jmervine/autobench](http://gihub.com/jmervine/autobench).
+More coming soon, for now see: [github.com/jmervine/autobench](http://github.com/jmervine/autobench).
 
 Cheers!
