@@ -3,6 +3,7 @@ Title: Install Nginx via yum
 
 # Install Nginx via yum
 
+    :::shell
     #!/bin/bash
     #
     # Run like so:
