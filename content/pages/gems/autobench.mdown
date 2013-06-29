@@ -34,9 +34,9 @@ running `autobench-config -o ./path/to/write/config.yml -s example.com -u /path/
     echo "gem 'autobench', '0.0.1alpha1'" >> Gemfile
     bundle install --path vendor/bundle
 
-## Dependancies
+## Dependencies
 
-The following three dependancies must either be in your `PATH`, or specified in your configuration like so:
+The following three dependencies must either be in your `PATH`, or specified in your configuration like so:
 
     :::yaml
     paths:
