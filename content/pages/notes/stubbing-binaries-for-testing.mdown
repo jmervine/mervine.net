@@ -6,10 +6,8 @@ Categories: notes, bash, testing, ruby, nodejs
 
 Being a Dev Ops guy, I write [gems](/gems), scripts and hacks that tend to hook in to system binaries. I know, it would probably be better to write C bindings, but heretofore that hasn't been something I really want to tackle. Additionally, I almost always write tests for my stuff. I've come across the problem where my tests pass locally, but not on [Travis-CI](http://travis-ci.org). Which annoys me to no end... hences this tweet:
 
-<blockquote class="twitter-tweet"><p>I hate it when <a href="https://twitter.com/search?q=%23travis&amp;src=hash">#travis</a>-ci breaks working tests. It becomes and obsession...</p>&mdash; Joshua Mervine (@mervinej) <a href="https://twitter.com/mervinej/statuses/351048894009966592">June 29, 2013</a></blockquote>
+<blockquote class="twitter-tweet"><p>I hate it when <a href="https://twitter.com/search?q=%23travis-ci&amp;src=hash">#travis-ci</a> breaks working tests. It becomes an obsession...</p>&mdash; Joshua Mervine (@mervinej) <a href="https://twitter.com/mervinej/statuses/351048894009966592">June 29, 2013</a></blockquote>
 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-> Yes, I noticed the typo... `s/ and / an /`... better?
 
 The way I've solved this is by building a method to define the binary location in my utilities and stubbing the binaries in a very simple method. Simply put, I have a shell script named for the binary that `echo`'s the standard output and ends with `exit 0`. 
 
