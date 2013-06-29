@@ -5,6 +5,8 @@ in three different ways; render metrics, client metrics and yslow metrics.
 
 # Autobench [alpha release]
 
+![Gem Version](https://badge.fury.io/rb/autobench.png)
+
 Autobench, as follow up to [Autoperf](http://mervine.net/gems/autoperf), was created to allow for benchmarking web pages 
 in three different ways. 
 
