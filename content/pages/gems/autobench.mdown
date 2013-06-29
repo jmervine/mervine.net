@@ -38,7 +38,7 @@ running `autobench-config -o ./path/to/write/config.yml -s example.com -u /path/
 
 ## Dependancies
 
-The following three dependancies must either be in your PATH, or specified in your configuration like so:
+The following three dependancies must either be in your `PATH`, or specified in your configuration like so:
 
     :::yaml
     paths:
@@ -55,10 +55,8 @@ however, if you choose not to, any version will give you most of the thresholds 
     :::shell
     # Ubuntu
     sudo apt-get install httperf
-    
     # CentOS
     sudo yum install httperf
-    
     # Mac
     sudo port install httperf # I think? Anyone, confirm!
 
