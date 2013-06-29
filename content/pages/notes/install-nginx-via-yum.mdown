@@ -1,0 +1,24 @@
+Categories: nginx, linux, notes, hacks
+Title: Install Nginx via yum
+
+# Install Nginx via yum
+
+    :::shell
+    #!/bin/bash
+    #
+    # Run like so:
+    #
+    # sudo bash < <( curl https://gist.github.com/jmervine/5359133/raw/ )
+    #
+    # Note: this is only for Centos 6 / x86_64
+     
+    echo "[nginx]
+    name=nginx repo
+    baseurl=http://nginx.org/packages/centos/6/x86_64/
+    gpgcheck=0
+    enabled=1
+    " >  /etc/yum.repos.d/nginx.repo
+         
+    yum install --assumeyes nginx
+
+[get the gist](https://gist.github.com/jmervine/5359133/)
