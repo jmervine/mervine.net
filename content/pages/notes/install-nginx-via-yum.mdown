@@ -21,4 +21,4 @@ Title: Install Nginx via yum
          
     yum install --assumeyes nginx
 
-[get the gist](https://gist.github.com/jmervine/5359133/raw/)
+[get the gist](https://gist.github.com/jmervine/5359133/)
