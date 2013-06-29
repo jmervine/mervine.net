@@ -1,6 +1,6 @@
 Date: 29 June 2013 12:00
 Title: Stubbing Binaries for Testing
-Categoires: notes, bash, testing, ruby, nodejs
+Categories: notes, bash, testing, ruby, nodejs
 
 # Stubbing Binaries for Testing
 
