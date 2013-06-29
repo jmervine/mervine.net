@@ -1,6 +1,6 @@
 Categories: notes, mysql, localhost, linux
 
-# Binding MySQL to `localhost`
+# Binding MySQL to localhost
 
     # cat /etc/my.cnf 
     [mysqld]
