@@ -1,4 +1,4 @@
-Date: 29 June 2013 11:#0
+Date: 29 June 2013 11:30
 Title: Stubbing Binaries for Testing
 Categoires: bash, testing, ruby, nodejs, hacks, notes
 
