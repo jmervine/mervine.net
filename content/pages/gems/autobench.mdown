@@ -3,7 +3,7 @@ Categories: gems, httperf, gems/httperfrb, ruby, performance, gems/autoperf, pha
 Summary: Autobench, as follow up to [Autoperf](http://mervine.net/gems/autoperf), was created to allow for benchmarking web pages 
 in three different ways; render metrics, client metrics and yslow metrics.
 
-# Autobench [aplha release]
+# Autobench [alpha release]
 
 Autobench, as follow up to [Autoperf](http://mervine.net/gems/autoperf), was created to allow for benchmarking web pages 
 in three different ways. 
