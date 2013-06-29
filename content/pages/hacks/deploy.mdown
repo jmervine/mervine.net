@@ -3,7 +3,7 @@ Categories: hacks, rake, ruby
 
 # Hack: Deploying with git
 
-> This has been updated, see: [Hack: Deploying with git and rake-remote_remote](/hacks/deploy-part-2.mdown)
+> This has been updated, see: [Hack: Deploying with git and rake-remote_remote](/hacks/deploy-part-2)
 
 
 Add the following to your Rakefile
