@@ -25,18 +25,18 @@ running `autobench-config -o ./path/to/write/config.yml -s example.com -u /path/
 
 For sample configurations, see: [github.com/jmervine/autobench/tree/master/config](https://github.com/jmervine/autobench/tree/master/config).
 
-> ### Why Alpha
->
-> Mostly because I haven't use this in thre real world yet. I don't like to final release [my gems](/gems)
-> until I've had a change to fully vet them in real world senarios. Additionally, I have some additional 
-> features in mind, like being able to pass a padding value in to `autobench-config` to pad thresholds by 
-> a percentage and perhaps allowing `autobench` to take a run only flag for benchmarks.
->
-> Lastly, and more importantly, I want to make sure it's actually useful. Currently when running autobench,
-> either via cli or in a test framework, I get a high failure rate do to network latency and other factors.
->
-> That said, help me out. Install it, try it, [submit issues](https://github.com/jmervine/autobench/issues) 
-> or [fork it](https://github.com/jmervine/autobench) and send me pull requests.
+### Why Alpha
+
+Mostly because I haven't use this in thre real world yet. I don't like to final release [my gems](/gems)
+until I've had a change to fully vet them in real world senarios. Additionally, I have some additional 
+features in mind, like being able to pass a padding value in to `autobench-config` to pad thresholds by 
+a percentage and perhaps allowing `autobench` to take a run only flag for benchmarks.
+
+Lastly, and more importantly, I want to make sure it's actually useful. Currently when running autobench,
+either via cli or in a test framework, I get a high failure rate do to network latency and other factors.
+
+That said, help me out. Install it, try it, [submit issues](https://github.com/jmervine/autobench/issues) 
+or [fork it](https://github.com/jmervine/autobench) and send me pull requests.
 
 
 ## Installation
