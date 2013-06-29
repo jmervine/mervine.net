@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 %html(lang="en")
   %head
+    = ::NewRelic::Agent.browser_timing_header rescue ""
     %link{ :rel=>"icon", :href=>"/favicon.ico" }
     %meta(charset="utf-8")
     - if @description
@@ -8,7 +9,6 @@
     - if @keywords
       %meta(name="keywords" content=@keywords)
     %title= @title
-    = haml :analytics, :layout => false
     <!--[if ! lte IE 6]><!-->
     %link(href="#{url('/css/master.css')}" media="screen" rel="stylesheet")
     <!--<![endif]-->
@@ -17,10 +17,8 @@
     /[if lt IE 9]
       %script(src="//html5shim.googlecode.com/svn/trunk/html5.js")
     - local_stylesheet_link_tag('local')
-    - if defined?(sharethis_javascript)
-      = sharethis_javascript
     %link(href="#{url('/articles.xml')}" rel="alternate" type="application/atom+xml")
-    = ::NewRelic::Agent.browser_timing_header rescue ""
+    = haml :analytics, :layout => false
 
   %body
     #container
@@ -28,4 +26,6 @@
       = yield
       = haml :footer, :layout => false
 
+  - if defined?(sharethis_javascript)
+    = sharethis_javascript
   = ::NewRelic::Agent.browser_timing_footer rescue ""
