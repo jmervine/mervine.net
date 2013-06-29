@@ -45,3 +45,5 @@ Title: Simple Perf Script - perf.rb
     end
 
     puts "Done!"
+
+[get the gist](https://gist.github.com/jmervine/5258983/raw/)
