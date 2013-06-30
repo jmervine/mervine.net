@@ -53,7 +53,7 @@ nginx/reload: nginx/update_configs
 	sudo $(NGINX_INIT) reload
 
 nginx/update_configs:
-	sudo $(NGINX_ETC)/nginx.conf $(NGINX_ETC)/nginx.conf.bak
-	sudo cp ./config/nginx.conf $(NGINX_ETC)/nginx.conf
-	sudo cp $(NGINX_ETC)/sites-available/mervine.net $(NGINX_ETC)/sites-available/mervine.net.bak
-	sudo cp ./config/mervine.net.conf $(NGINX_ETC)/sites-available/mervine.net
+	@sudo cp -v $(NGINX_ETC)/nginx.conf $(NGINX_ETC)/nginx.conf.bak
+	@sudo cp -v ./config/nginx.conf $(NGINX_ETC)/nginx.conf
+	@sudo cp -v $(NGINX_ETC)/sites-available/mervine.net $(NGINX_ETC)/sites-available/mervine.net.bak
+	@sudo cp -v ./config/mervine.net.conf $(NGINX_ETC)/sites-available/mervine.net
