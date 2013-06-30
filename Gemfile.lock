@@ -85,5 +85,6 @@ DEPENDENCIES
   rack-hard-copy
   rack-test
   rake
+  shotgun
   ultraviolet
   unicorn

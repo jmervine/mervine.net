@@ -28,6 +28,7 @@ group :test do
 end
 
 group :development do
+  gem 'shotgun'
   gem 'pry'
   gem 'pry-doc'
 end

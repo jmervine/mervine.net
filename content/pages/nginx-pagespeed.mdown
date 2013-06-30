@@ -1,0 +1,99 @@
+Date: 30 June 2013 09:30
+Title: Pagespeed Module for Nginx
+Categories: nginx, performance
+Summary: The guys at [Google Pagespeed](https://developers.google.com/speed/pagespeed/) are working diligently on [`ngx_pagespeed`](https://developers.google.com/speed/pagespeed/ngx), I installed and configured it and saw immediate performance gains.
+
+# Pagespeed Module for Nginx
+
+The guys at [Google Pagespeed](https://developers.google.com/speed/pagespeed/) are working diligently on [`ngx_pagespeed`](https://developers.google.com/speed/pagespeed/ngx)...
+
+> ngx_pagespeed speeds up your site and reduces page load time. This open-source [nginx][n] server module automatically applies [web performance best practices](https://developers.google.com/speed/docs/best-practices/rules_intro) to pages, and associated assets (CSS, JavaScript, images) without requiring that you modify your existing content or workflow.
+
+Yesterday I included it in my [nginx][n] configurations for [mervine.net](http://mervine.net) to give it try. This post is not about how to build and install this module. [Google's documentation is perfect.](https://github.com/pagespeed/ngx_pagespeed#readme) This post is about how I chose to configure `ngx_pagespeed` and the immediate performance gains I saw.
+
+### My Configuration
+
+After spending about an hour reading through the [various filters for `ngx_pagespeed`](https://developers.google.com/speed/pagespeed/module/filters), I settled on the following configuration:
+
+    :::shell
+    # file: nginx.conf
+    # ...
+    http {
+        # ...
+        pagespeed on;
+        pagespeed FileCachePath /var/ngx_pagespeed_cache;
+        pagespeed MaxSegmentLength 250;
+        pagespeed Domain mervine.net;
+        pagespeed Domain *.mervine.net;
+
+        pagespeed AnalyticsID UA-NNNNNNNN-N;
+
+        pagespeed EnableFilters collapse_whitespace,
+                                insert_ga,
+                                combine_css,
+                                inline_css,
+                                combine_javascript,
+                                inline_javascript,
+                                insert_dns_prefetch,
+                                rewrite_domains,
+                                elide_attributes,
+                                rewrite_javascript,
+                                recompress_images,
+                                remove_quotes,
+                                rewrite_css,
+                                rewrite_style_attributes,
+                                extend_cache,
+                                convert_meta_tags,
+                                defer_javascript,
+                                lazyload_images,
+                                trim_urls,
+                                rewrite_images;
+            # NOTE: The above need to be on the same line. I
+            #       broke them out to be easier to read.
+
+        # ...
+        server {
+            # ...
+            # I'm not currently using all of these, but added them
+            # because they're called out in the docs and they don't
+            # cause any noteworthy overhead by being here.
+            location ~ "\.pagespeed\.([a-z]\.)?[a-z]{2}\.[^.]{10}\.[^.]+" { add_header "" ""; }
+            location ~ "^/ngx_pagespeed_static/" { }
+            location ~ "^/ngx_pagespeed_beacon$" { }
+            location /ngx_pagespeed_statistics { allow 127.0.0.1; deny all; }
+            location /ngx_pagespeed_message { allow 127.0.0.1; deny all; }
+            # ...
+        }
+        # ...
+    }
+
+> Note: there are a few really good filters that I excluded here, mostly because they weren't applicable to my site. Either I'm not making a mistake if fixes, or don't use the element it addresses. Read the docs, choose your own.
+
+### Results
+
+I used a [gem](/gem) I've been working on ([Autobench](/gems/autobench) [shameless plug?]) to take a snap shot of a page from my site before and after implementing these changes (and once in between to optimize). Here's a quick view of the results.
+
+#### Highlights
+
+    :::diff
+    <   BEFORE
+    >   AFTER
+
+    # yslow - yslow.js
+    <   requests: 54
+    >   requests: 45
+    <   loadtime: 1415
+    >   loadtime: 1007
+
+    # client - phantomas
+    <   httpTrafficCompleted: 1530.0
+    >   httpTrafficCompleted: 1401.0
+    <   onDOMReadyTime: 107.0
+    >   onDOMReadyTime: 19.0
+    <   windowOnLoadTime: 807.0
+    >   windowOnLoadTime: 658.0
+
+#### More Complete Side by Side Comparison
+[![pagespeed.jpg](/pages/pagespeed.jpg)](/pages/pagespeed.jpg)
+
+[n]: /nginx
