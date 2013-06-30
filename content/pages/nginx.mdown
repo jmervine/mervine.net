@@ -1,0 +1,5 @@
+# Nginx
+
+> [![nginx.org](http://nginx.org/nginx.gif "Nginx")](http://nginx.org)
+>
+> nginx [engine x] is an HTTP and reverse proxy server, as well as a mail proxy server, written by [Igor Sysoev](http://sysoev.ru/en/). For a long time, it has been running on many heavily loaded Russian sites including Yandex, Mail.Ru, VKontakte, and Rambler. According to Netcraft nginx served or proxied [14.08% busiest sites in June 2013](http://news.netcraft.com/archives/2013/06/06/june-2013-web-server-survey-3.html).
