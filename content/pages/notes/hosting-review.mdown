@@ -1,4 +1,4 @@
-Title: Hosting Review - [QuestaVOLTA](http://www.questavolta.com)
+Title: Hosting Review - QuestaVOLTA
 Categories: notes, performance, httperf, httperfrb
 
 # Hosting Review - [QuestaVOLTA](http://www.questavolta.com)
