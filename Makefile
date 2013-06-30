@@ -1,5 +1,7 @@
 SHELL=/bin/bash
 RACK_ENV=production
+NGINX_ETC=/usr/local/etc/nginx
+NGINX_INIT=/etc/init.d/nginxps
 
 setup:
 	bundle install --path vendor/bundle
@@ -36,18 +38,22 @@ deploy/full: update cache/clean restart nginx/reload prod/generate_error_pages
 
 # nginx handlers
 nginx/start:
-	sudo /etc/init.d/nginx start
+	sudo $(NGINX_INIT) start
 
 nginx/stop:
-	sudo /etc/init.d/nginx start
+	sudo $(NGINX_INIT) start
 
 nginx/restart:
-	sudo /etc/init.d/nginx restart
-
-nginx/reload:
-	sudo cp ./config/nginx.conf /etc/nginx/sites-available/mervine.net
-	sudo /etc/init.d/nginx reload
+	sudo $(NGINX_INIT) restart
 
 nginx/status:
-	sudo /etc/init.d/nginx status
+	$(NGINX_INIT) status
 
+nginx/reload: nginx/update_configs
+	sudo $(NGINX_INIT) reload
+
+nginx/update_configs:
+	sudo $(NGINX_ETC)/nginx.conf $(NGINX_ETC)/nginx.conf.bak
+	sudo cp ./config/nginx.conf $(NGINX_ETC)/nginx.conf
+	sudo cp $(NGINX_ETC)/sites-available/mervine.net $(NGINX_ETC)/sites-available/mervine.net.bak
+	sudo cp ./config/mervine.net.conf $(NGINX_ETC)/sites-available/mervine.net
