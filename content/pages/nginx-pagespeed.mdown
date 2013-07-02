@@ -5,8 +5,7 @@ Summary: The guys at [Google Pagespeed](https://developers.google.com/speed/page
 
 # Pagespeed Module for Nginx
 
-> <blockquote class="twitter-tweet"><p><a href="https://twitter.com/jdorfman">@jdorfman</a> <a href="https://twitter.com/nginxorg">@nginxorg</a> <a href="https://twitter.com/pagespeed">@pagespeed</a> Perhaps I should have called the post &quot;Client Side Performance Optimization for Server Side Nerds.&quot; ;)</p>&mdash; Joshua Mervine (@mervinej) <a href="https://twitter.com/mervinej/statuses/351429588766818305">June 30, 2013</a></blockquote>
-> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+> Perhaps I should have called the post &quot;Client Side Performance Optimization for Server Side Nerds.&quot; ;)<br />&mdash; Joshua Mervine <a href="https://twitter.com/mervinej/statuses/351429588766818305">(@mervinej) June 30, 2013</a>
 
 The guys at [Google Pagespeed](https://developers.google.com/speed/pagespeed/) are working diligently on [`ngx_pagespeed`](https://developers.google.com/speed/pagespeed/ngx)...
 
