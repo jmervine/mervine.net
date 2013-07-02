@@ -5,7 +5,7 @@ Categories: gems/autobench
 
 # Autobench Release - 0.0.1alpha7
 
-### [0.0.1alpha7](https://github.com/jmervine/autobench/tree/0.0.1alpha7)
+### 0.0.1alpha7
 
 > Bunch of changes and releases today. I was working on something using Autobench 
 > and fixing bugs as I came across them.
