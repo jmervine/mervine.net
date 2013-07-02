@@ -10,7 +10,7 @@ Categories: gems/autobench
 > Bunch of changes and releases today. I was working on something using Autobench 
 > and fixing bugs as I came across them.
 
-* Fixing Issue #1 with quoting uri's. Fixing broken yslow command tests.
+* Fixing [Issue #1](https://github.com/jmervine/autobench/issues/1) with quoting uri's. Fixing broken yslow command tests.
 * Fixing nil issue with thresholds for yslow and render.
 * Fixing nil error with client thresholds.
 * Removing port check from render and adding port 80 as default in config.
