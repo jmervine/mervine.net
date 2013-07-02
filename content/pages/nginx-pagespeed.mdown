@@ -5,6 +5,9 @@ Summary: The guys at [Google Pagespeed](https://developers.google.com/speed/page
 
 # Pagespeed Module for Nginx
 
+> <blockquote class="twitter-tweet"><p><a href="https://twitter.com/jdorfman">@jdorfman</a> <a href="https://twitter.com/nginxorg">@nginxorg</a> <a href="https://twitter.com/pagespeed">@pagespeed</a> Perhaps I should have called the post &quot;Client Side Performance Optimization for Server Side Nerds.&quot; ;)</p>&mdash; Joshua Mervine (@mervinej) <a href="https://twitter.com/mervinej/statuses/351429588766818305">June 30, 2013</a></blockquote>
+> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
 The guys at [Google Pagespeed](https://developers.google.com/speed/pagespeed/) are working diligently on [`ngx_pagespeed`](https://developers.google.com/speed/pagespeed/ngx)...
 
 > ngx_pagespeed speeds up your site and reduces page load time. This open-source [nginx][n] server module automatically applies [web performance best practices](https://developers.google.com/speed/docs/best-practices/rules_intro) to pages, and associated assets (CSS, JavaScript, images) without requiring that you modify your existing content or workflow.
