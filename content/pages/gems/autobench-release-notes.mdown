@@ -1,0 +1,24 @@
+Date: 01 July 2013 20:00
+Title: Autobench Release - 0.0.1alpha7
+Summary: Commit Logs for Autobench Release's
+Categories: gems/autobench
+
+# Autobench Release - ![Gem Version](https://badge.fury.io/rb/autobench.png)
+
+### 0.0.1alpha7
+
+* Fixing Issue #1 with quoting uri's. Fixing broken yslow command tests.
+* Fixing nil issue with thresholds for yslow and render.
+* Fixing nil error with client thresholds.
+* Removing port check from render and adding port 80 as default in config.
+* Fixing [] method in render. Cleaning up examples.
+
+### 0.0.1alpha2
+
+* making shit work in travis
+* fixing bugs around loading js libs
+* Adding ignored and reversed metrics to render.
+
+### 0.0.1alpha1
+
+* All tests passing. I would say this is the alpha-1 commit.
