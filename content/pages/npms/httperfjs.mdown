@@ -25,6 +25,7 @@ works pretty much the same way.
 
 ### Basic usage:
 
+    :::javascript
     var HTTPerf = require('httperf');
 
     var httperf = new HTTPerf({
