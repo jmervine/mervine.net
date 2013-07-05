@@ -117,6 +117,8 @@ works pretty much the same way.
 
 #### Verbose Percentile Parser Keys:
 
+These require a non-standard version of `httperf`. See: [httperf-0.9.1 with individual connection times](/httperf-0-9-1-with-individual-connection-times).
+
     connection_time_75_pct
     connection_time_80_pct
     connection_time_85_pct
