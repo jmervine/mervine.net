@@ -26,7 +26,7 @@ works pretty much the same way.
 ### Basic usage:
 
     :::js
-    var HTTPerf = require('httperf');
+    var HTTPerf = require('httperfjs');
 
     var httperf = new HTTPerf({
         "server": "mervine.net",
