@@ -1,9 +1,9 @@
 # HTTPerf.js
 
-This is a node port of [HTTPerf.rb](http://mervine.net/gems/httperfrb) and
+Simple Node.js interface for httperf. This is a node port of [HTTPerf.rb](http://mervine.net/gems/httperfrb) and
 works pretty much the same way.
 
-> What hasn't been ported or is different:
+> What hasn't been ported or is different from the [ruby version](http://mervine.net/gems/httperfrb):
 >
 > - `parse` is true by default.
 > - `#fork` isn't currently supported.
