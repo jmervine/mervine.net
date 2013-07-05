@@ -10,6 +10,12 @@ works pretty much the same way.
 > - `tee` isn't currently supported.
 > - `httperf` must be in your `PATH`
 
+### Links
+
+* [package](https://npmjs.org/package/httperfjs)
+* [source](http://github.com/jmervine/httperfjs)
+* [tests](https://travis-ci.org/jmervine/httperfjs)
+
 ### Node.js Version
 
 [![Build Status](https://travis-ci.org/jmervine/httperfjs.png?branch=master)](https://travis-ci.org/jmervine/httperfjs) for the following node versions:
