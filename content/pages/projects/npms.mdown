@@ -1,0 +1,7 @@
+Title: My NPMs
+Categories: about, projects
+Flags: landing_page
+
+# My NPMs
+
+> Short for "Node Packaged Modules", [NPMs](http://npmjs.org) are the standard packaging method for [Node.js](/nodejs) modules.

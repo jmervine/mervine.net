@@ -1,5 +1,5 @@
 Title: HTTPerf.js
-Categories: npms, httperf, nodejs, performance
+Categories: projects/npms, httperf, nodejs, performance, projects/gems/httperfrb, projects/pips/httperfpy
 Summary: Simple Node.js interface for httperf. This is a node port of [HTTPerf.rb](http://mervine.net/gems/httperfrb) and
 works pretty much the same way.
 

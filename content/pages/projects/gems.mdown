@@ -1,0 +1,7 @@
+Title: My Gems
+Categories: about, projects
+Flags: landing_page
+
+# My Gems
+
+> [GEMs, or RubyGems](http://rubygems.org), are the standard packaging method for [Ruby](/ruby) modules.

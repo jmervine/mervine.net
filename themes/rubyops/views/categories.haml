@@ -1,7 +1,7 @@
 %nav.categories
   %h1 Search
   = display_searchbox
-  - unless @page.pages.empty? || @page.abspath == "/archive" || @page.abspath == "/gems"
+  - unless @page.pages.empty? || @page.flagged_as?('landing_page');
     %h1
       ="More on This"
     - @page.pages.each do |page|

@@ -1,13 +1,13 @@
 Date: 01 July 2013 20:00
 Title: Autobench Release - 0.0.1alpha7
 Summary: Commit Logs for Autobench Release's
-Categories: gems/autobench
+Categories: projects/gems/autobench
 
 # Autobench Release - 0.0.1alpha7
 
 ### 0.0.1alpha7
 
-> Bunch of changes and releases today. I was working on something using Autobench 
+> Bunch of changes and releases today. I was working on something using Autobench
 > and fixing bugs as I came across them.
 
 * Fixing [Issue #1](https://github.com/jmervine/autobench/issues/1) with quoting uri's. Fixing broken yslow command tests.

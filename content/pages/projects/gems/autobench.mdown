@@ -1,18 +1,18 @@
 Title: Autobench [alpha release]
-Categories: gems, httperf, gems/httperfrb, ruby, performance, gems/autoperf, phantomjs, nodejs
-Summary: Autobench, as follow up to [Autoperf](http://mervine.net/gems/autoperf), was created to allow for benchmarking web pages 
+Categories: projects/gems, httperf, projects/gems/httperfrb, ruby, performance, projects/gems/autoperf, phantomjs, nodejs
+Summary: Autobench, as follow up to [Autoperf](http://mervine.net/gems/autoperf), was created to allow for benchmarking web pages
 in three different ways; render metrics, client metrics and yslow metrics.
 
 # Autobench [alpha release]
 
 ![Gem Version](https://badge.fury.io/rb/autobench.png)&nbsp;&nbsp;[![Build Status](https://travis-ci.org/jmervine/autobench.png?branch=master)](https://travis-ci.org/jmervine/autobench)
 
-Autobench, as follow up to [Autoperf](http://mervine.net/gems/autoperf), was created to allow for benchmarking web pages 
-in three different ways. 
+Autobench, as follow up to [Autoperf](http://mervine.net/gems/autoperf), was created to allow for benchmarking web pages
+in three different ways.
 
-1. Render Metrics -- using [`httperf`](http://mervine.net/httperf] and [`HTTPerf.rb`](http://mervine.net/gems/httperfrb], it 
-   grabs a snapshot of how long it takes to access, (server side) render and download your page. You can set thresholds 
-   in your configuration for almost all of httperf's output. Additionally, if you use 
+1. Render Metrics -- using [`httperf`](http://mervine.net/httperf] and [`HTTPerf.rb`](http://mervine.net/gems/httperfrb], it
+   grabs a snapshot of how long it takes to access, (server side) render and download your page. You can set thresholds
+   in your configuration for almost all of httperf's output. Additionally, if you use
    [my version of httperf](http://mervine.net/httperf-0-9-1-with-individual-connection-times) you'll get percentile
    support as well.
 2. Client Metrics -- using [`phantomas`](https://github.com/macbre/phantomas), a sweet [PhantomJS](http://mervine.net/phantomjs)
@@ -20,7 +20,7 @@ in three different ways.
 3. YSlow Metrics -- using [`yslow.js`](http://yslow.org/phantomjs), a [PhantomJS](http://mervine.net/phantomjs) script
    written to inspect your page and give you all kinds of useful grading and information. See [YSlow](http://yslow.org)
    for more details.
-   
+
 Autobench is based around a pass / fail mentality and let's you set as many or as few thresholds as you would like through
 it's extensive, but hopefully simple configuration. You can easily generate a template configuration for your web page by
 running `autobench-config -o ./path/to/write/config.yml -s example.com -u /path/to/page` (see usage notes below for details).
@@ -30,14 +30,14 @@ For sample configurations, see: [github.com/jmervine/autobench/tree/master/confi
 ### Why Alpha
 
 Mostly because I haven't use this in thre real world yet. I don't like to final release [my gems](/gems)
-until I've had a change to fully vet them in real world senarios. Additionally, I have some additional 
-features in mind, like being able to pass a padding value in to `autobench-config` to pad thresholds by 
+until I've had a change to fully vet them in real world senarios. Additionally, I have some additional
+features in mind, like being able to pass a padding value in to `autobench-config` to pad thresholds by
 a percentage and perhaps allowing `autobench` to take a run only flag for benchmarks.
 
 Lastly, and more importantly, I want to make sure it's actually useful. Currently when running autobench,
 either via cli or in a test framework, I get a high failure rate do to network latency and other factors.
 
-That said, help me out. Install it, try it, [submit issues](https://github.com/jmervine/autobench/issues) 
+That said, help me out. Install it, try it, [submit issues](https://github.com/jmervine/autobench/issues)
 or [fork it](https://github.com/jmervine/autobench) and send me pull requests.
 
 

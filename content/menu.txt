@@ -1,5 +1,5 @@
 /
-  gems
+  projects
   ruby
   nodejs
   notes

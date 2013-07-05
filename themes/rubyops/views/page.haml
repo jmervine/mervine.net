@@ -5,7 +5,7 @@
   %article(role="main")
     ~ @page.to_html(self)
 
-    - if @page.abspath == "/archive" || @page.abspath == "/gems"
+    - if @page.flagged_as?('landing_page');
       %section.pages
         = article_summaries(@page.pages)
 
