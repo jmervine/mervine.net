@@ -91,7 +91,7 @@ File:
     });
 
     console.log("Configuration...");
-    console.log("=> yslow.uri       " + yslow.url);
+    console.log("=> yslow.url       " + yslow.url);
     console.log("=> yslow.command() " + yslow.command());
 
     console.log("Running....");
@@ -106,7 +106,7 @@ Run it:
     :::shell
     $ NODE_PATH=.:./node_modules/:$NODE_PATH node ./test.js
     Configuration...
-    => yslow.uri       http://mervine.net/about
+    => yslow.url       http://mervine.net/about
     => yslow.command() yslow.js --format json --info basic 'http://mervine.net/about'
     Running....
     => overall:   74
