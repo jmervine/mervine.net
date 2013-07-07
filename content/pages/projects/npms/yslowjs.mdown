@@ -8,6 +8,12 @@ Summary: IN PROGRESS - NOT CURRENTLY AVAILABLE: I published this and then unpubl
 
 YSlow.js is a simple wrapper for programmaticly running [`phantomjs yslow.js`](http://yslow.org/phantomjs/).
 
+### Links
+
+* [package](https://npmjs.org/package/yslowjs)
+* [source](https://github.com/jmervine/yslowjs)
+* [tests](https://travis-ci.org/jmervine/yslowjs)
+
 ## Installation
 
 > #### Requirements
