@@ -1,12 +1,12 @@
 Title: YSlow.js
 Categories: projects/npms, nodejs
-Summary: YSlow.js is a simple wrapper for programmaticly running [`phantomjs yslow.js`](http://yslow.org/phantomjs/).
+Summary: YSlow.js is a simple wrapper for programmatically running [`phantomjs yslow.js`](http://yslow.org/phantomjs/).
 
 # YSlow.js
 
 [![Build Status](https://travis-ci.org/jmervine/yslowjs.png)](https://travis-ci.org/jmervine/yslowjs)
 
-YSlow.js is a simple wrapper for programmaticly running [`phantomjs yslow.js`](http://yslow.org/phantomjs/).
+YSlow.js is a simple wrapper for programmatically running [`phantomjs yslow.js`](http://yslow.org/phantomjs/).
 
 ### Links
 
