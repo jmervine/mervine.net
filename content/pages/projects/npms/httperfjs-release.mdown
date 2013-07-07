@@ -1,5 +1,6 @@
 Date: 06 July 2013 21:00
 Title: HTTPerf.js Release: 0.0.2
+Categories: projects, projects/npms/httperfjs, nodejs
 
 # HTTPerf.js Release: 0.0.2
 
