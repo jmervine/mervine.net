@@ -69,3 +69,12 @@ Install it:
       headers  : "specify custom request headers, e.g.: -ch '{\'Cookie\': \'foo=bar\'}'"
     });
 
+> NOTE:
+>
+> There's another option which can be passed &mdash; `yslowdir`. It's intended to allow you to specify your own directory containing `phantomjs yslow.js`. **HOWEVER**, for this to work, you must do the following:
+>
+> * Add the following line to the top of yslow.js: `#!/usr/bin/env phantomjs`.
+> * Ensure that yslow.js is executable: `chmod 755 /path/to/your/yslow.js`.
+>
+> This feature was designed for testing, not real use, but it's there.
+
