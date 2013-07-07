@@ -53,7 +53,7 @@ Install it:
 ## Configuration Options
 
     :::js
-    {
+    var yslow = new YSlow({
       url      : "url to the page you wish to test",
       info     : "specify the information to display/log (basic|grade|stats|comps|all) [all]",
       ruleset  : "specify the YSlow performance ruleset to be used (ydefault|yslow1|yblog) [ydefault]",
@@ -61,5 +61,5 @@ Install it:
       ua       : "specify the user agent string sent to server when the page requests resources",
       viewport : "specify page viewport size WxY, where W = width and H = height [400x300]",
       headers  : "specify custom request headers, e.g.: -ch '{\'Cookie\': \'foo=bar\'}'"
-    }
+    });
 
