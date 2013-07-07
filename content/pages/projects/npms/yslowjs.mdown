@@ -78,3 +78,38 @@ Install it:
 >
 > This feature was designed for testing, not real use, but it's there.
 
+## Working Example
+
+File:
+
+    :::js
+    // file: test.js
+    var YSlow = require('yslowjs');
+    var yslow = new YSlow({
+        url: "http://mervine.net/about",
+        info: "basic"
+    });
+
+    console.log("Configuration...");
+    console.log("=> yslow.uri       " + yslow.url);
+    console.log("=> yslow.command() " + yslow.command());
+
+    console.log("Running....");
+    yslow.run( function (results) {
+        console.log("=> overall:   " + results.o);
+        console.log("=> load time: " + results.lt);
+    });
+
+
+Run it:
+
+    :::shell
+    $ NODE_PATH=.:./node_modules/:$NODE_PATH node ./test.js
+    Configuration...
+    => yslow.uri       http://mervine.net/about
+    => yslow.command() yslow.js --format json --info basic 'http://mervine.net/about'
+    Running....
+    => overall:   74
+    => load time: 1443
+
+
