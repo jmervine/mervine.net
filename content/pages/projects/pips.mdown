@@ -4,4 +4,4 @@ Flags: landing_page
 
 # My PIPs
 
-> [PIP](https://pypi.python.org/pypi/pip) is a tool for install and managing [Python](/python) packages.
+> [PIP](https://pypi.python.org/pypi/pip) is a tool for installing and managing [Python](/python) packages.
