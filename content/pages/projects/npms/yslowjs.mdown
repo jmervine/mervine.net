@@ -78,15 +78,13 @@ Install it:
 >
 > This feature was designed for testing, not real use, but it's there.
 
-## Working Example
-
-File:
+## Working Examples
 
     :::js
     // file: test.js
     var YSlow = require('yslowjs');
     var yslow = new YSlow({
-        url: "http://mervine.net/about",
+        url: "http://mervine.net/projects/npms/yslowjs",
         info: "basic"
     });
 
@@ -94,22 +92,30 @@ File:
     console.log("=> yslow.url       " + yslow.url);
     console.log("=> yslow.command() " + yslow.command());
 
-    console.log("Running....");
+    console.log("Running (Sync)....");
+    var results = yslow.runSync();
+    console.log("=> overall:   " + results.o);
+    console.log("=> load time: " + results.lt);
+
+    console.log("Running (Async)....");
     yslow.run( function (results) {
         console.log("=> overall:   " + results.o);
         console.log("=> load time: " + results.lt);
     });
 
 
+
 Run it:
 
-    :::shell
-    $ NODE_PATH=.:./node_modules/:$NODE_PATH node ./test.js
+    $ NODE_PATH=.:./node_modules/:$NODE_PATH node ./test.js                             [  | ruby-2.0.0p195 |12:21PM ]
     Configuration...
-    => yslow.url       http://mervine.net/about
-    => yslow.command() yslow.js --format json --info basic 'http://mervine.net/about'
-    Running....
-    => overall:   74
-    => load time: 1443
+    => yslow.url       http://mervine.net/projects/npms/yslowjs
+    => yslow.command() yslow.js --format json --info basic 'http://mervine.net/projects/npms/yslowjs'
+    Running (Sync)....
+    => overall:   76
+    => load time: 2296
+    Running (Async)....
+    => overall:   77
+    => load time: 2234
 
 
