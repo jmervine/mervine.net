@@ -1,7 +1,7 @@
 Date: 01 July 2013 20:00
 Title: Autobench Release - 0.0.1alpha7
 Summary: Commit Logs for Autobench Release's
-Categories: projects/gems/autobench
+Categories: projects/gems/autobench, projects, ruby
 
 # Autobench Release - 0.0.1alpha7
 
