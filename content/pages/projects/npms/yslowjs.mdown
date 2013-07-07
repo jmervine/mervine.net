@@ -12,7 +12,9 @@ YSlow.js is a simple wrapper for programmaticly running [`phantomjs yslow.js`](h
 
 > #### Requirements
 >
-> [PhantomJS](http://phantomjs.org/) in your `PATH`.
+> 1. [PhantomJS](http://phantomjs.org/) in your `PATH`.
+> 2. [Node.js](/nodejs) versions 0.8+.
+
 
 Install it:
 
