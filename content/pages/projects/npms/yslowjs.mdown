@@ -1,6 +1,6 @@
 Title: YSlow.js
 Categories: projects/npms, nodejs
-Summary: IN PROGRESS - NOT CURRENTLY AVAILABLE: I published this and then unpublished it due to some major issues. You can install it using the git repo, but you must download and install [`phantomjs yslow.js`](http://yslow.org/phantomjs/) yourself and set `yslowdir` to the path `yslow.js` is installed in. Even that is somewhat experimental and may not work in all cases.
+Summary: YSlow.js is a simple wrapper for programmaticly running [`phantomjs yslow.js`](http://yslow.org/phantomjs/).
 
 # YSlow.js
 
