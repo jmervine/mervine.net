@@ -1,0 +1,11 @@
+Date: 06 July 2013 21:00
+Title: HTTPerf.js Release: 0.0.2
+
+# HTTPerf.js Release: 0.0.2
+
+* Changing run to runSync for future async support.
+* Adding #run (async).
+
+### 0.0.1
+
+* Initial release.
