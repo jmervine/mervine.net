@@ -1,0 +1,53 @@
+Title: YSlow.js
+Categories: projects/npms, nodejs
+Summary: YSlow.js is a simple wrapper for programmaticly running [`phantomjs yslow.js`](http://yslow.org/phantomjs/).
+
+# YSlow.js
+
+[![Build Status](https://travis-ci.org/jmervine/yslowjs.png)](https://travis-ci.org/jmervine/yslowjs)
+
+YSlow.js is a simple wrapper for programmaticly running [`phantomjs yslow.js`](http://yslow.org/phantomjs/).
+
+## Installation
+
+> #### Requirements
+>
+> [PhantomJS](http://phantomjs.org/) in your `PATH`.
+
+Install it:
+
+    :::shell
+    $ npm install yslowjs
+
+## Usage Examples
+
+    :::js
+    > var YSlow = require('yslowjs');
+    > var yslow = new YSlow({
+    ...             url: "http://mervine.net/projects/npms/yslowjs",
+    ...             info: "basic"
+    ...           });
+    > var results = yslow.runSync();
+    > console.log(results);
+    { w: 98944,
+      o: 95,
+      u: 'http%3A%2F%2Fmervine.net%2Fprojects%2Fnpms%2Fyslowjs',
+      r: 7,
+      i: 'ydefault',
+      lt: 571 }
+    > var yprocess = yslow.run( function (result, raw_result) {
+    ...     console.log("RESULT:");
+    ...     console.log(result);
+    ...     console.log("RAW_RESULT:\n"+raw_result);
+    ... });
+    RESULT:
+    { w: 98944,
+      o: 95,
+      u: 'http%3A%2F%2Fmervine.net%2Fprojects%2Fnpms%2Fyslowjs',
+      r: 7,
+      i: 'ydefault',
+      lt: 548 }
+    RAW_RESULT:
+    {"w":98944,"o":95,"u":"http%3A%2F%2Fmervine.net%2Fprojects%2Fnpms%2Fyslowjs","r":7,"i":"ydefault","lt":548}
+
+
