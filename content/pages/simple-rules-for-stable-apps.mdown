@@ -1,11 +1,11 @@
 Date: 08 July 2013 08:00
 Title: Simple Rules for Stable, Performant and Maintainable Apps
 Categories: performance, ruby, nodejs, python, projects, httperf, linux, sinatra, express, rails, django, performance
-Summary: Here are some simple and basic rules I've found for building applications that are maintainable and perform well, both in speed and stability. These rules, at one level or another, can apply to smaller modules and libraries, scripts, and fully featured large scale application (both web and otherwise). In this post I will focus more on web applications, since that's where I've spent most of my time. At a higher level, they should apply to almost all areas of software development.
+Summary: Here are some simple and basic rules I've found for building applications that are maintainable and perform well, both in speed and stability. These rules, at one level or another, can apply to smaller modules and libraries, scripts, as well as fully featured large scale applications (both web and otherwise). In this post I will focus more on web applications, since that's where I've spent most of my time. At a higher level, they should apply to almost all areas of software development.
 
 # Simple Rules for Stable, Performant and Maintainable Apps
 
-Here are some simple and basic rules I've found for building applications that are maintainable and perform well, both in speed and stability. These rules, at one level or another, can apply to smaller modules and libraries, scripts, and fully featured large scale application (both web and otherwise). In this post I will focus more on web applications, since that's where I've spent most of my time. At a higher level, they should apply to almost all areas of software development.
+Here are some simple and basic rules I've found for building applications that are maintainable and perform well, both in speed and stability. These rules, at one level or another, can apply to smaller modules and libraries, scripts, as well as fully featured large scale applications (both web and otherwise). In this post I will focus more on web applications, since that's where I've spent most of my time. At a higher level, they should apply to almost all areas of software development.
 
 > Note: I've attempted to keep this as unbiased as possible. However, where I found it impossible (I'm opinionated), I've created a "Soap Box" section for my personal opinions. Feel free to consider and accept or reject them as it applies to you.
 >
