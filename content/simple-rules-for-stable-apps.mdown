@@ -1,0 +1,54 @@
+Date: 08 July 2013 08:00
+Title: Simple Rules for Stable, Performant and Maintainable Apps
+Categories: performance, ruby, nodejs, python, projects, httperf, linux, sinatra, express, rails, django, performance
+Summary: Here are some simple and basic rules I've found for building applications that are maintainable and perform well, both in speed and stability. These rules, at one level or another, can apply to smaller modules and libraries, scripts, and fully featured large scale application (both web and otherwise). Generally, in this post I will focus more on web applications, as that's where I've spent most of my time. At a higher level, they should apply to almost all areas of software development.
+
+# Simple Rules for Stable, Performant and Maintainable Apps
+
+Here are some simple and basic rules I've found for building applications that are maintainable and perform well, both in speed and stability. These rules, at one level or another, can apply to smaller modules and libraries, scripts, and fully featured large scale application (both web and otherwise). Generally, in this post I will focus more on web applications, as that's where I've spent most of my time. At a higher level, they should apply to almost all areas of software development.
+
+> Note: I've attempted to keep this as unbiased as possible. However, where I found it impossible (I'm opinionated), I've created a "Soap Box" section for my personal opinions. Feel free to consider and accept or reject them as it applies to you.
+>
+> Cheers!
+
+## Choose Technology Wisely
+
+"Bits is bits" and most languages, frameworks and platforms have their place, be it [Ruby](/ruby), [Node.js](/node), [Python](/python), PHP, etc., [Rails](http://rubyonrails.org/), [Sinatra](/sinatra), [Express](http://expressjs.com/), [Django](https://www.djangoproject.com/), [Zend](http://www.zend.com/en/), etc., etc. 
+
+Just about anything can be made to scale, some of the largest sites in the world are built using the afore mentioned technologies. So often people make their choices based on what's new and buzzing (which also has it's place). It's important to choose something that you and/or your development team feel comfortable working in. Additionally, something you and/or your ops team feel comfortable deploying and supporting.  
+
+> **Soap Box:**
+>
+> Personally, I prefer to choose an younger technology and framework that has a strong passionate open source community. Not for the technology itself, but rather for the people who choose to work in it. They tend to be the kind of people who develop because they love it, not simply because it's a job. Personally, I avoid technologies that do not promote open source &mdash; .NET and Java to name two.
+>
+> `+1` for Ruby:
+>
+> Ruby is a really pretty language, it's easy to read, write and debug. Additionally, it's very test driven and has a great community behind it.
+>
+> `+1` for Node.js:
+>
+> Node.js, like Ruby, has an amazing community behind it. Additionally, being JavaScript, for web application it's hard to beat. In most web app shops developers spend a phenomenal amount of time working on frontend JavaScript. Consolidating your language will help focus your talent in a single area thus building a strong expertise in one discipline. 
+
+
+## TEST ALL THE THINGS!!!
+
+Regardless of your technology, methodology and process. Automated testing is essential to a stable production environment. And not just unit tests, functional and integration testing are your friends. 
+
+
+## Automate Your Life
+
+Automate everything you can. For development, there's [`make`](http://www.gnu.org/software/make/), [`rake`](http://rake.rubyforge.org/), etc. Pre- and post-commit hooks can save lives (okay outages, but still). Deployment, obviously. It doesn't have to be fancy &mdash; [Chef](http://www.opscode.com/chef/) and [Vlad](http://rubyhitsquad.com/Vlad_the_Deployer.html) and things of the sort are great, but may be overkill depending on your scale &mdash; a simple `bash` script or [`rake_remote-task`](https://github.com/seattlerb/rake-remote_task) often will suffice. 
+
+> Soap Box:
+>
+> Start simple, always! Use `bash` and `make` to start, if you must expand due to more complicated requirements, then expand quickly to a mature higher level language &mdash; either [Ruby](/ruby) or [Python](/python). While I prefer [Ruby](/ruby), [Python](/python) is available by default on almost all modern Linux and BSD distro's (including Mac OSX) and therefore may be preferable. Both have excellent interfaces to the shell, while providing strong OO capabilities for building more mature and portable utilities. 
+
+
+## Hit the Mark, Benchmark!
+
+Benchmarking is an often overlooked practice, but an incredibly valuable one. There are a number of methods to do this, e.g. [`minitest/benchmark`](http://docs.seattlerb.org/minitest/#label-Benchmarks), the [`Benchmark`](http://www.ruby-doc.org/stdlib-2.0/libdoc/benchmark/rdoc/Benchmark.html) class in [Ruby](/ruby), or simply running your app through something like [`httperf`](/httperf) (server side) or [YSlow](http://yslow.org/) (client side) at regular intervals. Building a baseline and setting targets can make a big difference in your final product. 
+
+
+## Iterate, Iterate, Iterate...
+
+Too many times I've seen people fail by trying to design the car all at once. Build the tire, roll it down the hill, does it roll? Good. Now build another and attach them with an axle, do they roll? Good. This analogy translates to development well. Get something working.  Test it, benchmark it, vet it, etc. I can't tell you how many times I've worked on a project for weeks or months only to see it fail due lack of iteration. I also can't tell you how many times as I've tossed something out, and felt good about it, after the first iteration because it wasn't workable or well designed. 
