@@ -1,11 +1,11 @@
 Date: 08 July 2013 08:00
 Title: Simple Rules for Stable, Performant and Maintainable Apps
 Categories: performance, ruby, nodejs, python, projects, httperf, linux, sinatra, express, rails, django, performance
-Summary: Here are some simple and basic rules I've found for building applications that are maintainable and perform well, both in speed and stability. These rules, at one level or another, can apply to smaller modules and libraries, scripts, and fully featured large scale application (both web and otherwise). Generally, in this post I will focus more on web applications, as that's where I've spent most of my time. At a higher level, they should apply to almost all areas of software development.
+Summary: Here are some simple and basic rules I've found for building applications that are maintainable and perform well, both in speed and stability. These rules, at one level or another, can apply to smaller modules and libraries, scripts, and fully featured large scale application (both web and otherwise). In this post I will focus more on web applications, since that's where I've spent most of my time. At a higher level, they should apply to almost all areas of software development.
 
 # Simple Rules for Stable, Performant and Maintainable Apps
 
-Here are some simple and basic rules I've found for building applications that are maintainable and perform well, both in speed and stability. These rules, at one level or another, can apply to smaller modules and libraries, scripts, and fully featured large scale application (both web and otherwise). Generally, in this post I will focus more on web applications, as that's where I've spent most of my time. At a higher level, they should apply to almost all areas of software development.
+Here are some simple and basic rules I've found for building applications that are maintainable and perform well, both in speed and stability. These rules, at one level or another, can apply to smaller modules and libraries, scripts, and fully featured large scale application (both web and otherwise). In this post I will focus more on web applications, since that's where I've spent most of my time. At a higher level, they should apply to almost all areas of software development.
 
 > Note: I've attempted to keep this as unbiased as possible. However, where I found it impossible (I'm opinionated), I've created a "Soap Box" section for my personal opinions. Feel free to consider and accept or reject them as it applies to you.
 >
@@ -13,9 +13,7 @@ Here are some simple and basic rules I've found for building applications that a
 
 ## Choose Technology Wisely
 
-"Bits is bits" and most languages, frameworks and platforms have their place, be it [Ruby](/ruby), [Node.js](/node), [Python](/python), PHP, etc., [Rails](http://rubyonrails.org/), [Sinatra](/sinatra), [Express](http://expressjs.com/), [Django](https://www.djangoproject.com/), [Zend](http://www.zend.com/en/), etc., etc. 
-
-Just about anything can be made to scale, some of the largest sites in the world are built using the afore mentioned technologies. So often people make their choices based on what's new and buzzing (which also has it's place). It's important to choose something that you and/or your development team feel comfortable working in. Additionally, something you and/or your ops team feel comfortable deploying and supporting.  
+"Bits is bits" and most languages, frameworks and platforms have their place, be it [Ruby](/ruby), [Node.js](/node), [Python](/python), PHP, etc., [Rails](http://rubyonrails.org/), [Sinatra](/sinatra), [Express](http://expressjs.com/), [Django](https://www.djangoproject.com/), [Zend](http://www.zend.com/en/), etc., etc. Just about anything can be made to scale; some of the largest sites in the world are built using the technologies referred to above. Often people make their choices based on what's new and buzzing. which also has it's place. It's important to choose something that you and/or your development team feel comfortable working in. Additionally, something you and/or your ops team feel comfortable deploying and supporting.  
 
 > **Soap Box:**
 >
@@ -27,12 +25,12 @@ Just about anything can be made to scale, some of the largest sites in the world
 >
 > `+1` for Node.js:
 >
-> Node.js, like Ruby, has an amazing community behind it. Additionally, being JavaScript, for web application it's hard to beat. In most web app shops developers spend a phenomenal amount of time working on frontend JavaScript. Consolidating your language will help focus your talent in a single area thus building a strong expertise in one discipline. 
+> Node.js, like Ruby, has an amazing community behind it. Additionally, being JavaScript, it's hard to beat for web applications. In most web app shops developers spend a phenomenal amount of time working on frontend JavaScript. Consolidating your language will help focus your talent in a single area thus building a strong expertise in one discipline. 
 
 
 ## TEST ALL THE THINGS!!!
 
-Regardless of your technology, methodology and process. Automated testing is essential to a stable production environment. And not just unit tests, functional and integration testing are your friends. 
+Regardless of your technology, methodology and process. Automated testing is essential to a stable production environment. And not just unit tests; functional and integration testing are your friends. 
 
 
 ## Automate Your Life
