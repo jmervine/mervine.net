@@ -19,7 +19,7 @@ Just about anything can be made to scale, some of the largest sites in the world
 
 > **Soap Box:**
 >
-> Personally, I prefer to choose an younger technology and framework that has a strong passionate open source community. Not for the technology itself, but rather for the people who choose to work in it. They tend to be the kind of people who develop because they love it, not simply because it's a job. Personally, I avoid technologies that do not promote open source &mdash; .NET and Java to name two.
+> Personally, I prefer to choose a younger technology and framework that has a strong passionate open source community. Not for the technology itself, but rather for the people who choose to work in it. They tend to be the kind of people who develop because they love it, not simply because it's a job. Personally, I avoid technologies that do not promote open source &mdash; .NET and Java to name two.
 >
 > `+1` for Ruby:
 >
