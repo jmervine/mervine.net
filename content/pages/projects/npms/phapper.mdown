@@ -15,6 +15,7 @@ Simple PhantomJS wrapper for Node.js
 ### Node.js Version
 
 [![Build Status](https://travis-ci.org/jmervine/phapper.png?branch=master)](https://travis-ci.org/jmervine/phapper) for the following node versions:
+
 - 0.8
 - 0.10
 
