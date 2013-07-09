@@ -1,10 +1,10 @@
 Title: Phapper
-Summary: Simple PhantomJS wrapper for Node.js
+Summary: Simple PhantomJS Script wrapper for Node.js
 Categories: projects, projects/npms, nodejs, phantomjs
 
 # Phapper
 
-Simple PhantomJS wrapper for Node.js
+Simple PhantomJS Script wrapper for Node.js
 
 ### Links
 
