@@ -6,11 +6,24 @@ Categories: projects, projects/npms, nodejs, phantomjs
 
 Simple PhantomJS wrapper for Node.js
 
-# Install
+### Links
+
+* [package](https://npmjs.org/package/phapper)
+* [source](http://github.com/jmervine/phapper)
+* [tests](https://travis-ci.org/jmervine/phapper)
+
+### Node.js Version
+
+[![Build Status](https://travis-ci.org/jmervine/phapper.png?branch=master)](https://travis-ci.org/jmervine/phapper) for the following node versions:
+- 0.8
+- 0.10
+
+
+## Install
 
     $ npm install phapper
 
-# Usage
+## Usage
 
     :::js
     var Phapper = require('phapper');
