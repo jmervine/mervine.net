@@ -1,0 +1,31 @@
+Title: Phapper
+Summary: Simple PhantomJS wrapper for Node.js
+Categories: projects, projects/npms, nodejs, phantomjs
+
+# Phapper
+
+Simple PhantomJS wrapper for Node.js
+
+# Install
+
+    $ npm install phapper
+
+# Usage
+
+    :::js
+    var Phapper = require('phapper');
+
+    var phap = new Phapper("/path/to/phantom/script.js",
+                            [ "--arg1", "val1", "--arg2", "arg3" ]);
+
+    console.log("Run Sync");
+    var results = phap.runSync();
+    console.log("Results:\n%j", results);
+
+    console.log("Run Async");
+    phap.run( function (result, raw_result) {
+        console.log("Results:\n%j", result);
+        console.log("Raw Results:");
+        console.log(raw_result);
+    });
+
