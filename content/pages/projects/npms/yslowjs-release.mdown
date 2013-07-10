@@ -1,0 +1,15 @@
+Date: 09 July 2013 21:00
+Title: YSlow.js
+Categories: projects/npms, nodejs, projects/npms/yslowjs
+
+# current &mdash; 0.1.1
+
+* Refactored to use [Phapper](/projects/npms/phapper), way cleaner and less code.
+* Refactored tests for change to Phapper.
+* Refactored stubs..
+* Adding functional tests.
+
+### 0.0.1
+
+* Initial release.
+
