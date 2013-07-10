@@ -1,5 +1,5 @@
-Date: 09 July 2013 21:00
-Title: YSlow.js: Release 0.1.1
+Date: 10 July 2013 09:00
+Title: YSlow.js: Release 0.1.2
 Categories: projects/npms, nodejs, projects/npms/yslowjs
 
 # YSlow.js: Release 0.1.2
