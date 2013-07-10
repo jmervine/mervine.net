@@ -2,9 +2,13 @@ Date: 09 July 2013 21:00
 Title: YSlow.js: Release 0.1.1
 Categories: projects/npms, nodejs, projects/npms/yslowjs
 
-# YSlow.js: Release 0.1.1
+# YSlow.js: Release 0.1.2
 
 #### Links: [readme](/projects/npms/yslowjs) | [package](https://npmjs.org/package/yslowjs) | [source](https://github.com/jmervine/yslowjs) | [tests](https://travis-ci.org/jmervine/yslowjs)
+
+### 0.1.2
+
+* Fixing critical issue in NODE_PATH search when working with global installations.
 
 ### 0.1.1
 
