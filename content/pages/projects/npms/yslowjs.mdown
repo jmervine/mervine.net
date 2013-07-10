@@ -6,20 +6,20 @@ Summary: YSlow.js is a simple [Node.js](/nodejs) wrapper for programmatically ru
 
 YSlow.js is a simple [Node.js](/nodejs) wrapper for programmatically running [`phantomjs yslow.js`](http://yslow.org/phantomjs/).
 
-### Links
+## Links
 
 * [package](https://npmjs.org/package/yslowjs)
 * [source](https://github.com/jmervine/yslowjs)
 * [tests](https://travis-ci.org/jmervine/yslowjs)
 
-### Requirements
+## Requirements
 
 1. [PhantomJS](http://phantomjs.org/) in your `PATH`.
 2. [![Build Status](https://travis-ci.org/jmervine/yslowjs.png?branch=master)](https://travis-ci.org/jmervine/yslowjs) for the following node versions:
     - 0.8
     - 0.10
 
-### Installation
+## Installation
 
     :::shell
     $ npm install yslowjs
