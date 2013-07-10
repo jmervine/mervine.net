@@ -4,7 +4,7 @@ Categories: projects/npms, nodejs, projects/npms/yslowjs
 
 # YSlow.js: Release 0.1.1
 
-**Links:** [package](https://npmjs.org/package/yslowjs) | [source](https://github.com/jmervine/yslowjs) | [tests](https://travis-ci.org/jmervine/yslowjs)
+#### Links: [readme](/projects/npms/yslowjs) | [package](https://npmjs.org/package/yslowjs) | [source](https://github.com/jmervine/yslowjs) | [tests](https://travis-ci.org/jmervine/yslowjs)
 
 ### 0.1.1
 
