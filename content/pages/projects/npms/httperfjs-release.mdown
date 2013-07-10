@@ -4,6 +4,10 @@ Categories: projects, projects/npms/httperfjs, nodejs
 
 # HTTPerf.js: Release 0.0.2
 
+**Links:** [package](https://npmjs.org/package/httperfjs) | [source](http://github.com/jmervine/httperfjs) | [tests](https://travis-ci.org/jmervine/httperfjs)
+
+### 0.0.2
+
 * Changing run to runSync for future async support.
 * Adding #run (async).
 

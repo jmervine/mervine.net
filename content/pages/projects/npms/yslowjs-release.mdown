@@ -4,6 +4,10 @@ Categories: projects/npms, nodejs, projects/npms/yslowjs
 
 # YSlow.js: Release 0.1.1
 
+**Links:** [package](https://npmjs.org/package/yslowjs) | [source](https://github.com/jmervine/yslowjs) | [tests](https://travis-ci.org/jmervine/yslowjs)
+
+### 0.1.1
+
 * Refactored to use [Phapper](/projects/npms/phapper), way cleaner and less code.
 * Refactored tests for change to Phapper.
 * Refactored stubs..
