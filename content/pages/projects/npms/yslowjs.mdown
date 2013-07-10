@@ -4,8 +4,6 @@ Summary: YSlow.js is a simple [Node.js](/nodejs) wrapper for programmatically ru
 
 # YSlow.js
 
-[![Build Status](https://travis-ci.org/jmervine/yslowjs.png)](https://travis-ci.org/jmervine/yslowjs)
-
 YSlow.js is a simple [Node.js](/nodejs) wrapper for programmatically running [`phantomjs yslow.js`](http://yslow.org/phantomjs/).
 
 ### Links
