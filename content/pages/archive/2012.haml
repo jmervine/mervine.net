@@ -8,9 +8,9 @@ Categories: archive
         %a{ :href=>page.abspath }=page.title
         %small
           &mdash;
-          - if show_disqus_comment_count?(page)
-            = haml :disqus_comment, :layout => false
-            %a{ :href=>"#{url(page.abspath)}#disqus_thread" } Comments
-          - else
-            = page.date.strftime("%D %H:%M")
+          -#- if show_disqus_comment_count?(page)
+            -#= haml :disqus_comment, :layout => false
+            -#%a{ :href=>"#{url(page.abspath)}#disqus_thread" } Comments
+          -#- else
+          = page.date.strftime("%D %H:%M")
 
