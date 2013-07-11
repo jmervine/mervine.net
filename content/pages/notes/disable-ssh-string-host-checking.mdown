@@ -6,7 +6,6 @@ Categories: notes, ssh, linux
 
 What automating tasks with ssh, it can be annoying to be prompted to confirm the `authenticity of host`.
 
-    :::shell
     The authenticity of host 'host.example.com (NN.NN.NN.NN)' can't be established.
     RSA key fingerprint is af:78:f8:fb:8a:ae:dd:55:f0:40:51:29:68:27:7e:7c.
     Are you sure you want to continue connecting (yes/no)? 
