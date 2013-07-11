@@ -19,6 +19,5 @@ Here's a simple way around that:
     ssh -o StrictHostKeyChecking=no host.example.com
     
     # This doesn't add fingerprint
-    ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no \
-        host.example.com
+    ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no host.example.com
         
