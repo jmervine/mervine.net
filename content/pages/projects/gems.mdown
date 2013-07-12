@@ -5,3 +5,5 @@ Flags: landing_page
 # My Gems
 
 > [GEMs, or RubyGems](http://rubygems.org), are the standard packaging method for [Ruby](/ruby) modules.
+
+These are my featured gems, for a complete list see my [rubygems.org profile](https://rubygems.org/profiles/jmervine).
