@@ -5,3 +5,5 @@ Flags: landing_page
 # My NPMs
 
 > Short for "Node Packaged Modules", [NPMs](http://npmjs.org) are the standard packaging method for [Node.js](/nodejs) modules.
+
+These are my featured npms, for a complete list see my [npmsjs.org profile](https://npmjs.org/~jmervine).
