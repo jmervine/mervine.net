@@ -2,6 +2,6 @@ Title: My PIPs
 Categories: about, projects
 Flags: landing_page
 
-# My PIPs
+# My PyIPs
 
-> [PIP](https://pypi.python.org/pypi/pip) is a tool for installing and managing [Python](/python) packages.
+> [PyIP](https://pypi.python.org/pypi/pip) (or `pip`) is a tool for installing and managing [Python](/python) packages.
