@@ -1,0 +1,7 @@
+Date: 12 July 2013 12:30
+Catgories: tweets
+
+# GG DevOps
+
+<blockquote class="twitter-tweet"><p>Writing phantom, eval&#39;d in node, called by bash, fired by ruby, init&#39;d by perl, triggered by java, started by a post-commit hook. GG DevOps!</p>&mdash; Joshua Mervine (@mervinej) <a href="https://twitter.com/mervinej/statuses/355743093233942530">July 12, 2013</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
