@@ -1,10 +1,11 @@
 Title: Phapper
-Summary: Simple PhantomJS Script wrapper for Node.js
-Categories: projects, projects/npms, nodejs, phantomjs
+Summary: Simple PhantomJS Script wrapper for Node.js, which parsed JSON output from the passed PhantomJS script (if possible).
+Categories: projects, projects/npms, nodejs, phantomjs, projects/npms/phapper-release
 
 # Phapper
 
-Simple PhantomJS Script wrapper for Node.js
+Simple PhantomJS Script wrapper for Node.js, which parsed JSON output from the
+passed PhantomJS script (if possible).
 
 ### Links
 
@@ -28,18 +29,41 @@ Simple PhantomJS Script wrapper for Node.js
 
     :::js
     var Phapper = require('phapper');
-
     var phap = new Phapper("/path/to/phantom/script.js",
                             [ "--arg1", "val1", "--arg2", "arg3" ]);
 
     console.log("Run Sync");
     var results = phap.runSync();
-    console.log("Results:\n%j", results);
+    // => results
+    // {
+    //    parsed: { parsed json from stdout || undefined },
+    //    stdout: "stdout string",
+    //    stderr: "stderr string"
+    // }
+    if (results.parsed) {
+        console.log("result object:\n%j", results.parsed);
+    } else {
+        console.log(results.stdout);
+    }
 
     console.log("Run Async");
-    phap.run( function (result, raw_result) {
-        console.log("Results:\n%j", result);
+    phap.run( function (result, resultObj) {
+        // => result
+        // { parsed json from stdout || undefined }
+        // => resultObj
+        // {
+        //    stdout: "stdout string",
+        //    stderr: "stderr string"
+        //    error:  "error string"
+        // }
+        if (result) {
+            console.log("Results:\n%j", result);
+        }
         console.log("Raw Results:");
-        console.log(raw_result);
+        console.log(resultObj.stdout);
+        console.log(resultObj.stderr);
+        if (resultObj.error) {
+            console.error(resultObj.error);
+        }
     });
 
