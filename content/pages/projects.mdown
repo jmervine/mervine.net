@@ -2,4 +2,4 @@ Flags: landing_page
 
 # My Projects
 
-
+These are my featured projects. For a full list, see my [github](http://github.com/jmervine), [rubygems](https://rubygems.org/profiles/jmervine) and [npmjs](https://npmjs.org/~jmervine) accounts, or [search for me on pypi](https://pypi.python.org/pypi?%3Aaction=search&term=Joshua+Mervine&submit=search).
