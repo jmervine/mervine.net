@@ -1,4 +1,4 @@
-Date: 12 July 2013 09:00
+Date: 12 July 2013 18:00
 Title: Phapper.js: Release 0.1.2
 Categories: projects/npms, nodejs, projects/npms/phapper
 
