@@ -1,10 +1,15 @@
 Date: 12 July 2013 09:00
-Title: Phapper.js: Release 0.1.1
+Title: Phapper.js: Release 0.1.2
 Categories: projects/npms, nodejs, projects/npms/phapper
 
-# Phapper.js: Release 0.1.1
+# Phapper.js: Release 0.1.2
 
 #### Links: [readme](/projects/npms/phapper) | [package](https://npmjs.org/package/phapper) | [source](https://github.com/jmervine/phapper) | [tests](https://travis-ci.org/jmervine/phapper)
+
+### 0.1.2
+
+* Adding phantomjs install.
+* Adding better phantomjs path support.
 
 ### 0.1.1
 
