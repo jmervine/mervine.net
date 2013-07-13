@@ -6,11 +6,11 @@ Summary: Being new to [Node.js](/nodejs), it took me an amazing amount of time t
 
 Being new to [Node.js](/nodejs), it took me an amazing amount of time to figure out how to assgin event stream chunks (`foo.on('data', ...)`) to a variable and work with it. An amazing amount of time, because it's actually really easy if you understand callbacks (which I didn't) and because all the examples I could find worked with `console.log`. In this case, I didn't want to log the result, but pass it, process it, etc. So here's an example from [GitMD](http://github.com/jmervine/node-gitmd) with some additional comments to help you along the way.
 
-The goal here is to take a path, make an http.get request, grab the response stream and pass it back.
+The goal here is to take a path, make an `http.get` request, grab the response stream and pass it back.
 
 Simple enough? Well initially, thinking like a functional (non-async) developer, I wanted to return the response as a string, all sync-like.
 
-The issue I was having was scope. I was initalizing the return string (mdown) inside of the event handler (`res.on('data', ...)`) and trying to return it. That doesn't work.
+The issue I was having was scope. I was initalizing the return string (`mdown`) inside of the event handler (`res.on('data', ...)`) and trying to return it. That doesn't work.
 
 Instead, I have to build the data string as it's chunked back via the `data` event. Once complete (identified by the `end` event), I can pass it to the callback.
 
@@ -60,4 +60,12 @@ Instead, I have to build the data string as it's chunked back via the `data` eve
     }
 
 For a more complex example (passing custom events and responding), see [functional_app.js](https://github.com/jmervine/node-gitmd/blob/master/test/support/functional_app.js), which passes an custom event message to the parent that forks it, [functional.js](https://github.com/jmervine/node-gitmd/blob/master/test/functional.js). Also in the same example project as the above example &mdash; [GitMD](http://github.com/jmervine/node-gitmd).
+
+See the following for detailed documentation:
+
+* [Events](http://nodejs.org/api/events.html)
+* [Streams](http://nodejs.org/api/stream.html)
+* [http](http://nodejs.org/api/http.html)
+* [GitMD](https://github.com/jmervine/node-gitmd/blob/master/README.md)
+
 
