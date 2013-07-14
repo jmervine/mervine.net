@@ -1,70 +1,8 @@
 Title: Phapper
 Summary: Simple PhantomJS Script wrapper for Node.js, which parsed JSON output from the passed PhantomJS script (if possible).
 Categories: projects, projects/npms, nodejs, phantomjs, projects/npms/phapper-release
-Flags: forkme
+Forkme: phapper
+Readme: phapper/master/README.md
 
 # Phapper
-
-Simple PhantomJS Script wrapper for Node.js, which parsed JSON output from the
-passed PhantomJS script (if possible).
-
-### Links
-
-* [package](https://npmjs.org/package/phapper)
-* [source](http://github.com/jmervine/phapper)
-* [tests](https://travis-ci.org/jmervine/phapper)
-
-### Node.js Version
-
-[![Build Status](https://travis-ci.org/jmervine/phapper.png?branch=master)](https://travis-ci.org/jmervine/phapper) for the following node versions:
-
-- 0.8
-- 0.10
-
-
-## Install
-
-    $ npm install phapper
-
-## Usage
-
-    :::js
-    var Phapper = require('phapper');
-    var phap = new Phapper("/path/to/phantom/script.js",
-                            [ "--arg1", "val1", "--arg2", "arg3" ]);
-
-    console.log("Run Sync");
-    var results = phap.runSync();
-    // => results
-    // {
-    //    parsed: { parsed json from stdout || undefined },
-    //    stdout: "stdout string",
-    //    stderr: "stderr string"
-    // }
-    if (results.parsed) {
-        console.log("result object:\n%j", results.parsed);
-    } else {
-        console.log(results.stdout);
-    }
-
-    console.log("Run Async");
-    phap.run( function (result, resultObj) {
-        // => result
-        // { parsed json from stdout || undefined }
-        // => resultObj
-        // {
-        //    stdout: "stdout string",
-        //    stderr: "stderr string"
-        //    error:  "error string"
-        // }
-        if (result) {
-            console.log("Results:\n%j", result);
-        }
-        console.log("Raw Results:");
-        console.log(resultObj.stdout);
-        console.log(resultObj.stderr);
-        if (resultObj.error) {
-            console.error(resultObj.error);
-        }
-    });
 

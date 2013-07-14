@@ -1,10 +1,10 @@
-Keywords: ruby, devops, rails, ruby on rails, sinatra, httperf
+Keywords: ruby, devops, rails, ruby on rails, sinatra, httperf, nodejs, phantomjs, javascript, python, linux, bash
 
 # About
 
 Welcome to mervine.net.
 
-I'm starting this blog as a place to "take notes" on the various different problems I encounter in supporting web applications from a Dev Ops perspective.
+I started this blog as a place to "take notes" on the various different problems I encounter in supporting web applications from a Dev Ops perspective.
 
 This blog is running on [Nesta][Nesta], a simple [Sinatra](http://www.sinatrarb.com/) based blog application.
 

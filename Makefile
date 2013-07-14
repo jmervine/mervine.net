@@ -1,5 +1,5 @@
 SHELL=/bin/bash
-RACK_ENV=production
+RACK_ENV?=production
 NGINX_ETC=/usr/local/etc/nginx
 NGINX_INIT=/etc/init.d/nginxps
 

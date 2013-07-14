@@ -1,7 +1,7 @@
 Date: 13 July 2013 21:30
 Title: YSlow.js on Node.js: Release 0.2.0
 Categories: projects/npms, nodejs, projects/npms/yslowjs
-Flags: forkme
+Forkme: node-yslowjs
 
 # YSlow.js: Release 0.2.0
 

@@ -1,6 +1,7 @@
 # Use the app.rb file to load Ruby code, modify or extend the models, or
 # do whatever else you fancy when the theme is loaded.
 require 'ferret'
+require 'net/http'
 
 module Nesta
   class Config
@@ -38,6 +39,19 @@ module Nesta
         %[<form action="/search" method="GET">
           <input type="text" name="q" value="#{params[:q]}"/>
           </form>]
+      end
+
+      def gitmd path
+        uri  = URI.parse("https://raw.github.com/jmervine/"+path);
+        http = Net::HTTP.new(uri.host, uri.port)
+        http.use_ssl = true
+        body = http.request(Net::HTTP::Get.new(uri.request_uri)).body
+        if path.end_with?(".md") || path.end_with?(".mdown")
+          temp = Tilt['mdown'].new { body }
+          return temp.render
+        else
+          return "<pre>#{body}</pre>"
+        end
       end
     end
 

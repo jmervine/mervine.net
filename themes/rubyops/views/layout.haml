@@ -25,8 +25,8 @@
       = haml :header, :layout => false
       = yield
       = haml :footer, :layout => false
-    - if @page.flagged_as?('forkme')
-      = haml :forkme, :layout => false
+    - if @page.flagged_as?('forkme') || forkpath = @page.metadata('forkme')
+      = haml :forkme, :locals => { :forkpath => (forkpath || '')}, :layout => false
 
   - if defined?(sharethis_javascript)
     = sharethis_javascript
