@@ -40,7 +40,7 @@ YSlow.js on [Node.js](/nodejs) is a simple [Node.js](/nodejs) wrapper for progra
 
 ## Usage Examples
 
-##### Async
+#### Async
 
     :::js
     // file: async.js
@@ -53,7 +53,7 @@ YSlow.js on [Node.js](/nodejs) is a simple [Node.js](/nodejs) wrapper for progra
         console.log('=> load time: ' + result.lt);
     });
 
-##### Sync
+#### Sync
 
     :::js
     // file: sync.js
@@ -65,6 +65,12 @@ YSlow.js on [Node.js](/nodejs) is a simple [Node.js](/nodejs) wrapper for progra
     console.log('=> overall:   ' + results.o);
     console.log('=> load time: ' + results.lt);
 
+#### Using Custom `yslow.js` Download
+
+    :::js
+    var YSlow = require('lib/yslow');
+    YSlow.prototype.script = '/path/to/your/yslow.js';
+    // continue on
 
 ## Contributing
 
