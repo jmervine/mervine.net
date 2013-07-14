@@ -2,6 +2,7 @@ Title: Autobench [alpha release]
 Categories: projects/gems, httperf, projects/gems/httperfrb, ruby, performance, projects/gems/autoperf, phantomjs, nodejs
 Summary: Autobench, as follow up to [Autoperf](http://mervine.net/gems/autoperf), was created to allow for benchmarking web pages
 in three different ways; render metrics, client metrics and yslow metrics.
+Flags: forkme
 
 # Autobench [alpha release]
 

@@ -1,6 +1,7 @@
 Title: Diskchached
 Summary: Simple ruby disk cache for things like Sinatra which is implemented much like Memcached in hopes that in some cases they're interchangeable.
 Categories: projects/gems, ruby, caching, projects/gems/duality
+Flags: forkme
 
 # Diskcached
 

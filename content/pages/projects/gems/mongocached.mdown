@@ -1,6 +1,7 @@
 Title: Mongocached
 Summary: Simple ruby mongodb based cache for things like Sinatra and Rails which is implemented much like Memcached in hopes that in some cases they're interchangeable. It's based off 'diskcached'.
 Categories: projects/gems, ruby, mongo, caching, projects/gems/duality
+Flags: forkme
 
 # Mongocached
 

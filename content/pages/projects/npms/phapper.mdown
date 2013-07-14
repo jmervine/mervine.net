@@ -1,6 +1,7 @@
 Title: Phapper
 Summary: Simple PhantomJS Script wrapper for Node.js, which parsed JSON output from the passed PhantomJS script (if possible).
 Categories: projects, projects/npms, nodejs, phantomjs, projects/npms/phapper-release
+Flags: forkme
 
 # Phapper
 

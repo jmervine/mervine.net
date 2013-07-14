@@ -1,6 +1,7 @@
 Title: Rack::Hard::Copy
 Summary: This is a simple middleware to save and load static copies of rendered pages. So in other words, this is simple static cache which saves in a format that can be used as a backup, or to be loaded via a simple http server (e.g. Nginx).
 Categories: projects/gems, ruby, rack, caching
+Flags: forkme
 
 # Rack::Hard::Copy
 
