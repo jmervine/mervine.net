@@ -72,13 +72,3 @@ YSlow.js on [Node.js](/nodejs) is a simple [Node.js](/nodejs) wrapper for progra
     YSlow.prototype.script = '/path/to/your/yslow.js';
     // continue on
 
-## Contributing
-
-1. [Fork it.](http://github.com/jmervine/node-yslowjs)
-2. `make tests`
-3. `make functional`
-4. Make changes, **with tests**.
-5. `make tests`
-6. `make functional`
-7. Submit pull request.
-
