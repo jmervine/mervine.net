@@ -17,27 +17,25 @@ stop:
 
 restart: stop start
 
-clean: cache/clean
-
-cache/clean:
+clean:
 	rm -rf ./public/static
 
-cache/warmup: prod/generate_error_pages
-	./scripts/warmup_cache
+cache: generate_error_pages
+	/home/jmervine/ocp/ocp -l /home/jmervine/mervine.net/public/static -v http://mervine.net/sitemap.xml
 
 update:
 	git reset --hard
 	git pull
 
-prod/generate_error_pages:
+generate_error_pages:
 	curl -s 'http://mervine.net/error/400'
 	curl -s 'http://mervine.net/error/500'
 
-deploy/soft: update cache/clean prod/generate_error_pages
+deploy/soft: update clean generate_error_pages cache
 
-deploy: update cache/clean restart prod/generate_error_pages
+deploy: update clean restart generate_error_pages cache
 
-deploy/full: update cache/clean restart nginx/reload prod/generate_error_pages
+deploy/full: update clean restart nginx/reload generate_error_pages cache
 
 # nginx handlers
 nginx/start:
