@@ -2,9 +2,15 @@ Date: 10 July 2013 09:00
 Title: YSlow.js: Release 0.1.2
 Categories: projects/npms, nodejs, projects/npms/yslowjs
 
-# YSlow.js: Release 0.1.2
+# YSlow.js: Release 0.2.0
 
-#### Links: [readme](/projects/npms/yslowjs) | [package](https://npmjs.org/package/yslowjs) | [source](https://github.com/jmervine/yslowjs) | [tests](https://travis-ci.org/jmervine/yslowjs)
+#### Links: [readme](/projects/npms/yslowjs) | [package](https://npmjs.org/package/yslowjs) | [source](https://github.com/jmervine/node-yslowjs) | [tests](https://travis-ci.org/jmervine/node-yslowjs)
+
+### 0.2.0
+
+* Top down refactor using updated [Phapper](/projects/npms/phapper).
+* Includes better pathing support for finding included [yslow.js][1].
+* Downloads and install [yslow.js][1] if it can't be found, which should never happen.
 
 ### 0.1.2
 
@@ -21,3 +27,4 @@ Categories: projects/npms, nodejs, projects/npms/yslowjs
 
 * Initial release.
 
+[1]: http://yslow.org/phantomjs
