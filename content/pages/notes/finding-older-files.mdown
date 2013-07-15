@@ -1,6 +1,7 @@
 Date: 06 July 2013 11:30
 Title: Finding Older Files
 Categories: notes, linux, bash
+Flags: draft
 
 # Notes: Finding Older Files
 
