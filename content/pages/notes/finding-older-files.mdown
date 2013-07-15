@@ -7,20 +7,18 @@ Categories: notes, linux, bash
 In this example, I'm finding all files older then 14 days and removing them.
 
     :::shell
-    $ find . -type f -not -mtime 14 | xargs rm
-    # or
     $ find . -type f -mtime +14 | xargs rm
     
 In this example, I'm finding top level directoies in `/foo/bar/bah` that are more then 30 days old and removing them.
 
     :::shell
-    $ find /foo/bar/bah -type d -not -mtime 30 -maxdepth 0 | xargs rm -rf
+    $ find /foo/bar/bah -type d -mtime +30 -maxdepth 0 | xargs rm -rf
     
 I typically use this for removing, which is why I've used that as an example. This type of thing is great for a cronjob...
 
     :::shell
     # remove old files daily at 1am
-    * 1 * * * find /foo/bar/bah -type d -not -mtime 30 -maxdepth 0 | xargs rm -rf
+    * 1 * * * find /foo/bar/bah -type d -mtime +30 -maxdepth 0 | xargs rm -rf
     
 
 
