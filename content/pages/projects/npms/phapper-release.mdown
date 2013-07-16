@@ -6,7 +6,7 @@ Forkme: phapper
 
 # Phapper.js: Release 0.1.3
 
-#### Links: [readme](/projects/npms/phapper) | [package](https://npmjs.org/package/phapper) | [source](https://github.com/jmervine/phapper) | [tests](https://travis-ci.org/jmervine/phapper)
+#### Links: [readme](http://mervine.net/projects/npms/phapper) | [package](https://npmjs.org/package/phapper) | [source](https://github.com/jmervine/phapper) | [tests](https://travis-ci.org/jmervine/phapper)
 
 ### 0.1.3
 
