@@ -1,11 +1,17 @@
-Date: 06 July 2013 21:00
-Title: HTTPerf.js: Release 0.0.2
-Categories: projects, projects/npms/httperfjs, nodejs, projects/npms
+Date: 17 July 2013 05:30
+Title: HTTPerf.js: Release 0.0.3
+Categories: projects, projects/npms/httperfjs, nodejs, projects/npms, benchmarking-with-httperfjs-and-nodeunit
 Forkme: httperfjs
 
-# HTTPerf.js: Release 0.0.2
+# HTTPerf.js: Release 0.0.3
 
 #### Links: [readme](/projects/npms/httperfjs) | [package](https://npmjs.org/package/httperfjs) | [source](http://github.com/jmervine/httperfjs) | [tests](https://travis-ci.org/jmervine/httperfjs)
+
+### 0.0.3
+
+* Updating README
+* Adding functional tests
+* Removing persistant results `httperf.results`, as it's really not necessary for any real usecases.
 
 ### 0.0.2
 
