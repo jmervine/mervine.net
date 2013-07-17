@@ -105,12 +105,12 @@ Now, let's pretend we have a real site, with a lot of endpoints that we potentia
 This should generate some simple and pretty output like so:
 
     benchmark.js
-    ✔ "/" should be less then 250
-    ✔ "/about" should be less then 200
-    ✔ "/projects" should be less then 200
-    ✔ "/archive" should be less then 200
-    ✔ "/archive/2012" should be less then 200
-    ✔ "/search?q=httperf" should be less then 1000
+    + "/" should be less then 250
+    + "/about" should be less then 200
+    + "/projects" should be less then 200
+    + "/archive" should be less then 200
+    + "/archive/2012" should be less then 200
+    + "/search?q=httperf" should be less then 1000
 
     OK: 6 assertions (13445ms)
 
