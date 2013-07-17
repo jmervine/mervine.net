@@ -2,8 +2,8 @@
 
 Undo last commit (lightly).
 
-    $ git reset --soft HEAD~1
+    git reset --soft HEAD~1
 
 Prune local branches merged to master.
 
-    $ git branch --merged master | grep -v 'master$' | xargs git branch -d
+    git branch --merged master | grep -v 'master$' | xargs git branch -d
