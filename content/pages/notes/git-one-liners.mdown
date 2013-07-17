@@ -1,0 +1,5 @@
+# Git One-liners
+
+Prune local branches merged to master.
+
+    $ git branch --merged master | grep -v 'master$' | xargs git branch -d
