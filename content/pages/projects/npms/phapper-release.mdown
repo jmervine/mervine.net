@@ -1,12 +1,21 @@
-Date: 16 July 2013 10:00
-Title: Phapper.js: Release 0.1.3
+Date: 18 July 2013 23:30
+Title: Phapper.js: Release 0.1.4
 Categories: projects/npms, nodejs, projects/npms/phapper
 Keywords: phantomjs, nodejs, performance, webkit
 Forkme: phapper
 
-# Phapper.js: Release 0.1.3
+# Phapper.js: Release 0.1.4
 
 #### Links: [readme](/projects/npms/phapper) | [package](https://npmjs.org/package/phapper) | [source](https://github.com/jmervine/phapper) | [tests](https://travis-ci.org/jmervine/phapper)
+
+### 0.1.4
+
+* Fixing small issue with passed in arguments on init.
+* Added ability to pass exec object, see readme examples.
+* Cleaned up tests, added more.
+* Cleaned up make test / npm test.
+* Allowing for passing of cwd to sync function.
+
 
 ### 0.1.3
 
