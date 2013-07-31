@@ -7,7 +7,7 @@ setup:
 	bundle install --path vendor/bundle
 
 run:
-	RACK_ENV=$(RACK_ENV) bundle exec rackup -p 3000 ./config.ru
+	RACK_ENV=develop bundle exec rackup -p 3000 ./config.ru
 
 start:
 	RACK_ENV=$(RACK_ENV) bundle exec unicorn -D -c ./config/unicorn.rb

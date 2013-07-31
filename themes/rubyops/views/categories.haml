@@ -9,19 +9,16 @@
       %br
 
   - if ! @menu_items.empty?
-    %h1
+    %h1{:style=>"font-size:120%;text-decoration:none"}
       Featured Categories
     - display_menu(@menu_items, :class => "menu")
 
-  %h1 Joshua P. Mervine
-  %a{:href=>"http://linkedin.com/in/mervinej"} LinkedIn
+  %a{:href=>"/resume", :style=>"font-size:120%;text-decoration:underline"} Joshua P. Mervine
   %br
   %a{:href=>"http://twitter.com/mervinej"} Twitter
   %br
-  %a{:href=>"https://rubygems.org/profiles/51298"} Gems
+  %a{:href=>"http://linkedin.com/in/mervinej"} LinkedIn
   %br
   %a{:href=>"http://github.com/jmervine"} Github/jmervine
-  %br
-  %a{:href=>"http://github.com/rubyops"} Github/rubyops
   %br
   %a{:href=>"https://www.gittip.com/jmervine/"} Gittip
