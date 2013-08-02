@@ -1,4 +1,4 @@
-Date: 17 July 2013 05:30
+Date: 30 July 2013 05:30
 Title: HTTPerf.js: Release 0.0.4
 Categories: projects, projects/npms/httperfjs, nodejs, projects/npms, benchmarking-with-httperfjs-and-nodeunit
 Forkme: httperfjs
