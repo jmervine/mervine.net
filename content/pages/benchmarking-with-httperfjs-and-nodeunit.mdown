@@ -63,7 +63,11 @@ In my README, I have this basic example. It's pretty simple for small sites, whe
             test.done();
         }
     };
-    // $ ./node_modules/.bin/nodeunit ./benchmark.js
+
+Run with:
+
+    $ ./node_modules/.bin/nodeunit ./benchmark.js
+
 
 ### Benchmark Example Two
 
@@ -113,7 +117,10 @@ Now, let's pretend we have a real site, with a lot of endpoints that we potentia
         testFactory(testCase.uri, testCase.expected);
     });
     module.exports = tests;
-    // $ ./node_modules/.bin/nodeunit ./benchmark.js
+
+Run with:
+
+    $ ./node_modules/.bin/nodeunit ./benchmark.js
 
 
 This should generate some simple and pretty output like so:
