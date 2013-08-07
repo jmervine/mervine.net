@@ -1,11 +1,19 @@
-Date: 30 July 2013 05:30
-Title: HTTPerf.js: Release 0.0.4
+Date: 7 Auguest 2013 15:30
+Title: HTTPerf.js: Release 0.0.6
 Categories: projects, projects/npms/httperfjs, nodejs, projects/npms, benchmarking-with-httperfjs-and-nodeunit
 Forkme: httperfjs
 
-# HTTPerf.js: Release 0.0.4
+# HTTPerf.js: Release 0.0.6
 
 #### Links: [readme](/projects/npms/httperfjs) | [package](https://npmjs.org/package/httperfjs) | [source](http://github.com/jmervine/httperfjs) | [tests](https://travis-ci.org/jmervine/httperfjs)
+
+### 0.0.6
+
+* Fixing a bug in calculating percentile's when using verbose mode.
+
+### 0.0.5
+
+* Switching `exec-sync` for `execSync` to support easier compiles on Mac's.
 
 ### 0.0.4
 
