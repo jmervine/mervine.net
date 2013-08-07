@@ -44,25 +44,25 @@ In my README, I have this basic example. It's pretty simple for small sites, whe
 
         'homepage should be quick': function (test) {
             test.expect(1);
-            run = httperf.runSync();
-
-            test.ok(run.connection_time_avg < 200,
-                "homepage was too slow: got " + run.connection_time_avg
-                   + " but expected: < 200");
-            test.done();
+            httperf.run( function (run) {
+                test.ok(run.connection_time_avg < 200,
+                    "homepage was too slow: got " + run.connection_time_avg
+                       + " but expected: < 200");
+                test.done();
+            });
         },
 
         'archive should be quick': function (test) {
             test.expect(1);
-            httperf.update_option("uri", "/archive");
-            run = httperf.runSync();
-
-            test.ok(run.connection_time_median < 200,
-                "archive was too slow: got " + run.connection_time_avg
-                    + " but expected: < 200");
-            test.done();
+            httperf.run( function (run) {
+                test.ok(run.connection_time_median < 200,
+                    "archive was too slow: got " + run.connection_time_avg
+                        + " but expected: < 200");
+                test.done();
+            });
         }
     };
+
 
 Run with:
 
@@ -100,11 +100,12 @@ Now, let's pretend we have a real site, with a lot of endpoints that we potentia
         tests['"' + uri + '" should be less then ' + expected] = function (test) {
             test.expect(1);
             httperf.update_option("uri", uri);
-            run = httperf.runSync();
-            test.ok(run.connection_time_median < expected,
-                "too slow: got " + run.connection_time_median
-                    + " but expected: < " + expected);
-            test.done();
+            httperf.run( function (run) {
+                test.ok(run.connection_time_median < expected,
+                    "too slow: got " + run.connection_time_median
+                        + " but expected: < " + expected);
+                test.done();
+            });
         };
     }
     var tests = {
@@ -117,6 +118,7 @@ Now, let's pretend we have a real site, with a lot of endpoints that we potentia
         testFactory(testCase.uri, testCase.expected);
     });
     module.exports = tests;
+
 
 Run with:
 
