@@ -10,6 +10,18 @@ I covered this in the [HTTPerf.js README](/projects/npms/httperfjs) a bit, but w
 >
 > I've gone back and forth on using median and 85th percentile when benchmarking. I look at 85th percentile when running load tests and performance tests &mdash; basically when I'm trying to break my site. However, for simple benchmarks like this, median gives you a better perspective.
 
+### Setup
+
+Before getting started you'll need to install `node`, `httperf`, HTTPerf.js and NodeUnit.
+
+    # httperf
+    sudo apt-get install httperf # also available via brew and yum
+    sudo apt-get nodejs          # also available via brew and yum
+    npm install nodeunit httperf
+
+
+### Benchmark Example One
+
 In my README, I have this basic example. It's pretty simple for small sites, where you want to benchmark just a few endpoints.
 
 `file: benchmark.js`
@@ -52,6 +64,8 @@ In my README, I have this basic example. It's pretty simple for small sites, whe
         }
     };
     // $ ./node_modules/.bin/nodeunit ./benchmark.js
+
+### Benchmark Example Two
 
 Now, let's pretend we have a real site, with a lot of endpoints that we potentially want to benchmark the performance of. The above will work, but as your list grows it will gradually become harder to maintain. In this example, I build my list of urls using an external `json` file and use a factory function within my test to generate the complete test cases.
 
