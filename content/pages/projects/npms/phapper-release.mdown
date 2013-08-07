@@ -1,12 +1,20 @@
-Date: 18 July 2013 23:30
-Title: Phapper.js: Release 0.1.4
+Date: 7 Auguest 2013 15:40
+Title: Phapper.js: Release 0.1.6
 Categories: projects/npms, nodejs, projects/npms/phapper
 Keywords: phantomjs, nodejs, performance, webkit
 Forkme: phapper
 
-# Phapper.js: Release 0.1.4
+# Phapper.js: Release 0.1.6
 
 #### Links: [readme](/projects/npms/phapper) | [package](https://npmjs.org/package/phapper) | [source](https://github.com/jmervine/phapper) | [tests](https://travis-ci.org/jmervine/phapper)
+
+### 0.1.6
+
+* Replacing exec-sync with execSync for easier Mac installation.
+
+### 0.1.5
+
+* Removing unused dependancies.
 
 ### 0.1.4
 
