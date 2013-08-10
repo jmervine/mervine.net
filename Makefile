@@ -1,7 +1,7 @@
 SHELL=/bin/bash
 RACK_ENV?=production
-NGINX_ETC=/usr/local/etc/nginx
-NGINX_INIT=/etc/init.d/nginxps
+NGINX_ETC=/usr/local/nginx/conf
+NGINX_INIT=/etc/init.d/nginx
 
 setup:
 	bundle install --path vendor/bundle
@@ -42,7 +42,7 @@ nginx/start:
 	sudo $(NGINX_INIT) start
 
 nginx/stop:
-	sudo $(NGINX_INIT) start
+	sudo $(NGINX_INIT) stop
 
 nginx/restart:
 	sudo $(NGINX_INIT) restart
