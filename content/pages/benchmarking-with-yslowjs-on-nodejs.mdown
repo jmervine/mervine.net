@@ -1,30 +1,29 @@
 Date: 10 August 2013 00:00
 Categories: projects/npms/httperfjs, projects/npms/yslowjs, projects, projects/npms, projects/npms/phapper, nodejs, benchmarking, performance
-Summary: In my last post on this topic ([Benchmarking with HTTPerf.js and NodeUnit](http://mervine.net/benchmarking-with-httperfjs-and-nodeunit)) I covered benchmarking application render times from the server to first byte. In this post, I'm going cover basic client benchmarking using [YSlow](http://yslow.org/) and [PhantomJS](http://phantomjs.org/) via [YSlow.js on Node.js](http://mervine.net/projects/npms/yslowjs).
-Flags: draft
+Summary: In my last post on this topic ([Benchmarking with HTTPerf.js and NodeUnit](/benchmarking-with-httperfjs-and-nodeunit)) I covered benchmarking application render times from the server to first byte. In this post, I'm going cover basic client benchmarking using [YSlow](http://yslow.org/) and [PhantomJS](http://phantomjs.org/) via [YSlow.js on Node.js](/projects/npms/yslowjs).
 
 # Benchmarking with YSlow.js on Node.js
 
-In my last post on this topic ([Benchmarking with HTTPerf.js and NodeUnit](http://mervine.net/benchmarking-with-httperfjs-and-nodeunit)) I covered benchmarking application render times from the server to first byte. That's a very good starting point for ensuring the stability for your application, i.e. uptime. Beyond that, it's also important to ensure that you application is performing well on a browser. At the end of the day, while first byte times are wildly important, it's because they impact the end user experience. If you're not also benchmarking client load times, you're missing a big part of the picture.
+In my last post on this topic ([Benchmarking with HTTPerf.js and NodeUnit](/benchmarking-with-httperfjs-and-nodeunit)) I covered benchmarking application render times from the server to first byte. That's a very good starting point for ensuring the stability for your application, i.e. uptime. Beyond that, it's also important to ensure that you application is performing well on a browser. At the end of the day, while first byte times are wildly important, it's because they impact the end user experience. If you're not also benchmarking client load times, you're missing a big part of the picture.
 
-In this post, I'm going cover basic client benchmarking using [YSlow](http://yslow.org/) and [PhantomJS](http://phantomjs.org/) via [YSlow.js on Node.js](http://mervine.net/projects/npms/yslowjs), which is backed by [Phapper](http://mervine.net/projects/npms/phapper) (a PhantomJS wrapper for Node). Unlike in my last post, I'm not going to use NodeUnit. 
+In this post, I'm going cover basic client benchmarking using [YSlow](http://yslow.org/) and [PhantomJS](http://phantomjs.org/) via [YSlow.js on Node.js](/projects/npms/yslowjs), which is backed by [Phapper](/projects/npms/phapper) (a PhantomJS wrapper for Node). Unlike in my last post, I'm not going to use NodeUnit.
 
 > #### Issues with Browser based Benchmarking
-> 
+>
 > Clients (browsers), even the same clients, can be unpredictable when making Ajax requests. On my site, I include both [ShareThis](http://www.sharethis.com/) buttons and [Disqus](http://disqus.com/) commenting. Both are fantastic services, however given that I'm ajaxing these thrid-party includes they can throw off benchmark numbers in a very big way. A basic example is with YSlow's http requests metric (`r` in the results object), I have seen this range from 8 to 50 on two back to back page loads of the same page.
-> 
+>
 > Additionally, network speed. Are you running your benchmarks on the same network as your application, or on a saturated wifi connection at your local Starbucks? Over VPN? Etc. These, and similar conditions, can tweak your results in very large ways. A few milliseconds of latency for a basic `curl` can turn in to a few hundred spread across dozens of images, a few CSS and JS files and a ajax request or two thrown in for good measure. I think you get the point.
 
 Enough gabbing already... time for the meat!
 
 ### Setup
 
-Before getting started, you'll need to install [Node.js](http://nodejs.org) and [YSlow.js on Node.js](http://mervine.net/projects/npms/yslowjs). *(You can optionally pre-install [PhantomJS](http://phantomjs.org/), but if you don't [Phapper](/projects/npms/phapper) will install it for you.)*
+Before getting started, you'll need to install [Node.js](http://nodejs.org) and [YSlow.js on Node.js](/projects/npms/yslowjs). *(You can optionally pre-install [PhantomJS](http://phantomjs.org/), but if you don't [Phapper](/projects/npms/phapper) will install it for you.)*
 
     :::shell
     sudo apt-get nodejs # also available via brew and yum
     npm install yslowjs
-    
+
 
 ### Basic Example
 
@@ -40,7 +39,7 @@ Here I will get a working example, benchmarking a single endpoint for it's YSlow
     yslow.run( function(results) {
         var grade    = (results.o >= 74);
         var loadtime = (results.lt <= 1000);
-        console.log("YSlow Benchmark (http://mervine.net/about)");
+        console.log("YSlow Benchmark (/about)");
         console.log("=> Grade %s with %s (threshold: 74)."
                     , (grade ? "passed" : "failed")
                     , results.o);
@@ -53,10 +52,10 @@ Here I will get a working example, benchmarking a single endpoint for it's YSlow
 Run with:
 
     $ node ./bench.js
-    
+
 Sample output:
 
-    YSlow Benchmark (http://mervine.net/about)
+    YSlow Benchmark (/about)
     => Grade passed with 74 (threshold: 74).
     => LoadTime failed with 3113 (threshold: 1000ms).
 
@@ -64,9 +63,9 @@ Sample output:
 
 ### Real Example
 
-Well now, that's cool, but not really very flexible. Just like in my last post on the subject, let's move on to a real world example. 
+Well now, that's cool, but not really very flexible. Just like in my last post on the subject, let's move on to a real world example.
 
-Next, it's add the ability to include a JSON file containing a list of URLs and their respective thresholds. Setup a configuration file to include an array of objects, each containing a threshold for the yslow grade (`o`) and load time (`lt`). Both key names match what's returned by the [PhantomJS `yslow.js`](http://yslow.org/phantomjs/) script that [YSlow.js on Node.js](http://mervine.net/projects/npms/yslowjs) uses at it's core.
+Next, it's add the ability to include a JSON file containing a list of URLs and their respective thresholds. Setup a configuration file to include an array of objects, each containing a threshold for the yslow grade (`o`) and load time (`lt`). Both key names match what's returned by the [PhantomJS `yslow.js`](http://yslow.org/phantomjs/) script that [YSlow.js on Node.js](/projects/npms/yslowjs) uses at it's core.
 
 `file: tests.json`
 
@@ -79,7 +78,7 @@ Next, it's add the ability to include a JSON file containing a list of URLs and 
       { "url": "/search?q=httperf" , "o": 74, "lt": 1000 }
     ]
 
-In this `bench.js` example, I get a bit more dynamic, adding a couple of extra lines to support testing page weight (`w`) and http requests (`r`). I did not include them in `tests.json` due to their unpredictability. Additionally, the dynamic method below can be used cleanly with [HTTPerf.js](http://mervine.net/projects/npms/httperfjs) in place of YSlow.js.
+In this `bench.js` example, I get a bit more dynamic, adding a couple of extra lines to support testing page weight (`w`) and http requests (`r`). I did not include them in `tests.json` due to their unpredictability. Additionally, the dynamic method below can be used cleanly with [HTTPerf.js](/projects/npms/httperfjs) in place of YSlow.js.
 
 `file: bench.js`
 
@@ -89,7 +88,7 @@ In this `bench.js` example, I get a bit more dynamic, adding a couple of extra l
     var YSlow     = require('yslowjs');
     var failed    = 0;
     var hostname  = "http://mervine.net";
-    
+
     console.log("YSlow Benchmark (%s)", hostname);
     tests.forEach( function(test) {
         var yslow  = new YSlow(hostname+test.url);
@@ -117,36 +116,43 @@ In this `bench.js` example, I get a bit more dynamic, adding a couple of extra l
 Run with:
 
     $ node ./bench.js
-    
+
 Sample output:
 
-    YSlow Benchmark (http://mervine.net)
-    
+    YSlow Benchmark ()
+
     * /
     => 'o' passed with 86 (threshold: 70).
     => 'lt' passed with 1841 (threshold: 3000).
-    
+
     * /about
     => 'o' passed with 97 (threshold: 74).
     => 'lt' passed with 708 (threshold: 2000).
-    
+
     * /projects
     => 'o' passed with 94 (threshold: 74).
     => 'lt' passed with 1325 (threshold: 2000).
-    
+
     * /archive
     => 'o' passed with 94 (threshold: 74).
     => 'lt' passed with 1270 (threshold: 2000).
-    
+
     * /search?q=httperf
     => 'o' passed with 93 (threshold: 74).
     => 'lt' passed with 910 (threshold: 1000).
-    
+
+### What Next?
+
+Well for me, it's [Bench](https://github.com/jmervine/bench) &mdash; An extremely raw and super alpha utility for benchmarking and graphing web pages.
+
+![bench screenshot](/pages/bench.png)
+
+This is an example of what can be done with [YSlow.js](/projects/npms/yslowis), [HTTPerf.js](/projects/npms/httperfjs) and [Phantomas](https://github.com/macbre/phantomas) (via [Phapper](/projects/npms/phapper)).
+
 ### More Info
 
-For more advanced client side benchmarking you can also look at using [Phapper](http://mervine.net/projects/npms/phapper) with [Phantomas](https://github.com/macbre/phantomas). I'll try to put some sample gist's up soon and link to them from here. In the mean time, you can look at [bench](https://github.com/jmervine/bench/) (an extremely raw and super alpha project I'm working on) for some code samples.
-
-Additionally you can view details on YSlow.js for Node.js, Phapper, HTTPerf.js and my other projects at [mervine.net/projects](http://mervine.net/projects) or on [github](http://github.com/jmervine).
+You can view details on YSlow.js for Node.js, Phapper, HTTPerf.js and my other projects at [mervine.net/projects](/projects) or on [github](http://github.com/jmervine).
 
 
 Good luck and happy benching!
+
