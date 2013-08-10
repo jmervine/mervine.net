@@ -36,8 +36,8 @@ module Nesta
       end
 
       def display_searchbox
-        %[<form action="/search" method="GET">
-          <input type="text" name="q" value="#{params[:q]}"/>
+        %[<form action="/search" method="GET" id="searchform">
+          <input type="text" name="q" id="searchbox" value="#{params[:q]}"/>
           </form>]
       end
 

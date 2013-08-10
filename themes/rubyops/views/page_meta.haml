@@ -14,7 +14,6 @@
           - else
             %a(href="#{url(category.abspath)}")= category.heading
   - if show_disqus_comment_count?(page)
-    = haml :disqus_comment, :layout => false
     %p.meta{:style => "float:right"}
       %a{ :href => "#{url(page.abspath)}#disqus_thread", :style => "font-size:125%; font-weight:bold" } Comment
 

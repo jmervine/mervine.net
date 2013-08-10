@@ -11,6 +11,8 @@
     %title= @title
     <!--[if ! lte IE 6]><!-->
     %link(href="#{url('/css/master.css')}" media="screen" rel="stylesheet")
+    %script(src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js")
+    %script(src="#{url('/js/vim.js')}")
     <!--<![endif]-->
     /[if lte IE 6]
       %link(rel="stylesheet" href="http://universal-ie6-css.googlecode.com/files/ie6.1.1.css" media="screen, projection")
@@ -30,4 +32,5 @@
 
   - if defined?(sharethis_javascript)
     = sharethis_javascript
+  = haml :disqus_comment, :layout => false
   = ::NewRelic::Agent.browser_timing_footer rescue ""
