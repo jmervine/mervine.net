@@ -1,4 +1,5 @@
 Date: 14 Aug 2013 11:00
+Catgories: linux, bash, hacks, zsh
 
 # Command-line Google Search via `find`
 
