@@ -6,6 +6,13 @@ Catgories: linux, bash, hacks, zsh
 Just for fun...
 
     :::shell
+    $ find -type m -name "glendale, ca coffee"
+    $ find -type m -name "glendale, ca smog check"
+    $ find -type g -name "cool bash commands"
+
+The code:
+
+    :::shell
     # "Install" (I use that term loosely)
     # - Paste the function below in your .bashrc / .profile / .zshrc / etc.
     # Usage: find /usr/local -type [m|g] -name [KEYWORD]
@@ -32,13 +39,3 @@ Just for fun...
     }
 
 [get the gist](https://gist.github.com/jmervine/6232984)
-
-
-### Usage examples:
-
-    :::shell
-    $ find -type m -name "glendale, ca coffee"
-    $ find -type m -name "glendale, ca smog check"
-    $ find -type g -name "cool bash commands"
-
-    
