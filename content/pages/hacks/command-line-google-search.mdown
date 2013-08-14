@@ -7,19 +7,13 @@ Just for fun...
 
     :::shell
     # "Install" (I use that term loosely)
-    #
     # - Paste the function below in your .bashrc / .profile / .zshrc / etc.
-    #
     # Usage: find /usr/local -type [m|g] -name [KEYWORD]
-    #
-    # -type m : google maps search
-    # -type g : google search
-    #
-    # all other types pass through to find
-    #
+    # * -type m : google maps search
+    # * -type g : google search
+    # * all other types pass through to find
     # Notes: 
     # Tested on Ubuntu with ZSH. Comment's, suggestions, etc. welcome.
-     
     function find {
       if [ `uname -s` = "Darwin" ]; then
         $browser="open"
