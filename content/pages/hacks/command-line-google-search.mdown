@@ -5,7 +5,7 @@ Catgories: linux, bash, hacks, zsh
 
 Just for fun...
 
-    :::sh
+    :::shell
     # "Install" (I use that term loosely)
     #
     # - Paste the function below in your .bashrc / .profile / .zshrc / etc.
@@ -42,7 +42,7 @@ Just for fun...
 
 ### Usage examples:
 
-    :::sh
+    :::shell
     $ find -type m -name "glendale, ca coffee"
     $ find -type m -name "glendale, ca smog check"
     $ find -type g -name "cool bash commands"
