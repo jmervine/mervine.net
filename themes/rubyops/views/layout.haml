@@ -11,10 +11,6 @@
     %title= @title
     <!--[if ! lte IE 6]><!-->
     %link(href="#{url('/css/master.css')}" media="screen" rel="stylesheet")
-    %script(src="//code.jquery.com/jquery-1.10.1.min.js")
-    %script
-      var searchElement = 'form#searchform input#searchbox';
-    %script(src="//cdn.jsdelivr.net/jquery.webpage-vim/0.1/vim.min.js")
     <!--<![endif]-->
     /[if lte IE 6]
       %link(rel="stylesheet" href="http://universal-ie6-css.googlecode.com/files/ie6.1.1.css" media="screen, projection")
@@ -35,4 +31,10 @@
   - if defined?(sharethis_javascript)
     = sharethis_javascript
   = haml :disqus_comment, :layout => false
+  <!--[if ! lte IE 6]><!-->
+  %script(src="//code.jquery.com/jquery-1.10.1.min.js")
+  %script
+    var searchElement = 'form#searchform input#searchbox';
+  %script(src="//cdn.jsdelivr.net/jquery.webpage-vim/0.1/vim.min.js")
+  <!--<![endif]-->
   = ::NewRelic::Agent.browser_timing_footer rescue ""
