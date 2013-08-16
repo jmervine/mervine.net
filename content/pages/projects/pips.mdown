@@ -1,7 +1,0 @@
-Title: My PIPs
-Categories: about, projects
-Flags: landing_page
-
-# My PyIPs
-
-> [PyIP](https://pypi.python.org/pypi) (or `pip`), "Python Package Index", is a site and tool for installing and managing [Python](/python) packages.

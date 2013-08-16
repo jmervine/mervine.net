@@ -1,8 +1,0 @@
-Title: Bind MySQL to localhost
-Categories: notes, mysql, localhost, linux
-
-# Binding MySQL to localhost
-
-    # cat /etc/my.cnf 
-    [mysqld]
-    bind-address=127.0.0.1

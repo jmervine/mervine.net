@@ -1,5 +1,0 @@
-# Rack
-
-> [Rack](http://rack.github.com/) provides a minimal interface between webservers supporting Ruby and Ruby frameworks.
-
-

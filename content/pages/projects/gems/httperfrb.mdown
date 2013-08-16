@@ -1,8 +1,0 @@
-Title: HTTPerf.rb
-Summary: Simple Ruby interface for httperf.
-Categories: projects/gems, ruby, httperf, httperfrb, projects/gems/autoperf, projects/gems/autobench, projects/pips/httperfpy, projects/npms/httperfjs
-Forkme: httperfrb
-Readme: httperfrb/master/README.md
-
-# HTTPerf.rb
-

@@ -1,9 +1,0 @@
-Title: HTTPerf.py
-Categories: projects/pips, httperf, python, performance, projects/gems/httperfrb, projects/npms/httperfjs
-Summary: Simple [Python](/python) interface for [httperf](/httperf). This is a port of [HTTPerf.rb](http://mervine.net/gems/httperfrb) and works pretty much the same way.
-Forkme: httperfpy
-Readme: httperfpy/master/README.txt
-
-
-# HTTPerf.py
-

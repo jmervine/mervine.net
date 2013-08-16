@@ -1,4 +1,0 @@
-# Unicorn
-
-> [Unicorn](https://github.com/defunkt/unicorn) is a Rack HTTP server for fast clients and Unix.
-

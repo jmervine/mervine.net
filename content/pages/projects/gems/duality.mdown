@@ -1,8 +1,0 @@
-Title: Duality
-Summary: Duality is a simple ruby cache helper for using multiple caches.
-Categories: projects/gems, ruby, caching, projects/gems/mongocached, memcached, projects/gems/diskcached
-Forkme: duality
-Readme: duality/master/README.md
-
-# Duality
-

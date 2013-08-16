@@ -1,4 +1,0 @@
-# HTTPerf.rb
-
-> [HTTPerf.rb](/gems/httperfrb) - A simple Ruby interface for httperf.
-

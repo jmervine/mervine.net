@@ -1,7 +1,0 @@
-Date: 9 Aug 2013 15:30
-
-# RT: Benchmarking with HTTPerf.js and NodeUnit
-
-<blockquote class="twitter-tweet"><p>Benchmarking with HTTPerf.js and NodeUnit - Speed Awareness Month <a href="http://t.co/cdhLL1jswp">http://t.co/cdhLL1jswp</a> via <a href="http://twitter.com/mervinej">@mervinej</a> <a href="http://twitter.com/search?q=%23SAM2013&amp;src=hash">#SAM2013</a> <a href="http://twitter.com/search?q=%23webperf&amp;src=hash">#webperf</a></p>&mdash; SpeedAwarenessMonth (@SpeedMonth) <a href="http://twitter.com/SpeedMonth/statuses/365139773821698052">August 7, 2013</a></blockquote>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-

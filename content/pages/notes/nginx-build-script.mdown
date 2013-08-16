@@ -1,7 +1,0 @@
-Date: 23 July 2013 09:30
-
-# Nginx Build Script
-
-A simple (no frills) [Nginx](/nginx) build script.
-
-<script src="https://gist.github.com/jmervine/6063910.js"></script>

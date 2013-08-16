@@ -1,7 +1,0 @@
-Forkme: me
-Readme: me/master/README.md
-Description: Technical professional with over fifteen years of experience. Currently focused on performance, stability and automation by day and open source tools and blogging about the aforementioned by night. Experience includes developer management, process management, project management, web application development, release engineering and systems engineering. Strengths include communication, collaboration, problem solving, as well as mentoring and managing technical staff.
-Keywords: Linux (Gentoo, RedHat, Ubuntu, CentOS), Solaris, Mac OS X,Ruby, Python, JavaScript, Perl, PHP, Git, Nginx, Unicorn, Rack, Rake, RSpec, Apache/Tomcat, MySQL, MongoDB, Redis, DPKG, RPM, TPKG, JIRA, Bamboo, Hudson/Jenkins, Splunk, Gomez, NewRelic, Sparc, Intel, AMD, F5 BigIP, Agile/Scrum
-
-# Joshua P. Mervine
-

@@ -1,5 +1,0 @@
-# Rake
-
-> [Rake](http://rake.rubyforge.org/): a simple ruby build program with capabilities similar to make.
-
-

@@ -1,6 +1,0 @@
-Date: 2013 Aug 16 10:58
-
-# Tweet: Node.js, Eating Crow
-
-<blockquote class="twitter-tweet"><p>I kicked, I screamed, I threatened to leave; I&#39;m eating crow... I&#39;m a <a href="https://twitter.com/search?q=%23nodejs&amp;src=hash">#nodejs</a> convert.</p>&mdash; Joshua Mervine (@mervinej) <a href="https://twitter.com/mervinej/statuses/368428168840892416">August 16, 2013</a></blockquote>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>

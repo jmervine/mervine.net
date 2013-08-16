@@ -1,5 +1,0 @@
-%h1 Search Results
-- if params[:q] && (results = search_results( search_index, params[:q] )) && !results.empty?
-  %section.articles= article_summaries(results)
-- else
-  %h3 No articles found!

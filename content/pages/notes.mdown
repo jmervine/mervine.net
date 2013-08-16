@@ -1,5 +1,0 @@
-# Notes
-
-> ### Random notes go here!
->
-> This might feel a little redundant to the [hacks](/hacks) section, and truthfully a lot of things that I add here, I might also include there. The main difference is that I'm going to strive to only put things here which are setup in a more reusable way. If it doesn't work out, I'll probably end up combining the sections later.
