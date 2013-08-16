@@ -11,3 +11,4 @@
 /diskcache/
 themes/rubyops/public/rubyops/static/
 *.pid
+/content/pages

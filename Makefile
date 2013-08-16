@@ -24,14 +24,14 @@ cache: generate_error_pages
 	/home/jmervine/ocp/ocp -l /home/jmervine/mervine.net/public/static -v http://mervine.net/sitemap.xml
 
 update:
-	git reset --hard
-	git pull origin master
-	@echo "create or update content/pages"
 	@if test -d content/pages; then \
 		cd content/pages && git pull origin master; \
 	else \
 		git clone git@github.com:jmervine/posts.git content/pages; \
 	fi
+	git reset --hard
+	git pull origin master
+	@echo "create or update content/pages"
 
 generate_error_pages:
 	curl -s 'http://mervine.net/error/400'
