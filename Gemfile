@@ -16,6 +16,7 @@ gem 'nesta-plugin-search'
 #gem 'coderay'
 gem "ultraviolet", :require => "uv"
 gem 'rack-codehighlighter', :require => 'rack/codehighlighter'
+gem 'htmlcompressor'
 gem 'unicorn'
 
 group :production do
