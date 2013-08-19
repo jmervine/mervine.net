@@ -68,7 +68,7 @@ diskcached: false
 production:
   #diskcached: true
   #diskcached_dir: diskcache
-  #google_analytics_code: "UA-32343843-1"
+  google_analytics_code: "UA-32343843-1"
 
   #diskcached_timeout: 3600 # default (in seconds)
 
