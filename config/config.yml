@@ -57,12 +57,14 @@ search_ignore_list:
 #sharethis: "80df436a-9769-4c43-a468-adcd0ae6ec70"
 sharethis: "d70ec18a-3455-4f95-9c4c-43eb2d969408"
 
-#sharethis_buttons: # optional
-#- :twitter
-#- :linkedin
-#- :reddit
+sharethis_buttons: # optional
+- twitter
+- linkedin
+- reddit
+- plus1
+- facebook_like
+
 #- :digg
-#- :facebook_like
 
 diskcached: false
 production:

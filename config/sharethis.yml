@@ -3,13 +3,15 @@
 #dzone:         "<span class='st_dzone'></span>"
 #email:         "<span class='st_email'></span>"
 #facebook:      "<span class='st_facebook'></span>"
-#google:        "<span class='st_google'></span>"
 #google_reader: "<span class='st_google_reader'></span>"
 #tumblr:        "<span class='st_tumblr'></span>"
+#google:        "<span class='st_google'></span>"
+#plus1_count:    "<span class='st_plusone_hcount'></span>"
 
-facebook_like: "<span class='st_fblike'></span>"
-linkedin:      "<span class='st_linkedin'></span>"
-reddit:        "<span class='st_reddit'></span>"
+plus1:          "<span class='st_plusone'></span>"
+facebook_like:  "<span class='st_fblike'></span>"
+linkedin:       "<span class='st_linkedin'></span>"
+reddit:         "<span class='st_reddit'></span>"
 
 # updated for via and hash tags
 twitter:       '<span class="st_twitter" st_via="mervinej"></span>'
