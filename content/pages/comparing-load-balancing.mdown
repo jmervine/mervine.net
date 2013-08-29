@@ -6,7 +6,7 @@ Summary: Recently I've done a bit of research on the differences between Nginx, 
 
 # Comparing Load Balancing Options: Nginx vs. HAProxy vs. AWS ELB
 
-> Update: I've recently been getting some comment about changes that have occurred in both AWS and HAProxy since originally posting this. Please review the comments and use the as a companion to additional research. If/when I have the time and need I will review and update this post. Thanks!
+> Update: I've recently been getting some comments about changes that have occurred in both AWS and HAProxy since originally posting this. Please review the comments and use this as a companion to additional research. If/when I have the time and need I will review and update this post. Thanks!
 
 Recently I've done a bit of research on the differences between [Nginx], [HAProxy] and [AWS ELB] when being used as a Load Balancer. I put together a line by line comparison for a friend of mine and thought I would share my results.
 
