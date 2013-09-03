@@ -8,15 +8,15 @@ Categories: ruby, bundler
 
 Anyway, here's my quick timing comparison on bundling a very large project with hundrends of gems:
 
-``` bash
-rm -rf vendor/bundle
-bundle install --path vendor/bundle
-# time: 5:31.40 total
 
-rm -rf vendor/bundle
-gem install bundler -v 1.4.0.pre.1 --pre
-bundle install --jobs=4 --path vendor/bundle
-# time: 3:10.38 total
-```
+    rm -rf vendor/bundle
+    bundle install --path vendor/bundle
+    # time: 5:31.40 total
+    
+    rm -rf vendor/bundle
+    gem install bundler -v 1.4.0.pre.1 --pre
+    bundle install --jobs=4 --path vendor/bundle
+    # time: 3:10.38 total
+
 
 Enjoy!
