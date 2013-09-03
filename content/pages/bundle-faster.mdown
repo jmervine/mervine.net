@@ -1,0 +1,22 @@
+Date: Sep 3 2013 10:00
+Title: Bundle Faster
+Categories: ruby, bundler
+
+# Bundle Faster, Save Time
+
+[Bundler](http://bundler.io/) just annouced `1.4.0.pre.1` with `--jobs` support, which allows for multithreading gem installs -- I haven't looked at the code, but my guess is it's making use of the `JOBS` flag support in `gmake` (which multithreads C compilation) for navtive libs. 
+
+Anyway, here's my quick timing comparison on bundling a very large project with hundrends of gems:
+
+``` bash
+rm -rf vendor/bundle
+bundle install --path vendor/bundle
+# time: 5:31.40 total
+
+rm -rf vendor/bundle
+gem install bundler -v 1.4.0.pre.1 --pre
+bundle install --jobs=4 --path vendor/bundle
+# time: 3:10.38 total
+```
+
+Enjoy!
