@@ -1,11 +1,15 @@
 Date: 7 August 2013 21:30
-Title: YSlow.js on Node.js: Release 0.2.1
+Title: YSlow.js on Node.js: Release 0.3.0
 Categories: projects/npms, nodejs, projects/npms/yslowjs
 Forkme: node-yslowjs
 
-# YSlow.js: Release 0.2.1
+# YSlow.js: Release 0.3.0
 
 #### Links: [readme](/projects/npms/yslowjs) | [package](https://npmjs.org/package/yslowjs) | [source](https://github.com/jmervine/node-yslowjs) | [tests](https://travis-ci.org/jmervine/node-yslowjs)
+
+### 0.3.0
+
+* Fixing error handling in `run`. Now passes both `error` and `results` to callback. See README examples for details. **This update is not backwards compatabile with previous releases.**
 
 ### 0.2.1
 
