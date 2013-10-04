@@ -1,8 +1,8 @@
 Date: 29 June 2013 00:00
-Title: Simple CLI Testing Psudo-Framework
-Summary: For a recent project, created a simple CLI testing "psudo-framework" via bash. There are other like it, but this is mine.
+Title: Simple CLI Testing Pseudo-Framework
+Summary: For a recent project, created a simple CLI testing "pseudo-framework" via bash. There are other like it, but this is mine.
 
-# Simple CLI Testing Psudo-Framework
+# Simple CLI Testing Pseudo-Framework
 
 
 ### What!? Why?
@@ -10,9 +10,9 @@ Summary: For a recent project, created a simple CLI testing "psudo-framework" vi
 For a recent project ([Autobench](/gems/autobench)), I wanted a very simple way to run some simple tests against my CLI output.
 I know there are a number of these kinds of things out there, but most of the ones I looked at were more complex then I wanted.
 To start, I created a basic shell script to test my CLI, but as I began to add to it, and want more from it, I decided to take
-a few minutes and build a psudo-framework out of it.
+a few minutes and build a pseudo-framework out of it.
 
-I call it a "psudo-framework" because it's really more of a helper, which gives you a handfull of assertions to run against
+I call it a "pseudo-framework" because it's really more of a helper, which gives you a handfull of assertions to run against
 bash commands. Well, that and it doesn't really have a name.
 
 ### Where?
