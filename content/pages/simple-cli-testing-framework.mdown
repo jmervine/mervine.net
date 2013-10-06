@@ -1,7 +1,7 @@
 Date: 29 June 2013 00:00
 Title: Simple CLI Testing Pseudo-Framework
 Summary: For a recent project, created a simple CLI testing "pseudo-framework" via bash. There are other like it, but this is mine.
-Forkme: CLIunit 
+Forkme: CLIunit
 Readme: CLIunit/master/README.md
 
 # Simple CLI Testing Pseudo-Framework
