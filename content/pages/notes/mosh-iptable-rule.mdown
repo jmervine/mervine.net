@@ -1,0 +1,29 @@
+Date: 17 October 2013 09:30
+Title: Notes: Mosh IPTable Rules
+Categories: notes, ssh, linux
+
+# Notes: Mosh IPTable Rules
+
+I was recently picked up a [Note 3](http://www.samsung.com/us/mobile/cell-phones/SM-N900AZKEATT) and with the larger screen, I found myself want to use it for shelling in to my machines. So I started playing with [Mosh](http://mosh.mit.edu/) on one of my boxes. I, like hopefully most of you, set pretty strick IPTable rules for my machines to keep them locked down as much as possible. I quickly found that (obviously) things weren't working due to this.
+
+To make things work, I added this line to `/etc/sysconfig/iptables`:
+
+    -A INPUT -p udp -m udp --dport 60001:61000 -j ACCEPT
+
+Here's the diff:
+
+    :::diff
+    diff --git a/tmp/iptables.old b/etc/sysconfig/iptables
+    index d4229ca..b950f1f 100644
+    --- a/tmp/iptables.old
+    +++ b/etc/sysconfig/iptables
+    @@ -8,6 +8,7 @@
+     -A INPUT -p icmp -j ACCEPT 
+     -A INPUT -i lo -j ACCEPT 
+     -A INPUT -p tcp -m state --state NEW -m tcp --dport 22 -j ACCEPT 
+    +-A INPUT -p udp -m udp --dport 60001:61000 -j ACCEPT
+     -A INPUT -j REJECT --reject-with icmp-host-prohibited 
+     -A FORWARD -j REJECT --reject-with icmp-host-prohibited 
+     COMMIT
+
+Enjoy!
