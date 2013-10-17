@@ -26,4 +26,9 @@ Here's the diff:
      -A FORWARD -j REJECT --reject-with icmp-host-prohibited 
      COMMIT
 
+Once you've added the line, simply restart IPTables like so:
+
+    sudo /etc/init.d/iptables condrestart 
+    
+
 Enjoy!
