@@ -12,7 +12,7 @@ subtitle: "Lessons learned, code written, hacks, etc."
 #
 author:
   name: Joshua P. Mervine
-  uri: http://mervine.net/
+  uri: http://joshua.mervine.net/
   email: joshua@mervine.net
 
 # You can stick with the default look and feel, or use a theme. Themes are
@@ -20,6 +20,13 @@ author:
 # can also use scripts/theme to install them.
 #
 theme: bootstrap
+
+# For more themes, see:
+# http://www.bootstrapcdn.com/#bootswatch_tab
+bootstrap: "//netdna.bootstrapcdn.com/bootswatch/3.0.0/slate/bootstrap.min.css"
+#bootstrap: "//netdna.bootstrapcdn.com/bootswatch/3.0.0/flatly/bootstrap.min.css"
+#bootstrap: "//netdna.bootstrapcdn.com/bootswatch/3.0.0/cosmo/bootstrap.min.css"
+#bootstrap: "//netdna.bootstrapcdn.com/bootswatch/3.0.0/readable/bootstrap.min.css"
 
 disqus_short_name: rubyops
 
@@ -65,6 +72,11 @@ sharethis_buttons: # optional
 - facebook_like
 
 twitter: merivnej
+linkedin: mervinej
+github: jmervine
+gittip: jmervine
+
+gravatar: "http://www.gravatar.com/avatar/ed808193b8c2c8516715816f90a005b2.jpg?s=75"
 
 diskcached: false
 production:

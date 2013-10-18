@@ -6,14 +6,16 @@
 
 %h1 Category List
 
-%div{ :style=>"width: 45%; float:left" }
+%div{:style=>"width: 45%; float:left"}
   %ul
     - col1.each do |category|
       %li
-        %a{ :href => "/#{category}" }= category
+        %a{ :href => "/#{category}"}= category
 
-%div{ :style=>"width: 45%; float:right" }
+%div{:style=>"width: 45%; float:right" }
   %ul
     - col2.each do |category|
       %li
         %a{ :href => "/#{category}" }= category
+
+%br{:style=>"clear:both"}
