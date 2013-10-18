@@ -1,12 +1,5 @@
-/
-  projects
-  ruby
-  nodejs
-  notes
-  hacks
 categories
-archive
-  archive/2013
-  archive/2012
-quotes
-about
+projects
+notes
+hacks
+archives

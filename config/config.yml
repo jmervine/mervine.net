@@ -64,7 +64,7 @@ sharethis_buttons: # optional
 - plus1
 - facebook_like
 
-#- :digg
+twitter: merivnej
 
 diskcached: false
 production:
