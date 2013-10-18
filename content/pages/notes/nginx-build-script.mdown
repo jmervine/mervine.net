@@ -4,4 +4,81 @@ Date: 23 July 2013 09:30
 
 A simple (no frills) [Nginx](/nginx) build script.
 
-<script src="https://gist.github.com/jmervine/6063910.js"></script>
+    :::bash
+    #!/bin/bash
+    #
+    # This script has been tested on CentOS 5 && Ubuntu 12.04.3
+    #
+    # By: Joshua Mervine <joshua at mervine dot net> (http://mervine.net)
+    #
+    # Note: Does not run `make install` unless run with `INSTALL=true`.
+
+    set -e
+    test "$DEBUG" && set -x
+
+    BUILD_ROOT=`pwd`
+
+    PAGESPEED=true # set to false to disable pagespeed
+
+    VERSION=1.4.2
+    PSVER=1.6.29.5-beta
+    PSOLVER=1.6.29.5
+    PCREVER=8.32
+    ZLIBVER=1.2.8
+
+    # parallelize builds
+    export JOBS=8
+
+    # We don't want to compile against random artifacts
+    export PATH=/usr/kerberos/bin:/usr/local/bin:/bin:/usr/bin
+
+    # bail if no yup or apt-get
+    (which apt-get || which yum) || exit 1
+    which apt-get && sudo apt-get install build-essential zlib1g-dev libpcre3 libpcre3-dev libssl-dev wget
+    which yum && sudo yum install gcc-c++ pcre-dev pcre-devel zlib-devel make openssl-devel wget
+
+    # delete libs is rebuild
+    rm -rf nginx-* pcre-* zlib-* release-* *.tar.gz ngx_pagespeed-release-*
+
+    if $PAGESPEED; then
+      wget https://github.com/pagespeed/ngx_pagespeed/archive/release-$PSVER.zip -O release-$PSVER.zip
+      unzip release-$PSVER.zip
+      cd ngx_pagespeed-release-$PSVER/
+      wget https://dl.google.com/dl/page-speed/psol/$PSOLVER.tar.gz
+      tar -xzvf $PSOLVER.tar.gz
+      cd ..
+    fi
+
+    wget http://nginx.org/download/nginx-$VERSION.tar.gz
+    tar xzf nginx-$VERSION.tar.gz
+
+    # for rewrite_module
+    wget http://sourceforge.net/projects/pcre/files/pcre/$PCREVER/pcre-$PCREVER.tar.gz/download \
+            -O pcre-$PCREVER.tar.gz
+    tar xzf pcre-$PCREVER.tar.gz
+
+    # for gzip module
+    wget http://zlib.net/zlib-$ZLIBVER.tar.gz
+    tar xzf zlib-$ZLIBVER.tar.gz
+
+    cd nginx-$VERSION
+
+    OPTIONS=" --with-pcre=../pcre-$PCREVER
+     --with-zlib=../zlib-$ZLIBVER
+     --with-http_ssl_module
+     --without-http_uwsgi_module
+     --without-http_scgi_module
+     --without-http_fastcgi_module
+     --without-http_autoindex_module
+     --without-http_auth_basic_module"
+
+    if $PAGESPEED; then
+            OPTIONS+=" --add-module=$BUILD_ROOT/ngx_pagespeed-release-$PSVER"
+    fi
+
+    ./configure $OPTIONS
+
+    make
+    test $INSTALL && sudo make install
+
+[get the gist](https://gist.github.com/jmervine/6063910)
