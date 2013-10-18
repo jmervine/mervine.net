@@ -67,9 +67,8 @@ sharethis: "d70ec18a-3455-4f95-9c4c-43eb2d969408"
 sharethis_buttons: # optional
 - twitter
 - linkedin
-- reddit
+- facebook
 - plus1
-- facebook_like
 
 twitter: merivnej
 linkedin: mervinej
