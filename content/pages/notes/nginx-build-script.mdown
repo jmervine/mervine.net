@@ -4,7 +4,7 @@ Date: 23 July 2013 09:30
 
 A simple (no frills) [Nginx](/nginx) build script.
 
-    :::bash
+    :::shell
     #!/bin/bash
     #
     # This script has been tested on CentOS 5 && Ubuntu 12.04.3
