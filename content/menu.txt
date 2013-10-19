@@ -1,6 +1,6 @@
 categories
-archive
 projects
 notes
 hacks
 quotes
+archive
