@@ -1,10 +1,12 @@
 Date: 19 October 2013 10:45
 Title: Jade Bootstrap Layout Template
-Summary: After using the [Express](/express) command line generation untility, you get a very basic `layout.jade`. Here's the standard modifications I make for use with [BootstrapCDN](http://www.bootstrapcdn.com/).
+Categories: notes, express, node, nodejs, jade
+Summary: After using the [Express](/express) command line generation untility, you get a very basic _layout.jade_. Here's the standard modifications I make for use with [BootstrapCDN](http://www.bootstrapcdn.com/).
 
 # Jade Bootstrap Layout Template
 
-After using the [Express](/express) command line generation untility, you get a very basic `layout.jade`. Here's the standard modifications I make for use with [BootstrapCDN](http://www.bootstrapcdn.com/).
+After using the [Express](/express) command line generation untility, you get a very basic _layout.jade_. Here's the standard modifications I make for use with [BootstrapCDN](http://www.bootstrapcdn.com/).
+
 
     !!! 5
     html
