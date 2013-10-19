@@ -1,0 +1,21 @@
+Date: 
+Title: Jade Bootstrap Layout Template
+
+# Jade Bootstrap Layout Template
+
+    !!! 5
+    html
+      head
+        meta(charset='utf-8')
+        meta(name='viewport', content='width=device-width, initial-scale=1.0')
+        meta(name='description', content='')
+        meta(name='author', content='')
+        title= title
+        link(rel='stylesheet', href='//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css')
+        // if lt IE 9
+          script(src='//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2/html5shiv.min.js')
+          script(src='//cdnjs.cloudflare.com/ajax/libs/respond.js/1.3.0/respond.min.js')
+      body
+        .container
+          block content
+        script(src='//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js', async=true)
