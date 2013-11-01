@@ -16,8 +16,11 @@ config = YAML::load_file(File.join(File.dirname(File.expand_path(__FILE__)), '..
 # - /file/2
 
 api = NetDNARWS::NetDNA.new(config['alias'], config['key'], config['secret'])
+puts "Purging zone #{config['zone']}"
 if config['files']
+  config['files'].each { |file| puts "- #{file}" }
   api.purge(config['zone'], config['files'])
 else
   api.purge(config['zone'])
 end
+

@@ -17,11 +17,14 @@ stop:
 
 restart: stop start
 
-clean:
+clean: purge
 	rm -rf ./public/static
 
 cache: generate_error_pages
 	/home/jmervine/ocp/ocp -l /home/jmervine/mervine.net/public/static -v http://mervine.net/sitemap.xml
+
+purge:
+	-bundle exec ./scripts/purge.rb
 
 update:
 	git reset --hard
