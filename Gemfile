@@ -22,6 +22,7 @@ gem 'unicorn'
 group :production do
   gem 'newrelic_rpm', :require => false
   gem 'rack-hard-copy'
+  gem 'netdnarws'
 end
 
 group :test do
