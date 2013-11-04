@@ -1,0 +1,15 @@
+Date: 04 November 2013 13:00
+Title: NPM Registry's
+Categories: node, nodejs, npm, npmjs
+
+# NPM Registry's
+
+I'm starting this list with the plan on adding as many as I can find. Please shoot me any known public registry's in the comments below.
+
+* http://registry.npmjs.vitecho.com/
+* http://npm.nodejs.org.au:5984/registry/_design/app/_rewrite (AUS)
+
+### Usage:
+
+    npm install --registry http://registry.npmjs.vitecho.com/ npm-foo
+
