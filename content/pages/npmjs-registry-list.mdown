@@ -6,8 +6,8 @@ Categories: node, nodejs, npm, npmjs
 
 I'm starting this list with the plan on adding as many as I can find. Please shoot me any known public registry's in the comments below.
 
-* http://registry.npmjs.vitecho.com/
-* http://npm.nodejs.org.au:5984/registry/_design/app/_rewrite (AUS)
+* `http://registry.npmjs.vitecho.com/`
+* `http://npm.nodejs.org.au:5984/registry/_design/app/_rewrite` (AUS)
 
 ### Usage:
 
