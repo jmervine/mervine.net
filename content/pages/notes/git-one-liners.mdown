@@ -7,3 +7,13 @@ Undo last commit (lightly).
 Prune local branches merged to master.
 
     git branch --merged master | grep -v 'master$' | xargs git branch -d
+
+Replacing a branch with another.
+
+    git checkout new
+    git merge -s ours original
+    git checkout original
+    git merge new
+    
+    # original now has the exact contents of new
+    
