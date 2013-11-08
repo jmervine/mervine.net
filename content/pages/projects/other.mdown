@@ -4,7 +4,7 @@ Flags: landing_page
 
 # My Other Projects
 
-These are my featured projects, which either doesn't fit in another category &mdash; GEMs, NPMs or PyPIs. &mdash; or isn't owned directly by me, but I created or heavily contributed to.
+These are my featured projects, which either doesn't fit in another category &mdash; GEMs, NPMs or PyPIs. &mdash; or isn't owned directly by me, but I created or heavily contribute to.
 
 #### BoostrapCDN: [MaxCDN/bootstrap-cdn](https://github.com/MaxCDN/bootstrap-cdn)
 
