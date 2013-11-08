@@ -17,7 +17,7 @@ stop:
 
 restart: stop start
 
-clean: purge
+clean:
 	rm -rf ./public/static
 
 cache: generate_error_pages
@@ -38,7 +38,7 @@ deploy/soft: update clean generate_error_pages cache
 
 deploy: update clean restart generate_error_pages cache
 
-deploy/full: update clean restart nginx/reload generate_error_pages cache
+deploy/full: update purge clean restart nginx/reload generate_error_pages cache
 
 # nginx handlers
 nginx/start:
