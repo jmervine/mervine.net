@@ -1,0 +1,7 @@
+Title: My Other Projects
+Categories: about, projects
+Flags: landing_page
+
+# My Other Projects
+
+These are my featured projects, which doesn't fit in another category &mdash; GEMs, NPMs or PyPIs.
