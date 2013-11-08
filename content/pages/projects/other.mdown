@@ -5,3 +5,8 @@ Flags: landing_page
 # My Other Projects
 
 These are my featured projects, which doesn't fit in another category &mdash; GEMs, NPMs or PyPIs.
+
+
+### [odb/shunt](https://github.com/odb/shunt) &mdash; Simple Shell Unit Testing Framework
+
+### [odb/shml](https://github.com/odb/shml) &mdash; Style Framework for The Terminal
