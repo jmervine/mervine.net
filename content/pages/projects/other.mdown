@@ -7,11 +7,10 @@ Flags: landing_page
 These are my featured projects, which either doesn't fit in another category &mdash; GEMs, NPMs or PyPIs. &mdash; or isn't owned directly by me, but I created or heavily contributed to.
 
 
-#### [odb/shunt](https://github.com/odb/shunt) &mdash; Simple Shell Unit Testing Framework
+#### Simple Shell Unit Testing Framework: [odb/shunt](https://github.com/odb/shunt)
 
-#### [odb/shml](https://github.com/odb/shml) &mdash; Style Framework for The Terminal
+#### Style Framework for The Terminal: [odb/shml](https://github.com/odb/shml)
 
-#### [MaxCDN/hexo-maxcdn-plugin](https://github.com/MaxCDN/hexo-maxcdn-plugin) &mdash; MaxCDN support for the Hexo Blogging Platform.
+#### MaxCDN support for the Hexo Blogging Platform: [MaxCDN/hexo-maxcdn-plugin](https://github.com/MaxCDN/hexo-maxcdn-plugin)
 
 For more information, see [Turbocharging Hexo whit MaxCDN](http://blog.maxcdn.com/turbocharging-hexo-maxcdn/).
-
