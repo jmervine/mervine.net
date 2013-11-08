@@ -7,25 +7,27 @@ Flags: landing_page
 
 These are my featured projects, which either doesn't fit in another category &mdash; GEMs, NPMs or PyPIs. &mdash; or isn't owned directly by me, but I created or heavily contribute to.
 
-#### BoostrapCDN: [MaxCDN/bootstrap-cdn](https://github.com/MaxCDN/bootstrap-cdn)
+----
+
+### BoostrapCDN: [MaxCDN/bootstrap-cdn](https://github.com/MaxCDN/bootstrap-cdn)
 
 > I was asked by [Justin Dorfman](https://twitter.com/jdorfman) to assit him in redsigning and taking over the web component of [BootstrapCDN](http://www.bootstrapcdn.com), which redisgned using [Bootstrap](http://getbootstrap.com/) and [Node.js](/nodejs) and [Express](/express).
 >
 > I am a primary contributor and co-owner of this project.
 
-#### Simple Shell Unit Testing Framework: [odb/shunt](https://github.com/odb/shunt)
+### Simple Shell Unit Testing Framework: [odb/shunt](https://github.com/odb/shunt)
 
 > For a recent project, I wanted a very simple way to run some simple tests against my script output. I know there are a number of these kinds of things out there, but most of the ones I looked at were more complex then I wanted. To start, I created a basic shell script to test my scripts, but as I began to add to it, and want more from it, I decided to take a few minutes and build a pseudo-framework out of it.
 >
 > This project is part of the [Github orginzation "Ol' Dirty Bashnerds"](https://github.com), which I founded junction with [Justin Dorfman](https://twitter.com/jdorfman).
 
-#### Style Framework for The Terminal: [odb/shml](https://github.com/odb/shml)
+### Style Framework for The Terminal: [odb/shml](https://github.com/odb/shml)
 
 > HTML has CSS, terminals have "ANSI/VT100 Control Sequences". SHML makes is easy to apply some style to your shell scripts without trying to remember that Yellow = \033[33m instead Yellow is $(color yellow).
 >
 > This project is part of the [Github orginzation "Ol' Dirty Bashnerds"](https://github.com), which I founded junction with [Justin Dorfman](https://twitter.com/jdorfman).
 
-#### MaxCDN support for the Hexo Blogging Platform: [MaxCDN/hexo-maxcdn-plugin](https://github.com/MaxCDN/hexo-maxcdn-plugin)
+### MaxCDN support for the Hexo Blogging Platform: [MaxCDN/hexo-maxcdn-plugin](https://github.com/MaxCDN/hexo-maxcdn-plugin)
 
 > I created this Plugin at the request of [MaxCDN] and officially belongs to them. However, I am the current maintainer and co-owner for this repository and own the [NPM @ npmjs.org](https://npmjs.org/package/hexo-maxcdn-plugin)
 > 
