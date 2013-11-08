@@ -1,5 +1,6 @@
 Title: My Other Projects
 Categories: about, projects
+Summary: These are my featured projects, which either doesn't fit in another category &mdash; GEMs, NPMs or PyPIs. &mdash; or isn't owned directly by me, but I created or heavily contribute to.
 Flags: landing_page
 
 # My Other Projects
