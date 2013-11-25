@@ -5,6 +5,23 @@ Categories: hacks, bash, zsh, linux
 
 # Minimum Version Checking with BASH/ZSH
 
+#### Thanks to [@retr0h](https://twitter.com/retr0h):
+
+    :::shell
+    [[ $(zsh --version | awk '{print $2}') > 4.3.17 ]]
+    
+    # usage
+    
+    if [[ $(zsh --version | awk '{print $2}') > 4.3.17 ]]; then
+        # do someting that only higher zsh versions support
+    else
+        # do something else for low versions
+    fi
+
+----
+
+> This was my origitional (not so sexy solution).
+
 The following line will print `zsh` version information if the version is greater then or equal to 4.3.17, otherwise it will return blank:
 
     :::shell
