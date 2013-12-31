@@ -4,8 +4,6 @@ Flags: landing_page
 
 # My NPMs
 
-<iframe src="http://jmervine.github.io/npm-downloads-badge/badge.html?module=yslowjs" allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20"></iframe>
-
 > Short for "Node Packaged Modules", [NPMs](http://npmjs.org) are the standard packaging method for [Node.js](/nodejs) modules.
 
 These are my featured npms, for a complete list see my [npmsjs.org profile](https://npmjs.org/~jmervine).
