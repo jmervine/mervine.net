@@ -1,0 +1,26 @@
+Date: 6 January 2014 20:00
+Title: Simple Timing in Node.js
+Categories: node, nodejs, notes, hacks
+
+
+# Simple Timing in Node.js
+
+I just stumbled upon a cool feature of [Node.js](http://nodejs.org/) for adding timing to applications using `console.time` and console.timeEnd`.
+
+    ::: javascript
+    // pointless example that show all parts
+    console.time('timer');
+    setTimeout(function() {
+        console.timeEnd('timer');
+    }, 500);
+    
+    // => timer: 511ms
+    
+
+> Note: I've heard (and in somecases proven) that in most cases `console.` method are not asynchronous (i.e. blocking) and therefore should never be used in production code. Notice that in the above example, `console.time` and `console.timeEnd` appear to have about 11ms of overhead on my machine.
+
+    
+    
+    
+    
+
