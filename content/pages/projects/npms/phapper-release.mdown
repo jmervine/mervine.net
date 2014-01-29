@@ -1,12 +1,16 @@
-Date: 7 Auguest 2013 15:40
-Title: Phapper.js: Release 0.1.6
+Date: 28 Janurary 2014 22:00
+Title: Phapper.js: Release 0.1.8
 Categories: projects/npms, nodejs, projects/npms/phapper
 Keywords: phantomjs, nodejs, performance, webkit
 Forkme: phapper
 
-# Phapper.js: Release 0.1.6
+# Phapper.js: Release 0.1.8
 
 #### Links: [readme](/projects/npms/phapper) | [package](https://npmjs.org/package/phapper) | [source](https://github.com/jmervine/phapper) | [tests](https://travis-ci.org/jmervine/phapper)
+
+### 0.1.8
+
+* Updating PhantomJS version to 1.9.7.
 
 ### 0.1.6
 
