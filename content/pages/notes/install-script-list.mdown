@@ -1,7 +1,7 @@
-Title: Notes: List of Install Scripts
+Title: List of Install Scripts
 Categories: notes, install, linux
 
-# Notes: List of Install Scripts
+# List of Install Scripts
 
 > Notes: 
 >
