@@ -7,7 +7,7 @@ Categories: notes, install, linux
 
 Unless you're me, you should use these as reference, I wouldn't run them, without knowing what you're doin.
 
-* [Node.js](https://gist.github.com/jmervine/6441063)
-* [Golang](https://gist.github.com/jmervine/8321074)
-* [VIM](https://gist.github.com/jmervine/6710140)
-* [Nginx](https://gist.github.com/jmervine/6063910)
+* [Node.js - https://gist.github.com/jmervine/6441063](https://gist.github.com/jmervine/6441063)
+* [Golang - https://gist.github.com/jmervine/8321074](https://gist.github.com/jmervine/8321074)
+* [Nginx - https://gist.github.com/jmervine/6063910](https://gist.github.com/jmervine/6063910)
+* [VIM - https://gist.github.com/jmervine/6710140](https://gist.github.com/jmervine/6710140)
