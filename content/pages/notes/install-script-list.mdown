@@ -3,11 +3,14 @@ Categories: notes, install, linux
 
 # Notes: List of Install Scripts
 
-> Note: Chances are these were run on CentOS5, CentOS6 *OR* Ubuntu only. Perhaps more then one, perhaps only one. 
-
-Unless you're me, you should use these as reference, I wouldn't run them, without knowing what you're doin.
+> Notes: 
+>
+> 1. Chances are these were run on CentOS5, CentOS6 *OR* Ubuntu only. Perhaps more then one, perhaps only one. 
+> 2. The version in the script isn't always the latest version, but the version at time I last updated the script.
+> 3. **Unless you're me, you should use these as reference. I don't recommend running them, without knowing what you're doing.**
 
 * [Node.js - https://gist.github.com/jmervine/6441063](https://gist.github.com/jmervine/6441063)
 * [Golang - https://gist.github.com/jmervine/8321074](https://gist.github.com/jmervine/8321074)
 * [Nginx - https://gist.github.com/jmervine/6063910](https://gist.github.com/jmervine/6063910)
 * [VIM - https://gist.github.com/jmervine/6710140](https://gist.github.com/jmervine/6710140)
+
