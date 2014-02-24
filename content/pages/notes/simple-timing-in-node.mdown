@@ -7,7 +7,7 @@ Categories: node, nodejs, notes, hacks
 
 I just stumbled upon a cool feature of [Node.js](http://nodejs.org/) for adding timing to applications using `console.time` and console.timeEnd`.
 
-    ::: javascript
+    :::js
     // pointless example that show all parts
     console.time('timer');
     setTimeout(function() {
