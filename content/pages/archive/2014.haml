@@ -1,0 +1,15 @@
+Categories: archive
+
+%h1 2014 Articles
+%ol
+  - Nesta::Page.find_articles.each do |page|
+    - if page.date.strftime("%Y") == "2014"
+      %li
+        %a{ :href=>page.abspath }=page.title
+        %small
+          &mdash;
+          -#- if show_disqus_comment_count?(page)
+            -#= haml :disqus_comment, :layout => false
+            -#%a{ :href=>"#{page.abspath}#disqus_thread" } Comments
+          -#- else
+          = page.date.strftime("%D %H:%M")
