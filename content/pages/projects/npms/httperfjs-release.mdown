@@ -1,10 +1,10 @@
 Date: 27 Feb 2014 16:30
-Title: HTTPerf.js: Release 0.0.7
+Title: HTTPerf.js: Release 0.1.0
 Categories: projects, projects/npms/httperfjs, nodejs, projects/npms, benchmarking-with-httperfjs-and-nodeunit
 Summary: 0.1.0: Removing `runSync`. Refactoring `run` to support sending spawned process `SIGINT` to capture current report from httperf and exit.
 Forkme: httperfjs
 
-# HTTPerf.js: Release 0.0.7
+# HTTPerf.js: Release 0.1.0
 
 #### Links: [readme](/projects/npms/httperfjs) | [package](https://npmjs.org/package/httperfjs) | [source](http://github.com/jmervine/httperfjs) | [tests](https://travis-ci.org/jmervine/httperfjs)
 
