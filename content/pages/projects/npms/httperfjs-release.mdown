@@ -1,46 +1,34 @@
 Date: 27 Feb 2014 16:30
 Title: HTTPerf.js: Release 0.0.7
 Categories: projects, projects/npms/httperfjs, nodejs, projects/npms, benchmarking-with-httperfjs-and-nodeunit
+Summary: 0.1.0: Removing `runSync`. Refactoring `run` to support sending spawned process `SIGINT` to capture current report from httperf and exit.
 Forkme: httperfjs
 
 # HTTPerf.js: Release 0.0.7
 
 #### Links: [readme](/projects/npms/httperfjs) | [package](https://npmjs.org/package/httperfjs) | [source](http://github.com/jmervine/httperfjs) | [tests](https://travis-ci.org/jmervine/httperfjs)
 
-### 0.0.7
+### 0.1.0
 
-Exporting 'Parser' via 'HTTPerf', e.g.:
+- Removing `runSync`.
+- Refactoring `run` to support sending spawned process `SIGINT` to capture current report from httperf and exit.
 
-    :::js
-    var Parser = require('httperfjs').Parser;
+### Pre 0.1
 
-    var data = new Parser(' ... raw httperf output ... ');
-    console.log(data);
-
-
-### 0.0.6
-
-* Fixing a bug in calculating percentile's when using verbose mode.
-
-### 0.0.5
-
-* Switching `exec-sync` for `execSync` to support easier compiles on Mac's.
-
-### 0.0.4
-
-* Fixing bug with arguments that do not have values (e.g. `--verbose` and `--hog`). These should now be set like so: `verbose: true`.
-
-### 0.0.3
-
-* Updating README
-* Adding functional tests
-* Removing persistant results `httperf.results`, as it's really not necessary for any real usecases.
-
-### 0.0.2
-
-* Changing run to runSync for future async support.
-* Adding #run (async).
-
-### 0.0.1
-
-* Initial release.
+* 0.0.7
+  * Exporting 'Parser' via 'HTTPerf'
+* 0.0.6
+  * Fixing a bug in calculating percentile's when using verbose mode.
+* 0.0.5
+  * Switching `exec-sync` for `execSync` to support easier compiles on Mac's.
+* 0.0.4
+  * Fixing bug with arguments that do not have values (e.g. `--verbose` and `--hog`). These should now be set like so: `verbose: true`.
+* 0.0.3
+  * Updating README
+  * Adding functional tests
+  * Removing persistant results `httperf.results`, as it's really not necessary for any real usecases.
+* 0.0.2
+  * Changing run to runSync for future async support.
+  * Adding #run (async).
+* 0.0.1
+  * Initial release.
