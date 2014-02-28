@@ -1,11 +1,22 @@
-Date: 7 Auguest 2013 15:30
-Title: HTTPerf.js: Release 0.0.6
+Date: 27 Feb 2014 16:30
+Title: HTTPerf.js: Release 0.0.7
 Categories: projects, projects/npms/httperfjs, nodejs, projects/npms, benchmarking-with-httperfjs-and-nodeunit
 Forkme: httperfjs
 
-# HTTPerf.js: Release 0.0.6
+# HTTPerf.js: Release 0.0.7
 
 #### Links: [readme](/projects/npms/httperfjs) | [package](https://npmjs.org/package/httperfjs) | [source](http://github.com/jmervine/httperfjs) | [tests](https://travis-ci.org/jmervine/httperfjs)
+
+### 0.0.7
+
+Exporting 'Parser' via 'HTTPerf', e.g.:
+
+    :::js
+    var Parser = require('httperfjs').Parser;
+
+    var data = new Parser(' ... raw httperf output ... ');
+    console.log(data);
+
 
 ### 0.0.6
 
