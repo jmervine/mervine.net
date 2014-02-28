@@ -1,6 +1,7 @@
 Date: 26 Feb 2014 22:00 
 Title: Forking in Node.js / Threading HTTPerf with HTTPerf.js 
 Categories: hacks, node, nodejs, cluster, httperf, httperfjs
+Summary: Occasionally, we want to generate load beyond what a single httperf thread can handle, especially when working in [Node.js](http://nodejs.org/), where the connection limits can get very high. The code sample below does that, but also serves as an example of how to use the [cluster module](http://nodejs.org/api/cluster.html) to fork actions and collect the resulting data. Enjoy!
 
 # Forking in Node.js / Threading HTTPerf with HTTPerf.js
 
