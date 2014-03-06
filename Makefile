@@ -2,6 +2,7 @@ SHELL=/bin/bash
 RACK_ENV?=production
 NGINX_ETC=/usr/local/nginx/conf
 NGINX_INIT=/etc/init.d/nginx
+DOMAIN=mervine.net
 
 setup:
 	bundle install --path vendor/bundle
@@ -20,8 +21,12 @@ restart: stop start
 clean:
 	rm -rf ./public/static
 
-cache: generate_error_pages
-	/home/jmervine/ocp/ocp -l /home/jmervine/mervine.net/public/static -v http://mervine.net/sitemap.xml
+sitemap:
+	rm -rf ./public/static/sitemap.xml || true
+	curl -s --output /dev/null http://$(DOMAIN)/sitemap.xml
+
+cache: sitemap generate_error_pages
+	/home/jmervine/ocp/ocp -l /home/jmervine/$(DOMAIN)/public/static -v http://$(DOMAIN)/sitemap.xml
 
 purge:
 	-bundle exec ./scripts/purge.rb
@@ -31,8 +36,8 @@ update:
 	git pull
 
 generate_error_pages:
-	curl -s 'http://mervine.net/error/400'
-	curl -s 'http://mervine.net/error/500'
+	curl -s --output /dev/null 'http://$(DOMAIN)/error/400'
+	curl -s --output /dev/null 'http://$(DOMAIN)/error/500'
 
 deploy/soft: update clean generate_error_pages cache
 
@@ -59,5 +64,6 @@ nginx/reload: nginx/update_configs
 nginx/update_configs:
 	@sudo cp -v $(NGINX_ETC)/nginx.conf $(NGINX_ETC)/nginx.conf.bak
 	@sudo cp -v ./config/nginx.conf $(NGINX_ETC)/nginx.conf
-	@sudo cp -v $(NGINX_ETC)/sites-available/mervine.net $(NGINX_ETC)/sites-available/mervine.net.bak
-	@sudo cp -v ./config/mervine.net.conf $(NGINX_ETC)/sites-available/mervine.net
+	@sudo cp -v $(NGINX_ETC)/sites-available/$(DOMAIN) $(NGINX_ETC)/sites-available/$(DOMAIN).bak
+	@sudo cp -v ./config/$(DOMAIN).conf $(NGINX_ETC)/sites-available/$(DOMAIN)
+
