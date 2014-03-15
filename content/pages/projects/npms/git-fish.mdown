@@ -1,0 +1,8 @@
+Title: git-fish
+Categories: projects/npms, nodejs, projects/npms/git-fish
+Summary: `git-fish` is a simple [Node.js](/nodejs) [Github Webhook](http://developer.github.com/webhooks/) listener. Why `git-fish`? What recieves a hook?
+Forkme: node-git-fish
+Readme: node-git-fish/master/README.md
+
+# git-fish
+
