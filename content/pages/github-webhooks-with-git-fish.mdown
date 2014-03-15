@@ -1,5 +1,6 @@
 Date: March 15 2014 15:30
 Title: Github Webhooks with git-fish
+Categories: projects/npms, nodejs, projects/npms/git-fish
 Forkme: node-git-fish
 
 # Github Webhooks with git-fish
