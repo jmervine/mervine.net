@@ -1,0 +1,18 @@
+Date: March 15 2014 15:30
+Title: Github Webhooks with git-fish
+Flag: draft
+
+# Github Webhooks with `git-fish`
+
+I wrote `[git-fish]` &ndash; a [Github Webhook] listener &ndash; to provide a simple and modular method for executing an autodeployment on [mervine.net](/) when adding or updating a post. I designed it to as simple and as modular as possible. While written in [Node.js](/nodejs), I tend to use it execute simple [bash](/bash) scripts, like the [mervine.net] deployment script:
+
+    #!/bin/bash
+    
+    cd /home/jmervine/mervine.net
+    make deploy/soft
+
+
+[mervine.net]: /
+[Node.js]: /nodejs
+[bash]: /bash
+[git-fish]: /projects/npms/git-fish
