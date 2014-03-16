@@ -1,8 +1,0 @@
-Title: express-middleware-timer
-Categories: projects/npms, nodejs
-Summary: A simple timer implementation for debugging express middleware.
-Forkme: express-middleware-timer
-Readme: express-middleware-timer/master/README.md
-
-# express-middleware-timer
-
