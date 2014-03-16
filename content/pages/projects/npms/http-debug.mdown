@@ -1,7 +1,7 @@
 Title: http-debug
 Categories: projects/npms, nodejs
 Summary: Debug [Node.js](http://nodejs.org) http and https requests.
-Forkme: http-debug
-Readme: http-debug/master/README.md
+Forkme: node-http-debug
+Readme: node-http-debug/master/README.md
 
 # http-debug
