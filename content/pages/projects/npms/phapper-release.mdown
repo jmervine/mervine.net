@@ -12,44 +12,28 @@ Forkme: phapper
 
 * Fixing a minor bug with the install script.
 
-### 0.1.8
+### Previous Versions
 
-* Updating PhantomJS version to 1.9.7.
-
-### 0.1.6
-
-* Replacing exec-sync with execSync for easier Mac installation.
-
-### 0.1.5
-
-* Removing unused dependancies.
-
-### 0.1.4
-
-* Fixing small issue with passed in arguments on init.
-* Added ability to pass exec object, see readme examples.
-* Cleaned up tests, added more.
-* Cleaned up make test / npm test.
-* Allowing for passing of cwd to sync function.
-
-
-### 0.1.3
-
-* Adding windows handling and phantomjs version overide.
-* Updating [readme](/projects/npms/phapper).
-
-### 0.1.2
-
-* Adding phantomjs install.
-* Adding better phantomjs path support.
-
-### 0.1.1
-
-* Refactored to not require JSON stdout parse.
-* Refactored run and runSync return values, see [readme](/projects/npms/phapper).
-
-### 0.0.1
-
-* Initial release.
-
-
+* 0.1.8
+  * Updating PhantomJS version to 1.9.7.
+* 0.1.6
+  * Replacing exec-sync with execSync for easier Mac installation.
+* 0.1.5
+  * Removing unused dependancies.
+* 0.1.4
+  * Fixing small issue with passed in arguments on init.
+  * Added ability to pass exec object, see readme examples.
+  * Cleaned up tests, added more.
+  * Cleaned up make test / npm test.
+  * Allowing for passing of cwd to sync function.
+* 0.1.3
+  * Adding windows handling and phantomjs version overide.
+  * Updating [readme](/projects/npms/phapper).
+* 0.1.2
+  * Adding phantomjs install.
+  * Adding better phantomjs path support.
+* 0.1.1
+  * Refactored to not require JSON stdout parse.
+  * Refactored run and runSync return values, see [readme](/projects/npms/phapper).
+* 0.0.1
+  * Initial release.
