@@ -1,11 +1,15 @@
-Date: 24 September 2013 09:00
-Title: YSlow.js on Node.js: Release 0.3.0
-Categories: projects/npms, nodejs, projects/npms/yslowjs
+Date: 22 March 2014 14:40
+Title: YSlow.js on Node.js: Release 0.3.1
+Categories: projects/npms, nodejs, projects/npms/yslowjs, projects/npms/phapper
 Forkme: node-yslowjs
 
-# YSlow.js: Release 0.3.0
+# YSlow.js: Release 0.3.1
 
 #### Links: [readme](/projects/npms/yslowjs) | [package](https://npmjs.org/package/yslowjs) | [source](https://github.com/jmervine/node-yslowjs) | [tests](https://travis-ci.org/jmervine/node-yslowjs)
+
+### 0.3.1
+
+* Locking [Phapper](/projects/npms/phapper) version.
 
 ### 0.3.0
 
