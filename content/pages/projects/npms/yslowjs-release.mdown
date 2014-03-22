@@ -7,12 +7,14 @@ Forkme: node-yslowjs
 
 #### Links: [readme](/projects/npms/yslowjs) | [package](https://npmjs.org/package/yslowjs) | [source](https://github.com/jmervine/node-yslowjs) | [tests](https://travis-ci.org/jmervine/node-yslowjs)
 
-### 0.3.1
+### 0.3.2
 
-* Locking [Phapper](/projects/npms/phapper) version.
+* Upping [yslow](http://yslow.org/phantomjs/) version.
 
 ### Previous Version
 
+* 0.3.1
+  * Locking [Phapper](/projects/npms/phapper) version.
 * 0.3.0
   * Fixing error handling in `run`. Now passes both `error` and `results` to callback. See README examples for details. **This update is not backwards compatabile with previous releases.**
 * 0.2.1
