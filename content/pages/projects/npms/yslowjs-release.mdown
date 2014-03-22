@@ -11,34 +11,26 @@ Forkme: node-yslowjs
 
 * Locking [Phapper](/projects/npms/phapper) version.
 
-### 0.3.0
+### Previous Version
 
-* Fixing error handling in `run`. Now passes both `error` and `results` to callback. See README examples for details. **This update is not backwards compatabile with previous releases.**
-
-### 0.2.1
-
-* Removing unused dependainces.
-
-### 0.2.0
-
-* Top down refactor using updated [Phapper](/projects/npms/phapper).
-* Includes better pathing support for finding included [yslow.js][1].
-* Downloads and install [yslow.js][1] if it can't be found, which should never happen.
-* Adding limited support for [Windows](https://github.com/jmervine/node-yslowjs/blob/master/NOTES.mdown).
-
-### 0.1.2
-
-* Fixing critical issue in NODE_PATH search when working with global installations.
-
-### 0.1.1
-
-* Refactored to use [Phapper](/projects/npms/phapper), way cleaner and less code.
-* Refactored tests for change to Phapper.
-* Refactored stubs..
-* Adding functional tests.
-
-### 0.0.1
-
-* Initial release.
+* 0.3.0
+  * Fixing error handling in `run`. Now passes both `error` and `results` to callback. See README examples for details. **This update is not backwards compatabile with previous releases.**
+* 0.2.1
+  * Removing unused dependainces.
+* 0.2.0
+  * Top down refactor using updated [Phapper](/projects/npms/phapper).
+  * Includes better pathing support for finding included [yslow.js][1].
+  * Downloads and install [yslow.js][1] if it can't be found, which should never happen.
+  * Adding limited support for [Windows](https://github.com/jmervine/node-yslowjs/blob/master/NOTES.mdown).
+* 0.1.2
+  * Fixing critical issue in NODE_PATH search when working with global installations.
+* 0.1.1
+  * Refactored to use [Phapper](/projects/npms/phapper), way cleaner and less code.
+  * Refactored tests for change to Phapper.
+  * Refactored stubs..
+  * Adding functional tests.
+* 0.0.1
+  * Initial release.
 
 [1]: http://yslow.org/phantomjs
+
