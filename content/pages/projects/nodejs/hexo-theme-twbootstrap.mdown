@@ -3,5 +3,5 @@ Title: Twitter Bootstrap Theme for Hexo
 
 # Twitter Bootstrap Theme for Hexo
 
-Just finished building a [Twitter Bootstrap theme](http://github.com/jmervine/hexo-theme-twbootstrap) for [Hexo](http://zespia.tw/hexo/). Coming soon, big changes to [mervine.net](http://mervine.net/)!
+Just finished building a [Twitter Bootstrap theme](http://github.com/jmervine/hexo-theme-twbootstrap) for [Hexo](http://zespia.tw/hexo/).
 
