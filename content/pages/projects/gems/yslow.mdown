@@ -1,7 +1,7 @@
-Title: YSlow
+Title: YSlow on Ruby
 Summary: Ruby wrapper for [YSlow](http://yslow.org/phantomjs/) via [PhantomJS](http://phantomjs.org/).
 Categories: projects/gems, ruby, yslow, projects/npms/yslowjs
 Forkme: ruby-yslow
 Readme: ruby-yslow/master/README.md
 
-# YSlow
+# YSlow on Ruby
