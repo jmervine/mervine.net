@@ -1,0 +1,137 @@
+Date: 10 May 2014 14:00
+Title: Notes on Performance Testing
+Categories: performance, httperf, phantomjs
+Summary: A couple weeks ago I did an ad hoc talk at the [LAWebSpeed Meetup](http://www.meetup.com/LAWebSpeed/events/174808092/), hosted by [MaxCDN](http://www.maxcdn.com/), on general performance testing in the web world. I was asked to put together a list of the tools I spoke about and some brief notes on them...
+
+A couple weeks ago I did an ad hoc talk at the [LAWebSpeed Meetup](http://www.meetup.com/LAWebSpeed/events/174808092/), hosted by [MaxCDN](http://www.maxcdn.com/), on general performance testing in the web world. I was asked to put together a list of the tools I spoke about and some brief notes on them, so here goes.
+
+## TL;DR
+
+Here's a brief list of the tools I mentioned in my talk, for those that were there.
+
+**Server Side Tools**
+
+* [httperf]
+    * [main site](http://www.hpl.hp.com/research/linux/httperf/)
+    * [my fork](https://github.com/jmervine/httperf)
+* [Autoperf]
+* [HTTPerf.rb]
+* HTTPerf.rb ports:
+    * [HTTPerf.js]
+    * [HTTPerf.py]
+    * [HTTPerf.php]
+    * [gohttperf] (_experimental_)
+        
+
+**Client Side Tools**
+
+* [W3C Navigation Timing]
+* [WebPageTest.org]
+* [Google PageSpeed]
+* [YSlow]
+* [PhantomJS]
+    * [YSlow.js]
+    * [phantomas]
+
+
+
+
+## Server Side Testing
+
+In general, I use server side load / performance testing with two goals. The first is break testing, finding your applications break point and monitoring it's behavior on the way to breaking. The second is for a solid understanding of current state capacity, both for the purpose of future planning and to avoid critical failures.
+
+When running break tests, I run multiple tests, increasing the load in each until a break point is found, which is what [Autoperf] (see below) was designed for. These tests can often be done in short controlled bursts as opposed to long running break tests, although depending on your platform (i.e. Java) there are exceptions. Additionally, I tend to point these kinds of tests a a single endpoint or a few select higher priority endpoints as opposed to a more general traffic log. Again, the effectiveness depends greatly on platform and application design.
+
+In testing for capacity, I take the sweet spot from the break tests mentioned above and I run those over long periods of time, and attempt to more closely reproduce real production traffic (the closer the better). Once I've validated the sweet spot, I'll use that to determine capacity. 
+
+> **Note on capacity planning.**
+>
+> This will greatly depend on your traffic patterns and application designed. As such, there's no real formula out there. My typical rule of thumb is "400% peak", with a minimum of "250% peak". How "peak" is defined will vary almost from site to site, however, if you're familiar with your sites traffic patterns, it shouldn't be too hard to figure out.
+
+
+### Tools
+
+### httperf
+
+For both break testing and capacity testing, I use [httperf](http://mervine.net/httperf) - a command line tool for Linux which is designed to generate load at a controlled rate. There are [rpm's and deb's for it](http://pkgs.org/search/?query=httperf&type=name), but I use my own fork with more verbose output, which I'll talk about more later. For more information, see [Performance Testing with Httperf](http://mervine.net/performance-testing-with-httperf) and [httperf-0.9.1 with individual connection times](http://mervine.net/httperf-0-9-1-with-individual-connection-times).
+
+Some other popular options for generating load are [Siege](http://www.joedog.org/siege-home/), and [Apache Bench](http://httpd.apache.org/docs/2.2/programs/ab.html) (aka Ab). Siege is designed for time based break testing and is good at it, but has limited results data and I've found it to be less predictable the httperf, that said I haven't used it too much. I haven't personally played with Ab, as in my initial inspection it appeared to require the install of Apache, which I had no interest in doing and as I already have a tool to meet my needs, I didn't spend too much time digging deeper.
+
+
+### Autoperf
+
+[Autoperf] is a ruby driver for [httperf], designed to help you automate load and performance testing of any web application - for a single end point, or through log replay.
+
+This has been refactored from the original -- github.com/igrigorik/autoperf -- to include [HTTPerf.rb] as a simplification and to include additional features. This has been refactored and released with permission from Ilya Grigorik, the original author.
+
+### HTTPerf.rb
+
+[HTTPerf.rb] is a simple ruby interface for [httperf], which is used under the hood of [Autoperf]. It can also be very useful on it's own for running individual tests with [httperf] and manipulating the results programmaticly.
+
+I have also ported [HTTPerf.rb] to several other languages, although not always with all the time, care and features that the original ruby implementation had.
+ 
+HTTPerf.rb ports:
+
+* Node.js: [HTTPerf.js]
+* Python: [HTTPerf.py]
+* PHP: [HTTPerf.php]
+* Golang: [gohttperf] (_experimental_)
+
+For more information on [HTTPerf.rb](http://mervine.net/projects/gems/httperfrb) see [Automating Performance Testing with HTTPerf.rb](http://mervine.net/automating-performance-testing-with-httperfrb).
+
+
+## Client Side Testing
+
+Although some may disagree with me, I consider client side performance testing about as far from an exact science and you can get in the world of automated testing. There are too many external variables, possible data points and decisions to make on what's important to your business model.
+
+A great read on this topic is [Improving performance on twitter.com](https://blog.twitter.com/2012/improving-performance-on-twittercom), which while more targeted at overall performance improvements and monitoring, has some good ideas that can carry over to what to look for when client side performance testing -- namely the "Time to First Tweet".
+
+### Tools
+
+#### WebKit's Navigation Timing API
+
+[W3C Navigation Timing] is a collection of performance data generated by most modern browsers which contains timing for key events of the page load. 
+
+> Note: I've linked to an article on it by [Ilya Grigorik](https://www.igvita.com/) because reading spec's is just no damn fun.
+
+#### WebPageTest.org
+
+With [WebPageTest.org] run a free website speed test from multiple locations around the globe using real browsers (IE and Chrome) and at real consumer connection speeds. You can run simple tests or perform advanced testing including multi-step transactions, video capture, content blocking and much more. Your results will provide rich diagnostic information including resource loading waterfall charts, Page Speed optimization checks and suggestions for improvements.
+
+#### Google PageSpeed
+
+[Google PageSpeed] is a collection of client side testing tools from [Google](https://www.google.com).
+
+> "Analyze and optimize your website with PageSpeed tools to implement the web performance best practices.
+>
+> Fast and optimized pages lead to higher visitor engagement, retention, and conversions. The PageSpeed family of tools is designed to help you optimize the performance of your website. PageSpeed Insights products will help you identify performance best practices that can be applied to your site, and PageSpeed optimization tools can help you automate the process."
+
+#### YSlow
+
+[YSlow] from [Yahoo!](http://www.yahoo.com) analyzes web pages and why they're slow based on Yahoo!'s rules for high performance web sites.
+
+#### PhantomJS
+
+[PhantomJS] is a headless WebKit scriptable with a JavaScript API. It has fast and native support for various web standards: DOM handling, CSS selector, JSON, Canvas, and SVG. With it, you can easily and headlessly automate and collect data about your sites client side performance.
+
+A few tools that leverage [PhantomJS] include:
+
+* [YSlow.js]: a simple Node.js wrapper for programmaticaly running [PhantomJS yslow.js](http://yslow.org/phantomjs/).
+* [phantomas]: PhantomJS-based modular web performance metrics collector.
+
+
+
+[httperf]: http://mervine.net/httperf
+[Autoperf]: http://mervine.net/projects/gems/autoperf
+[HTTPerf.rb]: http://mervine.net/projects/gems/httperfrb
+[HTTPerf.js]: http://mervine.net/projects/npms/httperfjs
+[HTTPerf.py]: https://github.com/jmervine/httperfpy
+[HTTPerf.php]: https://github.com/jmervine/php-httperf
+[gohttperf]: https://github.com/jmervine/gohttperf
+[WebPageTest.org]: http://www.webpagetest.org/
+[Google PageSpeed]: http://developers.google.com/speed/pagespeed/
+[YSlow]: http://yslow.org/
+[YSlow.js]: http://mervine.net/projects/npms/yslowjs
+[PhantomJS]: http://phantomjs.org/
+[phantomas]: https://github.com/macbre/phantomas
+[W3C Navigation Timing]: https://www.igvita.com/2012/04/04/measuring-site-speed-with-navigation-timing/
