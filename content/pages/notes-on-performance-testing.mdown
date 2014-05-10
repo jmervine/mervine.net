@@ -3,6 +3,8 @@ Title: Notes on Performance Testing
 Categories: performance, httperf, phantomjs
 Summary: A couple weeks ago I did an ad hoc talk at the [LAWebSpeed Meetup](http://www.meetup.com/LAWebSpeed/events/174808092/), hosted by [MaxCDN](http://www.maxcdn.com/), on general performance testing in the web world. I was asked to put together a list of the tools I spoke about and some brief notes on them...
 
+# Notes on Performance Testing
+
 A couple weeks ago I did an ad hoc talk at the [LAWebSpeed Meetup](http://www.meetup.com/LAWebSpeed/events/174808092/), hosted by [MaxCDN](http://www.maxcdn.com/), on general performance testing in the web world. I was asked to put together a list of the tools I spoke about and some brief notes on them, so here goes.
 
 ## TL;DR
