@@ -1,7 +1,7 @@
-Title: Go Projects 
+Title: Go 
 Categories: about, projects 
 Flags: landing_page
 
-# Go Projects
+# Go
 
 > [Go](http://golang.org/) is an open source programming language that makes it easy to build simple, reliable, and efficient software.
