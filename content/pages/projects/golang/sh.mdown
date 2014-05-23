@@ -1,7 +1,5 @@
 Title: Sh
 Categories: projects/golang, golang, 
 Summary: Simple wrapper for executing shell commands and getting output as a strings.
-Forkme: sh
-Readme: sh/master/README.md
 
 # Sh
