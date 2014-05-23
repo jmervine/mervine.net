@@ -5,3 +5,42 @@ Flags: landing_page
 # Go
 
 > [Go](http://golang.org/) is an open source programming language that makes it easy to build simple, reliable, and efficient software.
+
+
+### [filetrav](https://godoc.org/github.com/jmervine/filetrav)
+
+    import "github.com/jmervine/filetrav"
+
+Package filetrav: Travel around files easily.
+
+This may exist elsewhere, there's probably an easier way to do this. But it was a fun bit of code to write and I find it useful.
+
+
+### [GoPerf](https://godoc.org/github.com/jmervine/goperf)
+
+> Note: This is still heavily under development. Please feel free to open any issues that may be encountered while using it.
+
+    import "github.com/jmervine/goperf"
+
+Package perf is a simple HTTPerf clone for performance testing web applications written in Go.
+
+This is designed to be run as a command line too, however, can be hooked in to as an API as well.
+
+Install CLI:
+
+    go get github.com/jmervine/goperf
+    go install github.com/jmervine/goperf/goperf
+
+    
+### [GoT](https://godoc.org/github.com/jmervine/GoT)
+
+    import "github.com/jmervine/GoT"
+
+Package GoT is a simple assertion wrapper for Go's built in "testing" package, which is designed to be as simple and unintrusive as possible while adding basic Assert and Refute methods to assist in writing clean and clean tests quickly.
+
+
+### [Sh](http://godoc.org/github.com/jmervine/sh)
+
+    import "github.com/jmervine/sh"
+
+Package sh is a simple wrapper for executing shell commands and getting output as a strings.
