@@ -7,6 +7,10 @@ Flags: landing_page
 > [Go](http://golang.org/) is an open source programming language that makes it easy to build simple, reliable, and efficient software.
 
 
+### [json2struct](http://mervine.net/json2struct)
+
+Web interface for converting json to a struct.
+
 ### [filetrav](https://godoc.org/github.com/jmervine/filetrav)
 
     import "github.com/jmervine/filetrav"
