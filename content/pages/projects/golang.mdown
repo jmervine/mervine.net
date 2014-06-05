@@ -35,7 +35,14 @@ Install CLI:
     go get github.com/jmervine/goperf
     go install github.com/jmervine/goperf/goperf
 
-    
+
+### [GoT](https://godoc.org/github.com/jmervine/GoT)
+
+    import "github.com/jmervine/GoT"
+
+Package GoT is a simple assertion wrapper for Go's built in "testing" package, which is designed to be as simple and unintrusive as possible while adding basic Assert and Refute methods to assist in writing clean and clean tests quickly.
+
+
 ### [Sh](http://godoc.org/github.com/jmervine/sh)
 
     import "github.com/jmervine/sh"
