@@ -1,5 +1,5 @@
 Title: git-fish
-Categories: projects/go, go, golang
+Categories: projects/golang, go, golang
 Summary: GoT is designed to be as simple and unintrusive as possible while adding basic Assert and Refute methods to assist in writing clean and clean tests quickly.
 Forkme: GoT
 Readme: GoT/master/README.md
