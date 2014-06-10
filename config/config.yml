@@ -18,7 +18,7 @@ author:
 # Currently not smart. '//' required, no trailing slash
 # required. Remove this configuration to no use a CDN.
 #cdn_host: "//blog.jmervine.netdna-cdn.com"
-cdn_host: "//cdn.mervine.net"
+#cdn_host: "//cdn.mervine.net"
 
 # You can stick with the default look and feel, or use a theme. Themes are
 # easy to create or install, and live inside the themes directory. You
@@ -67,13 +67,13 @@ search_ignore_list:
   #height: 90
 
 #sharethis: "80df436a-9769-4c43-a468-adcd0ae6ec70"
-sharethis: "d70ec18a-3455-4f95-9c4c-43eb2d969408"
+#sharethis: "d70ec18a-3455-4f95-9c4c-43eb2d969408"
 
-sharethis_buttons: # optional
-- twitter
-- linkedin
-- facebook
-- plus1
+#sharethis_buttons: # optional
+#- twitter
+#- linkedin
+#- facebook
+#- plus1
 
 twitter: merivnej
 linkedin: mervinej
@@ -84,9 +84,10 @@ gravatar: "http://www.gravatar.com/avatar/ed808193b8c2c8516715816f90a005b2.jpg?s
 
 diskcached: false
 production:
+  domain: "http://mervine.net"
+  cdn_host: "//cdn.mervine.net"
   #diskcached: true
   #diskcached_dir: diskcache
   google_analytics_code: "UA-32343843-1"
 
   #diskcached_timeout: 3600 # default (in seconds)
-  domain: "http://mervine.net"
