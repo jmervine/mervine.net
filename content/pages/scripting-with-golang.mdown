@@ -37,7 +37,7 @@ But let's say you need both `STDOUT` and `STDERR`, [Go]'s [`os/exec`] package pr
 The [`os/exec`] packages provides additional resouces for more complex handling of external execution, so I highly recommend reading up on it.
 
 
-## Advanced Execution through [`Sh`]
+## Basic Execution through [`Sh`]
 
 One important element of any language used for scripting is how quickly and simple a script can be "hacked together" (so to speak). Given [Go]'s strict nature, that can be a bit difficult at times &ndash; especially when first learning [Go]. One of the first packages I created when first learning [Go] was a simple command executer I call [`Sh`]. 
 
@@ -61,16 +61,22 @@ The goal of [`Sh`] is to wrap handling of shell execution in very easy to use ma
         query := `select count(*) from nginx_access_logs where yyyy=2014 and mm=06 and dd=03`
         cmd   := fmt.Sprintf("hive -S -e '%s'", query)
                     
-        if stdout, stderr, err := sh.Sh2(cmd, false); if err != nil {
+        if stdout, stderr, err := sh.Sh2(cmd, false); err != nil {
             log.Fatalln(stderr)
         } else {
             log.Println(stdout)
         }
     }
     
+> [See this example in Go Playground](http://play.golang.org/p/OHsSTJ68N7)
+>
 > Note: Currently both `Sh` and `Sh2` take a `bool` to indicate wheather or not to stream command output to `os.Stdout` and/or `os.Stderr`. In the future (probably soon) I'll be updating this to instead take a stream to stream to, something like `Sh2(cmd, os.Stdout, os.Stderr)`.
+
+Even as I'm putting this together, I'm looking at the side by side of [`os/exec`] and [`Sh`] and asking myself, what's the difference. The native functionality is pretty much just as easy to use and provides the same basic output. 
+
+For the more experienced [Go] hacker, the native package is probably more then enough, but for those newer to [Go], or those wanting to be able to whip up quick scrpts without having to pay too much attention to streams (and such), the [`Sh`] package wraps things up in a cleaner, more "scripty" way that I find useful.
 
 
 [Go]: http://golang.org/
-[`os/exec`]: http://golang.org/pkg/os/exec/
+[`os/exec`]: http://godoc.org/os/exec/
 [`Sh`]: http://godoc.org/github.com/jmervine/sh
