@@ -53,7 +53,7 @@ The goal of [`Sh`] is to wrap handling of shell execution in very easy to use ma
     func main() {
 
         // using Sh to ensure that command exists
-        if _, err := sh.Sh("which hive", false); err != nil {
+        if _, err := sh.Sh("which hive"); err != nil {
             log.Fatalln("hive command not found")
         }
 
@@ -61,22 +61,66 @@ The goal of [`Sh`] is to wrap handling of shell execution in very easy to use ma
         query := `select count(*) from nginx_access_logs where yyyy=2014 and mm=06 and dd=03`
         cmd   := fmt.Sprintf("hive -S -e '%s'", query)
 
-        if stdout, stderr, err := sh.Sh2(cmd, false); err != nil {
+        if stdout, stderr, err := sh.Sh2(cmd); err != nil {
             log.Fatalln(stderr)
         } else {
             log.Println(stdout)
         }
     }
 
-> [See this example in Go Playground](http://play.golang.org/p/OHsSTJ68N7)
->
-> Note: Currently both `Sh` and `Sh2` take a `bool` to indicate whether or not to stream command output to `os.Stdout` and/or `os.Stderr`. In the future (probably soon) I'll be updating this to instead take a stream to stream to, something like `Sh2(cmd, os.Stdout, os.Stderr)`.
+> [See this example in Go Playground](http://play.golang.org/p/h9sJo8_E-M)
 
 Even as I'm putting this together, I'm looking at the side by side of [`os/exec`] and [`Sh`] and asking myself, what's the difference. The native functionality is pretty much just as easy to use and provides the same basic output.
 
-For the more experienced [Go] hacker, the native package is probably more then enough, but for those newer to [Go], or those wanting to be able to whip up quick scripts without having to pay too much attention to streams (and such), the [`Sh`] package wraps things up in a cleaner, more "script-y" way that I find useful.
+In addtion to the two basic method I mentioned above, there's two other methods &ndash; `Sh1` and `Sh3`. With these you can stream you command's output to an `io.Writer`, most typeically `io.Stdout` and/or `io.Stderr`. _If you need it, as you'll see in the example below, [`Sh`] also provides a no-op `io.Writer` &ndash; `sh.Noout` &ndash; for silencing streams._
 
-> For those interested, here's the (slightly redacted) script I'm putting together for my [Hive] queries: [http://play.golang.org/p/Rwq8RmOIix](http://play.golang.org/p/Rwq8RmOIix). Please keep in mind this is a "script" and as such was hacked together quickly without real intention of others viewing it. :-P
+    package main
+
+    import (
+        "flag"
+        "fmt"
+        "io"
+        "log"
+        "os"
+
+        "github.com/jmervine/sh"
+    )
+
+    func main() {
+
+        var verbose bool
+        flag.BoolVar(&verbose, "verbose", false, "stream command output")
+        flag.Parse()
+
+        // using Sh to ensure that command exists
+        if _, err := sh.Sh("which hive"); err != nil {
+            log.Fatalln("hive command not found")
+        }
+
+        // using Sh3 to execute command
+        query := `select count(*) from nginx_access_logs where yyyy=2014 and mm=06 and dd=03`
+        cmd := fmt.Sprintf("hive -S -e '%s'", query)
+
+        var stdout, stderr io.Writer
+        stdout = &sh.Noout
+        stderr = &sh.Noout
+        if verbose {
+            stdout = os.Stdout
+            stderr = os.Stderr
+        }
+
+        if out, errout, err := sh.Sh3(cmd, stdout, stderr); err != nil {
+            log.Fatalln(errout)
+        } else if !verbose {
+            log.Println(out)
+        }
+        log.Println("done")
+    }
+
+> [See this example in Go Playground](http://play.golang.org/p/J1HRhDNq6j)
+>
+>
+> For those interested, here's the (slightly redacted) script I'm putting together for my [Hive] queries: [http://play.golang.org/p/Rwq8RmOIix](http://play.golang.org/p/3q85qSsWPX). Please keep in mind this is a "script" and as such was hacked together quickly without real intention of others viewing it. :-P
 
 
 [Go]: http://golang.org/
@@ -85,3 +129,4 @@ For the more experienced [Go] hacker, the native package is probably more then e
 [Hadoop]: http://hadoop.apache.org/
 [Hive]: https://hive.apache.org/
 [ElasticSearch]: http://www.elasticsearch.org/
+
