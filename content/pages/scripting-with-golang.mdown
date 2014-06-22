@@ -76,7 +76,7 @@ Even as I'm putting this together, I'm looking at the side by side of [`os/exec`
 
 For the more experienced [Go] hacker, the native package is probably more then enough, but for those newer to [Go], or those wanting to be able to whip up quick scrpts without having to pay too much attention to streams (and such), the [`Sh`] package wraps things up in a cleaner, more "scripty" way that I find useful.
 
-For those interested, here's the (slightly redacted) script I'm putting together for my [Hive] queries: [http://play.golang.org/p/Rwq8RmOIix](http://play.golang.org/p/Rwq8RmOIix). Please keep in mind this is a "script" and as such was hacked together quickly without real intention of others viewing it. :-P
+> For those interested, here's the (slightly redacted) script I'm putting together for my [Hive] queries: [http://play.golang.org/p/Rwq8RmOIix](http://play.golang.org/p/Rwq8RmOIix). Please keep in mind this is a "script" and as such was hacked together quickly without real intention of others viewing it. :-P
 
 
 [Go]: http://golang.org/
