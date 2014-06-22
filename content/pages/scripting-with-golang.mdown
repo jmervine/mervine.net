@@ -12,7 +12,7 @@ Today, I'm going to talk about using [Go] to access other commands &ndash; navit
 
 ### Basic Execution
 
-The most basic way to execute an external command would be through the [`os/exec`] package and it's `Command` method.
+The most basic way to execute (through native [Go]) of an external command would be through the [`os/exec`] package and it's `Command` method.
 
 In this first example, we'll use `Output` to run the data command and print the results of `STDOUT`.
 
@@ -34,6 +34,43 @@ But let's say you need both `STDOUT` and `STDERR`, [Go]'s [`os/exec`] package pr
 
 > [See this example in Go Playground](http://play.golang.org/p/jrVF-WDwXS)
 
+The [`os/exec`] packages provides additional resouces for more complex handling of external execution, so I highly recommend reading up on it.
+
+
+## Advanced Execution through [`Sh`]
+
+One important element of any language used for scripting is how quickly and simple a script can be "hacked together" (so to speak). Given [Go]'s strict nature, that can be a bit difficult at times &ndash; especially when first learning [Go]. One of the first packages I created when first learning [Go] was a simple command executer I call [`Sh`]. 
+
+The goal of [`Sh`] is to wrap handling of shell execution in very easy to use manner and return `string`(s) with the output streams and simple pass/fail through `error`. As such, there are two key methods, `Sh` (which returns combined `STDOUT` and `STDERR`) and `Sh2` (which returns `STDOUT` and `STDERR` seperately.
+
+    package main
+    import (
+        "log"
+        "fmt"
+        "github.com/jmervine/sh"
+    )
+    
+    func main() {
+        
+        // using Sh to ensure that command exists
+        if _, err := sh.Sh("which hive", false); err != nil {
+            log.Fatalln("hive command not found")
+        }
+        
+        // using Sh2 to execute command
+        query := `select count(*) from nginx_access_logs where yyyy=2014 and mm=06 and dd=03`
+        cmd   := fmt.Sprintf("hive -S -e '%s'", query)
+                    
+        if stdout, stderr, err := sh.Sh2(cmd, false); if err != nil {
+            log.Fatalln(stderr)
+        } else {
+            log.Println(stdout)
+        }
+    }
+    
+> Note: Currently both `Sh` and `Sh2` take a `bool` to indicate wheather or not to stream command output to `os.Stdout` and/or `os.Stderr`. In the future (probably soon) I'll be updating this to instead take a stream to stream to, something like `Sh2(cmd, os.Stdout, os.Stderr)`.
+
 
 [Go]: http://golang.org/
 [`os/exec`]: http://golang.org/pkg/os/exec/
+[`Sh`]: http://godoc.org/github.com/jmervine/sh
