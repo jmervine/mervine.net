@@ -6,9 +6,9 @@ Flags: draft
 
 # Scripting with [Golang][Go]
 
-One thing I love about [Go] over interperted languages is that a compiled binary doesn't care about what version of the [Go] compiler you're running. I've recently been tackling [Hadoop] and [Hive] and as part of the project I'm working on, I want to run regular queries and insert summary data into [ElasticSearch] for graphing and reporting. The [Hive] jump box I'm using has very old versions ofboth [Ruby] (1.8.6) and [Python] (2.4). As such, I chose to my scripting in [Go].
+One thing I love about [Go], over interpreted languages, is that a compiled binary doesn't care about what version of the [Go] compiler you're developing with. I've recently been tackling [Hadoop] and [Hive] and as part of the project I'm working on. I want to run regular queries and insert summary data into [ElasticSearch] data store for graphing and reporting. The [Hive] jump box I'm using has very old versions of both [Ruby] (1.8.6) and [Python] (2.4). As such, I choose to do my scripting in [Go].
 
-Today, I'm going to talk about using [Go] to access other commands &ndash; navite commands, scripts, etc. &ndash; in a Linux environment, specifically CentOS 5. That said, the infomration here should carry over, easily to other unix based distrobutions, and may (with a bit of tweaking) also work under Windows.
+In this post, I'm going to talk about using [Go] to access other commands &ndash; native commands, scripts, etc. &ndash; in a Linux environment, specifically CentOS 5. That said, the information here should carry over easily to other Unix based environments, and may (with a bit of tweaking) also work under Windows.
 
 ### Basic Execution
 
@@ -34,14 +34,14 @@ But let's say you need both `STDOUT` and `STDERR`, [Go]'s [`os/exec`] package pr
 
 > [See this example in Go Playground](http://play.golang.org/p/jrVF-WDwXS)
 
-The [`os/exec`] packages provides additional resouces for more complex handling of external execution, so I highly recommend reading up on it.
+The [`os/exec`] packages provides additional resources for more complex handling of external execution, so I highly recommend reading up on it.
 
 
 ## Basic Execution through [`Sh`]
 
-One important element of any language used for scripting is how quickly and simple a script can be "hacked together" (so to speak). Given [Go]'s strict nature, that can be a bit difficult at times &ndash; especially when first learning [Go]. One of the first packages I created when first learning [Go] was a simple command executer I call [`Sh`]. 
+One important element of any language used for scripting is how quickly and simple a script can be "hacked together" (so to speak). Given [Go]'s strict nature, that can be a bit difficult at times &ndash; especially when first learning [Go]. One of the first packages I created when first learning [Go] was a simple command executer I call [`Sh`].
 
-The goal of [`Sh`] is to wrap handling of shell execution in very easy to use manner and return `string`(s) with the output streams and simple pass/fail through `error`. As such, there are two key methods, `Sh` (which returns combined `STDOUT` and `STDERR`) and `Sh2` (which returns `STDOUT` and `STDERR` seperately.
+The goal of [`Sh`] is to wrap handling of shell execution in very easy to use manner and return `string`(s) with the output streams and simple pass/fail through `error`. As such, there are two key methods, `Sh` (which returns combined `STDOUT` and `STDERR`) and `Sh2` (which returns `STDOUT` and `STDERR` separately.
 
     package main
     import (
@@ -49,32 +49,32 @@ The goal of [`Sh`] is to wrap handling of shell execution in very easy to use ma
         "fmt"
         "github.com/jmervine/sh"
     )
-    
+
     func main() {
-        
+
         // using Sh to ensure that command exists
         if _, err := sh.Sh("which hive", false); err != nil {
             log.Fatalln("hive command not found")
         }
-        
+
         // using Sh2 to execute command
         query := `select count(*) from nginx_access_logs where yyyy=2014 and mm=06 and dd=03`
         cmd   := fmt.Sprintf("hive -S -e '%s'", query)
-                    
+
         if stdout, stderr, err := sh.Sh2(cmd, false); err != nil {
             log.Fatalln(stderr)
         } else {
             log.Println(stdout)
         }
     }
-    
+
 > [See this example in Go Playground](http://play.golang.org/p/OHsSTJ68N7)
 >
-> Note: Currently both `Sh` and `Sh2` take a `bool` to indicate wheather or not to stream command output to `os.Stdout` and/or `os.Stderr`. In the future (probably soon) I'll be updating this to instead take a stream to stream to, something like `Sh2(cmd, os.Stdout, os.Stderr)`.
+> Note: Currently both `Sh` and `Sh2` take a `bool` to indicate whether or not to stream command output to `os.Stdout` and/or `os.Stderr`. In the future (probably soon) I'll be updating this to instead take a stream to stream to, something like `Sh2(cmd, os.Stdout, os.Stderr)`.
 
-Even as I'm putting this together, I'm looking at the side by side of [`os/exec`] and [`Sh`] and asking myself, what's the difference. The native functionality is pretty much just as easy to use and provides the same basic output. 
+Even as I'm putting this together, I'm looking at the side by side of [`os/exec`] and [`Sh`] and asking myself, what's the difference. The native functionality is pretty much just as easy to use and provides the same basic output.
 
-For the more experienced [Go] hacker, the native package is probably more then enough, but for those newer to [Go], or those wanting to be able to whip up quick scrpts without having to pay too much attention to streams (and such), the [`Sh`] package wraps things up in a cleaner, more "scripty" way that I find useful.
+For the more experienced [Go] hacker, the native package is probably more then enough, but for those newer to [Go], or those wanting to be able to whip up quick scripts without having to pay too much attention to streams (and such), the [`Sh`] package wraps things up in a cleaner, more "script-y" way that I find useful.
 
 > For those interested, here's the (slightly redacted) script I'm putting together for my [Hive] queries: [http://play.golang.org/p/Rwq8RmOIix](http://play.golang.org/p/Rwq8RmOIix). Please keep in mind this is a "script" and as such was hacked together quickly without real intention of others viewing it. :-P
 
@@ -84,3 +84,4 @@ For the more experienced [Go] hacker, the native package is probably more then e
 [`Sh`]: http://godoc.org/github.com/jmervine/sh
 [Hadoop]: http://hadoop.apache.org/
 [Hive]: https://hive.apache.org/
+
