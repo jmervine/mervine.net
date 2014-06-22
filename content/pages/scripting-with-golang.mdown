@@ -80,3 +80,5 @@ For the more experienced [Go] hacker, the native package is probably more then e
 [Go]: http://golang.org/
 [`os/exec`]: http://godoc.org/os/exec/
 [`Sh`]: http://godoc.org/github.com/jmervine/sh
+[Hadoop]: http://hadoop.apache.org/
+[Hive]: https://hive.apache.org/
