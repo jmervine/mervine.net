@@ -1,0 +1,39 @@
+Date: 2014 June 22 10:00
+Title: Scripting with Golang
+Categories: golang, go, bash, scripting
+Tags: golang, go, bash, scripting
+Flags: draft
+
+# Scripting with [Golang][Go]
+
+One thing I love about [Go] over interperted languages is that a compiled binary doesn't care about what version of the [Go] compiler you're running. I've recently been tackling [Hadoop] and [Hive] and as part of the project I'm working on, I want to run regular queries and insert summary data into [ElasticSearch] for graphing and reporting. The [Hive] jump box I'm using has very old versions ofboth [Ruby] (1.8.6) and [Python] (2.4). As such, I chose to my scripting in [Go].
+
+Today, I'm going to talk about using [Go] to access other commands &ndash; navite commands, scripts, etc. &ndash; in a Linux environment, specifically CentOS 5. That said, the infomration here should carry over, easily to other unix based distrobutions, and may (with a bit of tweaking) also work under Windows.
+
+### Basic Execution
+
+The most basic way to execute an external command would be through the [`os/exec`] package and it's `Command` method.
+
+In this first example, we'll use `Output` to run the data command and print the results of `STDOUT`.
+
+	out, err := exec.Command("date").Output()
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("The date is %s\n", out)
+
+> [See this example in Go Playground](http://play.golang.org/p/1-kCAKb5hN)
+
+But let's say you need both `STDOUT` and `STDERR`, [Go]'s [`os/exec`] package provides `CombinedOutput` for that used in exactly the same way.
+
+	out, err := exec.Command("date").CombinedOutput()
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("The date is %s\n", out)
+
+> [See this example in Go Playground](http://play.golang.org/p/jrVF-WDwXS)
+
+
+[Go]: http://golang.org/
+[`os/exec`]: http://golang.org/pkg/os/exec/
