@@ -1,0 +1,34 @@
+Date: 13 Aug 2014 10:30
+Title: Ruby / RoR... Why not?
+Categories: ruby, rails
+Summary: In response to common question: "I'd be curious as to why your friends want to move away from the RoR/Ruby space..."
+
+# Ruby / RoR... Why not?
+
+##### In response to common question from recruiters:
+
+> "I'd be curious as to why your friends want to move away from the RoR/Ruby space..."
+
+##### On 08/13/14 10:31 AM
+
+> Hey,
+> 
+> RE Ruby/RoR; I really should type this up and post it on my blog. I will say, take this as one persons opinion. 
+> 
+> Ruby, while being a fantastic and powerful language, is not a fast executing language. Given that most Ruby development tools and frameworks are written in Ruby, they also tend to be slow which slows down development. Additionally, Ruby is a synchronous language &ndash; which (simply put) means it does one thing at a time. Today, there are other options, which grant you the same, similar or more power and flexibility that Ruby does, while be asynchronous &ndash; (simply put) doing multiple things at a time. Some examples of other options include Golang, Node.js, Erlang, etc. Of these, I personally find Node.js to be most suited for web development, while I lean towards Golang for API, CLI and other more server-side development.
+> 
+> People (I know) are moving away from Rails, for those reason, plus the fact that Rails isn't really Ruby. It's a collection of helpers and utilities built using Ruby. Rails was originally designed for rapid prototyping and scaffolding of [CRUD](http://en.wikipedia.org/wiki/Create,_read,_update_and_delete) application based on relational data (e.g. MySQL, Postgres, etc.). I've been away from Rails for a while, so this may have changed in some respects, but typically what I've seen is that Rails developers are not necessarily Ruby developers. While pure Ruby developers tend to want to bang their heads against the wall when working in Rails. RoR has added itself the .NET and PHP stigma of today's web world. That is to say, people who are new or newer to the development path learn the framework and tout themselves as developers, while only really understanding Rails alone.
+> 
+> It's important to note that this is not universally true. Some of the best engineers I know work heavily in Rails. It's more of a general observation, especially in regards to recruiters are looking to push on hiring managers.
+> 
+> Cheers,
+>
+> J
+
+
+##### Note:
+
+I know that my definition's of "synchronous" and "asynchronous" are gross over simplifications for the non-technical target audience. See the following for more complete understanding of those concepts:
+
+* [Wikipedia: Synchronous Programming Language](http://en.wikipedia.org/wiki/Synchronous_programming_language)
+* [What is Asynchronous Programming](http://www.i-programmer.info/programming/theory/6040-what-is-asynchronous-programming.html)
