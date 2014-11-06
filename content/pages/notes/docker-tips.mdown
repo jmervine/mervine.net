@@ -1,5 +1,6 @@
 Title: Docker Tips
 Categories: notes, docker, linux
+Date: 06 November 2014 15:00
 
 # Docker Tips
 
