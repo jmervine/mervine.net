@@ -47,3 +47,15 @@ Here are a few tips that I've found useful while delving in to [Docker](https://
     # I then recommend removing your old image to avoid accidentally pushing it to the public registry.
     sudo docker rmi jmervine/centos6-nodejs
 
+**Ports**
+
+    :::shell
+    # running randomly assigning host port
+    sudo docker run -d -p 3000 image/name
+    
+    # running with exposed ports randomly assigned on host
+    sudo docker run -d -P image/name
+    
+    # printing randomly assigned ports (only)
+    sudo docker port image_name | awk -F':' '{ print $NF }'
+    
