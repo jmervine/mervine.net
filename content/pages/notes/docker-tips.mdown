@@ -22,6 +22,9 @@ Here are a few tips that I've found useful while delving in to [Docker](https://
 
     # remove image containing TERM
     sudo docker rmi $(sudo docker images | grep TERM | awk '{ print $3 }')
+    
+    # remove all non-running containers
+    sudo docker ps -a | grep Exited | awk '{ print $NF }' | xargs sudo docker rm
 
 **Interacting with the most recent continer started.**
 
