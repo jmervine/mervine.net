@@ -6,6 +6,11 @@ Date: 06 November 2014 15:00
 
 Here are a few tips that I've found useful while delving in to [Docker](https://www.docker.com/), enjoy!
 
+**Search private registry.**
+
+    :::shell
+    sudo docker search <private domain>/<term>
+
 **Removing images and containers in bulk.**
 
     :::shell
