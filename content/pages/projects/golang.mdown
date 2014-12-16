@@ -1,5 +1,6 @@
 Title: Go 
 Categories: about, projects 
+Summary: Go is an open source programming language that makes it easy to build simple, reliable, and efficient software.
 Flags: landing_page
 
 # Go
