@@ -31,6 +31,6 @@ These are my featured projects, which either doesn't fit in another category &md
 
 > I created this Plugin at the request of [MaxCDN] and officially belongs to them. However, I am the current maintainer and co-owner for this repository and own the [NPM @ npmjs.org](https://npmjs.org/package/hexo-maxcdn-plugin)
 > 
-> For more information, see mt blog post for [MaxCDN] &ndash; [Turbocharging Hexo whit MaxCDN](http://blog.maxcdn.com/turbocharging-hexo-maxcdn/).
+> For more information, see mt blog post for [MaxCDN] &ndash; [Turbocharging Hexo with MaxCDN](http://blog.maxcdn.com/turbocharging-hexo-maxcdn/).
 
 [MaxCDN]: http://www.maxcdn.com/
