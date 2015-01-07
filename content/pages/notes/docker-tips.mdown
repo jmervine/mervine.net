@@ -4,7 +4,7 @@ Date: 06 November 2014 15:00
 
 # Docker Tips
 
-Here are a few tips that I've found useful while delving in to [Docker](https://www.docker.com/), enjoy!
+Here are a few tips that I've found useful while delving in to [Docker](https://www.docker.com/). For an introduction to Docker, see my post on the [YP Engineering Blog](http://engineering.yp.com/post/intro-to-docker). Enjoy!
 
 **Search private registry.**
 
