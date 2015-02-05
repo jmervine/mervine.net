@@ -19,6 +19,9 @@ Here are a few tips that I've found useful while delving in to [Docker](https://
 
     # remove all images
     sudo docker rmi $(sudo docker images -q)
+    
+    # remove specific images in bulk
+    sudo docker rmi myimage:{tagone,tagtwo,tagfive}
 
     # remove image containing TERM
     sudo docker rmi $(sudo docker images | grep TERM | awk '{ print $3 }')
