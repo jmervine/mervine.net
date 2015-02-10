@@ -1,4 +1,4 @@
-Title: Docker Tips 
+Title: Testing with Docker 
 Categories: notes, docker, linux 
 Date: 10 Fedruary 2015 13:25
 
