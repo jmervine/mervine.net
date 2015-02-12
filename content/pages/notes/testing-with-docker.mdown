@@ -10,7 +10,7 @@ Docker, amoung it's many strengths, allows for easily testing applications or ap
 
 ### Node.js / io.js
 
-    :::bash
+    :::shell
     host $ docker pull node:latest
     host $ cd /path/to/project
     host $ docker run --rm -it -v $(pwd):/src node:latest \
@@ -18,7 +18,7 @@ Docker, amoung it's many strengths, allows for easily testing applications or ap
   
 ### Ruby
 
-    :::bash
+    :::shell
     host $ docker pull ruby:latest
     host $ cd /path/to/project
     host $ docker run --rm -it -v $(pwd):/src node:latest \
