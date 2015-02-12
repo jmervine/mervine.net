@@ -1,6 +1,6 @@
 Title: Docker Tips
 Categories: notes, docker, linux
-Date: 06 November 2014 15:00
+Date: 06 November 2015 11:20
 
 # Docker Tips
 
@@ -70,3 +70,28 @@ Here are a few tips that I've found useful while delving in to [Docker](https://
     # printing randomly assigned ports (only)
     sudo docker port image_name | awk -F':' '{ print $NF }'
     
+**Copying Files TO Containers**
+
+    :::shell
+    
+    # Directly in to a running container.
+    cat /path/to/host/file.txt | \
+        sudo docker exec -i -t <container_id|name> bash -c "/bin/cat > /path/to/container/file.txt"
+    
+    # When running a container.
+    sudo docker run -i <container_id|name> \
+        /bin/bash -c 'cat > /path/to/container/file.txt' < /path/to/host/file.txt
+    
+    # Via Docker volume.
+    # - where 'file.txt' is /path/to/host/dir/file.txt
+    sudo docker run -v /path/to/host/dir:/path/to/container/dir <container_id|name>
+    
+    #... or ...
+    sudo docker run -v /path/to/host/dir:/path/to/container/dir <container_id|name>
+    cp /path/to/host/file.txt /path/to/host/dir/file.txt
+    
+    # Via file system -- untested as of yet.
+    sudo cp -v /path/to/host/file.txt \
+        /var/lib/docker/aufs/mnt/**$(sudo docker inspect -f '{{.Id}}' <container_id|name>)**/root/path/to/container/file.txt
+
+> Based on comments in http://stackoverflow.com/questions/22907231/copying-files-from-host-to-docker-container
