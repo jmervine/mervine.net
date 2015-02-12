@@ -1,6 +1,7 @@
 Title: Testing with Docker 
 Categories: notes, docker, linux 
 Date: 10 Fedruary 2015 13:25
+Summary: Here are a few tips that I've found useful while delving in to Docker.
 
 # Testing with Docker
 
