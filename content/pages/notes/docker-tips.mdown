@@ -93,4 +93,4 @@ Here are a few tips that I've found useful while delving in to [Docker](https://
     sudo cp -v /path/to/host/file.txt \
         /var/lib/docker/aufs/mnt/**$(sudo docker inspect -f '{{.Id}}' <container_id|name>)**/root/path/to/container/file.txt
 
-> Based on comments in http://stackoverflow.com/questions/22907231/copying-files-from-host-to-docker-container
+> Based on comments in [http://stackoverflow.com/questions/22907231/copying-files-from-host-to-docker-container](http://stackoverflow.com/questions/22907231/copying-files-from-host-to-docker-container)
