@@ -75,9 +75,9 @@ Here are a few tips that I've found useful while delving in to [Docker](https://
     :::shell
     
     # Directly in to a running container.
-    cat /path/to/host/file.txt | \
-        sudo docker exec -i -t <container_id|name> bash -c "/bin/cat > /path/to/container/file.txt"
-    
+    sudo docker exec -it <container_name|name> \
+        bash -c "echo \"$(cat /path/to/host/file.txt)\" > /path/to/container/file.txt"
+
     # When running a container.
     sudo docker run -i <container_id|name> \
         /bin/bash -c 'cat > /path/to/container/file.txt' < /path/to/host/file.txt
