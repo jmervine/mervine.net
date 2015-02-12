@@ -79,7 +79,7 @@ Here are a few tips that I've found useful while delving in to [Docker](https://
 
     # When running a container.
     sudo docker run -i <container_id|name> \
-        /bin/bash -c 'cat > /path/to/container/file.txt' < /path/to/host/file.txt
+        bash -c "echo \"$(cat /path/to/host/file.txt)\" > /path/to/container/file.txt; /bin/bash ./start.sh"
     
     # Via Docker volume.
     # - where 'file.txt' is /path/to/host/dir/file.txt
