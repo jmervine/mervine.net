@@ -73,7 +73,6 @@ Here are a few tips that I've found useful while delving in to [Docker](https://
 **Copying Files TO Containers**
 
     :::shell
-    
     # Directly in to a running container.
     sudo docker exec -it <container_name|name> \
         bash -c "echo \"$(cat /path/to/host/file.txt)\" > /path/to/container/file.txt"
