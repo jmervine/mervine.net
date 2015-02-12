@@ -16,15 +16,21 @@ Here are a few tips that I've found useful while delving in to [Docker](https://
     :::shell
     # remove all containers
     sudo docker rm $(sudo docker ps -a -q)
+    #... or ...
+    sudo docker ps -aq | xargs sudo docker rm
 
     # remove all images
     sudo docker rmi $(sudo docker images -q)
+    #... or ...
+    sudo docker images -q | xargs sudo docker rmi
     
     # remove specific images in bulk
     sudo docker rmi myimage:{tagone,tagtwo,tagfive}
 
     # remove image containing TERM
     sudo docker rmi $(sudo docker images | grep TERM | awk '{ print $3 }')
+    #... or ...
+    sudo docker images | grep TERM | awk '{ print $3 }' | xargs sudo docker rmi
     
     # remove all non-running containers
     sudo docker ps -a | grep Exited | awk '{ print $NF }' | xargs sudo docker rm
