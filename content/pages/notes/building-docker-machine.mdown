@@ -1,0 +1,103 @@
+Title: Building Docker Machine
+Categories: notes, docker, linux
+Date: 18 February 2015 11:20
+
+# Building Docker Machine
+
+> **[What's Docker Machine?](https://github.com/docker/machine)**
+>
+> Machine makes it really easy to create Docker hosts on local hypervisors and cloud providers. It creates servers, installs Docker on them, then configures the Docker client to talk to them
+
+This wasn't as clear as I was hoping, so here's what I did.
+
+### Mac
+
+    :::shell
+    $ uname -sm
+    Darwin x86_64
+  
+    $ docker version
+    Client version: 1.3.0
+    Client API version: 1.15
+    Go version (client): go1.3.3
+    Git commit (client): c78088f
+    OS/Arch (client): darwin/amd64
+    Server version: 1.4.1
+    Server API version: 1.16
+    Go version (server): go1.3.3
+    Git commit (server): 5bc2ff8
+
+    $ docker info
+    Containers: 3
+    Images: 67
+    Storage Driver: aufs
+     Root Dir: /mnt/sda1/var/lib/docker/aufs
+     Dirs: 73
+    Execution Driver: native-0.2
+    Kernel Version: 3.16.7-tinycore64
+    Operating System: Boot2Docker 1.4.1 (TCL 5.4); master : 86f7ec8 - Tue Dec 16 23:11:29 UTC 2014
+    Debug mode (server): true
+    Debug mode (client): false
+    Fds: 11
+    Goroutines: 13
+    EventsListeners: 0
+    Init Path: /usr/local/bin/docker
+  
+    $ mkdir -p $GOPATH/src/github.com/docker
+    $ cd $GOPATH/src/github.com/docker
+    $ git clone https://github.com/docker/machine.git
+    $ cd machine
+    
+    $ make test
+    $ ./script/build -os=darwin -arch=amd64
+    $ mv docker-machine_darwin-amd64 $GOBIN/docker-machine
+  
+### Linux
+
+    :::shell
+    $ uname -sio
+    Linux x86_64 GNU/Linux
+  
+    $ sudo docker version
+    Client version: 1.4.1
+    Client API version: 1.16
+    Go version (client): go1.3.3
+    Git commit (client): 5bc2ff8
+    OS/Arch (client): linux/amd64
+    Server version: 1.4.1
+    Server API version: 1.16
+    Go version (server): go1.3.3
+    Git commit (server): 5bc2ff8
+
+    $ sudo docker info
+    Containers: 8
+    Images: 1266
+    Storage Driver: devicemapper
+     Pool Name: docker-8:2-2231103-pool
+     Pool Blocksize: 65.54 kB
+     Data file: /var/lib/docker/devicemapper/devicemapper/data
+     Metadata file: /var/lib/docker/devicemapper/devicemapper/metadata
+     Data Space Used: 48.18 GB
+     Data Space Total: 107.4 GB
+     Metadata Space Used: 72.17 MB
+     Metadata Space Total: 2.147 GB
+     Library Version: 1.02.82-git (2013-10-04)
+    Execution Driver: native-0.2
+    Kernel Version: 2.6.32-431.3.1.el6.x86_64
+    Operating System: <unknown>
+    CPUs: 24
+    Total Memory: 47.12 GiB
+    Name: np1337.wc1.yellowpages.com
+    ID: ZOXJ:JBIX:MZVK:QKGP:EYPT:C2QD:IH4T:ASNS:RWEH:ELQE:LLWD:K62Q
+    Username: jmervine
+    Registry: [https://index.docker.io/v1/]
+
+    $ mkdir -p $GOPATH/src/github.com/docker
+    $ cd $GOPATH/src/github.com/docker
+    $ git clone https://github.com/docker/machine.git
+    $ cd machine
+    
+    $ sudo make test
+    $ sudo ./script/build -os=linux -arch=amd64
+    $ sudo chown $USER: docker-machine_linux-amd64
+    $ mv docker-machine_linux-amd64 $GOBIN/docker-machine
