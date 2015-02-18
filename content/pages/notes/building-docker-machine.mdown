@@ -87,8 +87,8 @@ This wasn't as clear as I was hoping, so here's what I did.
     Operating System: <unknown>
     CPUs: 24
     Total Memory: 47.12 GiB
-    Name: np1337.wc1.yellowpages.com
-    ID: ZOXJ:JBIX:MZVK:QKGP:EYPT:C2QD:IH4T:ASNS:RWEH:ELQE:LLWD:K62Q
+    Name: xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    ID: xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     Username: jmervine
     Registry: [https://index.docker.io/v1/]
 
