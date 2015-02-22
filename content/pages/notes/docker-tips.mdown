@@ -6,14 +6,6 @@ Date: 21 February 2015 15:20
 
 Here are a few tips that I've found useful while delving in to [Docker](https://www.docker.com/). For an introduction to Docker, see my post on the [YP Engineering Blog](http://engineering.yp.com/post/intro-to-docker). Enjoy!
 
-**Flatten an image.**
-
-    :::shell
-    docker export <image>:<tag> | docker import – <image>:<tag>_flat
-    
-    # Why? Images can get bloated with allocated fs space which is never released. 
-    # This can drastically decrease your resulting image size.
-
 **Search private registry.**
 
     :::shell
