@@ -3,7 +3,7 @@ Title: HTTPS: Creating Self-signed Certs
 Categories: nginx, https, linux, openssl
 Summary: Occasionally, I need to create self-signed certs when testing application through https. This isn't really the best way to do it, as it will require anyone visiting to confirm a security exception, but it's useful in a pinch.
 
-# HTTPS: Creating Slef-signed Certs
+# HTTPS: Creating Self-signed Certs
 
 Occasionally, I need to create self-signed certs when testing application through https. This isn't really the best way to do it, as it will require anyone visiting to confirm a security exception, but it's useful in a pinch.
 
