@@ -7,7 +7,7 @@ Date: 21 February 2015 15:20
 Here are a few tips that I've found useful while delving in to [Docker](https://www.docker.com/). For an introduction to Docker, see my post on the [YP Engineering Blog](http://engineering.yp.com/post/intro-to-docker). Enjoy!
 
 
-**Making smaller images.**
+### Making smaller images.
 
 Docker image size does matter. The larger your image, that more unweildy it starts to feel. Pulling a 50MB image is far preferable to pulling a 2G image. Some tips on building smaller images:
 
@@ -34,12 +34,12 @@ Docker image size does matter. The larger your image, that more unweildy it star
             apt-get remove -y build-essential && \
             apt-get autoremove -y && apt-get clean
 
-**Search private registry.**
+### Search private registry.
 
     :::shell
     sudo docker search <private domain>/<term>
 
-**Removing images and containers in bulk.**
+### Removing images and containers in bulk.
 
     :::shell
     # remove all containers
@@ -63,7 +63,7 @@ Docker image size does matter. The larger your image, that more unweildy it star
     # remove all non-running containers
     sudo docker ps -a | grep Exited | awk '{ print $NF }' | xargs sudo docker rm
 
-**Interacting with the most recent continer started.**
+### Interacting with the most recent continer started.
 
     :::shell
     # view last container
@@ -80,7 +80,7 @@ Docker image size does matter. The larger your image, that more unweildy it star
     sudo docker logs $(sudo docker ps -lq)
     sudo docker attach $(sudo docker ps -lq)
 
-**Pushing to a private registry.**
+### Pushing to a private registry.
 
     :::shell
     # assuming image 'jmervine/centos6-nodejs'
@@ -92,7 +92,7 @@ Docker image size does matter. The larger your image, that more unweildy it star
     # I then recommend removing your old image to avoid accidentally pushing it to the public registry.
     sudo docker rmi jmervine/centos6-nodejs
 
-**Ports**
+### Ports
 
     :::shell
     # running randomly assigning host port
@@ -104,7 +104,7 @@ Docker image size does matter. The larger your image, that more unweildy it star
     # printing randomly assigned ports (only)
     sudo docker port image_name | awk -F':' '{ print $NF }'
     
-**Copying Files TO Containers**
+### Copying Files TO Containers
 
     :::shell
     # Directly in to a running container.
