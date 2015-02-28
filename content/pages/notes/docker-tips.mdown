@@ -15,7 +15,7 @@ Docker image size does matter. The larger your image, that more unweildy it star
 * Install as little as possible to meet your needs -- `apt-get build-essential` is going to bloat your image, don't use it unless absolutly necessary.
 * Do as much as you can in a single `RUN`, as opposed to breaking things up. The downside to this is longer builds with less caching. However, it can make a huge difference in resulting image size. I once took an image from 1.3G to 555MB, just by collapsing all my commands to a single `RUN`. Additionally, clean up after yourself in that same `RUN` if possible. Example:
 
-    :shell
+    :::shell
     # BAD
     RUN apt-get install git
     RUN apt-get install wget
