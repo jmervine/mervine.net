@@ -6,6 +6,36 @@ Date: 21 February 2015 15:20
 
 Here are a few tips that I've found useful while delving in to [Docker](https://www.docker.com/). For an introduction to Docker, see my post on the [YP Engineering Blog](http://engineering.yp.com/post/intro-to-docker). Enjoy!
 
+
+**Making smaller images.**
+
+Docker image size does matter. The larger your image, that more unweildy it starts to feel. Pulling a 50MB image is far preferable to pulling a 2G image. Some tips on building smaller images:
+
+* Use the smallest linux distro which meets your needs; `busybox` < `debian` < `centos` < `ubuntu`. I try to use `progrium/busybox` whenever possible (which isn't all that often without serious work), otherwise, I tend to use `debian`.
+* Install as little as possible to meet your needs -- `apt-get build-essential` is going to bloat your image, don't use it unless absolutly necessary.
+* Do as much as you can in a single `RUN`, as opposed to breaking things up. The downside to this is longer builds with less caching. However, it can make a huge difference in resulting image size. I once took an image from 1.3G to 555MB, just by collapsing all my commands to a single `RUN`. Additionally, clean up after yourself in that same `RUN` if possible. Example:
+
+    :shell
+    # BAD
+    RUN apt-get install git
+    RUN apt-get install wget
+    RUN apt-get install build-essential
+    COPY http://somesite.com/somefile.tgz
+    RUN tar xzf somefile.tgz
+    RUN cd somefile
+    RUN ./configure && make && install
+
+    # GOOD
+    RUN \
+        apt-get install -y git wget build-essential && \
+        curl -sSL -O http://somesite.com/somefile.tgz && \
+        tar xzf somefile.tgz && \ 
+        cd somefile && ./configure && make && install && \
+        cd - && rm -rf somefile somefile.tgz && \
+        apt-get remove -y build-essential && \
+        apt-get autoremove -y && apt-get clean
+      
+
 **Search private registry.**
 
     :::shell
