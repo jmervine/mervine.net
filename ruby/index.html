@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta content="ror_why_not, bundle faster, simple rules for stable apps, autobench release notes, stubbing binaries for testing, sinatra vs express, deploy part 2, nginx with lua module, httperfrb perf example, httperfrb 0, la ruby conf, ruby methods vs regex, quick benchmarking one liner, alternatives to openstruct, thin wrapper, rails script server unicorn replacement, rvm readline on ubutnu, syntax highlighting on nesta, deploy, ghpages, executing bash from ruby, httperf 0 9 1 with individual connection times, automating performance testing with httperfrb, performance testing with httperf, benchmarking in ruby, duality two caches at once, mongocached simple cache using mongodb, diskcached simple disk cacheing for ruby, setting up newrelic on sinatra, migrating from mongomapper to mongoid, caching external http requests with vcr in rack, mongomapper overwriting a collection name, killing whitespace in haml, vlad push, haml link trailing whitespace sucks, configurable template engine in sinatra, sinatra mobile dection   rack mobile detect, deploy sinatra with vlad and git, sourcing and setting environment variables in ruby, dynamically generated object with accessors, mocking http response body for rspec, how to setup mysql and ror on aws" name="keywords">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="" name="author">
+<link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/spacelab/bootstrap.min.css" media="screen" rel="stylesheet">
+<link href="//cdn.mervine.net/bootstrap/master.css" media="screen" rel="stylesheet">
+<!--[if lte IE 6]>
+      <link href='http://universal-ie6-css.googlecode.com/files/ie6.1.1.css' media='screen, projection' rel='stylesheet'>
+    <![endif]--><!--[if lt IE 9]>
+      <script src='//html5shim.googlecode.com/svn/trunk/html5.js'></script>
+    <![endif]--><link href="/articles.xml" rel="alternate" type="application/atom+xml">
+<link href="//cdn.mervine.net/bootstrap/favicon.ico" rel="shortcut icon">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon.png" rel="apple-touch-icon">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon-72x72.png" rel="apple-touch-icon" sizes="72x72">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon-114x114.png" rel="apple-touch-icon" sizes="114x114">
+<title>Ruby - mervine.net</title>
+</head>
+<body style="padding-top: 10px !important">
+    <div class="container">
+      <div class="navbar navbar-default navbar-top" style="margin-bottom: 0px !important">
+        <div class="navbar-header">
+          <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse" type="button">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Home</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+<li class="">
+              <a href="http://mervine.net/categories">Category List</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/projects">My Projects</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/notes">Notes</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/hacks">Hacks</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/quotes">Quotes</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/archive">Archives</a>
+            </li>
+          </ul>
+<ul class="nav navbar-nav navbar-right visible-xs">
+<li>
+              <a href="http://twitter.com/mervinej">Twitter</a>
+            </li>
+            <li>
+              <a href="http://linkedin.com/in/mervinej">Linkedin</a>
+            </li>
+            <li>
+              <a href="http://github.com/jmervine">Github</a>
+            </li>
+            <li>
+              <a href="http://www.gittip.com/jmervine">Gittip</a>
+            </li>
+          </ul>
+</div>
+      </div>
+      <div class="container">
+        <div class="page-header" style="margin-top: 0px !important;">
+          <img src="http://www.gravatar.com/avatar/ed808193b8c2c8516715816f90a005b2.jpg?s=75" style="padding:5px 15px 15px; float:left"><a href="http://mervine.net/">
+            <h1>mervine.net</h1>
+          </a><small>Lessons learned, code written, hacks, etc.</small>
+        </div>
+      </div>
+      <div class="container">
+        <div class="col-sm-12 col-md-9">
+          <div class="page_content container">
+  <div class="page_content">
+    <h1>Ruby</h1>
+    
+    <blockquote><p><a href="http://www.ruby-lang.org/en/">Ruby</a> is a dynamic, open source programming language with a focus on simplicity and productivity. It has an elegant syntax that is natural to read and easy to write.</p></blockquote>
+    <hr class="article_seperator">
+<header><h2>Articles on Ruby</h2>
+    </header><div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/ror_why_not">Ruby / RoR... Why not?</a>
+    </h2>
+  </header><p>In response to common question: "I'd be curious as to why your friends want to move away from the RoR/Ruby space..."</p>
+  <p class="read_more">
+    <a href="http://mervine.net/ror_why_not">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2014-08-13T10:30:00+00:00" pubdate>13 August 2014</time>
+      in
+      <a href="http://mervine.net/ruby">Ruby</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/bundle-faster">Bundle Faster, Save Time</a>
+    </h2>
+  </header><p><a href="http://bundler.io/">Bundler</a> just annouced <code>1.4.0.pre.1</code> with <code>--jobs</code> support, which allows for multithreading gem installs -- I haven't looked at the code, but my guess is it's making use of the <code>JOBS</code> flag support in <code>gmake</code> (which multithreads C compilation) for navtive libs.</p>
+
+<p>Anyway, here's my quick timing comparison on bundling a very large project with hundrends of gems:</p>
+
+<pre class="twilight">rm -rf vendor/bundle
+bundle install --path vendor/bundle
+# time: 5:31.40 total
+
+rm -rf vendor/bundle
+gem install bundler -v 1.4.0.pre.1 --pre
+bundle install --jobs=4 --path vendor/bundle
+# time: 3:10.38 total
+</pre>
+
+<p>Enjoy!</p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2013-09-03T10:00:00+00:00" pubdate>03 September 2013</time>
+      in
+      <a href="http://mervine.net/ruby">Ruby</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/simple-rules-for-stable-apps">Simple Rules for Stable, Performant and Maintainable Apps</a>
+    </h2>
+  </header><p>Here are some simple and basic rules I've found for building applications that are maintainable and perform well, both in speed and stability. These rules, at one level or another, can apply to smaller modules and libraries, scripts, as well as fully featured large scale applications (both web and otherwise). In this post I will focus more on web applications, since that's where I've spent most of my time. At a higher level, they should apply to almost all areas of software development.</p>
+  <p class="read_more">
+    <a href="http://mervine.net/simple-rules-for-stable-apps">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+    Published
+    on
+    <time datetime="2013-07-08T08:00:00+00:00" pubdate>08 July 2013</time>
+    in
+    <a href="http://mervine.net/express">Express</a>,
+    <a href="http://mervine.net/httperf">Httperf</a>,
+    <a href="http://mervine.net/linux">Linux</a>,
+    <a href="http://mervine.net/projects">My Projects</a>,
+    <a href="http://mervine.net/nodejs">Node.js</a>,
+    <a href="http://mervine.net/python">Python</a>,
+    <a href="http://mervine.net/ruby">Ruby</a>,
+    <a href="http://mervine.net/sinatra">Sinatra</a>
+  </p>
+</footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/projects/gems/autobench-release-notes">Autobench Release - 0.0.1alpha7</a>
+    </h2>
+  </header><p>Commit Logs for Autobench Release's</p>
+  <p class="read_more">
+    <a href="http://mervine.net/projects/gems/autobench-release-notes">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2013-07-01T20:00:00+00:00" pubdate>01 July 2013</time>
+      in
+      <a href="http://mervine.net/projects/gems/autobench">Autobench [alpha release]</a>,
+      <a href="http://mervine.net/projects">My Projects</a>,
+      <a href="http://mervine.net/ruby">Ruby</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/notes/stubbing-binaries-for-testing">Stubbing Binaries for Testing</a>
+    </h2>
+  </header><p>Being a Dev Ops guy, I write <a href="/gems">gems</a>, scripts and hacks that tend to hook in to system binaries. I know, it would probably be better to write C bindings, but heretofore that hasn't been something I really want to tackle. Additionally, I almost always write tests for my stuff. I've come across the problem where my tests pass locally, but not on <a href="http://travis-ci.org">Travis-CI</a>.</p>
+  <p class="read_more">
+    <a href="http://mervine.net/notes/stubbing-binaries-for-testing">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2013-06-29T12:00:00+00:00" pubdate>29 June 2013</time>
+      in
+      <a href="http://mervine.net/bash">Bash</a>,
+      <a href="http://mervine.net/nodejs">Node.js</a>,
+      <a href="http://mervine.net/notes">Notes</a>,
+      <a href="http://mervine.net/ruby">Ruby</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/notes/sinatra-vs-express">Hello World: Sinatra vs. Node.js</a>
+    </h2>
+  </header><h3><a href="/sinatra">Sinatra</a></h3>
+
+<pre class="twilight"><span class="Keyword">require</span> <span class="String"><span class="String">'</span>sinatra<span class="String">'</span></span>
+get <span class="String"><span class="String">'</span>/<span class="String">'</span></span> <span class="Keyword">do</span>
+  <span class="String"><span class="String">"</span>Hello World<span class="String">"</span></span>
+<span class="Keyword">end</span>
+</pre>
+
+<h3><a href="/express">Express</a></h3>
+
+<pre class="twilight"><span class="Storage">var</span> app <span class="Keyword">=</span> require(<span class="String"><span class="String">'</span>express<span class="String">'</span></span>);
+app.get(<span class="String"><span class="String">'</span>/<span class="String">'</span></span>, <span class="Storage">function</span>(req, res) {
+    res.<span class="SupportFunction">send</span>(<span class="String"><span class="String">"</span>Hello World!<span class="String">"</span></span>);
+});
+app.listen(<span class="Constant">8000</span>);
+</pre>
+  <footer><p class="meta">
+    Published
+    on
+    <time datetime="2013-06-26T12:30:00+00:00" pubdate>26 June 2013</time>
+    in
+    <a href="http://mervine.net/express">Express</a>,
+    <a href="http://mervine.net/nodejs">Node.js</a>,
+    <a href="http://mervine.net/notes">Notes</a>,
+    <a href="http://mervine.net/ruby">Ruby</a>,
+    <a href="http://mervine.net/sinatra">Sinatra</a>
+  </p>
+</footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/hacks/deploy-part-2">Hack: Deploying with git and rake-remote_task</a>
+    </h2>
+  </header><blockquote><p>This is an update to my previous post: <a href="/hacks/deploy">Hack: Deploying with git</a>, replacing the use of pure <a href="/rake">rake</a>, for <a href="https://github.com/seattlerb/rake-remote_task">rake-remote_task</a>.</p></blockquote>
+
+<p>Add the following to your Rakefile</p>
+
+<pre class="twilight">require <span class="String"><span class="String">'</span>rake/remote_task<span class="String">'</span></span>
+
+set :domain,      ENV.fetch(PRODUCTION_HOST, <span class="String"><span class="String">"</span>www.yourhost.com<span class="String">"</span></span>)
+set :environment, ENV.fetch(RACK_ENV,        <span class="String"><span class="String">"</span>production<span class="String">"</span></span>)
+
+set :app_path,    <span class="String"><span class="String">"</span>/path/to/app/install<span class="String">"</span></span>
+
+remote_task :deploy <span class="Keyword">do</span>
+  run <span class="String"><span class="String">"</span>set -x; cd #{app_path} &amp;&amp; git pull &amp;&amp; bundle<span class="String">"</span></span>
+end
+
+remote_task :restart <span class="Keyword">do</span>
+  run <span class="String"><span class="String">"</span>set -x; cd #{app_path} &amp;&amp; RACK_ENV=#{environment} bundle exec rake unicorn:restart --trace<span class="String">"</span></span>
+end
+</pre>
+
+<p>Then run</p>
+
+<pre class="twilight">$ RACK_ENV=production PRODUCTION_HOST=www.foohost.com bundle exec rake deploy restart
+</pre>
+
+<p>or just</p>
+
+<pre class="twilight">$ RACK_ENV=production PRODUCTION_HOST=www.foohost.com bundle exec rake deploy
+</pre>
+
+<p><strong>Note -- This assumes the following: </strong></p>
+
+<ul>
+<li>You've checked out your repo on your remote host.</li>
+<li>You've setup your app and it's running on your remote server.</li>
+<li>You're using using <a href="https://github.com/defunkt/unicorn">Unicorn</a>.</li>
+<li>You're using <a href="http://gembundler.com/">Bundler</a>.</li>
+</ul>
+<footer><p class="meta">
+      Published
+      on
+      <time datetime="2013-06-03T21:00:00+00:00" pubdate>03 June 2013</time>
+      in
+      <a href="http://mervine.net/hacks">Hacks</a>,
+      <a href="http://mervine.net/rake">Rake</a>,
+      <a href="http://mervine.net/ruby">Ruby</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/nginx-with-lua-module">Installing Nginx with Lua Module</a>
+    </h2>
+  </header><p><a href="https://gist.github.com/jmervine/5407622/raw/nginx_w_lua.bash">Download the script.</a></p>
+
+<p>Or run the following command:</p>
+
+<pre class="twilight">bash <span class="Keyword">&lt;</span> <span class="String"><span class="String">&lt;(</span>curl -s https://gist.github.com/jmervine/5407622/raw/nginx_w_lua.bash<span class="String">)</span></span>
+</pre>
+
+<blockquote>
+<p>Note: This script has been tested on <code>Ubuntu 12.04.2 LTS</code> but should work on just about any unix based distro, as everything is compiled from source.</p>
+
+<p>Requires wget and basic build essentials.</p>
+</blockquote>
+
+<h3>What's it do?</h3>
+
+<ul>
+<li>Download LuaJIT 2.0.1</li>
+<li>Install LuaJIT 2.0.1</li>
+<li>Download Nginx Development Kit (NDK)</li>
+<li>Download lua-nginx-module</li>
+<li>Download Nginx 1.2.8</li>
+<li>
+<code>configure</code> Nginx with lua-nginx-module</li>
+<li>Install Nginx</li>
+</ul>
+<p>Binary Results:</p>
+
+<ul>
+<li><code>/opt/nginx/sbin/nginx</code></li>
+<li><code>/usr/local/bin/lua</code></li>
+<li><code>/usr/local/bin/luajit</code></li>
+</ul>
+<p>Lib Results:</p>
+
+<ul>
+<li><code>/usr/local/lib/*lua*</code></li>
+</ul>
+<p>Include Results:</p>
+
+<ul>
+<li><code>/usr/local/include/luajit-2.0/*</code></li>
+</ul>
+<h3>Starting Nginx</h3>
+
+<pre class="twilight">LD_LIBRARY_PATH=/usr/local/lib:<span class="Variable"><span class="Variable">$</span>LD_LIBRARY_PATH</span> /opt/nginx/sbin/nginx -c /path/to/nginx.conf
+</pre>
+
+<h3>Update existing Nginx init:</h3>
+
+<p>Stop Nginx: <code>sudo /etc/init.d/nginx stop</code></p>
+
+<p>Patch <a href="https://gist.github.com/jmervine/5407622#file-nginx-init-sh"><code>/etc/init.d/nginx</code></a> like so:</p>
+
+<pre class="twilight"><span class="DiffHeader">13,14c13,18</span>
+<span class="DiffDeleted"><span class="DiffDeleted">&lt;</span> PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin</span>
+<span class="DiffDeleted"><span class="DiffDeleted">&lt;</span> DAEMON=/usr/sbin/nginx</span>
+<span class="DiffHeader"><span class="DiffHeader">---</span></span>
+<span class="DiffInserted"><span class="DiffInserted">&gt;</span> export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH</span>
+<span class="DiffInserted"><span class="DiffInserted">&gt;</span> </span>
+<span class="DiffInserted"><span class="DiffInserted">&gt;</span> # ensure default configuration location</span>
+<span class="DiffInserted"><span class="DiffInserted">&gt;</span> test "$DAEMON_OPTS" || DAEMON_OPTS="-c /etc/nginx/nginx.conf"</span>
+<span class="DiffInserted"><span class="DiffInserted">&gt;</span> PATH=/opt/nginx/sbin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin</span>
+<span class="DiffInserted"><span class="DiffInserted">&gt;</span> DAEMON=/opt/nginx/sbin/nginx`</span>
+</pre>
+
+<blockquote><p>Note: the above may not be the best way, but it's what I had to do to get it to work and I didn't have a ton of time to mess with it.</p></blockquote>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2013-04-18T08:00:00+00:00" pubdate>18 April 2013</time>
+      in
+      <a href="http://mervine.net/linux">Linux</a>,
+      <a href="http://mervine.net/nginx">Nginx</a>,
+      <a href="http://mervine.net/ruby">Ruby</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/httperfrb-perf-example">HTTPerf.rb Example</a>
+    </h2>
+  </header><p>Here's an example of a simple script using HTTPerb.rb. It's a quick and dirty script used for getting quick differences between changes.</p>
+  <p class="read_more">
+    <a href="http://mervine.net/httperfrb-perf-example">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2013-04-09T20:00:00+00:00" pubdate>09 April 2013</time>
+      in
+      <a href="http://mervine.net/hacks">Hacks</a>,
+      <a href="http://mervine.net/httperf">Httperf</a>,
+      <a href="http://mervine.net/httperfrb">HTTPerf.rb</a>,
+      <a href="http://mervine.net/ruby">Ruby</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/httperfrb-0.3.10-released">HTTPerf.rb 0.3.11 Released</a>
+    </h2>
+  </header><p>Adding <code>tee</code> support, which will print any httperf (both STDOUT and STDERR) output to STDOUT while running the process.</p>
+  <p class="read_more">
+    <a href="http://mervine.net/httperfrb-0.3.10-released">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2013-03-31T20:00:00+00:00" pubdate>31 March 2013</time>
+      in
+      <a href="http://mervine.net/httperf">Httperf</a>,
+      <a href="http://mervine.net/httperfrb">HTTPerf.rb</a>,
+      <a href="http://mervine.net/ruby">Ruby</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/la-ruby-conf">LA Ruby Conf</a>
+    </h2>
+  </header><p><a href="http://www.larubyconf.com/"><img src="http://larubyconf.com/assets/larubyconf-logo.png" alt="LA Ruby Conf"></a></p>
+  
+  <p>I'll be there, say "Hello"!</p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2013-02-14T10:30:00+00:00" pubdate>14 February 2013</time>
+      in
+      <a href="http://mervine.net/ruby">Ruby</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/ruby-methods-vs-regex">'starts_with?', 'end_with?' and 'include?' vs. RegExp</a>
+    </h2>
+  </header><p>A co-worker of mine pointed out today that using Ruby's native methods for string matching is actually faster then using regular expressions. This was hard for me to believe to so I benchmarked them.</p>
+
+<h3>Setup the <a href="http://www.ruby-doc.org/stdlib-1.9.3/libdoc/benchmark/rdoc/Benchmark.html">Benchmark</a>
+</h3>
+
+<pre class="twilight">[<span class="Constant">1</span>] <span class="Entity">pry</span>(main)<span class="Keyword">&gt;</span> <span class="Keyword">require</span> <span class="String"><span class="String">'</span>benchmark<span class="String">'</span></span>
+=&gt; <span class="Constant">true</span>
+[<span class="Constant">2</span>] <span class="Entity">pry</span>(main)<span class="Keyword">&gt;</span> test_string <span class="Keyword">=</span> <span class="String"><span class="String">"</span>/foo/bar/bah/bing<span class="String">"</span></span>
+=&gt; <span class="String"><span class="String">"</span>/foo/bar/bah/bing<span class="String">"</span></span>
+</pre>
+
+<h3><a href="http://www.ruby-doc.org/core-1.9.3/String.html#method-i-start_with-3F">String#starts_with?</a></h3>
+
+<pre class="twilight">[<span class="Constant">3</span>] <span class="Entity">pry</span>(main)<span class="Keyword">&gt;</span> <span class="Support">Benchmark</span>.<span class="Entity">realtime</span> { (<span class="Constant">1</span>..<span class="Constant">10000</span>).<span class="Entity">to_a</span>.<span class="Entity">each</span> { <span class="StringRegexp"><span class="StringRegexp">%r{</span>^/foo<span class="StringRegexp">}</span></span>.<span class="Entity">match</span>(test_string) } }
+=&gt; <span class="Constant">0.009987447</span>
+[<span class="Constant">4</span>] <span class="Entity">pry</span>(main)<span class="Keyword">&gt;</span> <span class="Support">Benchmark</span>.<span class="Entity">realtime</span> { (<span class="Constant">1</span>..<span class="Constant">10000</span>).<span class="Entity">to_a</span>.<span class="Entity">each</span> { test_string.<span class="Entity">start_with?</span>(<span class="String"><span class="String">"</span>foo<span class="String">"</span></span>) } }
+=&gt; <span class="Constant">0.003103276</span>
+</pre>
+
+<h3><a href="http://www.ruby-doc.org/core-1.9.3/String.html#method-i-end_with-3F">String#end_with?</a></h3>
+
+<pre class="twilight">[<span class="Constant">5</span>] <span class="Entity">pry</span>(main)<span class="Keyword">&gt;</span> <span class="Support">Benchmark</span>.<span class="Entity">realtime</span> { (<span class="Constant">1</span>..<span class="Constant">10000</span>).<span class="Entity">to_a</span>.<span class="Entity">each</span> { <span class="StringRegexp"><span class="StringRegexp">%r{</span>bing$<span class="StringRegexp">}</span></span>.<span class="Entity">match</span>(test_string) } }
+=&gt; <span class="Constant">0.015837275</span>
+[<span class="Constant">6</span>] <span class="Entity">pry</span>(main)<span class="Keyword">&gt;</span> <span class="Support">Benchmark</span>.<span class="Entity">realtime</span> { (<span class="Constant">1</span>..<span class="Constant">10000</span>).<span class="Entity">to_a</span>.<span class="Entity">each</span> { test_string.<span class="Entity">end_with?</span>(<span class="String"><span class="String">"</span>bing<span class="String">"</span></span>) } }
+=&gt; <span class="Constant">0.005633547</span>
+</pre>
+
+<h3><a href="http://www.ruby-doc.org/core-1.9.3/String.html#method-i-include-3F">String#include?</a></h3>
+
+<pre class="twilight">[<span class="Constant">7</span>] <span class="Entity">pry</span>(main)<span class="Keyword">&gt;</span> <span class="Support">Benchmark</span>.<span class="Entity">realtime</span> { (<span class="Constant">1</span>..<span class="Constant">10000</span>).<span class="Entity">to_a</span>.<span class="Entity">each</span> { <span class="StringRegexp"><span class="StringRegexp">%r{</span>^.*bar.*$<span class="StringRegexp">}</span></span>.<span class="Entity">match</span>(test_string) } }
+=&gt; <span class="Constant">0.025630178</span>
+[<span class="Constant">8</span>] <span class="Entity">pry</span>(main)<span class="Keyword">&gt;</span> <span class="Support">Benchmark</span>.<span class="Entity">realtime</span> { (<span class="Constant">1</span>..<span class="Constant">10000</span>).<span class="Entity">to_a</span>.<span class="Entity">each</span> { test_string.<span class="Entity">include?</span>(<span class="String"><span class="String">"</span>bar<span class="String">"</span></span>) } }
+=&gt; <span class="Constant">0.010360719</span>
+</pre>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-11-14T22:30:00+00:00" pubdate>14 November 2012</time>
+      in
+      <a href="http://mervine.net/benchmarking-in-ruby">Benchmarking in Ruby</a>,
+      <a href="http://mervine.net/ruby">Ruby</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/hacks/quick-benchmarking-one-liner">Quick Benchmarking One Liner</a>
+    </h2>
+  </header><p>This is useful when you're quickly trying to decide between two methods of performing an action.</p>
+
+<pre class="twilight">[<span class="Constant">1</span>] <span class="Entity">pry</span>(main)<span class="Keyword">&gt;</span> u <span class="Keyword">=</span> <span class="String"><span class="String">"</span>/foo/bar/<span class="String">"</span></span>
+=&gt; <span class="String"><span class="String">"</span>/foo/bar/<span class="String">"</span></span>
+[<span class="Constant">2</span>] <span class="Entity">pry</span>(main)<span class="Keyword">&gt;</span> <span class="Support">Benchmark</span>.<span class="Entity">realtime</span> { u.<span class="Entity">split</span>(<span class="String"><span class="String">"</span>/<span class="String">"</span></span>).<span class="Entity">join</span>(<span class="String"><span class="String">"</span>::<span class="String">"</span></span>) } <span class="Keyword">&gt;</span> <span class="Support">Benchmark</span>.<span class="Entity">realtime</span> { u.<span class="Entity">gsub</span>(<span class="String"><span class="String">"</span>/<span class="String">"</span></span>, <span class="String"><span class="String">"</span>::<span class="String">"</span></span>).<span class="Entity">gsub</span>(<span class="StringRegexp"><span class="StringRegexp">/</span></span><span class="StringRegexp">::$</span><span class="StringRegexp"><span class="StringRegexp">/</span></span>, <span class="String"><span class="String">"</span><span class="String">"</span></span>) }
+=&gt; <span class="Constant">false</span>
+[<span class="Constant">3</span>] <span class="Entity">pry</span>(main)<span class="Keyword">&gt;</span> u.<span class="Entity">split</span>(<span class="String"><span class="String">"</span>/<span class="String">"</span></span>).<span class="Entity">join</span>(<span class="String"><span class="String">"</span>::<span class="String">"</span></span>)
+=&gt; <span class="String"><span class="String">"</span>::foo::bar<span class="String">"</span></span>
+[<span class="Constant">4</span>] <span class="Entity">pry</span>(main)<span class="Keyword">&gt;</span> u.<span class="Entity">gsub</span>(<span class="String"><span class="String">"</span>/<span class="String">"</span></span>, <span class="String"><span class="String">"</span>::<span class="String">"</span></span>).<span class="Entity">gsub</span>(<span class="StringRegexp"><span class="StringRegexp">/</span></span><span class="StringRegexp">::$</span><span class="StringRegexp"><span class="StringRegexp">/</span></span>, <span class="String"><span class="String">"</span><span class="String">"</span></span>)
+=&gt; <span class="String"><span class="String">"</span>::foo::bar<span class="String">"</span></span>
+</pre>
+
+<p>As you can see, the first method <code>u.split("/").join("::")</code> is faster.</p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-11-13T20:00:00+00:00" pubdate>13 November 2012</time>
+      in
+      <a href="http://mervine.net/benchmarking-in-ruby">Benchmarking in Ruby</a>,
+      <a href="http://mervine.net/ruby">Ruby</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/alternatives-to-openstruct">Alternatives to OpenStruct</a>
+    </h2>
+  </header><p>OpenStruct is bad. Here are two quick alternatives.</p>
+  <p class="read_more">
+    <a href="http://mervine.net/alternatives-to-openstruct">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-11-01T17:30:00+00:00" pubdate>01 November 2012</time>
+      in
+      <a href="http://mervine.net/ruby">Ruby</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/hacks/thin-wrapper">Thin Wrapper Script</a>
+    </h2>
+  </header><p>Their may be others, there may be better, but this is mine.</p>
+
+<pre class="twilight"><span class="Comment"><span class="Comment">#</span> file: APP_ROOT/thin.sh</span>
+<span class="Comment"><span class="Comment">#</span></span>
+<span class="Comment"><span class="Comment">#</span>!/usr/bin/env bash</span>
+<span class="Comment"><span class="Comment">#</span> source config if present</span>
+test -f ./config/thinrc <span class="Keyword">&amp;&amp;</span> source ./config/thinrc
+
+<span class="Comment"><span class="Comment">#</span> set up primary defaults</span>
+test <span class="String"><span class="String">"</span><span class="StringVariable"><span class="StringVariable">$</span>RACK_ENV</span><span class="String">"</span></span>  <span class="Keyword">||</span> RACK_ENV=<span class="String"><span class="String">"</span>development<span class="String">"</span></span>
+test <span class="String"><span class="String">"</span><span class="StringVariable"><span class="StringVariable">$</span>THIN_PORT</span><span class="String">"</span></span> <span class="Keyword">||</span> THIN_PORT=<span class="String"><span class="String">"</span>4321<span class="String">"</span></span>
+test <span class="String"><span class="String">"</span><span class="StringVariable"><span class="StringVariable">$</span>THIN_PID</span><span class="String">"</span></span>  <span class="Keyword">||</span> THIN_PID=<span class="String"><span class="String">"</span>./log/listener.pid<span class="String">"</span></span>
+test <span class="String"><span class="String">"</span><span class="StringVariable"><span class="StringVariable">$</span>THIN_LOG</span><span class="String">"</span></span>  <span class="Keyword">||</span> THIN_LOG=<span class="String"><span class="String">"</span>./log/listener.log<span class="String">"</span></span>
+
+test <span class="String"><span class="String">"</span><span class="StringVariable"><span class="StringVariable">$</span>DEBUG</span><span class="String">"</span></span>     <span class="Keyword">&amp;&amp;</span> set -x
+
+<span class="Keyword">if</span> <span class="Keyword">!</span> test <span class="String"><span class="String">"</span><span class="StringVariable"><span class="StringVariable">$</span>1</span><span class="String">"</span></span>
+<span class="Keyword">then</span>
+    echo <span class="String"><span class="String">"</span>Usage: listener start|stop|restart<span class="String">"</span></span>
+    echo <span class="String"><span class="String">"</span> <span class="String">"</span></span>
+    echo <span class="String"><span class="String">"</span>Takes the following overides as environemnt variables:<span class="String">"</span></span>
+    echo <span class="String"><span class="String">"</span> <span class="String">"</span></span>
+    echo <span class="String"><span class="String">"</span>  RACK_ENV  :: default <span class="StringVariable"><span class="StringVariable">$</span>RACK_ENV</span><span class="String">"</span></span>
+    echo <span class="String"><span class="String">"</span>  THIN_PORT :: default <span class="StringVariable"><span class="StringVariable">$</span>THIN_PORT</span><span class="String">"</span></span>
+    echo <span class="String"><span class="String">"</span>  THIN_PID  :: default <span class="StringVariable"><span class="StringVariable">$</span>THIN_PID</span><span class="String">"</span></span>
+    echo <span class="String"><span class="String">"</span>  THIN_LOG  :: default <span class="StringVariable"><span class="StringVariable">$</span>THIN_LOG</span><span class="String">"</span></span>
+    echo <span class="String"><span class="String">"</span> <span class="String">"</span></span>
+    echo <span class="String"><span class="String">"</span>Takes config file as './config/thinrc' with overides above. <span class="String">"</span></span>
+    echo <span class="String"><span class="String">"</span> <span class="String">"</span></span>
+    exit 0
+<span class="Keyword">fi</span>
+
+RACK_ENV=<span class="Variable"><span class="Variable">$</span>RACK_ENV</span> thin --port <span class="Variable"><span class="Variable">$</span>THIN_PORT</span> --pid <span class="Variable"><span class="Variable">$</span>THIN_PID</span> --log <span class="Variable"><span class="Variable">$</span>THIN_LOG</span> --daemonize <span class="Variable"><span class="Variable">$</span>1</span>
+
+<span class="Comment"><span class="Comment">#</span> vim: set filetype=sh</span>
+</pre>
+
+<p><em><a href="https://gist.github.com/3928518">gist</a></em></p>
+
+<br><p>And if you need external configs...</p>
+
+<pre class="twilight"><span class="Comment"><span class="Comment">#</span> file: APP_ROOT/config/thinrc</span>
+<span class="Comment"><span class="Comment">#</span></span>
+<span class="Comment"><span class="Comment">#</span> Directory pathing context should be that of the thin</span>
+<span class="Comment"><span class="Comment">#</span> init script sourcing this file, not this file itself.</span>
+<span class="Comment"><span class="Comment">#</span></span>
+<span class="Comment"><span class="Comment">#</span> allow for overides as such</span>
+test <span class="String"><span class="String">"</span><span class="StringVariable"><span class="StringVariable">$</span>RACK_ENV</span><span class="String">"</span></span>  <span class="Keyword">||</span> RACK_ENV=<span class="String"><span class="String">"</span>production<span class="String">"</span></span>
+test <span class="String"><span class="String">"</span><span class="StringVariable"><span class="StringVariable">$</span>THIN_PORT</span><span class="String">"</span></span> <span class="Keyword">||</span> THIN_PORT=<span class="String"><span class="String">"</span>4321<span class="String">"</span></span>
+test <span class="String"><span class="String">"</span><span class="StringVariable"><span class="StringVariable">$</span>THIN_PID</span><span class="String">"</span></span>  <span class="Keyword">||</span> THIN_PID=<span class="String"><span class="String">"</span>./log/listener.pid<span class="String">"</span></span>
+test <span class="String"><span class="String">"</span><span class="StringVariable"><span class="StringVariable">$</span>THIN_LOG</span><span class="String">"</span></span>  <span class="Keyword">||</span> THIN_LOG=<span class="String"><span class="String">"</span>./log/listener.log<span class="String">"</span></span>
+
+<span class="Comment"><span class="Comment">#</span> force defaults as such</span>
+<span class="Comment"><span class="Comment">#</span>RACK_ENV="development"</span>
+<span class="Comment"><span class="Comment">#</span>THIN_PORT="4321"</span>
+<span class="Comment"><span class="Comment">#</span>THIN_PID="./log/listener.pid"</span>
+<span class="Comment"><span class="Comment">#</span>THIN_LOG="./log/listener.log"</span>
+
+<span class="Comment"><span class="Comment">#</span> vim: set filetype=sh</span>
+</pre>
+
+<p><em><a href="https://gist.github.com/3928518">gist</a></em></p>
+
+<h4><a href="http://code.macournoyer.com/thin/">What is Thin?</a></h4>
+
+<br><footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-10-21T19:30:00+00:00" pubdate>21 October 2012</time>
+      in
+      <a href="http://mervine.net/hacks">Hacks</a>,
+      <a href="http://mervine.net/ruby">Ruby</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/hacks/rails-script-server-unicorn-replacement">Rails script/server Unicorn Replacement</a>
+    </h2>
+  </header><p>A script to replace <code>script/server</code> in Rails, which runs Unicorn over Webrick, because it's faster. This script is designed for <strong>development only</strong>!</p>
+  <p class="read_more">
+    <a href="http://mervine.net/hacks/rails-script-server-unicorn-replacement">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-10-19T18:30:00+00:00" pubdate>19 October 2012</time>
+      in
+      <a href="http://mervine.net/bash">Bash</a>,
+      <a href="http://mervine.net/hacks">Hacks</a>,
+      <a href="http://mervine.net/ruby">Ruby</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/rvm-readline-on-ubutnu">RVM, irb, readline and Ubuntu</a>
+    </h2>
+  </header><p>It's as easy as:</p>
+
+<pre class="twilight">sudo apt-get install libreadline-gplv2-dev
+rvm remove ruby-1.9.3-p194
+rvm install ruby-1.9.3-p194
+</pre>
+
+<p>Done.</p>
+
+<h3>Notes:</h3>
+
+<ol>
+<li>Do not use <code>rvm pkg install readline</code>.</li>
+<li>"1.9.3-p194" is an example, should work with most versions.</li>
+</ol>
+<footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-09-25T13:30:00+00:00" pubdate>25 September 2012</time>
+      in
+      <a href="http://mervine.net/linux">Linux</a>,
+      <a href="http://mervine.net/ruby">Ruby</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/syntax-highlighting-on-nesta">Syntax Highlighting on Nesta</a>
+    </h2>
+  </header><p>I recently went through setting up syntax highlighting on Nesta for this site. I started with "Setting up rack-codehighlighter" from the Nesta site, but wasn't loving what Coderay had to offer. Looking at 'rack-codehighlighter' and it's other formatter options and decided to use Ultraviolet.<br><br>While this is geared towards Nesta, this will also work for all Rack applications, especially those built on Sinatra.</p>
+  <p class="read_more">
+    <a href="http://mervine.net/syntax-highlighting-on-nesta">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-09-21T00:00:00+00:00" pubdate>21 September 2012</time>
+      in
+      <a href="http://mervine.net/nesta">Nesta</a>,
+      <a href="http://mervine.net/rack">Rack</a>,
+      <a href="http://mervine.net/ruby">Ruby</a>,
+      <a href="http://mervine.net/sinatra">Sinatra</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/hacks/deploy">Hack: Deploying with git</a>
+    </h2>
+  </header><blockquote><p>This has been updated, see: <a href="/hacks/deploy-part-2">Hack: Deploying with git and rake-remote_remote</a></p></blockquote>
+
+<p>Add the following to your Rakefile</p>
+
+<pre class="twilight">ENV[<span class="String"><span class="String">'</span>PRODUCTION_HOST<span class="String">'</span></span>] <span class="Keyword">||</span>= <span class="String"><span class="String">"</span>www.yourhost.com<span class="String">"</span></span>
+task :deploy <span class="Keyword">do</span>
+  system(<span class="String"><span class="String">"</span>ssh #{PRODUCTION_HOST} 'set -x; cd /path/to/app/install &amp;&amp; git pull &amp;&amp; bundle'<span class="String">"</span></span>)
+end
+
+desc <span class="String"><span class="String">"</span>restart production<span class="String">"</span></span> 
+task :restart <span class="Keyword">do</span>
+  system(<span class="String"><span class="String">"</span>ssh #{PRODUCTION_HOST} 'set -x; cd /path/to/app/install &amp;&amp; RACK_ENV=#{ENV['RACK_ENV']} bundle exec rake unicorn:restart --trace'<span class="String">"</span></span>)
+end
+</pre>
+
+<p>Then run</p>
+
+<pre class="twilight">$ RACK_ENV=production PRODUCTION_HOST=www.foohost.com bundle exec rake deploy restart
+</pre>
+
+<p>or just</p>
+
+<pre class="twilight">$ RACK_ENV=production PRODUCTION_HOST=www.foohost.com bundle exec rake deploy
+</pre>
+
+<p><strong>Note -- This assumes the following: </strong></p>
+
+<ul>
+<li>You've checked out your repo on your remote host.</li>
+<li>You've setup your app and it's running on your remote server.</li>
+<li>You're using using <a href="https://github.com/defunkt/unicorn">Unicorn</a>.</li>
+<li>You're using <a href="http://gembundler.com/">Bundler</a>.</li>
+</ul>
+<footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-09-20T16:00:00+00:00" pubdate>20 September 2012</time>
+      in
+      <a href="http://mervine.net/hacks">Hacks</a>,
+      <a href="http://mervine.net/rake">Rake</a>,
+      <a href="http://mervine.net/ruby">Ruby</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/hacks/ghpages">Hack: Generating gh-pages</a>
+    </h2>
+  </header><h3>With rake</h3>
+
+<p>Add the following to your Rakefile</p>
+
+<pre class="twilight">desc <span class="String"><span class="String">"</span>generate and update gh-pages<span class="String">"</span></span>
+task <span class="Constant"><span class="Constant">:</span>pages</span> <span class="Keyword">do</span>
+  <span class="Entity">system</span>(<span class="String"><span class="String">"</span> set -x; bundle exec rspec <span class="String">"</span></span>) <span class="Keyword">or</span> abort
+  <span class="Entity">system</span>(<span class="String"><span class="String">"</span> set -x; bundle exec yardoc --protected ./lib/**/*.rb <span class="String">"</span></span>) <span class="Keyword">or</span> abort
+  <span class="Entity">system</span>(<span class="String"><span class="String">"</span> set -x; mv -v ./doc /tmp <span class="String">"</span></span>) <span class="Keyword">or</span> abort
+  <span class="Entity">system</span>(<span class="String"><span class="String">"</span> set -x; mv -v ./coverage /tmp <span class="String">"</span></span>) <span class="Keyword">or</span> abort
+  <span class="Entity">system</span>(<span class="String"><span class="String">"</span> set -x; git checkout gh-pages <span class="String">"</span></span>) <span class="Keyword">or</span> abort
+  <span class="Entity">system</span>(<span class="String"><span class="String">"</span> set -x; rm -rf ./doc ./coverage <span class="String">"</span></span>) <span class="Keyword">or</span> abort
+  <span class="Entity">system</span>(<span class="String"><span class="String">"</span> set -x; mv -v /tmp/doc . <span class="String">"</span></span>) <span class="Keyword">or</span> abort
+  <span class="Entity">system</span>(<span class="String"><span class="String">"</span> set -x; mv -v /tmp/coverage . <span class="String">"</span></span>) <span class="Keyword">or</span> abort
+  <span class="Entity">system</span>(<span class="String"><span class="String">"</span> set -x; git add . <span class="String">"</span></span>) <span class="Keyword">or</span> abort 
+  <span class="Entity">system</span>(<span class="String"><span class="String">"</span> set -x; git commit --all -m 'updating doc and coverage' <span class="String">"</span></span>) <span class="Keyword">or</span> abort
+  <span class="Entity">system</span>(<span class="String"><span class="String">"</span> set -x; git checkout master <span class="String">"</span></span>) <span class="Keyword">or</span> abort
+  puts <span class="String"><span class="String">"</span>don't forget to run: git push origin gh-pages<span class="String">"</span></span>
+<span class="Keyword">end</span>
+</pre>
+
+<p>Then run</p>
+
+<pre class="twilight">$ bundle exec rake pages
+$ git push gh-pages
+</pre>
+
+<h3>Or less ugly, with bash...</h3>
+
+<p>Create <code>scripts/pages</code></p>
+
+<pre class="twilight"><span class="Comment"><span class="Comment">#</span>!/usr/bin/env bash</span>
+set -xue 
+bundle exec rspec 
+bundle exec yardoc --protected ./lib/**/*.rb
+mv -v ./doc /tmp 
+mv -v ./coverage /tmp 
+git checkout gh-pages
+rm -rf ./doc ./coverage 
+mv -v /tmp/doc .
+mv -v /tmp/coverage . 
+git add .
+git commit --all -m <span class="String"><span class="String">'</span>updating doc and coverage<span class="String">'</span></span>
+git checkout master
+echo <span class="String"><span class="String">"</span>don't forget to run: git push origin gh-pages<span class="String">"</span></span>
+</pre>
+
+<p>Then run</p>
+
+<pre class="twilight">$ chmod 755 ./scripts/pages
+$ ./scripts/pages
+</pre>
+
+<blockquote><p>Note -- I opted for the rake method because I use rake in my projects.</p></blockquote>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-09-20T15:30:00+00:00" pubdate>20 September 2012</time>
+      in
+      <a href="http://mervine.net/hacks">Hacks</a>,
+      <a href="http://mervine.net/rake">Rake</a>,
+      <a href="http://mervine.net/ruby">Ruby</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/executing-bash-from-ruby">Executing BASH from Ruby</a>
+    </h2>
+  </header><p>Found this today and thought I would share...</p>
+  <p class="read_more">
+    <a href="http://mervine.net/executing-bash-from-ruby">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-09-05T04:02:00+00:00" pubdate>05 September 2012</time>
+      in
+      <a href="http://mervine.net/bash">Bash</a>,
+      <a href="http://mervine.net/ruby">Ruby</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/httperf-0-9-1-with-individual-connection-times">httperf-0.9.1 with individual connection times</a>
+    </h2>
+  </header><p>This past weekend I dabbled in C++ for the first time patching httperf to use display each connection's timing when using verbose mode.</p>
+  <p class="read_more">
+    <a href="http://mervine.net/httperf-0-9-1-with-individual-connection-times">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-08-13T19:36:00+00:00" pubdate>13 August 2012</time>
+      in
+      <a href="http://mervine.net/performance-testing-with-httperf">Performance Testing with Httperf</a>,
+      <a href="http://mervine.net/ruby">Ruby</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/automating-performance-testing-with-httperfrb">Automating Performance Testing with httperfrb</a>
+    </h2>
+  </header><p>Here I'm going to cover basic usage for <a href="https://rubygems.org/gems/httperfrb">httperfrb</a>, which I wrote to assist in automating performance testing with <a href="/tag/httperf">httperf</a>. It's important to note that it is designed as an interface to httperf and not a full feature automation suite.</p>
+  <p class="read_more">
+    <a href="http://mervine.net/automating-performance-testing-with-httperfrb">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-08-10T16:14:00+00:00" pubdate>10 August 2012</time>
+      in
+      <a href="http://mervine.net/httperf">Httperf</a>,
+      <a href="http://mervine.net/httperfrb">HTTPerf.rb</a>,
+      <a href="http://mervine.net/performance-testing-with-httperf">Performance Testing with Httperf</a>,
+      <a href="http://mervine.net/ruby">Ruby</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/performance-testing-with-httperf">Performance Testing with Httperf</a>
+    </h2>
+  </header><blockquote><p><em>"<a href="http://www.hpl.hp.com/research/linux/httperf/">Httperf</a> -- a tool for measuring web server performance. It provides a flexible facility for generating various HTTP workloads and for measuring server performance. The focus of httperf is not on implementing one particular benchmark but on providing a robust, high-performance tool that facilitates the construction of both micro- and macro-level benchmarks. The three distinguishing characteristics of httperf are its robustness, which includes the ability to generate and sustain server overload, support for the HTTP/1.1 and SSL protocols, and its extensibility to new workload generators and performance measurements."</em></p></blockquote>
+  <p class="read_more">
+    <a href="http://mervine.net/performance-testing-with-httperf">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-07-30T14:36:00+00:00" pubdate>30 July 2012</time>
+      in
+      <a href="http://mervine.net/httperf">Httperf</a>,
+      <a href="http://mervine.net/httperfrb">HTTPerf.rb</a>,
+      <a href="http://mervine.net/ruby">Ruby</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/benchmarking-in-ruby">Benchmarking in Ruby</a>
+    </h2>
+  </header><p>Benchmark (per <a href="http://dictionary.reference.com/browse/benchmark">Dictionary.com</a>) - <em>"an established point of reference against which computers or programs can be measured in tests comparing their performance, reliability, etc."</em> <br> In my recent work with <a href="/tag/cache">caches</a>, I've been making sure to benchmark my code before releasing it. It's pretty evident, that anyone working with caches cares about speed and for larger sites, every millisecond (and sometimes even microsecond) can count.</p>
+  <p class="read_more">
+    <a href="http://mervine.net/benchmarking-in-ruby">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-07-21T21:39:00+00:00" pubdate>21 July 2012</time>
+      in
+      <a href="http://mervine.net/ruby">Ruby</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/duality-two-caches-at-once">Duality: Two Caches at Once</a>
+    </h2>
+  </header><p><a href="http://github.com/rubyops/duality">Duality</a> is a simple cache helper for using multiple caches. The idea is that you have local cache and a shared cache -- or fast and slow cache -- and want to save to both, and read from local, if present and shared if not. The idea came from <a href="http://www.virgentech.com/">Hector Virgen</a> (the PHP Zend Jedi Ninja Badass) and <a href="http://framework.zend.com/manual/en/zend.cache.backends.html#zend.cache.backends.twolevels">Zend_Cache_Backend_TwoLevels</a>, which does basically the same thing in PHP.</p>
+  <p class="read_more">
+    <a href="http://mervine.net/duality-two-caches-at-once">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-07-21T16:46:00+00:00" pubdate>21 July 2012</time>
+      in
+      <a href="http://mervine.net/ruby">Ruby</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/mongocached-simple-cache-using-mongodb">Mongocached: Simple Cache using Mongodb</a>
+    </h2>
+  </header><p>I created <a href="http://mongocached.mervine.net/">Mongocached</a>, with help from <a href="http://www.virgentech.com/">Hector Virgen</a>, as a simple shared cacheing layer for things like html fragments and database calls as a follow up to <a href="http://mongocached.mervine.net/">Diskcached</a>. It specifically targets situations where you want to cache large amounts of data and have memory constraints.</p>
+  <p class="read_more">
+    <a href="http://mervine.net/mongocached-simple-cache-using-mongodb">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-07-13T02:19:00+00:00" pubdate>13 July 2012</time>
+      in
+      <a href="http://mervine.net/ruby">Ruby</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/diskcached-simple-disk-cacheing-for-ruby">Diskcached: Simple Disk Cacheing for Ruby</a>
+    </h2>
+  </header><p>I created <a href="https://github.com/rubyops/diskcached/wiki">Diskcached</a> as a simple cacheing layer for things like html fragments and database calls. I thought about using <a href="http://memcached.org/">memcached</a>, but as <a href="http://ditty.mervine.net/">Ditty</a> is running on a single server, it seemed overkill. Additionally, I looked at using <a href="http://rtomayko.github.com/rack-cache/">rack-cache</a>, but I felt it was a bit more complex then I was looking for. So Diskcached was born (although it was origiionally released as "simple_disk_cache" -- for about 12 hours).</p>
+  <p class="read_more">
+    <a href="http://mervine.net/diskcached-simple-disk-cacheing-for-ruby">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-07-06T13:58:00+00:00" pubdate>06 July 2012</time>
+      in
+      <a href="http://mervine.net/httperf">Httperf</a>,
+      <a href="http://mervine.net/ruby">Ruby</a>,
+      <a href="http://mervine.net/sinatra">Sinatra</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/setting-up-newrelic-on-sinatra">Setting up NewRelic on Sinatra</a>
+    </h2>
+  </header><p>This week I spent some time setting a <a href="http://newrelic.com/">NewRelic</a> application on a <a href="/sinatra">Sinatra</a> app. It actually turned out to be so simple that I almost hesitate to do a post on it, but hey, here it is any way.</p>
+  <p class="read_more">
+    <a href="http://mervine.net/setting-up-newrelic-on-sinatra">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-06-16T15:48:00+00:00" pubdate>16 June 2012</time>
+      in
+      <a href="http://mervine.net/rack">Rack</a>,
+      <a href="http://mervine.net/ruby">Ruby</a>,
+      <a href="http://mervine.net/sinatra">Sinatra</a>,
+      <a href="http://mervine.net/unicorn">Unicorn</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/migrating-from-mongomapper-to-mongoid">Migrating from MongoMapper to Mongoid</a>
+    </h2>
+  </header><p>I recently took on the task of migrating <a href="http://ditty.mervine.net/">Ditty</a> from <a href="http://mongomapper.com/">MongoMapper</a> to <a href="http://mongoid.org/">Mongoid</a> and it actually wasn't that hard. Fortunately my test suite was adequate enough to catch most of the differences.</p>
+  <p class="read_more">
+    <a href="http://mervine.net/migrating-from-mongomapper-to-mongoid">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-06-11T20:38:00+00:00" pubdate>11 June 2012</time>
+      in
+      <a href="http://mervine.net/ruby">Ruby</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/caching-external-http-requests-with-vcr-in-rack">Caching external HTTP requests with VCR in Rack</a>
+    </h2>
+  </header><p>I was recently working on a project to build continuous integration performance tests on an application which makes extensive HTTP based calls to a middleware application. I was running in to issues where the middleware calls were unstable in the test, stage and load test environments. For the purpose of these tests, I was only interested in the render times of the Rails calls. The obvious choice seemed to cache the external HTTP requests.</p>
+  <p class="read_more">
+    <a href="http://mervine.net/caching-external-http-requests-with-vcr-in-rack">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-06-04T15:50:00+00:00" pubdate>04 June 2012</time>
+      in
+      <a href="http://mervine.net/caching">Caching</a>,
+      <a href="http://mervine.net/rack">Rack</a>,
+      <a href="http://mervine.net/ruby">Ruby</a>,
+      <a href="http://mervine.net/unicorn">Unicorn</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/mongomapper-overwriting-a-collection-name">MongoMapper: Overwriting a Collection Name</a>
+    </h2>
+  </header><p>I found this very hard to find online, so I'm dropping a post in here with it. To overwrite a collection name when using <a href="http://mongomapper.com/">MongoMapper</a> build your model like so:</p>
+
+<pre class="twilight"><span class="Keyword">require</span> <span class="String"><span class="String">'</span>mongomapper<span class="String">'</span></span>
+<span class="Keyword">class</span> <span class="Entity">Collection</span>
+  <span class="Keyword">include</span> <span class="Support">MongoMapper</span>::<span class="Entity">Document</span>
+<span class="Comment">  <span class="Comment">#</span> default collection name is "collections" which</span>
+<span class="Comment">  <span class="Comment">#</span> looks for 'db.collections' in mongo.</span>
+
+  set_collection_name <span class="String"><span class="String">"</span>some_collections<span class="String">"</span></span>
+<span class="Comment">  <span class="Comment">#</span> new collection name is "some_collections" which</span>
+<span class="Comment">  <span class="Comment">#</span> looks for 'db.some_collections' in mongo.</span>
+
+  key <span class="Constant"><span class="Constant">:</span>some_data</span>, <span class="Variable">String</span>
+
+<span class="Keyword">end</span> 
+</pre>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-06-02T17:31:00+00:00" pubdate>02 June 2012</time>
+      in
+      <a href="http://mervine.net/ruby">Ruby</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/killing-whitespace-in-haml">Killing whitespace in HAML</a>
+    </h2>
+  </header><p>HAML really like's to drop tag elements to the next line and personally, I find it a total pain. The <a href="http://haml.info/docs/yardoc/file.HAML_REFERENCE.html#whitespace_removal__and_">HAML REFERENCE</a> has some examples removing whitespace, but through trial and error I was able to find a few edge-cases that weren't mentioned.</p>
+  <p class="read_more">
+    <a href="http://mervine.net/killing-whitespace-in-haml">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-06-01T16:00:00+00:00" pubdate>01 June 2012</time>
+      in
+      <a href="http://mervine.net/ruby">Ruby</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/vlad-push">vlad-push</a>
+    </h2>
+  </header><p><a href="http://rubyhitsquad.com/Vlad_the_Deployer.html">Vlad</a> is a simple <a href="http://rake.rubyforge.org/">Rake</a> based deployment tool, similar to <a href="http://capify.org">Capistrano</a>, which allows for easily managing code deployments on multiple servers and various environments. I'm not going to take a deep dive in to Vlad here and now, but you can <a href="http://docs.seattlerb.org/vlad/doco/getting_started_txt.html">learn more about it here</a>.</p>
+  <p class="read_more">
+    <a href="http://mervine.net/vlad-push">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-05-31T15:20:00+00:00" pubdate>31 May 2012</time>
+      in
+      <a href="http://mervine.net/rake">Rake</a>,
+      <a href="http://mervine.net/ruby">Ruby</a>,
+      <a href="http://mervine.net/vlad-push">vlad-push</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/haml-link-trailing-whitespace-sucks">HAML link trailing whitespace sucks!</a>
+    </h2>
+  </header><p>I was having issues with whitespace at the end of links whose text is being populated by a variable, example:</p>
+
+<pre class="twilight"><span class="MetaTagAll"><span class="MetaTagAll">%</span><span class="MetaTagAll">a</span></span>{ <span class="Constant"><span class="Constant">:</span>href</span> =&gt; <span class="String"><span class="String">"</span>/foo<span class="String">"</span></span> }
+  =<span class="EmbeddedSource">my_foo</span>
+</pre>
+
+<p>Was resulting in:</p>
+
+<pre class="twilight"><span class="MetaTagInline"><span class="MetaTagInline">&lt;</span><span class="MetaTagInline">a</span> <span class="MetaTagInline">href</span>=<span class="String"><span class="String">"</span>/foo<span class="String">"</span></span><span class="MetaTagInline">&gt;</span></span>
+    My Foo
+<span class="MetaTagInline"><span class="MetaTagInline">&lt;/</span><span class="MetaTagInline">a</span><span class="MetaTagInline">&gt;</span></span>
+</pre>
+
+<p>To fix this, I was able to do this...</p>
+
+<pre class="twilight"><span class="MetaTagAll"><span class="MetaTagAll">%</span><span class="MetaTagAll">a</span></span>{ <span class="Constant"><span class="Constant">:</span>href</span> =&gt; <span class="String"><span class="String">"</span>/foo<span class="String">"</span></span> } #{my_foo}
+</pre>
+
+<p>Resulting in:</p>
+
+<pre class="twilight"><span class="MetaTagInline"><span class="MetaTagInline">&lt;</span><span class="MetaTagInline">a</span> <span class="MetaTagInline">href</span>=<span class="String"><span class="String">"</span>/foo<span class="String">"</span></span><span class="MetaTagInline">&gt;</span></span>My Foo<span class="MetaTagInline"><span class="MetaTagInline">&lt;/</span><span class="MetaTagInline">a</span><span class="MetaTagInline">&gt;</span></span>
+</pre>
+
+<p>Ta-Dah!!</p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-05-31T01:34:00+00:00" pubdate>31 May 2012</time>
+      in
+      <a href="http://mervine.net/ruby">Ruby</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/configurable-template-engine-in-sinatra">Configurable Template Engine in Sinatra</a>
+    </h2>
+  </header><p>A lot of people have taken to using HAML, example "sinatra-authentication" uses it by default. I personally don't like it, but I don't judge either. So that said, I wish that more apps out there would steer away from implicitly defining haml calls in their apps. Here's an easy way to allow the template engine to be configurable in Sinatra</p>
+  <p class="read_more">
+    <a href="http://mervine.net/configurable-template-engine-in-sinatra">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-05-30T00:32:00+00:00" pubdate>30 May 2012</time>
+      in
+      <a href="http://mervine.net/ruby">Ruby</a>,
+      <a href="http://mervine.net/sinatra">Sinatra</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/sinatra-mobile-dection---rack-mobile-detect">Sinatra Mobile Dection - rack-mobile-detect</a>
+    </h2>
+  </header><p>I was looking for a simple way to detect mobile devices for this blog, a Sinatra application, and found <a href="https://github.com/talison/rack-mobile-detect">rack-mobile-detect</a>.</p>
+  <p class="read_more">
+    <a href="http://mervine.net/sinatra-mobile-dection---rack-mobile-detect">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-05-29T20:19:00+00:00" pubdate>29 May 2012</time>
+      in
+      <a href="http://mervine.net/rack">Rack</a>,
+      <a href="http://mervine.net/ruby">Ruby</a>,
+      <a href="http://mervine.net/sinatra">Sinatra</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/deploy-sinatra-with-vlad-and-git">Deploy Sinatra with Vlad and Git</a>
+    </h2>
+  </header><p>Deploying <a href="http://sinatrarb.com/">Sinatra</a> with <a href="http://rubyhitsquad.com/Vlad_the_Deployer.html">Vlad the Deployer</a> and <a href="http://github.com/">Git</a> is basically just deploying with Vlad.</p>
+  <p class="read_more">
+    <a href="http://mervine.net/deploy-sinatra-with-vlad-and-git">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-05-29T18:40:00+00:00" pubdate>29 May 2012</time>
+      in
+      <a href="http://mervine.net/ruby">Ruby</a>,
+      <a href="http://mervine.net/sinatra">Sinatra</a>,
+      <a href="http://mervine.net/unicorn">Unicorn</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/sourcing-and-setting-environment-variables-in-ruby">Sourcing and Setting Environment Variables in Ruby</a>
+    </h2>
+  </header><p>I was looking for a simple way to source and set a bash environment variable from a file, in this specific instance, I can't be 100% sure that the any steps I take to ensure that the file itself is sourced on the host before Rails is started, nor can I impact the format of the file itself (e.g. changing it to YAML).</p>
+  <p class="read_more">
+    <a href="http://mervine.net/sourcing-and-setting-environment-variables-in-ruby">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-05-29T17:49:00+00:00" pubdate>29 May 2012</time>
+      in
+      <a href="http://mervine.net/bash">Bash</a>,
+      <a href="http://mervine.net/ruby">Ruby</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/dynamically-generated-object-with-accessors">Dynamically Generated Object with Accessors</a>
+    </h2>
+  </header><p>I was working on created a super class for use in importing various unknown data types from hashs, so I started playing around with dynamic instance variable and attr_accessor generation and came up with the following, which I thought I would share.</p>
+  <p class="read_more">
+    <a href="http://mervine.net/dynamically-generated-object-with-accessors">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-05-29T17:45:00+00:00" pubdate>29 May 2012</time>
+      in
+      <a href="http://mervine.net/ruby">Ruby</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/mocking-http-response-body-for-rspec">Mocking HTTP Response body for rSpec</a>
+    </h2>
+  </header><p>I'm sure there are many ways to do this -- probably better ways -- but this is a simple way I've done it.</p>
+
+<pre class="twilight"><span class="Keyword">class</span> <span class="Entity">FakeResponse</span>
+  <span class="Keyword">attr</span> <span class="Constant"><span class="Constant">:</span>body</span>
+  <span class="Keyword">def</span> <span class="Entity">initialize</span> body
+    <span class="Variable"><span class="Variable">@</span>body</span> <span class="Keyword">=</span> body
+  <span class="Keyword">end</span>
+<span class="Keyword">end</span>
+
+describe <span class="Variable">Foo</span> <span class="Keyword">do</span>
+  <span class="Entity">before</span>(<span class="Constant"><span class="Constant">:</span>each</span>) <span class="Keyword">do</span>
+    <span class="Variable"><span class="Variable">@</span>data</span> <span class="Keyword">=</span> <span class="Support">File</span>.<span class="Entity">read</span> <span class="String"><span class="String">"</span>./http/response/body.txt<span class="String">"</span></span>
+    <span class="Support">Net</span>::<span class="Entity">HTTP</span>.<span class="Entity">stub!</span>(<span class="Constant"><span class="Constant">:</span>post_form</span>).<span class="Entity">and_return</span>(<span class="Support">FakeResponse</span>.<span class="Entity">new</span> <span class="Variable"><span class="Variable">@</span>data</span>)
+  <span class="Keyword">end</span>
+  it <span class="String"><span class="String">"</span>should return stuff<span class="String">"</span></span> <span class="Keyword">do</span>
+    <span class="Support">Foo</span>.<span class="Entity">fetch</span>( <span class="Constant"><span class="Constant">:</span>key</span> =&gt; <span class="String"><span class="String">"</span>foo<span class="String">"</span></span>, <span class="Constant"><span class="Constant">:</span>uri</span> =&gt; <span class="String"><span class="String">"</span>http://foobar.com/<span class="String">"</span></span> ).<span class="Entity">should</span> <span class="Entity">eq</span>(<span class="Variable"><span class="Variable">@</span>data</span>)
+  <span class="Keyword">end</span>
+<span class="Keyword">end</span>
+</pre>
+
+<h4>Note:</h4>
+
+<blockquote><p>Since originally coming up with this, I found <a href="http://rubygems.org/gems/vcr">VCR</a>, check it out, it does this type of thing in some very cool ways.</p></blockquote>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-05-29T17:42:00+00:00" pubdate>29 May 2012</time>
+      in
+      <a href="http://mervine.net/ruby">Ruby</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/how-to-setup-mysql-and-ror-on-aws">How-to: Setup MySQL and RoR on AWS</a>
+    </h2>
+  </header><p>I have been working on setting up RoR with MySQL on an AWS instance and ran in to some oddities, so I decided to document the steps I took and lay it all out real nice and pretty.</p>
+  <p class="read_more">
+    <a href="http://mervine.net/how-to-setup-mysql-and-ror-on-aws">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-05-29T17:39:00+00:00" pubdate>29 May 2012</time>
+      in
+      <a href="http://mervine.net/nginx">Nginx</a>,
+      <a href="http://mervine.net/ruby">Ruby</a>,
+      <a href="http://mervine.net/unicorn">Unicorn</a>
+    </p>
+  </footer>
+</div>
+    
+    <hr class="article_seperator">
+<br><div id="disqus_thread">
+      <script async src="http://rubyops.disqus.com/embed.js" type="text/javascript"></script><noscript>
+        <a href="http://rubyops.disqus.com/embed.js?url=ref">View comments.</a>
+      </noscript>
+    </div>
+  </div>
+</div>
+        </div>
+        <div class="col-md-3 visible-md visible-lg">
+          <div class="sidebar-nav">
+              <ul class="share-buttons">
+<li>
+                  <a href="https://www.facebook.com/sharer/sharer.php?u=http://mervine.net/ruby" target="_blank">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Facebook.png"></a>
+                </li>
+                <li>
+                  <a href="https://twitter.com/intent/tweet?url=http://mervine.net/ruby&amp;text=Ruby%20-%20mervine.net%20-%20&amp;via=mervinej" target="_blank" title="Tweet">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Twitter.png"></a>
+                </li>
+                <li>
+                  <a href="https://plus.google.com/share?url=http://mervine.net/ruby" target="_blank" title="Share on Google+">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Google.png"></a>
+                </li>
+                <li>
+                  <a href="http://www.reddit.com/submit?url=http://mervine.net/ruby&amp;title=Ruby%20-%20mervine.net" target="_blank" title="Submit to Reddit">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Reddit.png"></a>
+                </li>
+                <li>
+                  <a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=http://mervine.net/ruby&amp;title=Ruby%20-%20mervine.net&amp;source=http://mervine.net/ruby" target="_blank" title="Share on LinkedIn">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/LinkedIn.png"></a>
+                </li>
+              </ul>
+<div class="list-group">
+                <a class="list-group-item active" href="#">
+                  <h4 class="list-group-item-heading">More on This</h4>
+                </a>
+                <a class="list-group-item" href="/projects/gems/autobench">Autobench [alpha release]</a>
+                <a class="list-group-item" href="/projects/gems/autoperf">Autoperf (w/ HTTPerf.rb)</a>
+                <a class="list-group-item" href="/notes/zshrc-pry-or-irb">Choosing between Pry or IRB</a>
+                <a class="list-group-item" href="/projects/gems/diskcached">Diskchached</a>
+                <a class="list-group-item" href="/projects/gems/duality">Duality</a>
+                <a class="list-group-item" href="/projects/gems/httperfrb">HTTPerf.rb</a>
+                <a class="list-group-item" href="/projects/gems/mongocached">Mongocached</a>
+                <a class="list-group-item" href="/projects/gems/rack-hard-copy">Rack::Hard::Copy</a>
+                <a class="list-group-item" href="/projects/gems/yslow">YSlow on Ruby</a>
+              </div>
+              <div class="list-group">
+<a class="list-group-item active" href="http://joshua.mervine.net/">
+                  <h4 class="list-group-item-heading">Joshua P. Mervine</h4>
+                </a><a class="list-group-item" href="http://twitter.com/mervinej">Twitter</a>
+            <a class="list-group-item" href="http://linkedin.com/in/mervinej">Linkedin</a>
+            <a class="list-group-item" href="http://github.com/jmervine">Github</a>
+            <a class="list-group-item" href="http://www.gittip.com/jmervine">Gittip</a>
+              </div>
+            </div>
+        </div>
+      </div>
+      <center>
+        <br><div id="footer">
+            <div class="container">
+              <p class="muted credit">
+                Powered by Nesta, a
+                <a href="http://nestacms.com">Ruby CMS</a>.
+              </p>
+            </div>
+          </div>
+      </center>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script><script async src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js" type="text/javascript"></script><script>
+      var searchElement = 'input[name=q]';
+    </script><script async src="//cdn.jsdelivr.net/jquery.webpage-vim/0.1/vim.min.js" type="text/javascript"></script><script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-32343843-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+      </script>
+</body>
+</html>

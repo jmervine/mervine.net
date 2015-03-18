@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta content="notes on performance testing, forking in nodejs, benchmarking with httperfjs and nodeunit, simple rules for stable apps, httperfrb perf example, httperfrb 0, automating performance testing with httperfrb, performance testing with httperf, diskcached simple disk cacheing for ruby" name="keywords">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="" name="author">
+<link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/spacelab/bootstrap.min.css" media="screen" rel="stylesheet">
+<link href="//cdn.mervine.net/bootstrap/master.css" media="screen" rel="stylesheet">
+<!--[if lte IE 6]>
+      <link href='http://universal-ie6-css.googlecode.com/files/ie6.1.1.css' media='screen, projection' rel='stylesheet'>
+    <![endif]--><!--[if lt IE 9]>
+      <script src='//html5shim.googlecode.com/svn/trunk/html5.js'></script>
+    <![endif]--><link href="/articles.xml" rel="alternate" type="application/atom+xml">
+<link href="//cdn.mervine.net/bootstrap/favicon.ico" rel="shortcut icon">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon.png" rel="apple-touch-icon">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon-72x72.png" rel="apple-touch-icon" sizes="72x72">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon-114x114.png" rel="apple-touch-icon" sizes="114x114">
+<title>Httperf - mervine.net</title>
+</head>
+<body style="padding-top: 10px !important">
+    <div class="container">
+      <div class="navbar navbar-default navbar-top" style="margin-bottom: 0px !important">
+        <div class="navbar-header">
+          <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse" type="button">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Home</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+<li class="">
+              <a href="http://mervine.net/categories">Category List</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/projects">My Projects</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/notes">Notes</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/hacks">Hacks</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/quotes">Quotes</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/archive">Archives</a>
+            </li>
+          </ul>
+<ul class="nav navbar-nav navbar-right visible-xs">
+<li>
+              <a href="http://twitter.com/mervinej">Twitter</a>
+            </li>
+            <li>
+              <a href="http://linkedin.com/in/mervinej">Linkedin</a>
+            </li>
+            <li>
+              <a href="http://github.com/jmervine">Github</a>
+            </li>
+            <li>
+              <a href="http://www.gittip.com/jmervine">Gittip</a>
+            </li>
+          </ul>
+</div>
+      </div>
+      <div class="container">
+        <div class="page-header" style="margin-top: 0px !important;">
+          <img src="http://www.gravatar.com/avatar/ed808193b8c2c8516715816f90a005b2.jpg?s=75" style="padding:5px 15px 15px; float:left"><a href="http://mervine.net/">
+            <h1>mervine.net</h1>
+          </a><small>Lessons learned, code written, hacks, etc.</small>
+        </div>
+      </div>
+      <div class="container">
+        <div class="col-sm-12 col-md-9">
+          <div class="page_content container">
+  <div class="page_content">
+    <h1>Httperf</h1>
+    
+    <blockquote>
+<p>For more information, please visit the <a href="http://www.hpl.hp.com/research/linux/httperf/">Httperf main site</a> or checkout the articles below.</p>
+    
+    <p>Here's a link to my httperf fork, for those interested -- <a href="https://github.com/jmervine/httperf">github.com/jmervine/httperf</a></p>
+</blockquote>
+    <hr class="article_seperator">
+<header><h2>Articles on Httperf</h2>
+    </header><div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/notes-on-performance-testing">Notes on Performance Testing</a>
+    </h2>
+  </header><p>A couple weeks ago I did an ad hoc talk at the <a href="http://www.meetup.com/LAWebSpeed/events/174808092/">LAWebSpeed Meetup</a>, hosted by <a href="http://www.maxcdn.com/">MaxCDN</a>, on general performance testing in the web world. I was asked to put together a list of the tools I spoke about and some brief notes on them...</p>
+  <p class="read_more">
+    <a href="http://mervine.net/notes-on-performance-testing">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2014-05-10T14:00:00+00:00" pubdate>10 May 2014</time>
+      in
+      <a href="http://mervine.net/httperf">Httperf</a>,
+      <a href="http://mervine.net/phantomjs">PhantomJS</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/hacks/forking-in-nodejs">Forking in Node.js / Threading HTTPerf with HTTPerf.js</a>
+    </h2>
+  </header><p>Occasionally, we want to generate load beyond what a single httperf thread can handle, especially when working in <a href="http://nodejs.org/">Node.js</a>, where the connection limits can get very high. The code sample below does that, but also serves as an example of how to use the <a href="http://nodejs.org/api/cluster.html">cluster module</a> to fork actions and collect the resulting data. Enjoy!</p>
+  <p class="read_more">
+    <a href="http://mervine.net/hacks/forking-in-nodejs">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2014-02-26T22:00:00+00:00" pubdate>26 February 2014</time>
+      in
+      <a href="http://mervine.net/hacks">Hacks</a>,
+      <a href="http://mervine.net/httperf">Httperf</a>,
+      <a href="http://mervine.net/nodejs">Node.js</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/benchmarking-with-httperfjs-and-nodeunit">Benchmarking with HTTPerf.js and NodeUnit</a>
+    </h2>
+  </header><p>I covered this in the <a href="/projects/npms/httperfjs">HTTPerf.js README</a> a bit, but wanted to take a deer look at how I'm using <a href="/projects/npms/httperfjs">HTTPerf.js</a> to benchmark web applications.</p>
+  <p class="read_more">
+    <a href="http://mervine.net/benchmarking-with-httperfjs-and-nodeunit">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2013-07-17T06:30:00+00:00" pubdate>17 July 2013</time>
+      in
+      <a href="http://mervine.net/httperf">Httperf</a>,
+      <a href="http://mervine.net/projects/npms/httperfjs">HTTPerf.js</a>,
+      <a href="http://mervine.net/projects">My Projects</a>,
+      <a href="http://mervine.net/nodejs">Node.js</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/simple-rules-for-stable-apps">Simple Rules for Stable, Performant and Maintainable Apps</a>
+    </h2>
+  </header><p>Here are some simple and basic rules I've found for building applications that are maintainable and perform well, both in speed and stability. These rules, at one level or another, can apply to smaller modules and libraries, scripts, as well as fully featured large scale applications (both web and otherwise). In this post I will focus more on web applications, since that's where I've spent most of my time. At a higher level, they should apply to almost all areas of software development.</p>
+  <p class="read_more">
+    <a href="http://mervine.net/simple-rules-for-stable-apps">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+    Published
+    on
+    <time datetime="2013-07-08T08:00:00+00:00" pubdate>08 July 2013</time>
+    in
+    <a href="http://mervine.net/express">Express</a>,
+    <a href="http://mervine.net/httperf">Httperf</a>,
+    <a href="http://mervine.net/linux">Linux</a>,
+    <a href="http://mervine.net/projects">My Projects</a>,
+    <a href="http://mervine.net/nodejs">Node.js</a>,
+    <a href="http://mervine.net/python">Python</a>,
+    <a href="http://mervine.net/ruby">Ruby</a>,
+    <a href="http://mervine.net/sinatra">Sinatra</a>
+  </p>
+</footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/httperfrb-perf-example">HTTPerf.rb Example</a>
+    </h2>
+  </header><p>Here's an example of a simple script using HTTPerb.rb. It's a quick and dirty script used for getting quick differences between changes.</p>
+  <p class="read_more">
+    <a href="http://mervine.net/httperfrb-perf-example">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2013-04-09T20:00:00+00:00" pubdate>09 April 2013</time>
+      in
+      <a href="http://mervine.net/hacks">Hacks</a>,
+      <a href="http://mervine.net/httperf">Httperf</a>,
+      <a href="http://mervine.net/httperfrb">HTTPerf.rb</a>,
+      <a href="http://mervine.net/ruby">Ruby</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/httperfrb-0.3.10-released">HTTPerf.rb 0.3.11 Released</a>
+    </h2>
+  </header><p>Adding <code>tee</code> support, which will print any httperf (both STDOUT and STDERR) output to STDOUT while running the process.</p>
+  <p class="read_more">
+    <a href="http://mervine.net/httperfrb-0.3.10-released">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2013-03-31T20:00:00+00:00" pubdate>31 March 2013</time>
+      in
+      <a href="http://mervine.net/httperf">Httperf</a>,
+      <a href="http://mervine.net/httperfrb">HTTPerf.rb</a>,
+      <a href="http://mervine.net/ruby">Ruby</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/automating-performance-testing-with-httperfrb">Automating Performance Testing with httperfrb</a>
+    </h2>
+  </header><p>Here I'm going to cover basic usage for <a href="https://rubygems.org/gems/httperfrb">httperfrb</a>, which I wrote to assist in automating performance testing with <a href="/tag/httperf">httperf</a>. It's important to note that it is designed as an interface to httperf and not a full feature automation suite.</p>
+  <p class="read_more">
+    <a href="http://mervine.net/automating-performance-testing-with-httperfrb">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-08-10T16:14:00+00:00" pubdate>10 August 2012</time>
+      in
+      <a href="http://mervine.net/httperf">Httperf</a>,
+      <a href="http://mervine.net/httperfrb">HTTPerf.rb</a>,
+      <a href="http://mervine.net/performance-testing-with-httperf">Performance Testing with Httperf</a>,
+      <a href="http://mervine.net/ruby">Ruby</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/performance-testing-with-httperf">Performance Testing with Httperf</a>
+    </h2>
+  </header><blockquote><p><em>"<a href="http://www.hpl.hp.com/research/linux/httperf/">Httperf</a> -- a tool for measuring web server performance. It provides a flexible facility for generating various HTTP workloads and for measuring server performance. The focus of httperf is not on implementing one particular benchmark but on providing a robust, high-performance tool that facilitates the construction of both micro- and macro-level benchmarks. The three distinguishing characteristics of httperf are its robustness, which includes the ability to generate and sustain server overload, support for the HTTP/1.1 and SSL protocols, and its extensibility to new workload generators and performance measurements."</em></p></blockquote>
+  <p class="read_more">
+    <a href="http://mervine.net/performance-testing-with-httperf">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-07-30T14:36:00+00:00" pubdate>30 July 2012</time>
+      in
+      <a href="http://mervine.net/httperf">Httperf</a>,
+      <a href="http://mervine.net/httperfrb">HTTPerf.rb</a>,
+      <a href="http://mervine.net/ruby">Ruby</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/diskcached-simple-disk-cacheing-for-ruby">Diskcached: Simple Disk Cacheing for Ruby</a>
+    </h2>
+  </header><p>I created <a href="https://github.com/rubyops/diskcached/wiki">Diskcached</a> as a simple cacheing layer for things like html fragments and database calls. I thought about using <a href="http://memcached.org/">memcached</a>, but as <a href="http://ditty.mervine.net/">Ditty</a> is running on a single server, it seemed overkill. Additionally, I looked at using <a href="http://rtomayko.github.com/rack-cache/">rack-cache</a>, but I felt it was a bit more complex then I was looking for. So Diskcached was born (although it was origiionally released as "simple_disk_cache" -- for about 12 hours).</p>
+  <p class="read_more">
+    <a href="http://mervine.net/diskcached-simple-disk-cacheing-for-ruby">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-07-06T13:58:00+00:00" pubdate>06 July 2012</time>
+      in
+      <a href="http://mervine.net/httperf">Httperf</a>,
+      <a href="http://mervine.net/ruby">Ruby</a>,
+      <a href="http://mervine.net/sinatra">Sinatra</a>
+    </p>
+  </footer>
+</div>
+    
+    <hr class="article_seperator">
+<br><div id="disqus_thread">
+      <script async src="http://rubyops.disqus.com/embed.js" type="text/javascript"></script><noscript>
+        <a href="http://rubyops.disqus.com/embed.js?url=ref">View comments.</a>
+      </noscript>
+    </div>
+  </div>
+</div>
+        </div>
+        <div class="col-md-3 visible-md visible-lg">
+          <div class="sidebar-nav">
+              <ul class="share-buttons">
+<li>
+                  <a href="https://www.facebook.com/sharer/sharer.php?u=http://mervine.net/httperf" target="_blank">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Facebook.png"></a>
+                </li>
+                <li>
+                  <a href="https://twitter.com/intent/tweet?url=http://mervine.net/httperf&amp;text=Httperf%20-%20mervine.net%20-%20&amp;via=mervinej" target="_blank" title="Tweet">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Twitter.png"></a>
+                </li>
+                <li>
+                  <a href="https://plus.google.com/share?url=http://mervine.net/httperf" target="_blank" title="Share on Google+">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Google.png"></a>
+                </li>
+                <li>
+                  <a href="http://www.reddit.com/submit?url=http://mervine.net/httperf&amp;title=Httperf%20-%20mervine.net" target="_blank" title="Submit to Reddit">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Reddit.png"></a>
+                </li>
+                <li>
+                  <a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=http://mervine.net/httperf&amp;title=Httperf%20-%20mervine.net&amp;source=http://mervine.net/httperf" target="_blank" title="Share on LinkedIn">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/LinkedIn.png"></a>
+                </li>
+              </ul>
+<div class="list-group">
+                <a class="list-group-item active" href="#">
+                  <h4 class="list-group-item-heading">More on This</h4>
+                </a>
+                <a class="list-group-item" href="/projects/gems/autobench">Autobench [alpha release]</a>
+                <a class="list-group-item" href="/projects/gems/autoperf">Autoperf (w/ HTTPerf.rb)</a>
+                <a class="list-group-item" href="/notes/hosting-review">Hosting Review - QuestaVOLTA</a>
+                <a class="list-group-item" href="/projects/npms/httperfjs">HTTPerf.js</a>
+                <a class="list-group-item" href="/projects/pips/httperfpy">HTTPerf.py</a>
+                <a class="list-group-item" href="/projects/gems/httperfrb">HTTPerf.rb</a>
+                <a class="list-group-item" href="/notes/perf_rb">Simple Perf Script - perf.rb</a>
+              </div>
+              <div class="list-group">
+<a class="list-group-item active" href="http://joshua.mervine.net/">
+                  <h4 class="list-group-item-heading">Joshua P. Mervine</h4>
+                </a><a class="list-group-item" href="http://twitter.com/mervinej">Twitter</a>
+            <a class="list-group-item" href="http://linkedin.com/in/mervinej">Linkedin</a>
+            <a class="list-group-item" href="http://github.com/jmervine">Github</a>
+            <a class="list-group-item" href="http://www.gittip.com/jmervine">Gittip</a>
+              </div>
+            </div>
+        </div>
+      </div>
+      <center>
+        <br><div id="footer">
+            <div class="container">
+              <p class="muted credit">
+                Powered by Nesta, a
+                <a href="http://nestacms.com">Ruby CMS</a>.
+              </p>
+            </div>
+          </div>
+      </center>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script><script async src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js" type="text/javascript"></script><script>
+      var searchElement = 'input[name=q]';
+    </script><script async src="//cdn.jsdelivr.net/jquery.webpage-vim/0.1/vim.min.js" type="text/javascript"></script><script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-32343843-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+      </script>
+</body>
+</html>

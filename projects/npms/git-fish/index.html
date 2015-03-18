@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta content="`git-fish` is a simple [Node.js](/nodejs) [Github Webhook](http://developer.github.com/webhooks/) listener. Why `git-fish`? What recieves a hook?" name="description">
+<meta content="npms, nodejsgithub webhooks with git fish" name="keywords">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="" name="author">
+<link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/spacelab/bootstrap.min.css" media="screen" rel="stylesheet">
+<link href="//cdn.mervine.net/bootstrap/master.css" media="screen" rel="stylesheet">
+<!--[if lte IE 6]>
+      <link href='http://universal-ie6-css.googlecode.com/files/ie6.1.1.css' media='screen, projection' rel='stylesheet'>
+    <![endif]--><!--[if lt IE 9]>
+      <script src='//html5shim.googlecode.com/svn/trunk/html5.js'></script>
+    <![endif]--><link href="/articles.xml" rel="alternate" type="application/atom+xml">
+<link href="//cdn.mervine.net/bootstrap/favicon.ico" rel="shortcut icon">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon.png" rel="apple-touch-icon">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon-72x72.png" rel="apple-touch-icon" sizes="72x72">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon-114x114.png" rel="apple-touch-icon" sizes="114x114">
+<title>git-fish</title>
+</head>
+<body style="padding-top: 10px !important">
+    <div class="container">
+      <div class="navbar navbar-default navbar-top" style="margin-bottom: 0px !important">
+        <div class="navbar-header">
+          <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse" type="button">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Home</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+<li class="">
+              <a href="http://mervine.net/categories">Category List</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/projects">My Projects</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/notes">Notes</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/hacks">Hacks</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/quotes">Quotes</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/archive">Archives</a>
+            </li>
+            <li>
+              <a href="https://github.com/jmervine/node-git-fish">Fork me on Github</a>
+            </li>
+          </ul>
+<ul class="nav navbar-nav navbar-right visible-xs">
+<li>
+              <a href="http://twitter.com/mervinej">Twitter</a>
+            </li>
+            <li>
+              <a href="http://linkedin.com/in/mervinej">Linkedin</a>
+            </li>
+            <li>
+              <a href="http://github.com/jmervine">Github</a>
+            </li>
+            <li>
+              <a href="http://www.gittip.com/jmervine">Gittip</a>
+            </li>
+          </ul>
+</div>
+      </div>
+      <div class="container">
+        <div class="page-header" style="margin-top: 0px !important;">
+          <img src="http://www.gravatar.com/avatar/ed808193b8c2c8516715816f90a005b2.jpg?s=75" style="padding:5px 15px 15px; float:left"><a href="http://mervine.net/">
+            <h1>mervine.net</h1>
+          </a><small>Lessons learned, code written, hacks, etc.</small>
+        </div>
+      </div>
+      <div class="container">
+        <div class="col-sm-12 col-md-9">
+          <div class="page_content container">
+  <div class="page_content">
+    <h1>git-fish</h1>
+
+<p><a href="https://gitter.im/jmervine/node-git-fish?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img src="https://badges.gitter.im/Join%20Chat.svg" alt="Join the chat at https://gitter.im/jmervine/node-git-fish"></a></p>
+
+<p><a href="https://travis-ci.org/jmervine/node-git-fish"><img src="https://travis-ci.org/jmervine/node-git-fish.png?branch=master" alt="Build Status"></a>   <a href="https://david-dm.org/jmervine/node-git-fish"><img src="https://david-dm.org/jmervine/node-git-fish.png" alt="Dependancy Status"></a>   <a href="https://badge.fury.io/js/git-fish"><img src="https://badge.fury.io/js/git-fish.png" alt="NPM Version"></a></p>
+
+<h3>Github Web Hook Listener in Node.js</h3>
+
+<blockquote><p>Why fish? What recieves a hook?</p></blockquote>
+
+<h3>Usage</h3>
+
+<pre class="twilight">$ gitfish help
+Usage: gitfish [forever options] action
+
+ Gitfish Actions
+
+   config   build initial config file
+   start    start gitfish
+   help     show this message
+
+ Daemonized Actions
+
+   stop     stop gitfish (when daemonized)
+   restart  restart gitfish (when daemonized)
+   status   status of gitfish (when de
+
+ Optional Gitfish Options
+
+   --daemonize : start gitfish daemonized
+   --config    : default is `$CWD/config.json`
+   --port      : overide port from config
+   --token     : overide token from config
+
+ Supported Forever Options
+
+   --logFile [file] : forever log file location # default: /tmp/gitfish.log
+   --outFile [file] : stdout file location      # default: forever log file
+   --errFile [file] : stderr file location      # default: forever log file
+   --pidFile [file] : pid file location         # default: /tmp/gitfish.pid
+   --max     [n]    : max restarts on error
+   --plain          : disable command line colors
+   --verbose        : verbose forever output
+
+ What is forever? https://github.com/nodejitsu/forever
+</pre>
+
+<h4>Usage Examples</h4>
+
+<pre class="twilight">$ npm install git-fish
+
+$ gitfish config
+Listener port? [8000]
+Security token? [secret]
+Hook endpoint? [script] /foo
+Hook script? [CWD/script.js]
+Hook branch filter?
+Saved configuration to /home/jmervine/config.json
+
+$ cat config.json
+{
+  "port": 8000,
+  "token": "secret",
+  "foo": {
+    "script": "/home/jmervine/script.js"
+  }
+}
+</pre>
+
+<blockquote>
+<p>Configuration note:</p>
+
+<p><code>script</code> can be anything; <code>ruby</code>, <code>bash</code>, <code>python</code>, etc. It doesn't have to be a <code>node</code> script.</p>
+</blockquote>
+
+<h3>Real World Config Example</h3>
+
+<blockquote>
+<p>Important Note:</p>
+
+<p><code>script</code> path must absolute and the script must be executable.</p>
+</blockquote>
+
+<pre class="twilight">{
+  "port": 8001,
+  "token": "shhh_do_not_tell_anyone",
+  "prod": {
+    "script": "/home/me/update_prod.sh",
+    "branch": "master" // optional branch matcher
+        // "branch" can also be an array of branches:
+        // e.g. `[ "master", "develop" ]`
+  },
+  "dev": {
+    "script": "/home/me/update_dev.sh",
+    "branch": [ "release", "develop" ] // optional branch matcher
+  }
+}
+</pre>
+
+<p>Where <code>/home/me/update_prod.sh</code> is something like:</p>
+
+<pre class="twilight">#!/usr/bin/env bash
+cd /path/to/mysite
+
+# For safty, you can stash any changes, although best practice says
+# there shouldn't be any here.
+# git stash
+
+git checkout master
+git pull
+
+make restart
+</pre>
+
+<p>And your post commit hooks would be:</p>
+
+<pre class="twilight">http://mysite:8001/prod?token=shhh_do_not_tell_anyone
+http://mysite:8001/dev?token=shhh_do_not_tell_anyone
+</pre>
+
+<h2>Contributors</h2>
+
+<ul>
+<li><a href="https://github.com/davidbau">davidbau</a></li>
+</ul>
+<hr class="article_seperator">
+<header><h2>Articles on git-fish</h2>
+    </header><div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/github-webhooks-with-git-fish">Github Webhooks with git-fish</a>
+    </h2>
+  </header><p>I wrote <a href="/projects/npms/git-fish">git-fish</a> – a <a href="http://developer.github.com/webhooks/">Github Webhook</a> listener – to provide a simple and modular method for executing an autodeployment on <a href="/">mervine.net</a> when adding or updating a post. I designed it to as simple and as modular as possible. While written in <a href="/nodejs">Node.js</a>, I tend to use it execute simple <a href="/bash">bash</a> scripts, like the <a href="/">mervine.net</a> deployment script:</p>
+
+<pre class="twilight">#!/bin/bash
+
+cd /home/jmervine/mervine.net
+make deploy/soft
+</pre>
+
+<p>With this combination, I can use [Github] as my psudo-CMS, to create and update posts and when I save an addition or change, it becomes visable on the site in seconds (including, updating code and purging cache).</p>
+
+<p>For detailed information on setting up and using <a href="/projects/npms/git-fish">git-fish</a> or my other see <a href="/projects/npms/git-fish">my git-fish project page</a>.</p>
+
+<p>Enjoy!</p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2014-03-15T15:30:00+00:00" pubdate>15 March 2014</time>
+      in
+      <a href="http://mervine.net/projects/npms/git-fish">git-fish</a>,
+      <a href="http://mervine.net/projects/npms">My NPMs</a>,
+      <a href="http://mervine.net/nodejs">Node.js</a>
+    </p>
+  </footer>
+</div>
+    
+    <hr class="article_seperator">
+<br><div id="disqus_thread">
+      <script async src="http://rubyops.disqus.com/embed.js" type="text/javascript"></script><noscript>
+        <a href="http://rubyops.disqus.com/embed.js?url=ref">View comments.</a>
+      </noscript>
+    </div>
+  </div>
+</div>
+        </div>
+        <div class="col-md-3 visible-md visible-lg">
+          <div class="sidebar-nav">
+              <ul class="share-buttons">
+<li>
+                  <a href="https://www.facebook.com/sharer/sharer.php?u=http://mervine.net/projects/npms/git-fish" target="_blank">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Facebook.png"></a>
+                </li>
+                <li>
+                  <a href="https://twitter.com/intent/tweet?url=http://mervine.net/projects/npms/git-fish&amp;text=git-fish%20-%20&amp;via=mervinej" target="_blank" title="Tweet">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Twitter.png"></a>
+                </li>
+                <li>
+                  <a href="https://plus.google.com/share?url=http://mervine.net/projects/npms/git-fish" target="_blank" title="Share on Google+">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Google.png"></a>
+                </li>
+                <li>
+                  <a href="http://www.reddit.com/submit?url=http://mervine.net/projects/npms/git-fish&amp;title=git-fish" target="_blank" title="Submit to Reddit">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Reddit.png"></a>
+                </li>
+                <li>
+                  <a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=http://mervine.net/projects/npms/git-fish&amp;title=git-fish&amp;source=http://mervine.net/projects/npms/git-fish" target="_blank" title="Share on LinkedIn">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/LinkedIn.png"></a>
+                </li>
+              </ul>
+<div class="list-group">
+<a class="list-group-item active" href="http://joshua.mervine.net/">
+                  <h4 class="list-group-item-heading">Joshua P. Mervine</h4>
+                </a><a class="list-group-item" href="http://twitter.com/mervinej">Twitter</a>
+            <a class="list-group-item" href="http://linkedin.com/in/mervinej">Linkedin</a>
+            <a class="list-group-item" href="http://github.com/jmervine">Github</a>
+            <a class="list-group-item" href="http://www.gittip.com/jmervine">Gittip</a>
+              </div>
+            </div>
+        </div>
+      </div>
+      <center>
+        <br><div id="footer">
+            <div class="container">
+              <p class="muted credit">
+                Powered by Nesta, a
+                <a href="http://nestacms.com">Ruby CMS</a>.
+              </p>
+            </div>
+          </div>
+      </center>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script><script async src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js" type="text/javascript"></script><script>
+      var searchElement = 'input[name=q]';
+    </script><script async src="//cdn.jsdelivr.net/jquery.webpage-vim/0.1/vim.min.js" type="text/javascript"></script><script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-32343843-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+      </script>
+</body>
+</html>

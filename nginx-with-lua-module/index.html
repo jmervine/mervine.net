@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta content="linux, nginx, ruby" name="keywords">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="" name="author">
+<link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/spacelab/bootstrap.min.css" media="screen" rel="stylesheet">
+<link href="//cdn.mervine.net/bootstrap/master.css" media="screen" rel="stylesheet">
+<!--[if lte IE 6]>
+      <link href='http://universal-ie6-css.googlecode.com/files/ie6.1.1.css' media='screen, projection' rel='stylesheet'>
+    <![endif]--><!--[if lt IE 9]>
+      <script src='//html5shim.googlecode.com/svn/trunk/html5.js'></script>
+    <![endif]--><link href="/articles.xml" rel="alternate" type="application/atom+xml">
+<link href="//cdn.mervine.net/bootstrap/favicon.ico" rel="shortcut icon">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon.png" rel="apple-touch-icon">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon-72x72.png" rel="apple-touch-icon" sizes="72x72">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon-114x114.png" rel="apple-touch-icon" sizes="114x114">
+<title>Installing Nginx with Lua Module</title>
+</head>
+<body style="padding-top: 10px !important">
+    <div class="container">
+      <div class="navbar navbar-default navbar-top" style="margin-bottom: 0px !important">
+        <div class="navbar-header">
+          <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse" type="button">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Home</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+<li class="">
+              <a href="http://mervine.net/categories">Category List</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/projects">My Projects</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/notes">Notes</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/hacks">Hacks</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/quotes">Quotes</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/archive">Archives</a>
+            </li>
+          </ul>
+<ul class="nav navbar-nav navbar-right visible-xs">
+<li>
+              <a href="http://twitter.com/mervinej">Twitter</a>
+            </li>
+            <li>
+              <a href="http://linkedin.com/in/mervinej">Linkedin</a>
+            </li>
+            <li>
+              <a href="http://github.com/jmervine">Github</a>
+            </li>
+            <li>
+              <a href="http://www.gittip.com/jmervine">Gittip</a>
+            </li>
+          </ul>
+</div>
+      </div>
+      <div class="container">
+        <div class="page-header" style="margin-top: 0px !important;">
+          <img src="http://www.gravatar.com/avatar/ed808193b8c2c8516715816f90a005b2.jpg?s=75" style="padding:5px 15px 15px; float:left"><a href="http://mervine.net/">
+            <h1>mervine.net</h1>
+          </a><small>Lessons learned, code written, hacks, etc.</small>
+        </div>
+      </div>
+      <div class="container">
+        <div class="col-sm-12 col-md-9">
+          <div class="page_content container">
+  <div class="page_content">
+    <h1>Installing Nginx with Lua Module</h1>
+
+<p><a href="https://gist.github.com/jmervine/5407622/raw/nginx_w_lua.bash">Download the script.</a></p>
+
+<p>Or run the following command:</p>
+
+<pre class="twilight">bash <span class="Keyword">&lt;</span> <span class="String"><span class="String">&lt;(</span>curl -s https://gist.github.com/jmervine/5407622/raw/nginx_w_lua.bash<span class="String">)</span></span>
+</pre>
+
+<blockquote>
+<p>Note: This script has been tested on <code>Ubuntu 12.04.2 LTS</code> but should work on just about any unix based distro, as everything is compiled from source.</p>
+
+<p>Requires wget and basic build essentials.</p>
+</blockquote>
+
+<h3>What's it do?</h3>
+
+<ul>
+<li>Download LuaJIT 2.0.1</li>
+<li>Install LuaJIT 2.0.1</li>
+<li>Download Nginx Development Kit (NDK)</li>
+<li>Download lua-nginx-module</li>
+<li>Download Nginx 1.2.8</li>
+<li>
+<code>configure</code> Nginx with lua-nginx-module</li>
+<li>Install Nginx</li>
+</ul>
+<p>Binary Results:</p>
+
+<ul>
+<li><code>/opt/nginx/sbin/nginx</code></li>
+<li><code>/usr/local/bin/lua</code></li>
+<li><code>/usr/local/bin/luajit</code></li>
+</ul>
+<p>Lib Results:</p>
+
+<ul>
+<li><code>/usr/local/lib/*lua*</code></li>
+</ul>
+<p>Include Results:</p>
+
+<ul>
+<li><code>/usr/local/include/luajit-2.0/*</code></li>
+</ul>
+<h3>Starting Nginx</h3>
+
+<pre class="twilight">LD_LIBRARY_PATH=/usr/local/lib:<span class="Variable"><span class="Variable">$</span>LD_LIBRARY_PATH</span> /opt/nginx/sbin/nginx -c /path/to/nginx.conf
+</pre>
+
+<h3>Update existing Nginx init:</h3>
+
+<p>Stop Nginx: <code>sudo /etc/init.d/nginx stop</code></p>
+
+<p>Patch <a href="https://gist.github.com/jmervine/5407622#file-nginx-init-sh"><code>/etc/init.d/nginx</code></a> like so:</p>
+
+<pre class="twilight"><span class="DiffHeader">13,14c13,18</span>
+<span class="DiffDeleted"><span class="DiffDeleted">&lt;</span> PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin</span>
+<span class="DiffDeleted"><span class="DiffDeleted">&lt;</span> DAEMON=/usr/sbin/nginx</span>
+<span class="DiffHeader"><span class="DiffHeader">---</span></span>
+<span class="DiffInserted"><span class="DiffInserted">&gt;</span> export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH</span>
+<span class="DiffInserted"><span class="DiffInserted">&gt;</span> </span>
+<span class="DiffInserted"><span class="DiffInserted">&gt;</span> # ensure default configuration location</span>
+<span class="DiffInserted"><span class="DiffInserted">&gt;</span> test "$DAEMON_OPTS" || DAEMON_OPTS="-c /etc/nginx/nginx.conf"</span>
+<span class="DiffInserted"><span class="DiffInserted">&gt;</span> PATH=/opt/nginx/sbin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin</span>
+<span class="DiffInserted"><span class="DiffInserted">&gt;</span> DAEMON=/opt/nginx/sbin/nginx`</span>
+</pre>
+
+<blockquote><p>Note: the above may not be the best way, but it's what I had to do to get it to work and I didn't have a ton of time to mess with it.</p></blockquote>
+    <footer><p class="meta">
+        Published
+        on
+        <time datetime="2013-04-18T08:00:00+00:00" pubdate>18 April 2013</time>
+        in
+        <a href="http://mervine.net/linux">Linux</a>,
+        <a href="http://mervine.net/nginx">Nginx</a>,
+        <a href="http://mervine.net/ruby">Ruby</a>
+      </p>
+    </footer><hr class="article_seperator">
+<br><div id="disqus_thread">
+      <script async src="http://rubyops.disqus.com/embed.js" type="text/javascript"></script><noscript>
+        <a href="http://rubyops.disqus.com/embed.js?url=ref">View comments.</a>
+      </noscript>
+    </div>
+  </div>
+</div>
+        </div>
+        <div class="col-md-3 visible-md visible-lg">
+          <div class="sidebar-nav">
+              <ul class="share-buttons">
+<li>
+                  <a href="https://www.facebook.com/sharer/sharer.php?u=http://mervine.net/nginx-with-lua-module" target="_blank">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Facebook.png"></a>
+                </li>
+                <li>
+                  <a href="https://twitter.com/intent/tweet?url=http://mervine.net/nginx-with-lua-module&amp;text=Installing%20Nginx%20with%20Lua%20Module%20-%20&amp;via=mervinej" target="_blank" title="Tweet">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Twitter.png"></a>
+                </li>
+                <li>
+                  <a href="https://plus.google.com/share?url=http://mervine.net/nginx-with-lua-module" target="_blank" title="Share on Google+">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Google.png"></a>
+                </li>
+                <li>
+                  <a href="http://www.reddit.com/submit?url=http://mervine.net/nginx-with-lua-module&amp;title=Installing%20Nginx%20with%20Lua%20Module" target="_blank" title="Submit to Reddit">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Reddit.png"></a>
+                </li>
+                <li>
+                  <a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=http://mervine.net/nginx-with-lua-module&amp;title=Installing%20Nginx%20with%20Lua%20Module&amp;source=http://mervine.net/nginx-with-lua-module" target="_blank" title="Share on LinkedIn">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/LinkedIn.png"></a>
+                </li>
+              </ul>
+<div class="list-group">
+<a class="list-group-item active" href="http://joshua.mervine.net/">
+                  <h4 class="list-group-item-heading">Joshua P. Mervine</h4>
+                </a><a class="list-group-item" href="http://twitter.com/mervinej">Twitter</a>
+            <a class="list-group-item" href="http://linkedin.com/in/mervinej">Linkedin</a>
+            <a class="list-group-item" href="http://github.com/jmervine">Github</a>
+            <a class="list-group-item" href="http://www.gittip.com/jmervine">Gittip</a>
+              </div>
+            </div>
+        </div>
+      </div>
+      <center>
+        <br><div id="footer">
+            <div class="container">
+              <p class="muted credit">
+                Powered by Nesta, a
+                <a href="http://nestacms.com">Ruby CMS</a>.
+              </p>
+            </div>
+          </div>
+      </center>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script><script async src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js" type="text/javascript"></script><script>
+      var searchElement = 'input[name=q]';
+    </script><script async src="//cdn.jsdelivr.net/jquery.webpage-vim/0.1/vim.min.js" type="text/javascript"></script><script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-32343843-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+      </script>
+</body>
+</html>

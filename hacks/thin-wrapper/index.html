@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta content="hacks, ruby" name="keywords">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="" name="author">
+<link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/spacelab/bootstrap.min.css" media="screen" rel="stylesheet">
+<link href="//cdn.mervine.net/bootstrap/master.css" media="screen" rel="stylesheet">
+<!--[if lte IE 6]>
+      <link href='http://universal-ie6-css.googlecode.com/files/ie6.1.1.css' media='screen, projection' rel='stylesheet'>
+    <![endif]--><!--[if lt IE 9]>
+      <script src='//html5shim.googlecode.com/svn/trunk/html5.js'></script>
+    <![endif]--><link href="/articles.xml" rel="alternate" type="application/atom+xml">
+<link href="//cdn.mervine.net/bootstrap/favicon.ico" rel="shortcut icon">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon.png" rel="apple-touch-icon">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon-72x72.png" rel="apple-touch-icon" sizes="72x72">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon-114x114.png" rel="apple-touch-icon" sizes="114x114">
+<title>Thin Wrapper Script</title>
+</head>
+<body style="padding-top: 10px !important">
+    <div class="container">
+      <div class="navbar navbar-default navbar-top" style="margin-bottom: 0px !important">
+        <div class="navbar-header">
+          <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse" type="button">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Home</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+<li class="">
+              <a href="http://mervine.net/categories">Category List</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/projects">My Projects</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/notes">Notes</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/hacks">Hacks</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/quotes">Quotes</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/archive">Archives</a>
+            </li>
+          </ul>
+<ul class="nav navbar-nav navbar-right visible-xs">
+<li>
+              <a href="http://twitter.com/mervinej">Twitter</a>
+            </li>
+            <li>
+              <a href="http://linkedin.com/in/mervinej">Linkedin</a>
+            </li>
+            <li>
+              <a href="http://github.com/jmervine">Github</a>
+            </li>
+            <li>
+              <a href="http://www.gittip.com/jmervine">Gittip</a>
+            </li>
+          </ul>
+</div>
+      </div>
+      <div class="container">
+        <div class="page-header" style="margin-top: 0px !important;">
+          <img src="http://www.gravatar.com/avatar/ed808193b8c2c8516715816f90a005b2.jpg?s=75" style="padding:5px 15px 15px; float:left"><a href="http://mervine.net/">
+            <h1>mervine.net</h1>
+          </a><small>Lessons learned, code written, hacks, etc.</small>
+        </div>
+      </div>
+      <div class="container">
+        <div class="col-sm-12 col-md-9">
+          <div class="page_content container">
+  <div class="page_content">
+    <h1>Thin Wrapper Script</h1>
+
+<p>Their may be others, there may be better, but this is mine.</p>
+
+<pre class="twilight"><span class="Comment"><span class="Comment">#</span> file: APP_ROOT/thin.sh</span>
+<span class="Comment"><span class="Comment">#</span></span>
+<span class="Comment"><span class="Comment">#</span>!/usr/bin/env bash</span>
+<span class="Comment"><span class="Comment">#</span> source config if present</span>
+test -f ./config/thinrc <span class="Keyword">&amp;&amp;</span> source ./config/thinrc
+
+<span class="Comment"><span class="Comment">#</span> set up primary defaults</span>
+test <span class="String"><span class="String">"</span><span class="StringVariable"><span class="StringVariable">$</span>RACK_ENV</span><span class="String">"</span></span>  <span class="Keyword">||</span> RACK_ENV=<span class="String"><span class="String">"</span>development<span class="String">"</span></span>
+test <span class="String"><span class="String">"</span><span class="StringVariable"><span class="StringVariable">$</span>THIN_PORT</span><span class="String">"</span></span> <span class="Keyword">||</span> THIN_PORT=<span class="String"><span class="String">"</span>4321<span class="String">"</span></span>
+test <span class="String"><span class="String">"</span><span class="StringVariable"><span class="StringVariable">$</span>THIN_PID</span><span class="String">"</span></span>  <span class="Keyword">||</span> THIN_PID=<span class="String"><span class="String">"</span>./log/listener.pid<span class="String">"</span></span>
+test <span class="String"><span class="String">"</span><span class="StringVariable"><span class="StringVariable">$</span>THIN_LOG</span><span class="String">"</span></span>  <span class="Keyword">||</span> THIN_LOG=<span class="String"><span class="String">"</span>./log/listener.log<span class="String">"</span></span>
+
+test <span class="String"><span class="String">"</span><span class="StringVariable"><span class="StringVariable">$</span>DEBUG</span><span class="String">"</span></span>     <span class="Keyword">&amp;&amp;</span> set -x
+
+<span class="Keyword">if</span> <span class="Keyword">!</span> test <span class="String"><span class="String">"</span><span class="StringVariable"><span class="StringVariable">$</span>1</span><span class="String">"</span></span>
+<span class="Keyword">then</span>
+    echo <span class="String"><span class="String">"</span>Usage: listener start|stop|restart<span class="String">"</span></span>
+    echo <span class="String"><span class="String">"</span> <span class="String">"</span></span>
+    echo <span class="String"><span class="String">"</span>Takes the following overides as environemnt variables:<span class="String">"</span></span>
+    echo <span class="String"><span class="String">"</span> <span class="String">"</span></span>
+    echo <span class="String"><span class="String">"</span>  RACK_ENV  :: default <span class="StringVariable"><span class="StringVariable">$</span>RACK_ENV</span><span class="String">"</span></span>
+    echo <span class="String"><span class="String">"</span>  THIN_PORT :: default <span class="StringVariable"><span class="StringVariable">$</span>THIN_PORT</span><span class="String">"</span></span>
+    echo <span class="String"><span class="String">"</span>  THIN_PID  :: default <span class="StringVariable"><span class="StringVariable">$</span>THIN_PID</span><span class="String">"</span></span>
+    echo <span class="String"><span class="String">"</span>  THIN_LOG  :: default <span class="StringVariable"><span class="StringVariable">$</span>THIN_LOG</span><span class="String">"</span></span>
+    echo <span class="String"><span class="String">"</span> <span class="String">"</span></span>
+    echo <span class="String"><span class="String">"</span>Takes config file as './config/thinrc' with overides above. <span class="String">"</span></span>
+    echo <span class="String"><span class="String">"</span> <span class="String">"</span></span>
+    exit 0
+<span class="Keyword">fi</span>
+
+RACK_ENV=<span class="Variable"><span class="Variable">$</span>RACK_ENV</span> thin --port <span class="Variable"><span class="Variable">$</span>THIN_PORT</span> --pid <span class="Variable"><span class="Variable">$</span>THIN_PID</span> --log <span class="Variable"><span class="Variable">$</span>THIN_LOG</span> --daemonize <span class="Variable"><span class="Variable">$</span>1</span>
+
+<span class="Comment"><span class="Comment">#</span> vim: set filetype=sh</span>
+</pre>
+
+<p><em><a href="https://gist.github.com/3928518">gist</a></em></p>
+
+<br><p>And if you need external configs...</p>
+
+<pre class="twilight"><span class="Comment"><span class="Comment">#</span> file: APP_ROOT/config/thinrc</span>
+<span class="Comment"><span class="Comment">#</span></span>
+<span class="Comment"><span class="Comment">#</span> Directory pathing context should be that of the thin</span>
+<span class="Comment"><span class="Comment">#</span> init script sourcing this file, not this file itself.</span>
+<span class="Comment"><span class="Comment">#</span></span>
+<span class="Comment"><span class="Comment">#</span> allow for overides as such</span>
+test <span class="String"><span class="String">"</span><span class="StringVariable"><span class="StringVariable">$</span>RACK_ENV</span><span class="String">"</span></span>  <span class="Keyword">||</span> RACK_ENV=<span class="String"><span class="String">"</span>production<span class="String">"</span></span>
+test <span class="String"><span class="String">"</span><span class="StringVariable"><span class="StringVariable">$</span>THIN_PORT</span><span class="String">"</span></span> <span class="Keyword">||</span> THIN_PORT=<span class="String"><span class="String">"</span>4321<span class="String">"</span></span>
+test <span class="String"><span class="String">"</span><span class="StringVariable"><span class="StringVariable">$</span>THIN_PID</span><span class="String">"</span></span>  <span class="Keyword">||</span> THIN_PID=<span class="String"><span class="String">"</span>./log/listener.pid<span class="String">"</span></span>
+test <span class="String"><span class="String">"</span><span class="StringVariable"><span class="StringVariable">$</span>THIN_LOG</span><span class="String">"</span></span>  <span class="Keyword">||</span> THIN_LOG=<span class="String"><span class="String">"</span>./log/listener.log<span class="String">"</span></span>
+
+<span class="Comment"><span class="Comment">#</span> force defaults as such</span>
+<span class="Comment"><span class="Comment">#</span>RACK_ENV="development"</span>
+<span class="Comment"><span class="Comment">#</span>THIN_PORT="4321"</span>
+<span class="Comment"><span class="Comment">#</span>THIN_PID="./log/listener.pid"</span>
+<span class="Comment"><span class="Comment">#</span>THIN_LOG="./log/listener.log"</span>
+
+<span class="Comment"><span class="Comment">#</span> vim: set filetype=sh</span>
+</pre>
+
+<p><em><a href="https://gist.github.com/3928518">gist</a></em></p>
+
+<h4><a href="http://code.macournoyer.com/thin/">What is Thin?</a></h4>
+
+<br><footer><p class="meta">
+        Published
+        on
+        <time datetime="2012-10-21T19:30:00+00:00" pubdate>21 October 2012</time>
+        in
+        <a href="http://mervine.net/hacks">Hacks</a>,
+        <a href="http://mervine.net/ruby">Ruby</a>
+      </p>
+    </footer><hr class="article_seperator">
+<br><div id="disqus_thread">
+      <script async src="http://rubyops.disqus.com/embed.js" type="text/javascript"></script><noscript>
+        <a href="http://rubyops.disqus.com/embed.js?url=ref">View comments.</a>
+      </noscript>
+    </div>
+  </div>
+</div>
+        </div>
+        <div class="col-md-3 visible-md visible-lg">
+          <div class="sidebar-nav">
+              <ul class="share-buttons">
+<li>
+                  <a href="https://www.facebook.com/sharer/sharer.php?u=http://mervine.net/hacks/thin-wrapper" target="_blank">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Facebook.png"></a>
+                </li>
+                <li>
+                  <a href="https://twitter.com/intent/tweet?url=http://mervine.net/hacks/thin-wrapper&amp;text=Thin%20Wrapper%20Script%20-%20&amp;via=mervinej" target="_blank" title="Tweet">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Twitter.png"></a>
+                </li>
+                <li>
+                  <a href="https://plus.google.com/share?url=http://mervine.net/hacks/thin-wrapper" target="_blank" title="Share on Google+">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Google.png"></a>
+                </li>
+                <li>
+                  <a href="http://www.reddit.com/submit?url=http://mervine.net/hacks/thin-wrapper&amp;title=Thin%20Wrapper%20Script" target="_blank" title="Submit to Reddit">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Reddit.png"></a>
+                </li>
+                <li>
+                  <a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=http://mervine.net/hacks/thin-wrapper&amp;title=Thin%20Wrapper%20Script&amp;source=http://mervine.net/hacks/thin-wrapper" target="_blank" title="Share on LinkedIn">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/LinkedIn.png"></a>
+                </li>
+              </ul>
+<div class="list-group">
+<a class="list-group-item active" href="http://joshua.mervine.net/">
+                  <h4 class="list-group-item-heading">Joshua P. Mervine</h4>
+                </a><a class="list-group-item" href="http://twitter.com/mervinej">Twitter</a>
+            <a class="list-group-item" href="http://linkedin.com/in/mervinej">Linkedin</a>
+            <a class="list-group-item" href="http://github.com/jmervine">Github</a>
+            <a class="list-group-item" href="http://www.gittip.com/jmervine">Gittip</a>
+              </div>
+            </div>
+        </div>
+      </div>
+      <center>
+        <br><div id="footer">
+            <div class="container">
+              <p class="muted credit">
+                Powered by Nesta, a
+                <a href="http://nestacms.com">Ruby CMS</a>.
+              </p>
+            </div>
+          </div>
+      </center>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script><script async src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js" type="text/javascript"></script><script>
+      var searchElement = 'input[name=q]';
+    </script><script async src="//cdn.jsdelivr.net/jquery.webpage-vim/0.1/vim.min.js" type="text/javascript"></script><script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-32343843-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+      </script>
+</body>
+</html>

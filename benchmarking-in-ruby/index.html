@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta content="Benchmark (per [Dictionary.com](http://dictionary.reference.com/browse/benchmark)) - *&quot;an established point of reference against which computers or programs can be measured in tests comparing their performance, reliability, etc.&quot;* &lt;br&gt; In my recent work with [caches](/tag/cache), I've been making sure to benchmark my code before releasing it. It's pretty evident, that anyone working with caches cares about speed and for larger sites, every millisecond (and sometimes even microsecond) can count." name="description">
+<meta content="rubyruby methods vs regex, quick benchmarking one liner" name="keywords">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="" name="author">
+<link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/spacelab/bootstrap.min.css" media="screen" rel="stylesheet">
+<link href="//cdn.mervine.net/bootstrap/master.css" media="screen" rel="stylesheet">
+<!--[if lte IE 6]>
+      <link href='http://universal-ie6-css.googlecode.com/files/ie6.1.1.css' media='screen, projection' rel='stylesheet'>
+    <![endif]--><!--[if lt IE 9]>
+      <script src='//html5shim.googlecode.com/svn/trunk/html5.js'></script>
+    <![endif]--><link href="/articles.xml" rel="alternate" type="application/atom+xml">
+<link href="//cdn.mervine.net/bootstrap/favicon.ico" rel="shortcut icon">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon.png" rel="apple-touch-icon">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon-72x72.png" rel="apple-touch-icon" sizes="72x72">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon-114x114.png" rel="apple-touch-icon" sizes="114x114">
+<title>Benchmarking in Ruby</title>
+</head>
+<body style="padding-top: 10px !important">
+    <div class="container">
+      <div class="navbar navbar-default navbar-top" style="margin-bottom: 0px !important">
+        <div class="navbar-header">
+          <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse" type="button">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Home</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+<li class="">
+              <a href="http://mervine.net/categories">Category List</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/projects">My Projects</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/notes">Notes</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/hacks">Hacks</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/quotes">Quotes</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/archive">Archives</a>
+            </li>
+          </ul>
+<ul class="nav navbar-nav navbar-right visible-xs">
+<li>
+              <a href="http://twitter.com/mervinej">Twitter</a>
+            </li>
+            <li>
+              <a href="http://linkedin.com/in/mervinej">Linkedin</a>
+            </li>
+            <li>
+              <a href="http://github.com/jmervine">Github</a>
+            </li>
+            <li>
+              <a href="http://www.gittip.com/jmervine">Gittip</a>
+            </li>
+          </ul>
+</div>
+      </div>
+      <div class="container">
+        <div class="page-header" style="margin-top: 0px !important;">
+          <img src="http://www.gravatar.com/avatar/ed808193b8c2c8516715816f90a005b2.jpg?s=75" style="padding:5px 15px 15px; float:left"><a href="http://mervine.net/">
+            <h1>mervine.net</h1>
+          </a><small>Lessons learned, code written, hacks, etc.</small>
+        </div>
+      </div>
+      <div class="container">
+        <div class="col-sm-12 col-md-9">
+          <div class="page_content container">
+  <div class="page_content">
+    <h1>Benchmarking in Ruby</h1>
+
+<p>Benchmark (per <a href="http://dictionary.reference.com/browse/benchmark">Dictionary.com</a>) - <em>"an established point of reference against which computers or programs can be measured in tests comparing their performance, reliability, etc."</em></p>
+
+<p>In my recent work with <a href="/caching">caches</a>, I've been making sure to benchmark my code before releasing it. It's pretty evident, that anyone working with caches cares about speed and for larger sites, every millisecond (and sometimes even microsecond) can count.</p>
+
+<p><a href="/ruby">Ruby</a> has built in benchmarking capibilities (see <a href="http://www.ruby-doc.org/stdlib-1.9.3/libdoc/benchmark/rdoc/Benchmark.html">the API for Benchmark</a> for details beyond what I cover here). While Benchmark has several different methods of running benchmarks, I tend to focus on <em>Benchmark.bm</em>, which is a pretty straigh forward iteration through your code samples.</p>
+
+<p>You can easily find good basic examples in the documentation, but I'll include them here for your convience.</p>
+
+<h3>Basic Example</h3>
+
+<p>Benchmark Code:</p>
+
+<pre class="twilight"><span class="Constant">1</span>: <span class="Keyword">require</span> <span class="String"><span class="String">'</span>benchmark<span class="String">'</span></span>
+<span class="Constant">2</span>: n <span class="Keyword">=</span> <span class="Constant">50000</span>
+<span class="Constant">3</span>: <span class="Support">Benchmark</span>.<span class="Entity">bm</span> <span class="Keyword">do </span>|<span class="Variable">x</span>|
+<span class="Constant">4</span>:   x.<span class="Entity">report</span> { <span class="Keyword">for</span> i <span class="Keyword">in</span> <span class="Constant">1</span>..n; a <span class="Keyword">=</span> <span class="String"><span class="String">"</span>1<span class="String">"</span></span>; <span class="Keyword">end</span> }
+<span class="Constant">5</span>:   x.<span class="Entity">report</span> { n.<span class="Entity">times</span> <span class="Keyword">do   </span>; a <span class="Keyword">=</span> <span class="String"><span class="String">"</span>1<span class="String">"</span></span>; <span class="Keyword">end</span> }
+<span class="Constant">6</span>:   x.<span class="Entity">report</span> { <span class="Constant">1</span>.<span class="Entity">upto</span>(n) <span class="Keyword">do </span>; a <span class="Keyword">=</span> <span class="String"><span class="String">"</span>1<span class="String">"</span></span>; <span class="Keyword">end</span> }
+<span class="Constant">7</span>: <span class="Keyword">end</span>
+</pre>
+
+<p>Which results in (depending on your machine specs):</p>
+
+<pre class="twilight">    user     system      total        real
+1.033333   0.016667   1.016667 (  0.492106)
+1.483333   0.000000   1.483333 (  0.694605)
+1.516667   0.000000   1.516667 (  0.711077)
+</pre>
+
+<p>Great, so what's it all mean?</p>
+
+<p>Well, if we look at the code sample line by line:</p>
+
+<ol>
+<li>we require benchmark so it's availble for use</li>
+<li>we set <em>n</em> to <em>50000</em> to defie the number of times to itterate the various loops were going to be benchmarking in this run</li>
+<li>we open a <em>Benchmark.bm</em> block with <em>x</em>
+</li>
+<li>define a report block, which contains your first loop -- a <em>for</em> loop</li>
+<li>define your second loop -- <em>n.times</em>
+</li>
+<li>define your thrid loop -- <em>upto(n)</em>
+</li>
+<li>close your benchmark block</li>
+</ol>
+<p>Simple enough -- we've started a benchmark block and defined thee things to benchmark.</p>
+
+<p>Now for the results -- there's four columns of output here, "user" (or user CPU time), "system" (or system CPU time), "total" (or the sum of user and system CPU time) and "real" (or the actual real time elapsed).</p>
+
+<p>So simply put, the conclusion of this test is that the <em>for</em> loop is going to be the fastest.</p>
+
+<h3>Advanced Example</h3>
+
+<p>This is a simplified version of what I'm using for <a href="/duality-two-caches-at-once">Duality</a>, <a href="/mongocached-simple-cache-using-mongodb">Mongocached</a> and <a href="/diskcached-simple-disk-cacheing-for-ruby">Diskcached</a>. All of which benchmark themselves against <a href="http://memcached.org/">Memcached</a> and in some cases eachother.</p>
+
+<p>In this example, I'll be running a benchmark of <a href="/diskcached-simple-disk-cacheing-for-ruby">Diskcached</a>, <a href="/mongocached-simple-cache-using-mongodb">Mongocached</a> and <a href="http://memcached.org/">Memcached</a> running a cache request, or <em>get('some_key')</em>.</p>
+
+<p>Benchmark Code:</p>
+
+<pre class="twilight"><span class="Keyword">require</span> <span class="String"><span class="String">'</span>benchmark<span class="String">'</span></span>
+<span class="Keyword">require</span> <span class="String"><span class="String">'</span>diskcached<span class="String">'</span></span>
+<span class="Keyword">require</span> <span class="String"><span class="String">'</span>mongocached<span class="String">'</span></span>
+<span class="Keyword">require</span> <span class="String"><span class="String">'</span>memcached<span class="String">'</span></span>
+
+<span class="Comment"><span class="Comment">#</span> init diskcached</span>
+diskcache <span class="Keyword">=</span> <span class="Support">Diskcached</span>.<span class="Entity">new</span>(<span class="String"><span class="String">'</span>/tmp/bm_cache<span class="String">'</span></span>)
+
+<span class="Comment"><span class="Comment">#</span> init mongocached with defaults -- localhost</span>
+mongocache <span class="Keyword">=</span> <span class="Support">Mongocached</span>.<span class="Entity">new</span>()
+
+<span class="Comment"><span class="Comment">#</span> init memcached</span>
+memcache <span class="Keyword">=</span> <span class="Support">Memcached</span>.<span class="Entity">new</span>(<span class="String"><span class="String">"</span>localhost:11211<span class="String">"</span></span>)
+
+<span class="Comment"><span class="Comment">#</span> create a data object to be cached</span>
+cache_content <span class="Keyword">=</span> <span class="String"><span class="String">"</span>some string to be saved in cached<span class="String">"</span></span>
+
+<span class="Comment"><span class="Comment">#</span> set the number of times to itterate over the cache get</span>
+<span class="Comment"><span class="Comment">#</span>   I do this because these actions are very fast, so a</span>
+<span class="Comment"><span class="Comment">#</span>   single call, isn't really enough to show a difference.</span>
+<span class="Comment"><span class="Comment">#</span></span>
+<span class="Comment"><span class="Comment">#</span>   For this, I typically use 100,000, as it allows you to</span>
+<span class="Comment"><span class="Comment">#</span>   easily translate all interations into a single</span>
+<span class="Comment"><span class="Comment">#</span>   intteration.</span>
+<span class="Comment"><span class="Comment">#</span></span>
+<span class="Comment"><span class="Comment">#</span>   1 second for all, is 1 microsecond for a single iteration</span>
+<span class="Comment"><span class="Comment">#</span>   using "fuzzy logic".</span>
+iterations <span class="Keyword">=</span> <span class="Constant">100000</span>
+
+<span class="Comment"><span class="Comment">#</span> set each cache, so we have something to get</span>
+diskcache.<span class="Entity">set</span>(<span class="String"><span class="String">"</span>bm_key<span class="String">"</span></span>, cache_content)
+mongocache.<span class="Entity">set</span>(<span class="String"><span class="String">"</span>bm_key<span class="String">"</span></span>, cache_content)
+memcache.<span class="Entity">set</span>(<span class="String"><span class="String">"</span>bm_key<span class="String">"</span></span>, cache_content)
+
+<span class="Comment"><span class="Comment">#</span> now for the meat</span>
+<span class="Support">Benchmark</span>.<span class="Entity">bm</span> <span class="Keyword">do </span>|<span class="Variable">bm</span>|
+<span class="Comment">  <span class="Comment">#</span> first report - diskcached</span>
+  bm.<span class="Entity">report</span>(<span class="String"><span class="String">'</span>disk<span class="String">'</span></span>) <span class="Keyword">do</span>
+    (<span class="Constant">1</span>..iterations).<span class="Entity">each</span> <span class="Keyword">do</span>
+      diskcache.<span class="Entity">get</span>(<span class="String"><span class="String">"</span>bm_key<span class="String">"</span></span>)
+    <span class="Keyword">end</span>
+  <span class="Keyword">end</span>
+
+<span class="Comment">  <span class="Comment">#</span> second report - mongocached</span>
+  bm.<span class="Entity">report</span>(<span class="String"><span class="String">'</span>mong<span class="String">'</span></span>) <span class="Keyword">do</span>
+    (<span class="Constant">1</span>..iterations).<span class="Entity">each</span> <span class="Keyword">do</span>
+      mongocache.<span class="Entity">get</span>(<span class="String"><span class="String">"</span>bm_key<span class="String">"</span></span>)
+    <span class="Keyword">end</span>
+  <span class="Keyword">end</span>
+
+<span class="Comment">  <span class="Comment">#</span> third report - memcached</span>
+  bm.<span class="Entity">report</span>(<span class="String"><span class="String">'</span>memc<span class="String">'</span></span>) <span class="Keyword">do</span>
+    (<span class="Constant">1</span>..iterations).<span class="Entity">each</span> <span class="Keyword">do</span>
+      memcache.<span class="Entity">get</span>(<span class="String"><span class="String">"</span>bm_key<span class="String">"</span></span>)
+    <span class="Keyword">end</span>
+  <span class="Keyword">end</span>
+<span class="Keyword">end</span>
+</pre>
+
+<p>So what are we doing here?</p>
+
+<ul>
+<li>First we setup our caches to be benchmarked by initializing them and inserting some data to be fetched.</li>
+<li>Inside <em>Benchmark.bm</em> we create a report for each cache, and run <em>100000</em> cache fetches as fast as we can.</li>
+</ul>
+<p>It's pretty much that simple.</p>
+
+<p>It should be noted that this isn't a real emualtion of how this code will preform in production, but it should make it pretty clear which is faster and possible surface any gross inefficiencies.</p>
+
+<p>Now, the results of this test for those that are curious (and to prove it all works):</p>
+
+<blockquote><p>Note: this was run on a Debian virtual host with 8 cores.</p></blockquote>
+
+<pre class="twilight">      user       system    total       real
+disk  6.130000   2.180000   8.310000 (  8.501748)
+mong  29.650000  4.150000  33.800000 ( 49.266912)
+memc  2.330000   2.720000   5.050000 (  9.508415)
+</pre>
+
+<p>Okay, now what are our takeaway from this. <a href="/mongocached-simple-cache-using-mongodb">Mongocached</a> is quite a bit slower with reads, while <a href="/diskcached-simple-disk-cacheing-for-ruby">Diskcached</a> and <a href="http://memcached.org/">Memcached</a> are about the same.</p>
+
+<h3>Closing</h3>
+
+<p>This is my little write up on how I benchmark. I would love comments and feedback from those who know more about it. I'm always down to learn.</p>
+
+<p>Also, I have a template I use for benchmarking small samples of code in a gist -- I call it my <a href="https://gist.github.com/3157875">Benchmark A/B Test Suite</a> -- enjoy!</p>
+    <hr class="article_seperator">
+<header><h2>Articles on Benchmarking in Ruby</h2>
+    </header><div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/ruby-methods-vs-regex">'starts_with?', 'end_with?' and 'include?' vs. RegExp</a>
+    </h2>
+  </header><p>A co-worker of mine pointed out today that using Ruby's native methods for string matching is actually faster then using regular expressions. This was hard for me to believe to so I benchmarked them.</p>
+
+<h3>Setup the <a href="http://www.ruby-doc.org/stdlib-1.9.3/libdoc/benchmark/rdoc/Benchmark.html">Benchmark</a>
+</h3>
+
+<pre class="twilight">[<span class="Constant">1</span>] <span class="Entity">pry</span>(main)<span class="Keyword">&gt;</span> <span class="Keyword">require</span> <span class="String"><span class="String">'</span>benchmark<span class="String">'</span></span>
+=&gt; <span class="Constant">true</span>
+[<span class="Constant">2</span>] <span class="Entity">pry</span>(main)<span class="Keyword">&gt;</span> test_string <span class="Keyword">=</span> <span class="String"><span class="String">"</span>/foo/bar/bah/bing<span class="String">"</span></span>
+=&gt; <span class="String"><span class="String">"</span>/foo/bar/bah/bing<span class="String">"</span></span>
+</pre>
+
+<h3><a href="http://www.ruby-doc.org/core-1.9.3/String.html#method-i-start_with-3F">String#starts_with?</a></h3>
+
+<pre class="twilight">[<span class="Constant">3</span>] <span class="Entity">pry</span>(main)<span class="Keyword">&gt;</span> <span class="Support">Benchmark</span>.<span class="Entity">realtime</span> { (<span class="Constant">1</span>..<span class="Constant">10000</span>).<span class="Entity">to_a</span>.<span class="Entity">each</span> { <span class="StringRegexp"><span class="StringRegexp">%r{</span>^/foo<span class="StringRegexp">}</span></span>.<span class="Entity">match</span>(test_string) } }
+=&gt; <span class="Constant">0.009987447</span>
+[<span class="Constant">4</span>] <span class="Entity">pry</span>(main)<span class="Keyword">&gt;</span> <span class="Support">Benchmark</span>.<span class="Entity">realtime</span> { (<span class="Constant">1</span>..<span class="Constant">10000</span>).<span class="Entity">to_a</span>.<span class="Entity">each</span> { test_string.<span class="Entity">start_with?</span>(<span class="String"><span class="String">"</span>foo<span class="String">"</span></span>) } }
+=&gt; <span class="Constant">0.003103276</span>
+</pre>
+
+<h3><a href="http://www.ruby-doc.org/core-1.9.3/String.html#method-i-end_with-3F">String#end_with?</a></h3>
+
+<pre class="twilight">[<span class="Constant">5</span>] <span class="Entity">pry</span>(main)<span class="Keyword">&gt;</span> <span class="Support">Benchmark</span>.<span class="Entity">realtime</span> { (<span class="Constant">1</span>..<span class="Constant">10000</span>).<span class="Entity">to_a</span>.<span class="Entity">each</span> { <span class="StringRegexp"><span class="StringRegexp">%r{</span>bing$<span class="StringRegexp">}</span></span>.<span class="Entity">match</span>(test_string) } }
+=&gt; <span class="Constant">0.015837275</span>
+[<span class="Constant">6</span>] <span class="Entity">pry</span>(main)<span class="Keyword">&gt;</span> <span class="Support">Benchmark</span>.<span class="Entity">realtime</span> { (<span class="Constant">1</span>..<span class="Constant">10000</span>).<span class="Entity">to_a</span>.<span class="Entity">each</span> { test_string.<span class="Entity">end_with?</span>(<span class="String"><span class="String">"</span>bing<span class="String">"</span></span>) } }
+=&gt; <span class="Constant">0.005633547</span>
+</pre>
+
+<h3><a href="http://www.ruby-doc.org/core-1.9.3/String.html#method-i-include-3F">String#include?</a></h3>
+
+<pre class="twilight">[<span class="Constant">7</span>] <span class="Entity">pry</span>(main)<span class="Keyword">&gt;</span> <span class="Support">Benchmark</span>.<span class="Entity">realtime</span> { (<span class="Constant">1</span>..<span class="Constant">10000</span>).<span class="Entity">to_a</span>.<span class="Entity">each</span> { <span class="StringRegexp"><span class="StringRegexp">%r{</span>^.*bar.*$<span class="StringRegexp">}</span></span>.<span class="Entity">match</span>(test_string) } }
+=&gt; <span class="Constant">0.025630178</span>
+[<span class="Constant">8</span>] <span class="Entity">pry</span>(main)<span class="Keyword">&gt;</span> <span class="Support">Benchmark</span>.<span class="Entity">realtime</span> { (<span class="Constant">1</span>..<span class="Constant">10000</span>).<span class="Entity">to_a</span>.<span class="Entity">each</span> { test_string.<span class="Entity">include?</span>(<span class="String"><span class="String">"</span>bar<span class="String">"</span></span>) } }
+=&gt; <span class="Constant">0.010360719</span>
+</pre>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-11-14T22:30:00+00:00" pubdate>14 November 2012</time>
+      in
+      <a href="http://mervine.net/benchmarking-in-ruby">Benchmarking in Ruby</a>,
+      <a href="http://mervine.net/ruby">Ruby</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/hacks/quick-benchmarking-one-liner">Quick Benchmarking One Liner</a>
+    </h2>
+  </header><p>This is useful when you're quickly trying to decide between two methods of performing an action.</p>
+
+<pre class="twilight">[<span class="Constant">1</span>] <span class="Entity">pry</span>(main)<span class="Keyword">&gt;</span> u <span class="Keyword">=</span> <span class="String"><span class="String">"</span>/foo/bar/<span class="String">"</span></span>
+=&gt; <span class="String"><span class="String">"</span>/foo/bar/<span class="String">"</span></span>
+[<span class="Constant">2</span>] <span class="Entity">pry</span>(main)<span class="Keyword">&gt;</span> <span class="Support">Benchmark</span>.<span class="Entity">realtime</span> { u.<span class="Entity">split</span>(<span class="String"><span class="String">"</span>/<span class="String">"</span></span>).<span class="Entity">join</span>(<span class="String"><span class="String">"</span>::<span class="String">"</span></span>) } <span class="Keyword">&gt;</span> <span class="Support">Benchmark</span>.<span class="Entity">realtime</span> { u.<span class="Entity">gsub</span>(<span class="String"><span class="String">"</span>/<span class="String">"</span></span>, <span class="String"><span class="String">"</span>::<span class="String">"</span></span>).<span class="Entity">gsub</span>(<span class="StringRegexp"><span class="StringRegexp">/</span></span><span class="StringRegexp">::$</span><span class="StringRegexp"><span class="StringRegexp">/</span></span>, <span class="String"><span class="String">"</span><span class="String">"</span></span>) }
+=&gt; <span class="Constant">false</span>
+[<span class="Constant">3</span>] <span class="Entity">pry</span>(main)<span class="Keyword">&gt;</span> u.<span class="Entity">split</span>(<span class="String"><span class="String">"</span>/<span class="String">"</span></span>).<span class="Entity">join</span>(<span class="String"><span class="String">"</span>::<span class="String">"</span></span>)
+=&gt; <span class="String"><span class="String">"</span>::foo::bar<span class="String">"</span></span>
+[<span class="Constant">4</span>] <span class="Entity">pry</span>(main)<span class="Keyword">&gt;</span> u.<span class="Entity">gsub</span>(<span class="String"><span class="String">"</span>/<span class="String">"</span></span>, <span class="String"><span class="String">"</span>::<span class="String">"</span></span>).<span class="Entity">gsub</span>(<span class="StringRegexp"><span class="StringRegexp">/</span></span><span class="StringRegexp">::$</span><span class="StringRegexp"><span class="StringRegexp">/</span></span>, <span class="String"><span class="String">"</span><span class="String">"</span></span>)
+=&gt; <span class="String"><span class="String">"</span>::foo::bar<span class="String">"</span></span>
+</pre>
+
+<p>As you can see, the first method <code>u.split("/").join("::")</code> is faster.</p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-11-13T20:00:00+00:00" pubdate>13 November 2012</time>
+      in
+      <a href="http://mervine.net/benchmarking-in-ruby">Benchmarking in Ruby</a>,
+      <a href="http://mervine.net/ruby">Ruby</a>
+    </p>
+  </footer>
+</div>
+    <footer><p class="meta">
+        Published
+        on
+        <time datetime="2012-07-21T21:39:00+00:00" pubdate>21 July 2012</time>
+        in
+        <a href="http://mervine.net/ruby">Ruby</a>
+      </p>
+    </footer><hr class="article_seperator">
+<br><div id="disqus_thread">
+      <script async src="http://rubyops.disqus.com/embed.js" type="text/javascript"></script><noscript>
+        <a href="http://rubyops.disqus.com/embed.js?url=ref">View comments.</a>
+      </noscript>
+    </div>
+  </div>
+</div>
+        </div>
+        <div class="col-md-3 visible-md visible-lg">
+          <div class="sidebar-nav">
+              <ul class="share-buttons">
+<li>
+                  <a href="https://www.facebook.com/sharer/sharer.php?u=http://mervine.net/benchmarking-in-ruby" target="_blank">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Facebook.png"></a>
+                </li>
+                <li>
+                  <a href="https://twitter.com/intent/tweet?url=http://mervine.net/benchmarking-in-ruby&amp;text=Benchmarking%20in%20Ruby%20-%20&amp;via=mervinej" target="_blank" title="Tweet">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Twitter.png"></a>
+                </li>
+                <li>
+                  <a href="https://plus.google.com/share?url=http://mervine.net/benchmarking-in-ruby" target="_blank" title="Share on Google+">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Google.png"></a>
+                </li>
+                <li>
+                  <a href="http://www.reddit.com/submit?url=http://mervine.net/benchmarking-in-ruby&amp;title=Benchmarking%20in%20Ruby" target="_blank" title="Submit to Reddit">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Reddit.png"></a>
+                </li>
+                <li>
+                  <a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=http://mervine.net/benchmarking-in-ruby&amp;title=Benchmarking%20in%20Ruby&amp;source=http://mervine.net/benchmarking-in-ruby" target="_blank" title="Share on LinkedIn">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/LinkedIn.png"></a>
+                </li>
+              </ul>
+<div class="list-group">
+<a class="list-group-item active" href="http://joshua.mervine.net/">
+                  <h4 class="list-group-item-heading">Joshua P. Mervine</h4>
+                </a><a class="list-group-item" href="http://twitter.com/mervinej">Twitter</a>
+            <a class="list-group-item" href="http://linkedin.com/in/mervinej">Linkedin</a>
+            <a class="list-group-item" href="http://github.com/jmervine">Github</a>
+            <a class="list-group-item" href="http://www.gittip.com/jmervine">Gittip</a>
+              </div>
+            </div>
+        </div>
+      </div>
+      <center>
+        <br><div id="footer">
+            <div class="container">
+              <p class="muted credit">
+                Powered by Nesta, a
+                <a href="http://nestacms.com">Ruby CMS</a>.
+              </p>
+            </div>
+          </div>
+      </center>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script><script async src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js" type="text/javascript"></script><script>
+      var searchElement = 'input[name=q]';
+    </script><script async src="//cdn.jsdelivr.net/jquery.webpage-vim/0.1/vim.min.js" type="text/javascript"></script><script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-32343843-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+      </script>
+</body>
+</html>

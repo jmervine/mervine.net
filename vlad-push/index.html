@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta content="[Vlad](http://rubyhitsquad.com/Vlad_the_Deployer.html) is a simple [Rake](http://rake.rubyforge.org/) based deployment tool, similar to [Capistrano](http://capify.org), which allows for easily managing code deployments on multiple servers and various environments. I'm not going to take a deep dive in to Vlad here and now, but you can [learn more about it here](http://docs.seattlerb.org/vlad/doco/getting_started_txt.html)." name="description">
+<meta content="rake, ruby, vlad pushvlad push" name="keywords">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="" name="author">
+<link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/spacelab/bootstrap.min.css" media="screen" rel="stylesheet">
+<link href="//cdn.mervine.net/bootstrap/master.css" media="screen" rel="stylesheet">
+<!--[if lte IE 6]>
+      <link href='http://universal-ie6-css.googlecode.com/files/ie6.1.1.css' media='screen, projection' rel='stylesheet'>
+    <![endif]--><!--[if lt IE 9]>
+      <script src='//html5shim.googlecode.com/svn/trunk/html5.js'></script>
+    <![endif]--><link href="/articles.xml" rel="alternate" type="application/atom+xml">
+<link href="//cdn.mervine.net/bootstrap/favicon.ico" rel="shortcut icon">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon.png" rel="apple-touch-icon">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon-72x72.png" rel="apple-touch-icon" sizes="72x72">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon-114x114.png" rel="apple-touch-icon" sizes="114x114">
+<title>vlad-push</title>
+</head>
+<body style="padding-top: 10px !important">
+    <div class="container">
+      <div class="navbar navbar-default navbar-top" style="margin-bottom: 0px !important">
+        <div class="navbar-header">
+          <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse" type="button">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Home</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+<li class="">
+              <a href="http://mervine.net/categories">Category List</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/projects">My Projects</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/notes">Notes</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/hacks">Hacks</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/quotes">Quotes</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/archive">Archives</a>
+            </li>
+          </ul>
+<ul class="nav navbar-nav navbar-right visible-xs">
+<li>
+              <a href="http://twitter.com/mervinej">Twitter</a>
+            </li>
+            <li>
+              <a href="http://linkedin.com/in/mervinej">Linkedin</a>
+            </li>
+            <li>
+              <a href="http://github.com/jmervine">Github</a>
+            </li>
+            <li>
+              <a href="http://www.gittip.com/jmervine">Gittip</a>
+            </li>
+          </ul>
+</div>
+      </div>
+      <div class="container">
+        <div class="page-header" style="margin-top: 0px !important;">
+          <img src="http://www.gravatar.com/avatar/ed808193b8c2c8516715816f90a005b2.jpg?s=75" style="padding:5px 15px 15px; float:left"><a href="http://mervine.net/">
+            <h1>mervine.net</h1>
+          </a><small>Lessons learned, code written, hacks, etc.</small>
+        </div>
+      </div>
+      <div class="container">
+        <div class="col-sm-12 col-md-9">
+          <div class="page_content container">
+  <div class="page_content">
+    <h1>vlad-push</h1>
+
+<h3>Intro</h3>
+
+<p><a href="http://rubyhitsquad.com/Vlad_the_Deployer.html">Vlad</a> is a simple <a href="http://rake.rubyforge.org/">Rake</a> based deployment tool, similar to <a href="http://capify.org">Capistrano</a>, which allows for easily managing code deployments on multiple servers and various environments. I'm not going to take a deep dive in to Vlad here and now, but you can <a href="http://docs.seattlerb.org/vlad/doco/getting_started_txt.html">learn more about it here</a>.</p>
+
+<p>Vlad is designed around the idea of deploying from an SCM -- svn by default, but it also support <a href="http://github.com">git</a> through a nice plugin (<a href="https://github.com/jbarnette/vlad-git">vlad-git</a>).  Some time back, I ran in to an issue where I was trying to deploy to an AWS cluster from a firewalled repo and opening it was not an option. Thus <a href="http://jmervine.github.com/vlad-push/doc/index.html">vlad-push</a> was born.</p>
+
+<h3>vlad-push</h3>
+
+<p><em>vlad-push</em> allows for deploying via Vlad sans SCM. And it's fairly simple. I takes your local code, wraps it up and pushes it to the remote server(s).</p>
+
+<h3>Installation</h3>
+
+<p>To install <em>vlad-push</em>, just install the gem. It will (of course) install Vlad if it isn't already installed.</p>
+
+<pre class="twilight">gem install vlad-push
+</pre>
+
+<p>If installing via <a href="http://gembundler.com/">Bundler</a>, I recomment that you also ':require =&gt; false', as I've heard reports that Bundler's auto require "feature" can sometime mess things up.</p>
+
+<pre class="twilight"><span class="Comment"><span class="Comment">#</span> file: Gemfile</span>
+source <span class="Constant"><span class="Constant">:</span>rubygems</span>
+group <span class="Constant"><span class="Constant">:</span>deployment</span> <span class="Keyword">do</span>
+  gem <span class="String"><span class="String">'</span>rake<span class="String">'</span></span>
+  gem <span class="String"><span class="String">'</span>vlad<span class="String">'</span></span>, <span class="Constant"><span class="Constant">:</span>require</span> =&gt; <span class="Constant">false</span>
+  gem <span class="String"><span class="String">'</span>vlad-push<span class="String">'</span></span>, <span class="Constant"><span class="Constant">:</span>require</span> =&gt; <span class="Constant">false</span>
+<span class="Keyword">end</span>
+</pre>
+
+<p>I'm also including Rake in there, but Vlad should take care of that for you via it's dependancies if you don't include it.</p>
+
+<h3>Configuration</h3>
+
+<p>Once installed, there are a few configuration steps, above and beyond Vlad's configuration. For the purpose of this post, I'm going to assume that you've already followed Vlad's instructions and configured you servers accordingly.</p>
+
+<p>To make Vlad and <em>vlad-push</em> available to Rake, you'll need to set up your Rakefile accordingly.</p>
+
+<p>In it's simplest form, you would want to add this:</p>
+
+<pre class="twilight"><span class="Comment"><span class="Comment">#</span> file: &lt;APP_ROOT&gt;/Rakefile</span>
+<span class="Keyword">require</span> <span class="String"><span class="String">'</span>vlad<span class="String">'</span></span>
+<span class="Support">Vlad</span>.<span class="Entity">load</span>(<span class="Constant"><span class="Constant">:</span>scm</span> =&gt; <span class="Constant"><span class="Constant">:</span>push</span>)
+<span class="Comment"><span class="Comment">#</span> ':scm =&gt; :push' tells Vlad to use vlad-push.</span>
+</pre>
+
+<p>If you want to be safer, and more importantly allow Rake to work without Vlad (and <em>push</em>) installed you'll want to do the following.</p>
+
+<pre class="twilight"><span class="Comment"><span class="Comment">#</span> file: &lt;APP_ROOT&gt;/Rakefile</span>
+<span class="Keyword">begin</span>
+  <span class="Keyword">require</span> <span class="String"><span class="String">'</span>vlad<span class="String">'</span></span>
+  <span class="Support">Vlad</span>.<span class="Entity">load</span>(<span class="Constant"><span class="Constant">:</span>scm</span> =&gt; <span class="Constant"><span class="Constant">:</span>push</span>)
+<span class="Keyword">rescue</span> <span class="Variable">LoadError</span>
+<span class="Comment">  <span class="Comment">#</span> do nothing</span>
+<span class="Keyword">end</span>
+</pre>
+
+<p>Either one of these two blocks will surface Vlad and <em>vlad-push</em> tasks within Rake.</p>
+
+<pre class="twilight">$ bundle exec rake -T vlad
+rake vlad:cleanup         # Clean up old releases.
+rake vlad:create_extract  # Built the extracted tarball to be pushed from the CWD
+rake vlad:debug           # Show the vlad setup.
+rake vlad:deploy          # Runs push and update / deploy
+rake vlad:invoke          # Invoke a single command on every remote server.
+rake vlad:migrate         # Run the migrate rake task for the the app.
+rake vlad:push            # Push current working directory to remote servers.
+rake vlad:push_cleanup    # Clean up archive files created by push.
+rake vlad:rollback        # Rolls back to a previous version and restarts.
+rake vlad:setup           # Setup your servers.
+rake vlad:setup_app       # Prepares application servers for deployment.
+rake vlad:start           # (Re)Start the web and app servers
+rake vlad:start_app       # (Re)Start the app servers
+rake vlad:start_web       # (Re)Start the web servers
+rake vlad:stop            # Stop the web and app servers
+rake vlad:stop_app        # Stop the app servers
+rake vlad:stop_web        # Stop the web servers
+rake vlad:update          # Updates your application server to the latest revision.
+</pre>
+
+<p>If you output looks like the above, you've correctly setup Vlad and vlad-push.</p>
+
+<p>At this point, you can run <em>rake vlad:push</em> with no additional configurations, however, there are a few default options that you may want to overwrite in your deploy.rb.</p>
+
+<pre class="twilight"><span class="Comment"><span class="Comment">#</span> file: &lt;APP_ROOT&gt;/config/deploy.rb</span>
+<span class="Comment"><span class="Comment">#</span></span>
+<span class="Comment"><span class="Comment">#</span> These are the defaults:</span>
+<span class="Comment"><span class="Comment">#</span></span>
+<span class="Comment"><span class="Comment">#</span> set :repository,    "/tmp/repo"</span>
+<span class="Comment"><span class="Comment">#</span> set :extract_dir,   "/tmp"</span>
+<span class="Comment"><span class="Comment">#</span> set :extract_file,  "vlad-push-extract-#{release_name}.tgz"</span>
+</pre>
+
+<h3>Usage</h3>
+
+<p>If you're familar with Vlad, the usage is almost identical, when setting up from scratch you would run the following, in order:</p>
+
+<pre class="twilight">$ rake vlad:setup
+$ rake vlad:push
+$ rake vlad:update
+$ rake vlad:start_app
+</pre>
+
+<p>Additionally, I have included a <em>vlad:deploy</em> task, which pushes and updates in one step.</p>
+
+<pre class="twilight">$ rake vlad:deploy
+</pre>
+
+<p>That's it, you're done. I'm done. Enjoy.</p>
+
+<h3>Resources</h3>
+
+<ul>
+<li><a href="https://github.com/jmervine/vlad-push">Fork on Github</a></li>
+<li><a href="http://jmervine.github.com/vlad-push/doc/index.html">API Documentation</a></li>
+<li><a href="https://rubygems.org/gems/vlad-push"><em>vlad-push</em> on RubyGems.org</a></li>
+</ul>
+<hr class="article_seperator">
+<header><h2>Articles on vlad-push</h2>
+    </header><div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/vlad-push">vlad-push</a>
+    </h2>
+  </header><p><a href="http://rubyhitsquad.com/Vlad_the_Deployer.html">Vlad</a> is a simple <a href="http://rake.rubyforge.org/">Rake</a> based deployment tool, similar to <a href="http://capify.org">Capistrano</a>, which allows for easily managing code deployments on multiple servers and various environments. I'm not going to take a deep dive in to Vlad here and now, but you can <a href="http://docs.seattlerb.org/vlad/doco/getting_started_txt.html">learn more about it here</a>.</p>
+  <p class="read_more">
+    <a href="http://mervine.net/vlad-push">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-05-31T15:20:00+00:00" pubdate>31 May 2012</time>
+      in
+      <a href="http://mervine.net/rake">Rake</a>,
+      <a href="http://mervine.net/ruby">Ruby</a>,
+      <a href="http://mervine.net/vlad-push">vlad-push</a>
+    </p>
+  </footer>
+</div>
+    <footer><p class="meta">
+        Published
+        on
+        <time datetime="2012-05-31T15:20:00+00:00" pubdate>31 May 2012</time>
+        in
+        <a href="http://mervine.net/rake">Rake</a>,
+        <a href="http://mervine.net/ruby">Ruby</a>,
+        <a href="http://mervine.net/vlad-push">vlad-push</a>
+      </p>
+    </footer><hr class="article_seperator">
+<br><div id="disqus_thread">
+      <script async src="http://rubyops.disqus.com/embed.js" type="text/javascript"></script><noscript>
+        <a href="http://rubyops.disqus.com/embed.js?url=ref">View comments.</a>
+      </noscript>
+    </div>
+  </div>
+</div>
+        </div>
+        <div class="col-md-3 visible-md visible-lg">
+          <div class="sidebar-nav">
+              <ul class="share-buttons">
+<li>
+                  <a href="https://www.facebook.com/sharer/sharer.php?u=http://mervine.net/vlad-push" target="_blank">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Facebook.png"></a>
+                </li>
+                <li>
+                  <a href="https://twitter.com/intent/tweet?url=http://mervine.net/vlad-push&amp;text=vlad-push%20-%20&amp;via=mervinej" target="_blank" title="Tweet">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Twitter.png"></a>
+                </li>
+                <li>
+                  <a href="https://plus.google.com/share?url=http://mervine.net/vlad-push" target="_blank" title="Share on Google+">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Google.png"></a>
+                </li>
+                <li>
+                  <a href="http://www.reddit.com/submit?url=http://mervine.net/vlad-push&amp;title=vlad-push" target="_blank" title="Submit to Reddit">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Reddit.png"></a>
+                </li>
+                <li>
+                  <a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=http://mervine.net/vlad-push&amp;title=vlad-push&amp;source=http://mervine.net/vlad-push" target="_blank" title="Share on LinkedIn">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/LinkedIn.png"></a>
+                </li>
+              </ul>
+<div class="list-group">
+<a class="list-group-item active" href="http://joshua.mervine.net/">
+                  <h4 class="list-group-item-heading">Joshua P. Mervine</h4>
+                </a><a class="list-group-item" href="http://twitter.com/mervinej">Twitter</a>
+            <a class="list-group-item" href="http://linkedin.com/in/mervinej">Linkedin</a>
+            <a class="list-group-item" href="http://github.com/jmervine">Github</a>
+            <a class="list-group-item" href="http://www.gittip.com/jmervine">Gittip</a>
+              </div>
+            </div>
+        </div>
+      </div>
+      <center>
+        <br><div id="footer">
+            <div class="container">
+              <p class="muted credit">
+                Powered by Nesta, a
+                <a href="http://nestacms.com">Ruby CMS</a>.
+              </p>
+            </div>
+          </div>
+      </center>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script><script async src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js" type="text/javascript"></script><script>
+      var searchElement = 'input[name=q]';
+    </script><script async src="//cdn.jsdelivr.net/jquery.webpage-vim/0.1/vim.min.js" type="text/javascript"></script><script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-32343843-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+      </script>
+</body>
+</html>

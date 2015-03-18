@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta content="I was recently working on a project to build continuous integration performance tests on an application which makes extensive HTTP based calls to a middleware application. I was running in to issues where the middleware calls were unstable in the test, stage and load test environments. For the purpose of these tests, I was only interested in the render times of the Rails calls. The obvious choice seemed to cache the external HTTP requests. " name="description">
+<meta content="caching, rack, ruby, unicorn" name="keywords">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="" name="author">
+<link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/spacelab/bootstrap.min.css" media="screen" rel="stylesheet">
+<link href="//cdn.mervine.net/bootstrap/master.css" media="screen" rel="stylesheet">
+<!--[if lte IE 6]>
+      <link href='http://universal-ie6-css.googlecode.com/files/ie6.1.1.css' media='screen, projection' rel='stylesheet'>
+    <![endif]--><!--[if lt IE 9]>
+      <script src='//html5shim.googlecode.com/svn/trunk/html5.js'></script>
+    <![endif]--><link href="/articles.xml" rel="alternate" type="application/atom+xml">
+<link href="//cdn.mervine.net/bootstrap/favicon.ico" rel="shortcut icon">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon.png" rel="apple-touch-icon">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon-72x72.png" rel="apple-touch-icon" sizes="72x72">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon-114x114.png" rel="apple-touch-icon" sizes="114x114">
+<title>Caching external HTTP requests with VCR in Rack</title>
+</head>
+<body style="padding-top: 10px !important">
+    <div class="container">
+      <div class="navbar navbar-default navbar-top" style="margin-bottom: 0px !important">
+        <div class="navbar-header">
+          <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse" type="button">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Home</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+<li class="">
+              <a href="http://mervine.net/categories">Category List</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/projects">My Projects</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/notes">Notes</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/hacks">Hacks</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/quotes">Quotes</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/archive">Archives</a>
+            </li>
+          </ul>
+<ul class="nav navbar-nav navbar-right visible-xs">
+<li>
+              <a href="http://twitter.com/mervinej">Twitter</a>
+            </li>
+            <li>
+              <a href="http://linkedin.com/in/mervinej">Linkedin</a>
+            </li>
+            <li>
+              <a href="http://github.com/jmervine">Github</a>
+            </li>
+            <li>
+              <a href="http://www.gittip.com/jmervine">Gittip</a>
+            </li>
+          </ul>
+</div>
+      </div>
+      <div class="container">
+        <div class="page-header" style="margin-top: 0px !important;">
+          <img src="http://www.gravatar.com/avatar/ed808193b8c2c8516715816f90a005b2.jpg?s=75" style="padding:5px 15px 15px; float:left"><a href="http://mervine.net/">
+            <h1>mervine.net</h1>
+          </a><small>Lessons learned, code written, hacks, etc.</small>
+        </div>
+      </div>
+      <div class="container">
+        <div class="col-sm-12 col-md-9">
+          <div class="page_content container">
+  <div class="page_content">
+    <h1>Caching external HTTP requests with VCR in Rack</h1>
+
+<p>I was recently working on a project to build continuous integration performance tests on an application which makes extensive HTTP based calls to a middleware application. I was running in to issues where the middleware calls were unstable in the test, stage and load test environments. For the purpose of these tests, I was only interested in the render times of the Rails calls. The obvious choice seemed to cache the external HTTP requests.</p>
+
+<p><a href="https://www.relishapp.com/myronmarston/vcr/docs">Enter VCR</a>. VCR is a test tool designed to cache external HTTP requests. It uses your favorite mocking tool (<a href="https://github.com/bblimke/webmock">webmock</a>, <a href="http://flexmock.rubyforge.org/">flexmock</a>, etc.) and records HTTP requests and saves them in a YAML (or optionally JSON) file.</p>
+
+<p>I decided to run a standalone instance of the server with a custom Rack config implementing VCR as a caching layer for initial HTTP requests. After a bit of hacking, it turned out to be way simpler then I expected.</p>
+
+<h4>Install VCR and Mock framework</h4>
+
+<p>Along with VCR, I choose webmock, or rather it was choosen for me -- it's the mock framework currently used in the application I work on.</p>
+
+<p>Install VCR</p>
+
+<pre class="twilight">$ gem install vcr
+$ gem install webmock
+</pre>
+
+<p>Or via Gemfile</p>
+
+<pre class="twilight"><span class="Comment"><span class="Comment">#</span> file: &lt;app_root&gt;/Gemfile</span>
+sources <span class="Constant"><span class="Constant">:</span>rubygems</span>
+
+group <span class="Constant"><span class="Constant">:</span>performance</span> <span class="Keyword">do</span>
+  gem <span class="String"><span class="String">'</span>vcr<span class="String">'</span></span>
+  gem <span class="String"><span class="String">'</span>webmock<span class="String">'</span></span>
+<span class="Keyword">end</span>
+</pre>
+
+<h4>Configure Rack</h4>
+
+<p>Next add the following to your Rack config file.</p>
+
+<pre class="twilight"><span class="Comment"><span class="Comment">#</span> file: &lt;app_root&gt;/config.ru</span>
+
+<span class="Comment"><span class="Comment">#</span> only use cache when running performance tests   </span>
+<span class="Keyword">if</span> <span class="Variable">ENV</span>[<span class="String"><span class="String">'</span>RACK_ENV<span class="String">'</span></span>] <span class="Keyword">==</span> <span class="String"><span class="String">"</span>performance<span class="String">"</span></span> 
+  <span class="Keyword">require</span> <span class="String"><span class="String">'</span>vcr<span class="String">'</span></span>
+  <span class="Keyword">require</span> <span class="String"><span class="String">'</span>webmock<span class="String">'</span></span>
+
+<span class="Comment">  <span class="Comment">#</span> configure VCR </span>
+  <span class="Variable">VCR</span>.<span class="Entity">configure</span> <span class="Keyword">do </span>|<span class="Variable">c</span>|
+    c.<span class="Entity">cassette_library_dir</span>  <span class="Keyword">=</span> <span class="String"><span class="String">'</span>./cache/<span class="String">'</span></span> <span class="Comment"><span class="Comment">#</span> where to save cache files</span>
+    c.<span class="Entity">hook_into</span>             <span class="Keyword">=</span> <span class="Constant"><span class="Constant">:</span>webmock</span>   <span class="Comment"><span class="Comment">#</span> select mock framework</span>
+  <span class="Keyword">end</span>
+
+  use <span class="Variable">VCR</span>::<span class="Entity">Middleware</span>::<span class="Entity">Rack</span> <span class="Keyword">do </span>|<span class="Variable">cassette</span>|
+    cassette.<span class="Entity">name</span>     <span class="String"><span class="String">'</span>cassette<span class="String">'</span></span>
+    cassette.<span class="Entity">options</span>  <span class="Constant"><span class="Constant">:</span>record</span> =&gt; <span class="Constant"><span class="Constant">:</span>new_episodes</span>,  <span class="Comment"><span class="Comment">#</span> record only new requests</span>
+                        <span class="Constant"><span class="Constant">:</span>match_requests_on</span> =&gt; [<span class="Constant"><span class="Constant">:</span>host</span>, <span class="Constant"><span class="Constant">:</span>path</span>] 
+<span class="Comment">                                                 <span class="Comment">#</span> define new by host and/or path changes</span>
+  <span class="Keyword">end</span>
+<span class="Keyword">end</span>
+
+... your app config ...
+</pre>
+
+<h4>So what does this record?</h4>
+
+<p>For this example, imagine that your application is making an external call to a service which returns data about a passed keyword. We'll define the host as "example.org" and the URI format as "/q/<keyword>".</keyword></p>
+
+<ol>
+<li>http://example.org/q/food   -- recorded</li>
+<li>http://example.org/q/bar     -- recorded</li>
+<li>http://example.org/q/food   -- from cache</li>
+<li>http://example.org/q/bar     -- from cache</li>
+<li>etc., etc., etc.</li>
+</ol>
+<h3>VCR as a Production Cache</h3>
+
+<p>VCR+Rack can be used in this way, although it could be slow if you're caching a large number of HTTP requests or your cached requests are large themselves.</p>
+
+<p>Also, I would add an expiration to your cache, which is supported in newer version of VCR</p>
+
+<p>While this is untested, it should look something like this.</p>
+
+<pre class="twilight"><span class="Comment"><span class="Comment">#</span> file: &lt;app_root&gt;/config.ru</span>
+
+<span class="Keyword">require</span> <span class="String"><span class="String">'</span>vcr<span class="String">'</span></span>
+<span class="Keyword">require</span> <span class="String"><span class="String">'</span>webmock<span class="String">'</span></span>
+<span class="Variable">VCR</span>.<span class="Entity">configure</span> <span class="Keyword">do </span>|<span class="Variable">c</span>|
+  c.<span class="Entity">cassette_library_dir</span>  <span class="Keyword">=</span> <span class="String"><span class="String">'</span>./cache/<span class="String">'</span></span>
+  c.<span class="Entity">hook_into</span>             <span class="Keyword">=</span> <span class="Constant"><span class="Constant">:</span>webmock</span>
+<span class="Keyword">end</span>
+use <span class="Variable">VCR</span>::<span class="Entity">Middleware</span>::<span class="Entity">Rack</span> <span class="Keyword">do </span>|<span class="Variable">cassette</span>|
+  cassette.<span class="Entity">name</span>     <span class="String"><span class="String">'</span>cassette<span class="String">'</span></span>
+  cassette.<span class="Entity">option</span>   <span class="Constant"><span class="Constant">:</span>record</span> =&gt; <span class="Constant"><span class="Constant">:</span>new_episodes</span>,  
+                      <span class="Constant"><span class="Constant">:</span>re_record_interval</span> =&gt; <span class="Constant">5</span>.<span class="Entity">minutes</span>, <span class="Comment"><span class="Comment">#</span> expire every 5 minutes</span>
+                      <span class="Constant"><span class="Constant">:</span>match</span>,requests_on =&gt; [<span class="Constant"><span class="Constant">:</span>host</span>, <span class="Constant"><span class="Constant">:</span>path</span>]
+<span class="Keyword">end</span>
+
+... your app config ...
+</pre>
+
+<p>The primary issue with this is that all cached requests are stored in a YAML file as a serialized HTTP objects. This can be quite large. If you're making many different quests and/or the results are large, the cache file can quickly become unwieldy (I've seen 150K line YAML files) and the parse time can actually take a while. Use this solution at your own risk and performance test with and without a full cache before putting it in a production environment.</p>
+
+<p>Enjoy!</p>
+    <footer><p class="meta">
+        Published
+        on
+        <time datetime="2012-06-04T15:50:00+00:00" pubdate>04 June 2012</time>
+        in
+        <a href="http://mervine.net/caching">Caching</a>,
+        <a href="http://mervine.net/rack">Rack</a>,
+        <a href="http://mervine.net/ruby">Ruby</a>,
+        <a href="http://mervine.net/unicorn">Unicorn</a>
+      </p>
+    </footer><hr class="article_seperator">
+<br><div id="disqus_thread">
+      <script async src="http://rubyops.disqus.com/embed.js" type="text/javascript"></script><noscript>
+        <a href="http://rubyops.disqus.com/embed.js?url=ref">View comments.</a>
+      </noscript>
+    </div>
+  </div>
+</div>
+        </div>
+        <div class="col-md-3 visible-md visible-lg">
+          <div class="sidebar-nav">
+              <ul class="share-buttons">
+<li>
+                  <a href="https://www.facebook.com/sharer/sharer.php?u=http://mervine.net/caching-external-http-requests-with-vcr-in-rack" target="_blank">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Facebook.png"></a>
+                </li>
+                <li>
+                  <a href="https://twitter.com/intent/tweet?url=http://mervine.net/caching-external-http-requests-with-vcr-in-rack&amp;text=Caching%20external%20HTTP%20requests%20with%20VCR%20in%20Rack%20-%20&amp;via=mervinej" target="_blank" title="Tweet">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Twitter.png"></a>
+                </li>
+                <li>
+                  <a href="https://plus.google.com/share?url=http://mervine.net/caching-external-http-requests-with-vcr-in-rack" target="_blank" title="Share on Google+">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Google.png"></a>
+                </li>
+                <li>
+                  <a href="http://www.reddit.com/submit?url=http://mervine.net/caching-external-http-requests-with-vcr-in-rack&amp;title=Caching%20external%20HTTP%20requests%20with%20VCR%20in%20Rack" target="_blank" title="Submit to Reddit">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Reddit.png"></a>
+                </li>
+                <li>
+                  <a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=http://mervine.net/caching-external-http-requests-with-vcr-in-rack&amp;title=Caching%20external%20HTTP%20requests%20with%20VCR%20in%20Rack&amp;source=http://mervine.net/caching-external-http-requests-with-vcr-in-rack" target="_blank" title="Share on LinkedIn">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/LinkedIn.png"></a>
+                </li>
+              </ul>
+<div class="list-group">
+<a class="list-group-item active" href="http://joshua.mervine.net/">
+                  <h4 class="list-group-item-heading">Joshua P. Mervine</h4>
+                </a><a class="list-group-item" href="http://twitter.com/mervinej">Twitter</a>
+            <a class="list-group-item" href="http://linkedin.com/in/mervinej">Linkedin</a>
+            <a class="list-group-item" href="http://github.com/jmervine">Github</a>
+            <a class="list-group-item" href="http://www.gittip.com/jmervine">Gittip</a>
+              </div>
+            </div>
+        </div>
+      </div>
+      <center>
+        <br><div id="footer">
+            <div class="container">
+              <p class="muted credit">
+                Powered by Nesta, a
+                <a href="http://nestacms.com">Ruby CMS</a>.
+              </p>
+            </div>
+          </div>
+      </center>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script><script async src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js" type="text/javascript"></script><script>
+      var searchElement = 'input[name=q]';
+    </script><script async src="//cdn.jsdelivr.net/jquery.webpage-vim/0.1/vim.min.js" type="text/javascript"></script><script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-32343843-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+      </script>
+</body>
+</html>

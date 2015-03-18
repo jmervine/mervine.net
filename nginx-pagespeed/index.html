@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta content="The guys at [Google Pagespeed](https://developers.google.com/speed/pagespeed/) are working diligently on [`ngx_pagespeed`](https://developers.google.com/speed/pagespeed/ngx), I installed and configured it and saw immediate performance gains." name="description">
+<meta content="nginx" name="keywords">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="" name="author">
+<link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/spacelab/bootstrap.min.css" media="screen" rel="stylesheet">
+<link href="//cdn.mervine.net/bootstrap/master.css" media="screen" rel="stylesheet">
+<!--[if lte IE 6]>
+      <link href='http://universal-ie6-css.googlecode.com/files/ie6.1.1.css' media='screen, projection' rel='stylesheet'>
+    <![endif]--><!--[if lt IE 9]>
+      <script src='//html5shim.googlecode.com/svn/trunk/html5.js'></script>
+    <![endif]--><link href="/articles.xml" rel="alternate" type="application/atom+xml">
+<link href="//cdn.mervine.net/bootstrap/favicon.ico" rel="shortcut icon">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon.png" rel="apple-touch-icon">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon-72x72.png" rel="apple-touch-icon" sizes="72x72">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon-114x114.png" rel="apple-touch-icon" sizes="114x114">
+<title>Pagespeed Module for Nginx</title>
+</head>
+<body style="padding-top: 10px !important">
+    <div class="container">
+      <div class="navbar navbar-default navbar-top" style="margin-bottom: 0px !important">
+        <div class="navbar-header">
+          <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse" type="button">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Home</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+<li class="">
+              <a href="http://mervine.net/categories">Category List</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/projects">My Projects</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/notes">Notes</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/hacks">Hacks</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/quotes">Quotes</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/archive">Archives</a>
+            </li>
+          </ul>
+<ul class="nav navbar-nav navbar-right visible-xs">
+<li>
+              <a href="http://twitter.com/mervinej">Twitter</a>
+            </li>
+            <li>
+              <a href="http://linkedin.com/in/mervinej">Linkedin</a>
+            </li>
+            <li>
+              <a href="http://github.com/jmervine">Github</a>
+            </li>
+            <li>
+              <a href="http://www.gittip.com/jmervine">Gittip</a>
+            </li>
+          </ul>
+</div>
+      </div>
+      <div class="container">
+        <div class="page-header" style="margin-top: 0px !important;">
+          <img src="http://www.gravatar.com/avatar/ed808193b8c2c8516715816f90a005b2.jpg?s=75" style="padding:5px 15px 15px; float:left"><a href="http://mervine.net/">
+            <h1>mervine.net</h1>
+          </a><small>Lessons learned, code written, hacks, etc.</small>
+        </div>
+      </div>
+      <div class="container">
+        <div class="col-sm-12 col-md-9">
+          <div class="page_content container">
+  <div class="page_content">
+    <h1>Pagespeed Module for Nginx</h1>
+
+<blockquote><p>Perhaps I should have called the post "Client Side Performance Optimization for Server Side Nerds." ;)<br>— Joshua Mervine <a href="https://twitter.com/mervinej/statuses/351429588766818305">(@mervinej) June 30, 2013</a></p></blockquote>
+
+<p>The guys at <a href="https://developers.google.com/speed/pagespeed/">Google Pagespeed</a> are working diligently on <a href="https://developers.google.com/speed/pagespeed/ngx"><code>ngx_pagespeed</code></a>...</p>
+
+<blockquote><p>ngx_pagespeed speeds up your site and reduces page load time. This open-source <a href="/nginx">nginx</a> server module automatically applies <a href="https://developers.google.com/speed/docs/best-practices/rules_intro">web performance best practices</a> to pages, and associated assets (CSS, JavaScript, images) without requiring that you modify your existing content or workflow.</p></blockquote>
+
+<p>Yesterday I included it in my <a href="/nginx">nginx</a> configurations for <a href="http://mervine.net">mervine.net</a> to give it try. This post is not about how to build and install this module. <a href="https://github.com/pagespeed/ngx_pagespeed#readme">Google's documentation is perfect.</a> This post is about how I chose to configure <code>ngx_pagespeed</code> and the immediate performance gains I saw.</p>
+
+<h3>My Configuration</h3>
+
+<p>After spending about an hour reading through the <a href="https://developers.google.com/speed/pagespeed/module/filters">various filters for <code>ngx_pagespeed</code></a>, I settled on the following configuration:</p>
+
+<pre class="twilight"><span class="Comment"><span class="Comment">#</span> file: nginx.conf</span>
+<span class="Comment"><span class="Comment">#</span> ...</span>
+http {
+    <span class="Comment"><span class="Comment">#</span> ...</span>
+    pagespeed on<span class="Keyword">;</span>
+    pagespeed FileCachePath /var/ngx_pagespeed_cache<span class="Keyword">;</span>
+    pagespeed MaxSegmentLength 250<span class="Keyword">;</span>
+    pagespeed Domain mervine.net<span class="Keyword">;</span>
+    pagespeed Domain *.mervine.net<span class="Keyword">;</span>
+
+    pagespeed AnalyticsID UA-NNNNNNNN-N<span class="Keyword">;</span>
+
+    pagespeed EnableFilters collapse_whitespace,
+                            insert_ga,
+                            combine_css,
+                            inline_css,
+                            combine_javascript,
+                            inline_javascript,
+                            insert_dns_prefetch,
+                            rewrite_domains,
+                            elide_attributes,
+                            rewrite_javascript,
+                            recompress_images,
+                            remove_quotes,
+                            rewrite_css,
+                            rewrite_style_attributes,
+                            extend_cache,
+                            convert_meta_tags,
+                            defer_javascript,
+                            lazyload_images,
+                            trim_urls,
+                            rewrite_images<span class="Keyword">;</span>
+        <span class="Comment"><span class="Comment">#</span> NOTE: The above need to be on the same line. I</span>
+        <span class="Comment"><span class="Comment">#</span>       broke them out to be easier to read.</span>
+
+    <span class="Comment"><span class="Comment">#</span> ...</span>
+    server {
+        <span class="Comment"><span class="Comment">#</span> ...</span>
+        <span class="Comment"><span class="Comment">#</span> I'm not currently using all of these, but added them</span>
+        <span class="Comment"><span class="Comment">#</span> because they're called out in the docs and they don't</span>
+        <span class="Comment"><span class="Comment">#</span> cause any noteworthy overhead by being here.</span>
+        location <span class="Keyword">~</span> <span class="String"><span class="String">"</span>\.pagespeed\.([a-z]\.)?[a-z]{2}\.[^.]{10}\.[^.]+<span class="String">"</span></span> { add_header <span class="String"><span class="String">"</span><span class="String">"</span></span> <span class="String"><span class="String">"</span><span class="String">"</span></span><span class="Keyword">;</span> }
+        location <span class="Keyword">~</span> <span class="String"><span class="String">"</span>^/ngx_pagespeed_static/<span class="String">"</span></span> { }
+        location <span class="Keyword">~</span> <span class="String"><span class="String">"</span>^/ngx_pagespeed_beacon$<span class="String">"</span></span> { }
+        location /ngx_pagespeed_statistics { allow 127.0.0.1<span class="Keyword">;</span> deny all<span class="Keyword">;</span> }
+        location /ngx_pagespeed_message { allow 127.0.0.1<span class="Keyword">;</span> deny all<span class="Keyword">;</span> }
+        <span class="Comment"><span class="Comment">#</span> ...</span>
+    }
+    <span class="Comment"><span class="Comment">#</span> ...</span>
+}
+</pre>
+
+<blockquote><p>Note: there are a few really good filters that I excluded here, mostly because they weren't applicable to my site. Either I'm not making a mistake if fixes, or don't use the element it addresses. Read the docs, choose your own.</p></blockquote>
+
+<h3>Results</h3>
+
+<p>I used a <a href="/gem">gem</a> I've been working on (<a href="/gems/autobench">Autobench</a> [shameless plug?]) to take a snap shot of a page from my site before and after implementing these changes (and once in between to optimize). Here's a quick view of the results.</p>
+
+<h4>Highlights</h4>
+
+<pre class="twilight"><span class="DiffDeleted"><span class="DiffDeleted">&lt;</span>   BEFORE</span>
+<span class="DiffInserted"><span class="DiffInserted">&gt;</span>   AFTER</span>
+
+# yslow - yslow.js
+<span class="DiffDeleted"><span class="DiffDeleted">&lt;</span>   requests: 54</span>
+<span class="DiffInserted"><span class="DiffInserted">&gt;</span>   requests: 45</span>
+<span class="DiffDeleted"><span class="DiffDeleted">&lt;</span>   loadtime: 1415</span>
+<span class="DiffInserted"><span class="DiffInserted">&gt;</span>   loadtime: 1007</span>
+
+# client - phantomas
+<span class="DiffDeleted"><span class="DiffDeleted">&lt;</span>   httpTrafficCompleted: 1530.0</span>
+<span class="DiffInserted"><span class="DiffInserted">&gt;</span>   httpTrafficCompleted: 1401.0</span>
+<span class="DiffDeleted"><span class="DiffDeleted">&lt;</span>   onDOMReadyTime: 107.0</span>
+<span class="DiffInserted"><span class="DiffInserted">&gt;</span>   onDOMReadyTime: 19.0</span>
+<span class="DiffDeleted"><span class="DiffDeleted">&lt;</span>   windowOnLoadTime: 807.0</span>
+<span class="DiffInserted"><span class="DiffInserted">&gt;</span>   windowOnLoadTime: 658.0</span>
+</pre>
+
+<h4>More Complete Side by Side Comparison</h4>
+
+<p><a href="/pages/pagespeed.jpg"><img src="/pages/pagespeed.jpg" alt="pagespeed.jpg"></a></p>
+    <footer><p class="meta">
+        Published
+        on
+        <time datetime="2013-06-30T09:30:00+00:00" pubdate>30 June 2013</time>
+        in
+        <a href="http://mervine.net/nginx">Nginx</a>
+      </p>
+    </footer><hr class="article_seperator">
+<br><div id="disqus_thread">
+      <script async src="http://rubyops.disqus.com/embed.js" type="text/javascript"></script><noscript>
+        <a href="http://rubyops.disqus.com/embed.js?url=ref">View comments.</a>
+      </noscript>
+    </div>
+  </div>
+</div>
+        </div>
+        <div class="col-md-3 visible-md visible-lg">
+          <div class="sidebar-nav">
+              <ul class="share-buttons">
+<li>
+                  <a href="https://www.facebook.com/sharer/sharer.php?u=http://mervine.net/nginx-pagespeed" target="_blank">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Facebook.png"></a>
+                </li>
+                <li>
+                  <a href="https://twitter.com/intent/tweet?url=http://mervine.net/nginx-pagespeed&amp;text=Pagespeed%20Module%20for%20Nginx%20-%20&amp;via=mervinej" target="_blank" title="Tweet">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Twitter.png"></a>
+                </li>
+                <li>
+                  <a href="https://plus.google.com/share?url=http://mervine.net/nginx-pagespeed" target="_blank" title="Share on Google+">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Google.png"></a>
+                </li>
+                <li>
+                  <a href="http://www.reddit.com/submit?url=http://mervine.net/nginx-pagespeed&amp;title=Pagespeed%20Module%20for%20Nginx" target="_blank" title="Submit to Reddit">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Reddit.png"></a>
+                </li>
+                <li>
+                  <a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=http://mervine.net/nginx-pagespeed&amp;title=Pagespeed%20Module%20for%20Nginx&amp;source=http://mervine.net/nginx-pagespeed" target="_blank" title="Share on LinkedIn">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/LinkedIn.png"></a>
+                </li>
+              </ul>
+<div class="list-group">
+<a class="list-group-item active" href="http://joshua.mervine.net/">
+                  <h4 class="list-group-item-heading">Joshua P. Mervine</h4>
+                </a><a class="list-group-item" href="http://twitter.com/mervinej">Twitter</a>
+            <a class="list-group-item" href="http://linkedin.com/in/mervinej">Linkedin</a>
+            <a class="list-group-item" href="http://github.com/jmervine">Github</a>
+            <a class="list-group-item" href="http://www.gittip.com/jmervine">Gittip</a>
+              </div>
+            </div>
+        </div>
+      </div>
+      <center>
+        <br><div id="footer">
+            <div class="container">
+              <p class="muted credit">
+                Powered by Nesta, a
+                <a href="http://nestacms.com">Ruby CMS</a>.
+              </p>
+            </div>
+          </div>
+      </center>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script><script async src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js" type="text/javascript"></script><script>
+      var searchElement = 'input[name=q]';
+    </script><script async src="//cdn.jsdelivr.net/jquery.webpage-vim/0.1/vim.min.js" type="text/javascript"></script><script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-32343843-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+      </script>
+</body>
+</html>

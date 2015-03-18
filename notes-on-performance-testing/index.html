@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta content="A couple weeks ago I did an ad hoc talk at the [LAWebSpeed Meetup](http://www.meetup.com/LAWebSpeed/events/174808092/), hosted by [MaxCDN](http://www.maxcdn.com/), on general performance testing in the web world. I was asked to put together a list of the tools I spoke about and some brief notes on them..." name="description">
+<meta content="httperf, phantomjs" name="keywords">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="" name="author">
+<link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/spacelab/bootstrap.min.css" media="screen" rel="stylesheet">
+<link href="//cdn.mervine.net/bootstrap/master.css" media="screen" rel="stylesheet">
+<!--[if lte IE 6]>
+      <link href='http://universal-ie6-css.googlecode.com/files/ie6.1.1.css' media='screen, projection' rel='stylesheet'>
+    <![endif]--><!--[if lt IE 9]>
+      <script src='//html5shim.googlecode.com/svn/trunk/html5.js'></script>
+    <![endif]--><link href="/articles.xml" rel="alternate" type="application/atom+xml">
+<link href="//cdn.mervine.net/bootstrap/favicon.ico" rel="shortcut icon">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon.png" rel="apple-touch-icon">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon-72x72.png" rel="apple-touch-icon" sizes="72x72">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon-114x114.png" rel="apple-touch-icon" sizes="114x114">
+<title>Notes on Performance Testing</title>
+</head>
+<body style="padding-top: 10px !important">
+    <div class="container">
+      <div class="navbar navbar-default navbar-top" style="margin-bottom: 0px !important">
+        <div class="navbar-header">
+          <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse" type="button">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Home</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+<li class="">
+              <a href="http://mervine.net/categories">Category List</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/projects">My Projects</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/notes">Notes</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/hacks">Hacks</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/quotes">Quotes</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/archive">Archives</a>
+            </li>
+          </ul>
+<ul class="nav navbar-nav navbar-right visible-xs">
+<li>
+              <a href="http://twitter.com/mervinej">Twitter</a>
+            </li>
+            <li>
+              <a href="http://linkedin.com/in/mervinej">Linkedin</a>
+            </li>
+            <li>
+              <a href="http://github.com/jmervine">Github</a>
+            </li>
+            <li>
+              <a href="http://www.gittip.com/jmervine">Gittip</a>
+            </li>
+          </ul>
+</div>
+      </div>
+      <div class="container">
+        <div class="page-header" style="margin-top: 0px !important;">
+          <img src="http://www.gravatar.com/avatar/ed808193b8c2c8516715816f90a005b2.jpg?s=75" style="padding:5px 15px 15px; float:left"><a href="http://mervine.net/">
+            <h1>mervine.net</h1>
+          </a><small>Lessons learned, code written, hacks, etc.</small>
+        </div>
+      </div>
+      <div class="container">
+        <div class="col-sm-12 col-md-9">
+          <div class="page_content container">
+  <div class="page_content">
+    <h1>Notes on Performance Testing</h1>
+
+<p>A couple weeks ago I did an ad hoc talk at the <a href="http://www.meetup.com/LAWebSpeed/events/174808092/">LAWebSpeed Meetup</a>, hosted by <a href="http://www.maxcdn.com/">MaxCDN</a>, on general performance testing in the web world. I was asked to put together a list of the tools I spoke about and some brief notes on them, so here goes.</p>
+
+<h2>TL;DR</h2>
+
+<p>Here's a brief list of the tools I mentioned in my talk, for those that were there.</p>
+
+<p><strong>Server Side Tools</strong></p>
+
+<ul>
+<li>
+<a href="http://mervine.net/httperf">httperf</a>
+
+<ul>
+<li><a href="http://www.hpl.hp.com/research/linux/httperf/">main site</a></li>
+<li><a href="https://github.com/jmervine/httperf">my fork</a></li>
+</ul>
+</li>
+<li><a href="http://mervine.net/projects/gems/autoperf">Autoperf</a></li>
+<li><a href="http://mervine.net/projects/gems/httperfrb">HTTPerf.rb</a></li>
+<li>HTTPerf.rb ports:
+
+<ul>
+<li><a href="http://mervine.net/projects/npms/httperfjs">HTTPerf.js</a></li>
+<li><a href="https://github.com/jmervine/httperfpy">HTTPerf.py</a></li>
+<li><a href="https://github.com/jmervine/php-httperf">HTTPerf.php</a></li>
+<li>
+<a href="https://github.com/jmervine/gohttperf">gohttperf</a> (<em>experimental</em>)</li>
+</ul>
+</li>
+</ul>
+<p><strong>Client Side Tools</strong></p>
+
+<ul>
+<li><a href="https://www.igvita.com/2012/04/04/measuring-site-speed-with-navigation-timing/">W3C Navigation Timing</a></li>
+<li><a href="http://www.webpagetest.org/">WebPageTest.org</a></li>
+<li><a href="http://developers.google.com/speed/pagespeed/">Google PageSpeed</a></li>
+<li><a href="http://yslow.org/">YSlow</a></li>
+<li>
+<a href="http://phantomjs.org/">PhantomJS</a>
+
+<ul>
+<li><a href="http://mervine.net/projects/npms/yslowjs">YSlow.js</a></li>
+<li><a href="https://github.com/macbre/phantomas">phantomas</a></li>
+</ul>
+</li>
+</ul>
+<h2>Server Side Testing</h2>
+
+<p>In general, I use server side load / performance testing with two goals. The first is break testing, finding your applications break point and monitoring it's behavior on the way to breaking. The second is for a solid understanding of current state capacity, both for the purpose of future planning and to avoid critical failures.</p>
+
+<p>When running break tests, I run multiple tests, increasing the load in each until a break point is found, which is what <a href="http://mervine.net/projects/gems/autoperf">Autoperf</a> (see below) was designed for. These tests can often be done in short controlled bursts as opposed to long running break tests, although depending on your platform (i.e. Java) there are exceptions. Additionally, I tend to point these kinds of tests a a single endpoint or a few select higher priority endpoints as opposed to a more general traffic log. Again, the effectiveness depends greatly on platform and application design.</p>
+
+<p>In testing for capacity, I take the sweet spot from the break tests mentioned above and I run those over long periods of time, and attempt to more closely reproduce real production traffic (the closer the better). Once I've validated the sweet spot, I'll use that to determine capacity.</p>
+
+<blockquote>
+<p><strong>Note on capacity planning.</strong></p>
+
+<p>This will greatly depend on your traffic patterns and application designed. As such, there's no real formula out there. My typical rule of thumb is "400% peak", with a minimum of "250% peak". How "peak" is defined will vary almost from site to site, however, if you're familiar with your sites traffic patterns, it shouldn't be too hard to figure out.</p>
+</blockquote>
+
+<h3>Tools</h3>
+
+<h3>httperf</h3>
+
+<p>For both break testing and capacity testing, I use <a href="http://mervine.net/httperf">httperf</a> - a command line tool for Linux which is designed to generate load at a controlled rate. There are <a href="http://pkgs.org/search/?query=httperf&amp;type=name">rpm's and deb's for it</a>, but I use my own fork with more verbose output, which I'll talk about more later. For more information, see <a href="http://mervine.net/performance-testing-with-httperf">Performance Testing with Httperf</a> and <a href="http://mervine.net/httperf-0-9-1-with-individual-connection-times">httperf-0.9.1 with individual connection times</a>.</p>
+
+<p>Some other popular options for generating load are <a href="http://www.joedog.org/siege-home/">Siege</a>, and <a href="http://httpd.apache.org/docs/2.2/programs/ab.html">Apache Bench</a> (aka Ab). Siege is designed for time based break testing and is good at it, but has limited results data and I've found it to be less predictable the httperf, that said I haven't used it too much. I haven't personally played with Ab, as in my initial inspection it appeared to require the install of Apache, which I had no interest in doing and as I already have a tool to meet my needs, I didn't spend too much time digging deeper.</p>
+
+<h3>Autoperf</h3>
+
+<p><a href="http://mervine.net/projects/gems/autoperf">Autoperf</a> is a ruby driver for <a href="http://mervine.net/httperf">httperf</a>, designed to help you automate load and performance testing of any web application - for a single end point, or through log replay.</p>
+
+<p>This has been refactored from the original -- github.com/igrigorik/autoperf -- to include <a href="http://mervine.net/projects/gems/httperfrb">HTTPerf.rb</a> as a simplification and to include additional features. This has been refactored and released with permission from Ilya Grigorik, the original author.</p>
+
+<h3>HTTPerf.rb</h3>
+
+<p><a href="http://mervine.net/projects/gems/httperfrb">HTTPerf.rb</a> is a simple ruby interface for <a href="http://mervine.net/httperf">httperf</a>, which is used under the hood of <a href="http://mervine.net/projects/gems/autoperf">Autoperf</a>. It can also be very useful on it's own for running individual tests with <a href="http://mervine.net/httperf">httperf</a> and manipulating the results programmaticly.</p>
+
+<p>I have also ported <a href="http://mervine.net/projects/gems/httperfrb">HTTPerf.rb</a> to several other languages, although not always with all the time, care and features that the original ruby implementation had.</p>
+
+<p>HTTPerf.rb ports:</p>
+
+<ul>
+<li>Node.js: <a href="http://mervine.net/projects/npms/httperfjs">HTTPerf.js</a>
+</li>
+<li>Python: <a href="https://github.com/jmervine/httperfpy">HTTPerf.py</a>
+</li>
+<li>PHP: <a href="https://github.com/jmervine/php-httperf">HTTPerf.php</a>
+</li>
+<li>Golang: <a href="https://github.com/jmervine/gohttperf">gohttperf</a> (<em>experimental</em>)</li>
+</ul>
+<p>For more information on <a href="http://mervine.net/projects/gems/httperfrb">HTTPerf.rb</a> see <a href="http://mervine.net/automating-performance-testing-with-httperfrb">Automating Performance Testing with HTTPerf.rb</a>.</p>
+
+<h2>Client Side Testing</h2>
+
+<p>Although some may disagree with me, I consider client side performance testing about as far from an exact science and you can get in the world of automated testing. There are too many external variables, possible data points and decisions to make on what's important to your business model.</p>
+
+<p>A great read on this topic is <a href="https://blog.twitter.com/2012/improving-performance-on-twittercom">Improving performance on twitter.com</a>, which while more targeted at overall performance improvements and monitoring, has some good ideas that can carry over to what to look for when client side performance testing -- namely the "Time to First Tweet".</p>
+
+<h3>Tools</h3>
+
+<h4>WebKit's Navigation Timing API</h4>
+
+<p><a href="https://www.igvita.com/2012/04/04/measuring-site-speed-with-navigation-timing/">W3C Navigation Timing</a> is a collection of performance data generated by most modern browsers which contains timing for key events of the page load.</p>
+
+<blockquote><p>Note: I've linked to an article on it by <a href="https://www.igvita.com/">Ilya Grigorik</a> because reading spec's is just no damn fun.</p></blockquote>
+
+<h4>WebPageTest.org</h4>
+
+<p>With <a href="http://www.webpagetest.org/">WebPageTest.org</a> run a free website speed test from multiple locations around the globe using real browsers (IE and Chrome) and at real consumer connection speeds. You can run simple tests or perform advanced testing including multi-step transactions, video capture, content blocking and much more. Your results will provide rich diagnostic information including resource loading waterfall charts, Page Speed optimization checks and suggestions for improvements.</p>
+
+<h4>Google PageSpeed</h4>
+
+<p><a href="http://developers.google.com/speed/pagespeed/">Google PageSpeed</a> is a collection of client side testing tools from <a href="https://www.google.com">Google</a>.</p>
+
+<blockquote>
+<p>"Analyze and optimize your website with PageSpeed tools to implement the web performance best practices.</p>
+
+<p>Fast and optimized pages lead to higher visitor engagement, retention, and conversions. The PageSpeed family of tools is designed to help you optimize the performance of your website. PageSpeed Insights products will help you identify performance best practices that can be applied to your site, and PageSpeed optimization tools can help you automate the process."</p>
+</blockquote>
+
+<h4>YSlow</h4>
+
+<p><a href="http://yslow.org/">YSlow</a> from <a href="http://www.yahoo.com">Yahoo!</a> analyzes web pages and why they're slow based on Yahoo!'s rules for high performance web sites.</p>
+
+<h4>PhantomJS</h4>
+
+<p><a href="http://phantomjs.org/">PhantomJS</a> is a headless WebKit scriptable with a JavaScript API. It has fast and native support for various web standards: DOM handling, CSS selector, JSON, Canvas, and SVG. With it, you can easily and headlessly automate and collect data about your sites client side performance.</p>
+
+<p>A few tools that leverage <a href="http://phantomjs.org/">PhantomJS</a> include:</p>
+
+<ul>
+<li>
+<a href="http://mervine.net/projects/npms/yslowjs">YSlow.js</a>: a simple Node.js wrapper for programmaticaly running <a href="http://yslow.org/phantomjs/">PhantomJS yslow.js</a>.</li>
+<li>
+<a href="https://github.com/macbre/phantomas">phantomas</a>: PhantomJS-based modular web performance metrics collector.</li>
+</ul>
+<footer><p class="meta">
+        Published
+        on
+        <time datetime="2014-05-10T14:00:00+00:00" pubdate>10 May 2014</time>
+        in
+        <a href="http://mervine.net/httperf">Httperf</a>,
+        <a href="http://mervine.net/phantomjs">PhantomJS</a>
+      </p>
+    </footer><hr class="article_seperator">
+<br><div id="disqus_thread">
+      <script async src="http://rubyops.disqus.com/embed.js" type="text/javascript"></script><noscript>
+        <a href="http://rubyops.disqus.com/embed.js?url=ref">View comments.</a>
+      </noscript>
+    </div>
+  </div>
+</div>
+        </div>
+        <div class="col-md-3 visible-md visible-lg">
+          <div class="sidebar-nav">
+              <ul class="share-buttons">
+<li>
+                  <a href="https://www.facebook.com/sharer/sharer.php?u=http://mervine.net/notes-on-performance-testing" target="_blank">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Facebook.png"></a>
+                </li>
+                <li>
+                  <a href="https://twitter.com/intent/tweet?url=http://mervine.net/notes-on-performance-testing&amp;text=Notes%20on%20Performance%20Testing%20-%20&amp;via=mervinej" target="_blank" title="Tweet">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Twitter.png"></a>
+                </li>
+                <li>
+                  <a href="https://plus.google.com/share?url=http://mervine.net/notes-on-performance-testing" target="_blank" title="Share on Google+">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Google.png"></a>
+                </li>
+                <li>
+                  <a href="http://www.reddit.com/submit?url=http://mervine.net/notes-on-performance-testing&amp;title=Notes%20on%20Performance%20Testing" target="_blank" title="Submit to Reddit">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Reddit.png"></a>
+                </li>
+                <li>
+                  <a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=http://mervine.net/notes-on-performance-testing&amp;title=Notes%20on%20Performance%20Testing&amp;source=http://mervine.net/notes-on-performance-testing" target="_blank" title="Share on LinkedIn">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/LinkedIn.png"></a>
+                </li>
+              </ul>
+<div class="list-group">
+<a class="list-group-item active" href="http://joshua.mervine.net/">
+                  <h4 class="list-group-item-heading">Joshua P. Mervine</h4>
+                </a><a class="list-group-item" href="http://twitter.com/mervinej">Twitter</a>
+            <a class="list-group-item" href="http://linkedin.com/in/mervinej">Linkedin</a>
+            <a class="list-group-item" href="http://github.com/jmervine">Github</a>
+            <a class="list-group-item" href="http://www.gittip.com/jmervine">Gittip</a>
+              </div>
+            </div>
+        </div>
+      </div>
+      <center>
+        <br><div id="footer">
+            <div class="container">
+              <p class="muted credit">
+                Powered by Nesta, a
+                <a href="http://nestacms.com">Ruby CMS</a>.
+              </p>
+            </div>
+          </div>
+      </center>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script><script async src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js" type="text/javascript"></script><script>
+      var searchElement = 'input[name=q]';
+    </script><script async src="//cdn.jsdelivr.net/jquery.webpage-vim/0.1/vim.min.js" type="text/javascript"></script><script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-32343843-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+      </script>
+</body>
+</html>

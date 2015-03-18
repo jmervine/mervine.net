@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta content="Recently I've done a bit of research on the differences between Nginx, HAProxy and AWS ELB when being used as a Load Balancer. I put together a line by line comparison for a friend of mine and thought I would share my results." name="description">
+<meta content="nginx" name="keywords">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="" name="author">
+<link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/spacelab/bootstrap.min.css" media="screen" rel="stylesheet">
+<link href="//cdn.mervine.net/bootstrap/master.css" media="screen" rel="stylesheet">
+<!--[if lte IE 6]>
+      <link href='http://universal-ie6-css.googlecode.com/files/ie6.1.1.css' media='screen, projection' rel='stylesheet'>
+    <![endif]--><!--[if lt IE 9]>
+      <script src='//html5shim.googlecode.com/svn/trunk/html5.js'></script>
+    <![endif]--><link href="/articles.xml" rel="alternate" type="application/atom+xml">
+<link href="//cdn.mervine.net/bootstrap/favicon.ico" rel="shortcut icon">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon.png" rel="apple-touch-icon">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon-72x72.png" rel="apple-touch-icon" sizes="72x72">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon-114x114.png" rel="apple-touch-icon" sizes="114x114">
+<title>Comparing Load Balancing Options</title>
+</head>
+<body style="padding-top: 10px !important">
+    <div class="container">
+      <div class="navbar navbar-default navbar-top" style="margin-bottom: 0px !important">
+        <div class="navbar-header">
+          <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse" type="button">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Home</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+<li class="">
+              <a href="http://mervine.net/categories">Category List</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/projects">My Projects</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/notes">Notes</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/hacks">Hacks</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/quotes">Quotes</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/archive">Archives</a>
+            </li>
+          </ul>
+<ul class="nav navbar-nav navbar-right visible-xs">
+<li>
+              <a href="http://twitter.com/mervinej">Twitter</a>
+            </li>
+            <li>
+              <a href="http://linkedin.com/in/mervinej">Linkedin</a>
+            </li>
+            <li>
+              <a href="http://github.com/jmervine">Github</a>
+            </li>
+            <li>
+              <a href="http://www.gittip.com/jmervine">Gittip</a>
+            </li>
+          </ul>
+</div>
+      </div>
+      <div class="container">
+        <div class="page-header" style="margin-top: 0px !important;">
+          <img src="http://www.gravatar.com/avatar/ed808193b8c2c8516715816f90a005b2.jpg?s=75" style="padding:5px 15px 15px; float:left"><a href="http://mervine.net/">
+            <h1>mervine.net</h1>
+          </a><small>Lessons learned, code written, hacks, etc.</small>
+        </div>
+      </div>
+      <div class="container">
+        <div class="col-sm-12 col-md-9">
+          <div class="page_content container">
+  <div class="page_content">
+    <h1>Comparing Load Balancing Options: Nginx vs. HAProxy vs. AWS ELB</h1>
+
+<blockquote><p>Update: I've recently been getting some comments about changes that have occurred in both AWS and HAProxy since originally posting this. Please review the comments and use this as a companion to additional research. If/when I have the time and need I will review and update this post. Thanks!</p></blockquote>
+
+<p>Recently I've done a bit of research on the differences between <a href="http://nginx.org/">Nginx</a>, <a href="http://haproxy.1wt.eu/">HAProxy</a> and <a href="http://aws.amazon.com/elasticloadbalancing/">AWS ELB</a> when being used as a Load Balancer. I put together a line by line comparison for a friend of mine and thought I would share my results.</p>
+
+<p>Below I'm going to go over load balancing talking points, discuss the pros and cons of each. I welcome comments -- especially disagreements -- in the comments section at the bottom of this post.</p>
+
+<h3>Performance</h3>
+
+<p>In <a href="http://affectioncode.wordpress.com/2008/06/11/comparing-nginx-and-haproxy-for-web-applications/">a side by side comparison of performance response times</a> between <a href="http://nginx.org/">Nginx</a> and <a href="http://haproxy.1wt.eu/">HAProxy</a> done in 2008, <a href="http://haproxy.1wt.eu/">HAProxy</a> clearly out performs <a href="http://nginx.org/">Nginx</a> for application with lower load (3 concurrent connections or less), while <a href="http://nginx.org/">Nginx</a> quickly becomes the clear leader under higher load (10 to 30+ concurrent connections) as <a href="http://haproxy.1wt.eu/">HAProxy</a> begins to perform very poorly. I read somewhere (but can't seem to dig up the post) that this is due to <a href="http://haproxy.1wt.eu/">HAProxy</a> not being multi-threaded nor having the capability to spawn child processes. Additionally, <a href="http://haproxy.1wt.eu/">HAProxy</a> must be run on port 80, which solidifies this limitation.</p>
+
+<p><a href="http://aws.amazon.com/elasticloadbalancing/">AWS ELB</a> boasts being able to easily handle 20K+ concurrent connections, however, <a href="http://harish11g.blogspot.com/2012/07/aws-elastic-load-balancing-elb-amazon.html">it has been reported</a> to have issues with large scale (1000's of connections) traffic spikes.</p>
+
+<p>In the end, if you're using <a href="http://aws.amazon.com/">AWS</a>, use <a href="http://aws.amazon.com/elasticloadbalancing/">ELB</a>, otherwise from purely a performance perspective, for smaller trafficked application, <a href="http://haproxy.1wt.eu/">HAProxy</a> would be better choice. For high load, <a href="http://nginx.org/">Nginx</a> is the only real option unless you want to use a tiered approach in your load balancing.</p>
+
+<h3>SSL Support</h3>
+
+<p><a href="http://haproxy.1wt.eu/">HAProxy</a> does not support SSL out of the box, there are work around using <a href="http://nginx.org/">Nginx</a>, but they're clunky and why not just use <a href="http://nginx.org/">Nginx</a> in that case. Both <a href="http://nginx.org/">Nginx</a> and <a href="http://aws.amazon.com/elasticloadbalancing/">AWS ELB</a> have SSL support.</p>
+
+<h3>Algorithm Options</h3>
+
+<p><a href="http://haproxy.1wt.eu/">HAProxy</a> has the most options in this arena, support Round-Robin, Least Connection, Weighted and more.</p>
+
+<p><a href="http://nginx.org/">Nginx</a> supports Round-Robin and Weighted only.</p>
+
+<p><a href="http://aws.amazon.com/elasticloadbalancing/">AWS ELB</a> only supports Round-Robin.</p>
+
+<h3>Geo Awareness / Multi Region Proxying</h3>
+
+<p><a href="http://nginx.org/">Nginx</a> has two plug-ins -- <a href="http://wiki.nginx.org/HttpGeoModule">HttpGeoModule</a> and <a href="http://wiki.nginx.org/HttpGeoIPModule">HttpGeoipModule</a> -- which when used in conjunction can be used to direct traffic by geo-location. I haven't personally used this option, so I can't speak to performance or accuracy, but the folks a <a href="http://nginx.org/">Nginx</a> tend to do things right.</p>
+
+<p><a href="http://haproxy.1wt.eu/">HAProxy</a> does not support geo-location out of the box. I found a few forum posts that mention patches or combining it with BIND and GeoDNS patching, but I didn't read too deeply in to it, as it breaks the focus of this post.</p>
+
+<p><a href="http://aws.amazon.com/elasticloadbalancing/">AWS ELB</a> by itself cannot do geo-location on it's own, but in conjunction with <a href="http://aws.amazon.com/route53/">AWS Route53 DNS</a>, it can be made to do so easily. This is by far the best solution if building your architecture on <a href="http://aws.amazon.com/">AWS</a>.</p>
+
+<h3>Monitoring Solutions</h3>
+
+<p><a href="http://nginx.org/">Nginx</a>, being a standard web server, can easily be monitored by any log monitor (e.g. Nagios), additionally, there's a plug-in (which I haven't tried) that looks interesting called <a href="https://scoutapp.com/plugin_urls/72-nginx-monitoring">Scout</a>.</p>
+
+<p><a href="http://haproxy.1wt.eu/">HAProxy</a> is also supported by <a href="http://blog.scoutapp.com/articles/2011/10/21/monitoring-haproxy">Scout</a> and there are several other options, including log monitors like Nagios.</p>
+
+<p><a href="http://aws.amazon.com/elasticloadbalancing/">AWS ELB</a> is supported by <a href="http://aws.amazon.com/cloudwatch/">CloudWatch</a>, so that's probably the simplest solution over, if you're using <a href="http://aws.amazon.com/">AWS</a>.</p>
+
+<h3>Configuration -- clarity, simplicity</h3>
+
+<p>All three are fairly easy to configure. <a href="http://nginx.org/">Nginx</a>, as it has more functionality, tends be slightly more complex then <a href="http://haproxy.1wt.eu/">HAProxy</a>, while <a href="http://aws.amazon.com/elasticloadbalancing/">AWS ELB</a> would be the simplest, being purely web based.</p>
+
+<h2>Summary</h2>
+
+<p>Over all, I would recommend using <a href="http://aws.amazon.com/elasticloadbalancing/">ELB</a> if you're on <a href="http://aws.amazon.com/">AWS</a> -- not that I would recommend that in most cases. If you're not, I would recommend <a href="http://nginx.org/">Nginx</a> for most cases; it's performs better under load, it support HTTPS and if needed geo-location is always handy. As for <a href="http://haproxy.1wt.eu/">HAProxy</a>, this is best suited for lower traffic thin API application, where HTTPS isn't a requirement and especially when Least Connections is preferred.</p>
+
+<h2>Sources</h2>
+
+<ul>
+<li><a href="http://harish11g.blogspot.com/2012/07/aws-elastic-load-balancing-elb-amazon.html">Dissecting Amazon ELB : 18 things you should know</a></li>
+<li><a href="http://affectioncode.wordpress.com/2008/06/11/comparing-nginx-and-haproxy-for-web-applications/">Comparing Nginx and HAProxy for web applications</a></li>
+<li><a href="http://wiki.nginx.org/HttpUpstreamModule">wiki.nginx.org/HttpUpstreamModule</a></li>
+<li><a href="http://www.evanhoffman.com/evan/2012/01/09/load-balancing-in-ec2-with-nginx-and-haproxy/">Load balancing in EC2 with Nginx and HAProxy</a></li>
+<li><a href="http://code.google.com/p/haproxy-docs/wiki/Configuring">haproxy-docs:Configuring</a></li>
+</ul>
+<footer><p class="meta">
+        Published
+        on
+        <time datetime="2013-02-26T20:00:00+00:00" pubdate>26 February 2013</time>
+        in
+        <a href="http://mervine.net/nginx">Nginx</a>
+      </p>
+    </footer><hr class="article_seperator">
+<br><div id="disqus_thread">
+      <script async src="http://rubyops.disqus.com/embed.js" type="text/javascript"></script><noscript>
+        <a href="http://rubyops.disqus.com/embed.js?url=ref">View comments.</a>
+      </noscript>
+    </div>
+  </div>
+</div>
+        </div>
+        <div class="col-md-3 visible-md visible-lg">
+          <div class="sidebar-nav">
+              <ul class="share-buttons">
+<li>
+                  <a href="https://www.facebook.com/sharer/sharer.php?u=http://mervine.net/comparing-load-balancing" target="_blank">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Facebook.png"></a>
+                </li>
+                <li>
+                  <a href="https://twitter.com/intent/tweet?url=http://mervine.net/comparing-load-balancing&amp;text=Comparing%20Load%20Balancing%20Options%20-%20&amp;via=mervinej" target="_blank" title="Tweet">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Twitter.png"></a>
+                </li>
+                <li>
+                  <a href="https://plus.google.com/share?url=http://mervine.net/comparing-load-balancing" target="_blank" title="Share on Google+">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Google.png"></a>
+                </li>
+                <li>
+                  <a href="http://www.reddit.com/submit?url=http://mervine.net/comparing-load-balancing&amp;title=Comparing%20Load%20Balancing%20Options" target="_blank" title="Submit to Reddit">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Reddit.png"></a>
+                </li>
+                <li>
+                  <a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=http://mervine.net/comparing-load-balancing&amp;title=Comparing%20Load%20Balancing%20Options&amp;source=http://mervine.net/comparing-load-balancing" target="_blank" title="Share on LinkedIn">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/LinkedIn.png"></a>
+                </li>
+              </ul>
+<div class="list-group">
+<a class="list-group-item active" href="http://joshua.mervine.net/">
+                  <h4 class="list-group-item-heading">Joshua P. Mervine</h4>
+                </a><a class="list-group-item" href="http://twitter.com/mervinej">Twitter</a>
+            <a class="list-group-item" href="http://linkedin.com/in/mervinej">Linkedin</a>
+            <a class="list-group-item" href="http://github.com/jmervine">Github</a>
+            <a class="list-group-item" href="http://www.gittip.com/jmervine">Gittip</a>
+              </div>
+            </div>
+        </div>
+      </div>
+      <center>
+        <br><div id="footer">
+            <div class="container">
+              <p class="muted credit">
+                Powered by Nesta, a
+                <a href="http://nestacms.com">Ruby CMS</a>.
+              </p>
+            </div>
+          </div>
+      </center>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script><script async src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js" type="text/javascript"></script><script>
+      var searchElement = 'input[name=q]';
+    </script><script async src="//cdn.jsdelivr.net/jquery.webpage-vim/0.1/vim.min.js" type="text/javascript"></script><script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-32343843-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+      </script>
+</body>
+</html>

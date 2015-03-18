@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta content="node.js, nodejs, node, ruby, ruby lang, programming, system administration, devops, development operations, sinatra, httperf, performance testing" name="keywords">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="" name="author">
+<link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/spacelab/bootstrap.min.css" media="screen" rel="stylesheet">
+<link href="//cdn.mervine.net/bootstrap/master.css" media="screen" rel="stylesheet">
+<!--[if lte IE 6]>
+      <link href='http://universal-ie6-css.googlecode.com/files/ie6.1.1.css' media='screen, projection' rel='stylesheet'>
+    <![endif]--><!--[if lt IE 9]>
+      <script src='//html5shim.googlecode.com/svn/trunk/html5.js'></script>
+    <![endif]--><link href="/articles.xml" rel="alternate" type="application/atom+xml">
+<link href="//cdn.mervine.net/bootstrap/favicon.ico" rel="shortcut icon">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon.png" rel="apple-touch-icon">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon-72x72.png" rel="apple-touch-icon" sizes="72x72">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon-114x114.png" rel="apple-touch-icon" sizes="114x114">
+<title>mervine.net</title>
+</head>
+<body style="padding-top: 10px !important">
+    <div class="container">
+      <div class="navbar navbar-default navbar-top" style="margin-bottom: 0px !important">
+        <div class="navbar-header">
+          <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse" type="button">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Home</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+<li class="">
+              <a href="http://mervine.net/categories">Category List</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/projects">My Projects</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/notes">Notes</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/hacks">Hacks</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/quotes">Quotes</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/archive">Archives</a>
+            </li>
+          </ul>
+<ul class="nav navbar-nav navbar-right visible-xs">
+<li>
+              <a href="http://twitter.com/mervinej">Twitter</a>
+            </li>
+            <li>
+              <a href="http://linkedin.com/in/mervinej">Linkedin</a>
+            </li>
+            <li>
+              <a href="http://github.com/jmervine">Github</a>
+            </li>
+            <li>
+              <a href="http://www.gittip.com/jmervine">Gittip</a>
+            </li>
+          </ul>
+</div>
+      </div>
+      <div class="container">
+        <div class="page-header" style="margin-top: 0px !important;">
+          <img src="http://www.gravatar.com/avatar/ed808193b8c2c8516715816f90a005b2.jpg?s=75" style="padding:5px 15px 15px; float:left"><a href="http://mervine.net/">
+            <h1>mervine.net</h1>
+          </a><small>Lessons learned, code written, hacks, etc.</small>
+        </div>
+      </div>
+      <div class="container">
+        <div class="col-sm-12 col-md-9">
+          <div class="page_content container">
+  <div class="page_content">
+    <section class="articles"><div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/notes/testing-with-docker">Testing with Docker</a>
+    </h2>
+  </header><p>Here are a few tips that I've found useful while delving in to Docker.</p>
+  <p class="read_more">
+    <a href="http://mervine.net/notes/testing-with-docker">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2015-03-10T13:25:00+00:00" pubdate>10 March 2015</time>
+      in
+      <a href="http://mervine.net/linux">Linux</a>,
+      <a href="http://mervine.net/notes">Notes</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/notes/docker-tips">Docker Tips</a>
+    </h2>
+  </header><p>Here are a few tips that I've found useful while delving in to <a href="https://www.docker.com/">Docker</a>. For an introduction to Docker, see my post on the <a href="http://engineering.yp.com/post/intro-to-docker">YP Engineering Blog</a>. Enjoy!</p>
+
+<h3>Making smaller images.</h3>
+
+<p>Docker image size does matter. The larger your image, that more unweildy it starts to feel. Pulling a 50MB image is far preferable to pulling a 2G image. Some tips on building smaller images:</p>
+
+<ul>
+<li>Use the smallest linux distro which meets your needs; <code>busybox</code> &lt; <code>debian</code> &lt; <code>centos</code> &lt; <code>ubuntu</code>. I try to use <code>progrium/busybox</code> whenever possible (which isn't all that often without serious work), otherwise, I tend to use <code>debian</code>.</li>
+<li>Install as little as possible to meet your needs -- <code>apt-get build-essential</code> is going to bloat your image, don't use it unless absolutly necessary.</li>
+<li>
+<p>Do as much as you can in a single <code>RUN</code>, as opposed to breaking things up. The downside to this is longer builds with less caching. However, it can make a huge difference in resulting image size. I once took an image from 1.3G to 555MB, just by collapsing all my commands to a single <code>RUN</code>. Additionally, clean up after yourself in that same <code>RUN</code> if possible. Example:</p>
+
+<pre class="twilight">  # BAD
+  RUN apt-get install git
+  RUN apt-get install wget
+  RUN apt-get install build-essential
+  COPY http://somesite.com/somefile.tgz
+  RUN tar xzf somefile.tgz
+  RUN cd somefile
+  RUN ./configure &amp;&amp; make &amp;&amp; install
+
+  # GOOD
+  RUN \
+      apt-get install -y git wget build-essential &amp;&amp; \
+      curl -sSL -O http://somesite.com/somefile.tgz &amp;&amp; \
+      tar xzf somefile.tgz &amp;&amp; \ 
+      cd somefile &amp;&amp; ./configure &amp;&amp; make &amp;&amp; install &amp;&amp; \
+      cd - &amp;&amp; rm -rf somefile somefile.tgz &amp;&amp; \
+      apt-get remove -y build-essential &amp;&amp; \
+      apt-get autoremove -y &amp;&amp; apt-get clean
+</pre>
+</li>
+</ul>
+<h3>Search private registry.</h3>
+
+<pre class="twilight">sudo docker search <span class="Keyword">&lt;</span>private domain<span class="Keyword">&gt;</span>/<span class="Keyword">&lt;</span>term<span class="Keyword">&gt;</span>
+</pre>
+
+<h3>Removing images and containers in bulk.</h3>
+
+<pre class="twilight"><span class="Comment"><span class="Comment">#</span> remove all containers</span>
+sudo docker rm <span class="String"><span class="String">$(</span>sudo docker ps -a -q<span class="String">)</span></span>
+<span class="Comment"><span class="Comment">#</span>... or ...</span>
+sudo docker ps -aq <span class="Keyword">|</span> xargs sudo docker rm
+
+<span class="Comment"><span class="Comment">#</span> remove all images</span>
+sudo docker rmi <span class="String"><span class="String">$(</span>sudo docker images -q<span class="String">)</span></span>
+<span class="Comment"><span class="Comment">#</span>... or ...</span>
+sudo docker images -q <span class="Keyword">|</span> xargs sudo docker rmi
+
+<span class="Comment"><span class="Comment">#</span> remove specific images in bulk</span>
+sudo docker rmi myimage:{tagone,tagtwo,tagfive}
+
+<span class="Comment"><span class="Comment">#</span> remove image containing TERM</span>
+sudo docker rmi <span class="String"><span class="String">$(</span>sudo docker images <span class="Keyword">|</span> grep TERM <span class="Keyword">|</span> awk <span class="String"><span class="String">'</span>{ print $3 }<span class="String">'</span></span><span class="String">)</span></span>
+<span class="Comment"><span class="Comment">#</span>... or ...</span>
+sudo docker images <span class="Keyword">|</span> grep TERM <span class="Keyword">|</span> awk <span class="String"><span class="String">'</span>{ print $3 }<span class="String">'</span></span> <span class="Keyword">|</span> xargs sudo docker rmi
+
+<span class="Comment"><span class="Comment">#</span> remove all non-running containers</span>
+sudo docker ps -a <span class="Keyword">|</span> grep Exited <span class="Keyword">|</span> awk <span class="String"><span class="String">'</span>{ print $NF }<span class="String">'</span></span> <span class="Keyword">|</span> xargs sudo docker rm
+</pre>
+
+<h3>Interacting with the most recent continer started.</h3>
+
+<pre class="twilight"><span class="Comment"><span class="Comment">#</span> view last container</span>
+sudo docker ps -l 
+
+<span class="Comment"><span class="Comment">#</span> view last container sha only</span>
+sudo docker ps -lq
+
+<span class="Comment"><span class="Comment">#</span> stop, start, attach, logs, etc. last container</span>
+<span class="Comment"><span class="Comment">#</span></span>
+<span class="Comment"><span class="Comment">#</span> $ sudo docker &lt;action&gt; $(sudo docker ps -lq)</span>
+sudo docker start <span class="String"><span class="String">$(</span>sudo docker ps -lq<span class="String">)</span></span>
+sudo docker stop <span class="String"><span class="String">$(</span>sudo docker ps -lq<span class="String">)</span></span>
+sudo docker logs <span class="String"><span class="String">$(</span>sudo docker ps -lq<span class="String">)</span></span>
+sudo docker attach <span class="String"><span class="String">$(</span>sudo docker ps -lq<span class="String">)</span></span>
+</pre>
+
+<h3>Pushing to a private registry.</h3>
+
+<pre class="twilight"><span class="Comment"><span class="Comment">#</span> assuming image 'jmervine/centos6-nodejs'</span>
+<span class="Comment"><span class="Comment">#</span></span>
+<span class="Comment"><span class="Comment">#</span>               &lt;current image name&gt;    &lt;private registry&gt;:&lt;port&gt;/&lt;image name&gt;</span>
+sudo docker tag jmervine/centos6-nodejs docker.myregstry.com:5000/jmervine/centos6-nodejs
+sudo docker push docker.myregstry.com:5000/jmervine/centos6-nodejs
+
+<span class="Comment"><span class="Comment">#</span> I then recommend removing your old image to avoid accidentally pushing it to the public registry.</span>
+sudo docker rmi jmervine/centos6-nodejs
+</pre>
+
+<h3>Ports</h3>
+
+<pre class="twilight"><span class="Comment"><span class="Comment">#</span> running randomly assigning host port</span>
+sudo docker run -d -p 3000 image/name
+
+<span class="Comment"><span class="Comment">#</span> running with exposed ports randomly assigned on host</span>
+sudo docker run -d -P image/name
+
+<span class="Comment"><span class="Comment">#</span> printing randomly assigned ports (only)</span>
+sudo docker port image_name <span class="Keyword">|</span> awk -F<span class="String"><span class="String">'</span>:<span class="String">'</span></span> <span class="String"><span class="String">'</span>{ print $NF }<span class="String">'</span></span>
+</pre>
+
+<h3>Copying Files TO Containers</h3>
+
+<pre class="twilight"><span class="Comment"><span class="Comment">#</span> Directly in to a running container.</span>
+sudo docker exec -it <span class="Keyword">&lt;</span>container_name<span class="Keyword">|</span>name<span class="Keyword">&gt;</span> \
+    bash -c <span class="String"><span class="String">"</span>echo <span class="StringConstant">\"</span><span class="String"><span class="String">$(</span>cat /path/to/host/file.txt<span class="String">)</span></span><span class="StringConstant">\"</span> &gt; /path/to/container/file.txt<span class="String">"</span></span>
+
+<span class="Comment"><span class="Comment">#</span> When running a container.</span>
+sudo docker run -i <span class="Keyword">&lt;</span>container_id<span class="Keyword">|</span>name<span class="Keyword">&gt;</span> \
+    bash -c <span class="String"><span class="String">"</span>echo <span class="StringConstant">\"</span><span class="String"><span class="String">$(</span>cat /path/to/host/file.txt<span class="String">)</span></span><span class="StringConstant">\"</span> &gt; /path/to/container/file.txt; /bin/bash ./start.sh<span class="String">"</span></span>
+
+<span class="Comment"><span class="Comment">#</span> Via Docker volume.</span>
+<span class="Comment"><span class="Comment">#</span> - where 'file.txt' is /path/to/host/dir/file.txt</span>
+sudo docker run -v /path/to/host/dir:/path/to/container/dir <span class="Keyword">&lt;</span>container_id<span class="Keyword">|</span>name<span class="Keyword">&gt;</span>
+
+<span class="Comment"><span class="Comment">#</span>... or ...</span>
+sudo docker run -v /path/to/host/dir:/path/to/container/dir <span class="Keyword">&lt;</span>container_id<span class="Keyword">|</span>name<span class="Keyword">&gt;</span>
+cp /path/to/host/file.txt /path/to/host/dir/file.txt
+
+<span class="Comment"><span class="Comment">#</span> Via file system -- untested as of yet.</span>
+sudo cp -v /path/to/host/file.txt \
+    /var/lib/docker/aufs/mnt/**<span class="String"><span class="String">$(</span>sudo docker inspect -f <span class="String"><span class="String">'</span>{{.Id}}<span class="String">'</span></span> <span class="Keyword">&lt;</span>container_id<span class="Keyword">|</span>name<span class="Keyword">&gt;</span><span class="String">)</span></span>**/root/path/to/container/file.txt
+</pre>
+
+<blockquote><p>Based on comments in <a href="http://stackoverflow.com/questions/22907231/copying-files-from-host-to-docker-container">http://stackoverflow.com/questions/22907231/copying-files-from-host-to-docker-container</a></p></blockquote>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2015-02-21T15:20:00+00:00" pubdate>21 February 2015</time>
+      in
+      <a href="http://mervine.net/linux">Linux</a>,
+      <a href="http://mervine.net/notes">Notes</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/notes/building-docker-machine">Building Docker Machine</a>
+    </h2>
+  </header><blockquote>
+<p><strong><a href="https://github.com/docker/machine">What's Docker Machine?</a></strong></p>
+
+<p>Machine makes it really easy to create Docker hosts on local hypervisors and cloud providers. It creates servers, installs Docker on them, then configures the Docker client to talk to them</p>
+</blockquote>
+
+<p>This wasn't as clear as I was hoping, so here's what I did.</p>
+
+<h3>Mac</h3>
+
+<pre class="twilight">$ uname -sm
+Darwin x86_64
+
+$ docker version
+Client version: 1.3.0
+Client API version: 1.15
+Go version (client): go1.3.3
+Git commit (client): c78088f
+OS/Arch (client): darwin/amd64
+Server version: 1.4.1
+Server API version: 1.16
+Go version (server): go1.3.3
+Git commit (server): 5bc2ff8
+
+$ mkdir -p <span class="Variable"><span class="Variable">$</span>GOPATH</span>/src/github.com/docker
+$ cd <span class="Variable"><span class="Variable">$</span>GOPATH</span>/src/github.com/docker
+$ git clone https://github.com/docker/machine.git
+$ cd machine
+
+$ make test
+$ ./script/build -os=darwin -arch=amd64
+$ mv docker-machine_darwin-amd64 <span class="Variable"><span class="Variable">$</span>GOBIN</span>/docker-machine
+</pre>
+
+<h3>Linux</h3>
+
+<pre class="twilight">$ uname -sio
+Linux x86_64 GNU/Linux
+
+$ sudo docker version
+Client version: 1.4.1
+Client API version: 1.16
+Go version (client): go1.3.3
+Git commit (client): 5bc2ff8
+OS/Arch (client): linux/amd64
+Server version: 1.4.1
+Server API version: 1.16
+Go version (server): go1.3.3
+Git commit (server): 5bc2ff8
+
+$ mkdir -p <span class="Variable"><span class="Variable">$</span>GOPATH</span>/src/github.com/docker
+$ cd <span class="Variable"><span class="Variable">$</span>GOPATH</span>/src/github.com/docker
+$ git clone https://github.com/docker/machine.git
+$ cd machine
+
+$ sudo make test
+$ sudo ./script/build -os=linux -arch=amd64
+$ sudo chown <span class="Variable"><span class="Variable">$</span>USER</span>: docker-machine_linux-amd64
+$ mv docker-machine_linux-amd64 <span class="Variable"><span class="Variable">$</span>GOBIN</span>/docker-machine
+</pre>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2015-02-18T11:20:00+00:00" pubdate>18 February 2015</time>
+      in
+      <a href="http://mervine.net/linux">Linux</a>,
+      <a href="http://mervine.net/notes">Notes</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/ror_why_not">Ruby / RoR... Why not?</a>
+    </h2>
+  </header><p>In response to common question: "I'd be curious as to why your friends want to move away from the RoR/Ruby space..."</p>
+  <p class="read_more">
+    <a href="http://mervine.net/ror_why_not">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2014-08-13T10:30:00+00:00" pubdate>13 August 2014</time>
+      in
+      <a href="http://mervine.net/ruby">Ruby</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/notes-on-performance-testing">Notes on Performance Testing</a>
+    </h2>
+  </header><p>A couple weeks ago I did an ad hoc talk at the <a href="http://www.meetup.com/LAWebSpeed/events/174808092/">LAWebSpeed Meetup</a>, hosted by <a href="http://www.maxcdn.com/">MaxCDN</a>, on general performance testing in the web world. I was asked to put together a list of the tools I spoke about and some brief notes on them...</p>
+  <p class="read_more">
+    <a href="http://mervine.net/notes-on-performance-testing">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2014-05-10T14:00:00+00:00" pubdate>10 May 2014</time>
+      in
+      <a href="http://mervine.net/httperf">Httperf</a>,
+      <a href="http://mervine.net/phantomjs">PhantomJS</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/node-hello-framework">Node.js Hello Framework</a>
+    </h2>
+  </header><p>A far from complete collection of Hello World examples for various Node.js web frameworks.</p>
+  <p class="read_more">
+    <a href="http://mervine.net/node-hello-framework">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+    Published
+    on
+    <time datetime="2014-03-23T12:30:00+00:00" pubdate>23 March 2014</time>
+    in
+    <a href="http://mervine.net/express">Express</a>,
+    <a href="http://mervine.net/nodejs">Node.js</a>
+  </p>
+</footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/projects/npms/yslowjs-release">YSlow.js: Release 0.3.1</a>
+    </h2>
+  </header><h4>Links: <a href="/projects/npms/yslowjs">readme</a> | <a href="https://npmjs.org/package/yslowjs">package</a> | <a href="https://github.com/jmervine/node-yslowjs">source</a> | <a href="https://travis-ci.org/jmervine/node-yslowjs">tests</a>
+</h4>
+
+<h3>0.3.2</h3>
+
+<ul>
+<li>Upping <a href="http://yslow.org/phantomjs/">yslow</a> version.</li>
+</ul>
+<h3>Previous Version</h3>
+
+<ul>
+<li>0.3.1
+
+<ul>
+<li>Locking <a href="/projects/npms/phapper">Phapper</a> version.</li>
+</ul>
+</li>
+<li>0.3.0
+
+<ul>
+<li>Fixing error handling in <code>run</code>. Now passes both <code>error</code> and <code>results</code> to callback. See README examples for details. <strong>This update is not backwards compatabile with previous releases.</strong>
+</li>
+</ul>
+</li>
+<li>0.2.1
+
+<ul>
+<li>Removing unused dependainces.</li>
+</ul>
+</li>
+<li>0.2.0
+
+<ul>
+<li>Top down refactor using updated <a href="/projects/npms/phapper">Phapper</a>.</li>
+<li>Includes better pathing support for finding included <a href="http://yslow.org/phantomjs">yslow.js</a>.</li>
+<li>Downloads and install <a href="http://yslow.org/phantomjs">yslow.js</a> if it can't be found, which should never happen.</li>
+<li>Adding limited support for <a href="https://github.com/jmervine/node-yslowjs/blob/master/NOTES.mdown">Windows</a>.</li>
+</ul>
+</li>
+<li>0.1.2
+
+<ul>
+<li>Fixing critical issue in NODE_PATH search when working with global installations.</li>
+</ul>
+</li>
+<li>0.1.1
+
+<ul>
+<li>Refactored to use <a href="/projects/npms/phapper">Phapper</a>, way cleaner and less code.</li>
+<li>Refactored tests for change to Phapper.</li>
+<li>Refactored stubs..</li>
+<li>Adding functional tests.</li>
+</ul>
+</li>
+<li>0.0.1
+
+<ul>
+<li>Initial release.</li>
+</ul>
+</li>
+</ul>
+<footer><p class="meta">
+      Published
+      on
+      <time datetime="2014-03-22T14:40:00+00:00" pubdate>22 March 2014</time>
+      in
+      <a href="http://mervine.net/projects/npms">My NPMs</a>,
+      <a href="http://mervine.net/nodejs">Node.js</a>,
+      <a href="http://mervine.net/projects/npms/phapper">Phapper</a>,
+      <a href="http://mervine.net/projects/npms/yslowjs">YSlow.js on Node.js</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/projects/npms/phapper-release">Phapper.js: Release 0.1.9</a>
+    </h2>
+  </header><h4>Links: <a href="/projects/npms/phapper">readme</a> | <a href="https://npmjs.org/package/phapper">package</a> | <a href="https://github.com/jmervine/phapper">source</a> | <a href="https://travis-ci.org/jmervine/phapper">tests</a>
+</h4>
+
+<h3>0.1.9</h3>
+
+<ul>
+<li>Fixing a minor bug with the install script.</li>
+</ul>
+<h3>Previous Versions</h3>
+
+<ul>
+<li>0.1.8
+
+<ul>
+<li>Updating PhantomJS version to 1.9.7.</li>
+</ul>
+</li>
+<li>0.1.6
+
+<ul>
+<li>Replacing exec-sync with execSync for easier Mac installation.</li>
+</ul>
+</li>
+<li>0.1.5
+
+<ul>
+<li>Removing unused dependancies.</li>
+</ul>
+</li>
+<li>0.1.4
+
+<ul>
+<li>Fixing small issue with passed in arguments on init.</li>
+<li>Added ability to pass exec object, see readme examples.</li>
+<li>Cleaned up tests, added more.</li>
+<li>Cleaned up make test / npm test.</li>
+<li>Allowing for passing of cwd to sync function.</li>
+</ul>
+</li>
+<li>0.1.3
+
+<ul>
+<li>Adding windows handling and phantomjs version overide.</li>
+<li>Updating <a href="/projects/npms/phapper">readme</a>.</li>
+</ul>
+</li>
+<li>0.1.2
+
+<ul>
+<li>Adding phantomjs install.</li>
+<li>Adding better phantomjs path support.</li>
+</ul>
+</li>
+<li>0.1.1
+
+<ul>
+<li>Refactored to not require JSON stdout parse.</li>
+<li>Refactored run and runSync return values, see <a href="/projects/npms/phapper">readme</a>.</li>
+</ul>
+</li>
+<li>0.0.1
+
+<ul>
+<li>Initial release.</li>
+</ul>
+</li>
+</ul>
+<footer><p class="meta">
+      Published
+      on
+      <time datetime="2014-03-22T14:30:00+00:00" pubdate>22 March 2014</time>
+      in
+      <a href="http://mervine.net/projects/npms">My NPMs</a>,
+      <a href="http://mervine.net/nodejs">Node.js</a>,
+      <a href="http://mervine.net/projects/npms/phapper">Phapper</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/github-webhooks-with-git-fish">Github Webhooks with git-fish</a>
+    </h2>
+  </header><p>I wrote <a href="/projects/npms/git-fish">git-fish</a> – a <a href="http://developer.github.com/webhooks/">Github Webhook</a> listener – to provide a simple and modular method for executing an autodeployment on <a href="/">mervine.net</a> when adding or updating a post. I designed it to as simple and as modular as possible. While written in <a href="/nodejs">Node.js</a>, I tend to use it execute simple <a href="/bash">bash</a> scripts, like the <a href="/">mervine.net</a> deployment script:</p>
+
+<pre class="twilight">#!/bin/bash
+
+cd /home/jmervine/mervine.net
+make deploy/soft
+</pre>
+
+<p>With this combination, I can use [Github] as my psudo-CMS, to create and update posts and when I save an addition or change, it becomes visable on the site in seconds (including, updating code and purging cache).</p>
+
+<p>For detailed information on setting up and using <a href="/projects/npms/git-fish">git-fish</a> or my other see <a href="/projects/npms/git-fish">my git-fish project page</a>.</p>
+
+<p>Enjoy!</p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2014-03-15T15:30:00+00:00" pubdate>15 March 2014</time>
+      in
+      <a href="http://mervine.net/projects/npms/git-fish">git-fish</a>,
+      <a href="http://mervine.net/projects/npms">My NPMs</a>,
+      <a href="http://mervine.net/nodejs">Node.js</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/projects/npms/httperfjs-release">HTTPerf.js: Release 0.1.0</a>
+    </h2>
+  </header><p>Removing <code>runSync</code>. Refactoring <code>run</code> to support sending spawned process <code>SIGINT</code> to capture current report from httperf and exit.</p>
+  <p class="read_more">
+    <a href="http://mervine.net/projects/npms/httperfjs-release">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2014-02-27T16:30:00+00:00" pubdate>27 February 2014</time>
+      in
+      <a href="http://mervine.net/benchmarking-with-httperfjs-and-nodeunit">Benchmarking with HTTPerf.js and NodeUnit</a>,
+      <a href="http://mervine.net/projects/npms/httperfjs">HTTPerf.js</a>,
+      <a href="http://mervine.net/projects/npms">My NPMs</a>,
+      <a href="http://mervine.net/projects">My Projects</a>,
+      <a href="http://mervine.net/nodejs">Node.js</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/hacks/forking-in-nodejs">Forking in Node.js / Threading HTTPerf with HTTPerf.js</a>
+    </h2>
+  </header><p>Occasionally, we want to generate load beyond what a single httperf thread can handle, especially when working in <a href="http://nodejs.org/">Node.js</a>, where the connection limits can get very high. The code sample below does that, but also serves as an example of how to use the <a href="http://nodejs.org/api/cluster.html">cluster module</a> to fork actions and collect the resulting data. Enjoy!</p>
+  <p class="read_more">
+    <a href="http://mervine.net/hacks/forking-in-nodejs">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2014-02-26T22:00:00+00:00" pubdate>26 February 2014</time>
+      in
+      <a href="http://mervine.net/hacks">Hacks</a>,
+      <a href="http://mervine.net/httperf">Httperf</a>,
+      <a href="http://mervine.net/nodejs">Node.js</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/notes/simple-timing-in-node">Simple Timing in Node.js</a>
+    </h2>
+  </header><p>I just stumbled upon a cool feature of <a href="http://nodejs.org/">Node.js</a> for adding timing to applications using <code>console.time</code> and console.timeEnd`.</p>
+
+<pre class="twilight"><span class="Comment"><span class="Comment">//</span> pointless example that show all parts</span>
+<span class="Entity">console</span><span class="SupportFunction">.time</span>(<span class="String"><span class="String">'</span>timer<span class="String">'</span></span>);
+<span class="SupportFunction">setTimeout</span>(<span class="Storage">function</span>() {
+    <span class="Entity">console</span><span class="SupportFunction">.timeEnd</span>(<span class="String"><span class="String">'</span>timer<span class="String">'</span></span>);
+}, <span class="Constant">500</span>);
+
+<span class="Comment"><span class="Comment">//</span> =&gt; timer: 511ms</span>
+</pre>
+
+<blockquote><p>Note: I've heard (and in somecases proven) that in most cases <code>console.</code> method are not asynchronous (i.e. blocking) and therefore should never be used in production code. Notice that in the above example, <code>console.time</code> and <code>console.timeEnd</code> appear to have about 11ms of overhead on my machine.</p></blockquote>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2014-01-06T20:00:00+00:00" pubdate>06 January 2014</time>
+      in
+      <a href="http://mervine.net/hacks">Hacks</a>,
+      <a href="http://mervine.net/nodejs">Node.js</a>,
+      <a href="http://mervine.net/notes">Notes</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/npmjs-registry-list">NPM Registry's</a>
+    </h2>
+  </header><p>I'm starting this list with the plan on adding as many as I can find. Please shoot me any known public registry's in the comments below.</p>
+
+<pre class="twilight">http://registry.npmjs.vitecho.com/
+http://npm.nodejs.org.au:5984/registry/_design/app/_rewrite (AUS)
+</pre>
+
+<h3>Usage:</h3>
+
+<pre class="twilight">npm install --registry http://registry.npmjs.vitecho.com/ npm-foo
+</pre>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2013-11-04T13:00:00+00:00" pubdate>04 November 2013</time>
+      in
+      <a href="http://mervine.net/nodejs">Node.js</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/notes/jade-bootstrap-layout">Jade Bootstrap Layout Template</a>
+    </h2>
+  </header><p>After using the <a href="/express">Express</a> command line generation untility, you get a very basic <em>layout.jade</em>. Here's the standard modifications I make for use with <a href="http://www.bootstrapcdn.com/">BootstrapCDN</a>.</p>
+  <p class="read_more">
+    <a href="http://mervine.net/notes/jade-bootstrap-layout">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+    Published
+    on
+    <time datetime="2013-10-19T10:45:00+00:00" pubdate>19 October 2013</time>
+    in
+    <a href="http://mervine.net/express">Express</a>,
+    <a href="http://mervine.net/nodejs">Node.js</a>,
+    <a href="http://mervine.net/notes">Notes</a>
+  </p>
+</footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/notes/mosh-iptable-rule">Notes: Mosh IPTable Rules</a>
+    </h2>
+  </header><p>I recently picked up a <a href="http://www.samsung.com/us/mobile/cell-phones/SM-N900AZKEATT">Note 3</a> and with the larger screen I found myself want to use it for shelling in to my machines. So I started playing with <a href="http://mosh.mit.edu/">Mosh</a> on one of my boxes. I (like hopefully most of you) set strick IPTable rules to keep things locked down as much as possible. I quickly found that (obviously) things weren't working due to this.</p>
+
+<p>To make things work, I added this line to <code>/etc/sysconfig/iptables</code>:</p>
+
+<pre class="twilight">-A INPUT -p udp -m udp --dport 60001:61000 -j ACCEPT
+</pre>
+
+<p>Here's the diff:</p>
+
+<pre class="twilight">diff --git a/tmp/iptables.old b/etc/sysconfig/iptables
+index d4229ca..b950f1f 100644
+<span class="DiffHeader"><span class="DiffHeader">---</span> a/tmp/iptables.old</span>
+<span class="DiffHeader"><span class="DiffHeader">+++</span> b/etc/sysconfig/iptables</span>
+<span class="DiffHeader"><span class="DiffHeader">@@</span> <span class="DiffHeader">-8,6 +8,7</span> <span class="DiffHeader">@@</span></span>
+ -A INPUT -p icmp -j ACCEPT 
+ -A INPUT -i lo -j ACCEPT 
+ -A INPUT -p tcp -m state --state NEW -m tcp --dport 22 -j ACCEPT 
+<span class="DiffInserted"><span class="DiffInserted">+</span>-A INPUT -p udp -m udp --dport 60001:61000 -j ACCEPT</span>
+ -A INPUT -j REJECT --reject-with icmp-host-prohibited 
+ -A FORWARD -j REJECT --reject-with icmp-host-prohibited 
+ COMMIT
+</pre>
+
+<p>Once you've added the line, simply restart IPTables like so:</p>
+
+<pre class="twilight">sudo /etc/init.d/iptables condrestart 
+</pre>
+
+<p>Enjoy!</p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2013-10-17T09:30:00+00:00" pubdate>17 October 2013</time>
+      in
+      <a href="http://mervine.net/linux">Linux</a>,
+      <a href="http://mervine.net/notes">Notes</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/bundle-faster">Bundle Faster, Save Time</a>
+    </h2>
+  </header><p><a href="http://bundler.io/">Bundler</a> just annouced <code>1.4.0.pre.1</code> with <code>--jobs</code> support, which allows for multithreading gem installs -- I haven't looked at the code, but my guess is it's making use of the <code>JOBS</code> flag support in <code>gmake</code> (which multithreads C compilation) for navtive libs.</p>
+
+<p>Anyway, here's my quick timing comparison on bundling a very large project with hundrends of gems:</p>
+
+<pre class="twilight">rm -rf vendor/bundle
+bundle install --path vendor/bundle
+# time: 5:31.40 total
+
+rm -rf vendor/bundle
+gem install bundler -v 1.4.0.pre.1 --pre
+bundle install --jobs=4 --path vendor/bundle
+# time: 3:10.38 total
+</pre>
+
+<p>Enjoy!</p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2013-09-03T10:00:00+00:00" pubdate>03 September 2013</time>
+      in
+      <a href="http://mervine.net/ruby">Ruby</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/nodejs-eating-crow-tweet">Tweet: Node.js, Eating Crow</a>
+    </h2>
+  </header><blockquote class="twitter-tweet">
+<p>I kicked, I screamed, I threatened to leave; I'm eating crow... I'm a <a href="https://twitter.com/search?q=%23nodejs&amp;src=hash">#nodejs</a> convert.</p>— Joshua Mervine (@mervinej) <a href="https://twitter.com/mervinej/statuses/368428168840892416">August 16, 2013</a>
+</blockquote>
+  
+  
+  <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script><footer><p class="meta">
+      Published
+      on
+      <time datetime="2013-08-16T10:58:00+00:00" pubdate>16 August 2013</time></p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/hacks/pretty-sleep-using-nodejs">Pretty Sleep using Node.js</a>
+    </h2>
+  </header><pre class="twilight"><span class="Keyword">$</span> node <span class="Keyword">-</span>e <span class="String"><span class="String">'</span>n=0; setInterval(function(){n++;if(n&gt;=20){console.log(".");process.exit(0);}process.stdout.write(".");},1000);<span class="String">'</span></span>
+</pre>
+  <footer><p class="meta">
+        Published
+        on
+        <time datetime="2013-08-16T10:30:00+00:00" pubdate>16 August 2013</time>
+        in
+        <a href="http://mervine.net/bash">Bash</a>,
+        <a href="http://mervine.net/hacks">Hacks</a>,
+        <a href="http://mervine.net/linux">Linux</a>,
+        <a href="http://mervine.net/nodejs">Node.js</a>
+      </p>
+    </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/projects/nodejs/hexo-theme-twbootstrap">Twitter Bootstrap Theme for Hexo</a>
+    </h2>
+  </header><p>Just finished building a <a href="http://github.com/jmervine/hexo-theme-twbootstrap">Twitter Bootstrap theme</a> for <a href="http://zespia.tw/hexo/">Hexo</a>.</p>
+  <footer><p class="meta">
+        Published
+        on
+        <time datetime="2013-08-15T20:00:00+00:00" pubdate>15 August 2013</time></p>
+    </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/hacks/command-line-google-search">Command-line Google Search via `find`</a>
+    </h2>
+  </header><p>Just for fun...</p>
+
+<pre class="twilight">$ find -type m -name <span class="String"><span class="String">"</span>glendale, ca coffee<span class="String">"</span></span>
+$ find -type m -name <span class="String"><span class="String">"</span>glendale, ca smog check<span class="String">"</span></span>
+$ find -type g -name <span class="String"><span class="String">"</span>cool bash commands<span class="String">"</span></span>
+</pre>
+
+<p>The code:</p>
+
+<pre class="twilight"><span class="Comment"><span class="Comment">#</span> "Install" (I use that term loosely)</span>
+<span class="Comment"><span class="Comment">#</span> - Paste the function below in your .bashrc / .profile / .zshrc / etc.</span>
+<span class="Comment"><span class="Comment">#</span> Usage: find /usr/local -type [m|g] -name [KEYWORD]</span>
+<span class="Comment"><span class="Comment">#</span> * -type m : google maps search</span>
+<span class="Comment"><span class="Comment">#</span> * -type g : google search</span>
+<span class="Comment"><span class="Comment">#</span> * all other types pass through to find</span>
+<span class="Comment"><span class="Comment">#</span> Notes: </span>
+<span class="Comment"><span class="Comment">#</span> Tested on Ubuntu with ZSH. Comment's, suggestions, etc. welcome.</span>
+function find {
+  <span class="Keyword">if</span> [ <span class="String"><span class="String">`</span>uname -s<span class="String">`</span></span> = <span class="String"><span class="String">"</span>Darwin<span class="String">"</span></span> ]<span class="Keyword">;</span> <span class="Keyword">then</span>
+    <span class="Variable"><span class="Variable">$</span>browser</span>=<span class="String"><span class="String">"</span>open<span class="String">"</span></span>
+  <span class="Keyword">fi</span>
+  test <span class="String"><span class="String">"</span><span class="StringVariable"><span class="StringVariable">$</span>browser</span><span class="String">"</span></span> <span class="Keyword">||</span> browser=<span class="String"><span class="String">`</span>which chromium-browser<span class="String">`</span></span>
+  test <span class="String"><span class="String">"</span><span class="StringVariable"><span class="StringVariable">$</span>browser</span><span class="String">"</span></span> <span class="Keyword">||</span> browser=<span class="String"><span class="String">`</span>which google-chrome<span class="String">`</span></span>
+  test <span class="String"><span class="String">"</span><span class="StringVariable"><span class="StringVariable">$</span>browser</span><span class="String">"</span></span> <span class="Keyword">||</span> browser=<span class="String"><span class="String">`</span>which firefox<span class="String">`</span></span>
+  query=<span class="String"><span class="String">"</span><span class="String"><span class="String">`</span>echo "$@" | sed -e 's:^[a-z\/\~\.]* ::' -e 's/-type [mg]//' -e 's/-name//'<span class="String">`</span></span><span class="String">"</span></span>
+  <span class="Keyword">if</span> [[ <span class="Variable"><span class="Variable">$</span>@</span> =<span class="Keyword">~</span> <span class="String"><span class="String">"</span>-type m<span class="String">"</span></span> ]]<span class="Keyword">;</span> <span class="Keyword">then</span>
+    <span class="Variable"><span class="Variable">$</span>browser</span> <span class="String"><span class="String">"</span>http://maps.google.com/?q=<span class="StringVariable"><span class="StringVariable">$</span>query</span><span class="String">"</span></span> <span class="Keyword">2&gt;&amp;1</span> <span class="Keyword">&gt;</span> /dev/null <span class="Keyword">&amp;</span>
+  <span class="Keyword">elif</span> [[ <span class="Variable"><span class="Variable">$</span>@</span> =<span class="Keyword">~</span> <span class="String"><span class="String">"</span>-type g<span class="String">"</span></span> ]]<span class="Keyword">;</span> <span class="Keyword">then</span>
+    <span class="Variable"><span class="Variable">$</span>browser</span> <span class="String"><span class="String">"</span>http://www.google.com/search?q=<span class="StringVariable"><span class="StringVariable">$</span>query</span><span class="String">"</span></span> <span class="Keyword">2&gt;&amp;1</span> <span class="Keyword">&gt;</span> /dev/null <span class="Keyword">&amp;</span>
+  <span class="Keyword">else</span>
+    /usr/bin/find <span class="Variable"><span class="Variable">$</span>@</span>
+  <span class="Keyword">fi</span>
+}
+</pre>
+
+<p><a href="https://gist.github.com/jmervine/6232984">get the gist</a></p>
+  <footer><p class="meta">
+        Published
+        on
+        <time datetime="2013-08-14T11:00:00+00:00" pubdate>14 August 2013</time></p>
+    </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/benchmarking-with-yslowjs-on-nodejs">Benchmarking with YSlow.js on Node.js</a>
+    </h2>
+  </header><p>In my last post on this topic (<a href="/benchmarking-with-httperfjs-and-nodeunit">Benchmarking with HTTPerf.js and NodeUnit</a>) I covered benchmarking application render times from the server to first byte. In this post, I'm going cover basic client benchmarking using <a href="http://yslow.org/">YSlow</a> and <a href="http://phantomjs.org/">PhantomJS</a> via <a href="/projects/npms/yslowjs">YSlow.js on Node.js</a>.</p>
+  <p class="read_more">
+    <a href="http://mervine.net/benchmarking-with-yslowjs-on-nodejs">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+        Published
+        on
+        <time datetime="2013-08-10T00:00:00+00:00" pubdate>10 August 2013</time>
+        in
+        <a href="http://mervine.net/projects/npms/httperfjs">HTTPerf.js</a>,
+        <a href="http://mervine.net/projects/npms">My NPMs</a>,
+        <a href="http://mervine.net/projects">My Projects</a>,
+        <a href="http://mervine.net/nodejs">Node.js</a>,
+        <a href="http://mervine.net/projects/npms/phapper">Phapper</a>,
+        <a href="http://mervine.net/projects/npms/yslowjs">YSlow.js on Node.js</a>
+      </p>
+    </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/retweets/20130909">RT: Benchmarking with HTTPerf.js and NodeUnit</a>
+    </h2>
+  </header><blockquote class="twitter-tweet">
+<p>Benchmarking with HTTPerf.js and NodeUnit - Speed Awareness Month <a href="http://t.co/cdhLL1jswp">http://t.co/cdhLL1jswp</a> via <a href="http://twitter.com/mervinej">@mervinej</a> <a href="http://twitter.com/search?q=%23SAM2013&amp;src=hash">#SAM2013</a> <a href="http://twitter.com/search?q=%23webperf&amp;src=hash">#webperf</a></p>— SpeedAwarenessMonth (@SpeedMonth) <a href="http://twitter.com/SpeedMonth/statuses/365139773821698052">August 7, 2013</a>
+</blockquote>
+    
+    
+    <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script><footer><p class="meta">
+        Published
+        on
+        <time datetime="2013-08-09T15:30:00+00:00" pubdate>09 August 2013</time></p>
+    </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/notes/nginx-build-script">Nginx Build Script</a>
+    </h2>
+  </header><p>A simple (no frills) <a href="/nginx">Nginx</a> build script.</p>
+
+<pre class="twilight"><span class="Comment"><span class="Comment">#</span>!/bin/bash</span>
+<span class="Comment"><span class="Comment">#</span></span>
+<span class="Comment"><span class="Comment">#</span> This script has been tested on CentOS 5 &amp;&amp; Ubuntu 12.04.3</span>
+<span class="Comment"><span class="Comment">#</span></span>
+<span class="Comment"><span class="Comment">#</span> By: Joshua Mervine &lt;joshua at mervine dot net&gt; (http://mervine.net)</span>
+<span class="Comment"><span class="Comment">#</span></span>
+<span class="Comment"><span class="Comment">#</span> Note: Does not run `make install` unless run with `INSTALL=true`.</span>
+
+set -e
+test <span class="String"><span class="String">"</span><span class="StringVariable"><span class="StringVariable">$</span>DEBUG</span><span class="String">"</span></span> <span class="Keyword">&amp;&amp;</span> set -x
+
+BUILD_ROOT=<span class="String"><span class="String">`</span>pwd<span class="String">`</span></span>
+
+PAGESPEED=true <span class="Comment"><span class="Comment">#</span> set to false to disable pagespeed</span>
+
+VERSION=1.4.2
+PSVER=1.6.29.5-beta
+PSOLVER=1.6.29.5
+PCREVER=8.32
+ZLIBVER=1.2.8
+
+<span class="Comment"><span class="Comment">#</span> parallelize builds</span>
+<span class="Storage">export</span> JOBS=8
+
+<span class="Comment"><span class="Comment">#</span> We don't want to compile against random artifacts</span>
+<span class="Storage">export</span> PATH=/usr/kerberos/bin:/usr/local/bin:/bin:/usr/bin
+
+<span class="Comment"><span class="Comment">#</span> bail if no yup or apt-get</span>
+(which apt-get <span class="Keyword">||</span> which yum) <span class="Keyword">||</span> exit 1
+which apt-get <span class="Keyword">&amp;&amp;</span> sudo apt-get install build-essential zlib1g-dev libpcre3 libpcre3-dev libssl-dev wget
+which yum <span class="Keyword">&amp;&amp;</span> sudo yum install gcc-c++ pcre-dev pcre-devel zlib-devel make openssl-devel wget
+
+<span class="Comment"><span class="Comment">#</span> delete libs is rebuild</span>
+rm -rf nginx-* pcre-* zlib-* release-* *.tar.gz ngx_pagespeed-release-*
+
+<span class="Keyword">if</span> <span class="Variable"><span class="Variable">$</span>PAGESPEED</span><span class="Keyword">;</span> <span class="Keyword">then</span>
+  wget https://github.com/pagespeed/ngx_pagespeed/archive/release-<span class="Variable"><span class="Variable">$</span>PSVER</span>.zip -O release-<span class="Variable"><span class="Variable">$</span>PSVER</span>.zip
+  unzip release-<span class="Variable"><span class="Variable">$</span>PSVER</span>.zip
+  cd ngx_pagespeed-release-<span class="Variable"><span class="Variable">$</span>PSVER</span>/
+  wget https://dl.google.com/dl/page-speed/psol/<span class="Variable"><span class="Variable">$</span>PSOLVER</span>.tar.gz
+  tar -xzvf <span class="Variable"><span class="Variable">$</span>PSOLVER</span>.tar.gz
+  cd ..
+<span class="Keyword">fi</span>
+
+wget http://nginx.org/download/nginx-<span class="Variable"><span class="Variable">$</span>VERSION</span>.tar.gz
+tar xzf nginx-<span class="Variable"><span class="Variable">$</span>VERSION</span>.tar.gz
+
+<span class="Comment"><span class="Comment">#</span> for rewrite_module</span>
+wget http://sourceforge.net/projects/pcre/files/pcre/<span class="Variable"><span class="Variable">$</span>PCREVER</span>/pcre-<span class="Variable"><span class="Variable">$</span>PCREVER</span>.tar.gz/download \
+        -O pcre-<span class="Variable"><span class="Variable">$</span>PCREVER</span>.tar.gz
+tar xzf pcre-<span class="Variable"><span class="Variable">$</span>PCREVER</span>.tar.gz
+
+<span class="Comment"><span class="Comment">#</span> for gzip module</span>
+wget http://zlib.net/zlib-<span class="Variable"><span class="Variable">$</span>ZLIBVER</span>.tar.gz
+tar xzf zlib-<span class="Variable"><span class="Variable">$</span>ZLIBVER</span>.tar.gz
+
+cd nginx-<span class="Variable"><span class="Variable">$</span>VERSION</span>
+
+OPTIONS=<span class="String"><span class="String">"</span> --with-pcre=../pcre-<span class="StringVariable"><span class="StringVariable">$</span>PCREVER</span></span>
+<span class="String"> --with-zlib=../zlib-<span class="StringVariable"><span class="StringVariable">$</span>ZLIBVER</span></span>
+<span class="String"> --with-http_ssl_module</span>
+<span class="String"> --without-http_uwsgi_module</span>
+<span class="String"> --without-http_scgi_module</span>
+<span class="String"> --without-http_fastcgi_module</span>
+<span class="String"> --without-http_autoindex_module</span>
+<span class="String"> --without-http_auth_basic_module<span class="String">"</span></span>
+
+<span class="Keyword">if</span> <span class="Variable"><span class="Variable">$</span>PAGESPEED</span><span class="Keyword">;</span> <span class="Keyword">then</span>
+        OPTIONS+=<span class="String"><span class="String">"</span> --add-module=<span class="StringVariable"><span class="StringVariable">$</span>BUILD_ROOT</span>/ngx_pagespeed-release-<span class="StringVariable"><span class="StringVariable">$</span>PSVER</span><span class="String">"</span></span>
+<span class="Keyword">fi</span>
+
+./configure <span class="Variable"><span class="Variable">$</span>OPTIONS</span>
+
+make
+test <span class="Variable"><span class="Variable">$</span>INSTALL</span> <span class="Keyword">&amp;&amp;</span> sudo make install
+</pre>
+
+<p><a href="https://gist.github.com/jmervine/6063910">get the gist</a></p>
+  <footer><p class="meta">
+        Published
+        on
+        <time datetime="2013-07-23T09:30:00+00:00" pubdate>23 July 2013</time></p>
+    </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/benchmarking-with-httperfjs-and-nodeunit">Benchmarking with HTTPerf.js and NodeUnit</a>
+    </h2>
+  </header><p>I covered this in the <a href="/projects/npms/httperfjs">HTTPerf.js README</a> a bit, but wanted to take a deer look at how I'm using <a href="/projects/npms/httperfjs">HTTPerf.js</a> to benchmark web applications.</p>
+  <p class="read_more">
+    <a href="http://mervine.net/benchmarking-with-httperfjs-and-nodeunit">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+        Published
+        on
+        <time datetime="2013-07-17T06:30:00+00:00" pubdate>17 July 2013</time>
+        in
+        <a href="http://mervine.net/httperf">Httperf</a>,
+        <a href="http://mervine.net/projects/npms/httperfjs">HTTPerf.js</a>,
+        <a href="http://mervine.net/projects">My Projects</a>,
+        <a href="http://mervine.net/nodejs">Node.js</a>
+      </p>
+    </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/working-with-events-and-strings-in-nodejs">Working with Events and Strings in Node.js</a>
+    </h2>
+  </header><p>Being new to <a href="/nodejs">Node.js</a>, it took me an amazing amount of time to figure out how to assgin event stream chunks (<code>foo.on('data', ...)</code>) to a variable and work with it. An amazing amount of time, because it's actually really easy if you understand callbacks (which I didn't) and because all the examples I could find worked with <code>console.log</code>. In this case, I didn't want to log the result, but pass it, process it, etc. So here's an example from <a href="http://github.com/jmervine/node-gitmd">GitMD</a> with some additional comments to help you along the way.</p>
+  <p class="read_more">
+    <a href="http://mervine.net/working-with-events-and-strings-in-nodejs">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+        Published
+        on
+        <time datetime="2013-07-13T14:00:00+00:00" pubdate>13 July 2013</time>
+        in
+        <a href="http://mervine.net/nodejs">Node.js</a>
+      </p>
+    </footer>
+</div></section><hr class="article_seperator">
+<br><div id="disqus_thread">
+      <script async src="http://rubyops.disqus.com/embed.js" type="text/javascript"></script><noscript>
+        <a href="http://rubyops.disqus.com/embed.js?url=ref">View comments.</a>
+      </noscript>
+    </div>
+  </div>
+</div>
+        </div>
+        <div class="col-md-3 visible-md visible-lg">
+          <div class="sidebar-nav">
+              <ul class="share-buttons">
+<li>
+                  <a href="https://www.facebook.com/sharer/sharer.php?u=http://mervine.net/" target="_blank">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Facebook.png"></a>
+                </li>
+                <li>
+                  <a href="https://twitter.com/intent/tweet?url=http://mervine.net/&amp;text=mervine.net%20-%20&amp;via=mervinej" target="_blank" title="Tweet">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Twitter.png"></a>
+                </li>
+                <li>
+                  <a href="https://plus.google.com/share?url=http://mervine.net/" target="_blank" title="Share on Google+">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Google.png"></a>
+                </li>
+                <li>
+                  <a href="http://www.reddit.com/submit?url=http://mervine.net/&amp;title=mervine.net" target="_blank" title="Submit to Reddit">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Reddit.png"></a>
+                </li>
+                <li>
+                  <a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=http://mervine.net/&amp;title=mervine.net&amp;source=http://mervine.net/" target="_blank" title="Share on LinkedIn">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/LinkedIn.png"></a>
+                </li>
+              </ul>
+<div class="list-group">
+<a class="list-group-item active" href="http://joshua.mervine.net/">
+                  <h4 class="list-group-item-heading">Joshua P. Mervine</h4>
+                </a><a class="list-group-item" href="http://twitter.com/mervinej">Twitter</a>
+            <a class="list-group-item" href="http://linkedin.com/in/mervinej">Linkedin</a>
+            <a class="list-group-item" href="http://github.com/jmervine">Github</a>
+            <a class="list-group-item" href="http://www.gittip.com/jmervine">Gittip</a>
+              </div>
+            </div>
+        </div>
+      </div>
+      <center>
+        <br><div id="footer">
+            <div class="container">
+              <p class="muted credit">
+                Powered by Nesta, a
+                <a href="http://nestacms.com">Ruby CMS</a>.
+              </p>
+            </div>
+          </div>
+      </center>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script><script async src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js" type="text/javascript"></script><script>
+      var searchElement = 'input[name=q]';
+    </script><script async src="//cdn.jsdelivr.net/jquery.webpage-vim/0.1/vim.min.js" type="text/javascript"></script><script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-32343843-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+      </script>
+</body>
+</html>

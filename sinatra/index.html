@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta content="simple rules for stable apps, sinatra vs express, syntax highlighting on nesta, diskcached simple disk cacheing for ruby, setting up newrelic on sinatra, configurable template engine in sinatra, sinatra mobile dection   rack mobile detect, deploy sinatra with vlad and git" name="keywords">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="" name="author">
+<link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/spacelab/bootstrap.min.css" media="screen" rel="stylesheet">
+<link href="//cdn.mervine.net/bootstrap/master.css" media="screen" rel="stylesheet">
+<!--[if lte IE 6]>
+      <link href='http://universal-ie6-css.googlecode.com/files/ie6.1.1.css' media='screen, projection' rel='stylesheet'>
+    <![endif]--><!--[if lt IE 9]>
+      <script src='//html5shim.googlecode.com/svn/trunk/html5.js'></script>
+    <![endif]--><link href="/articles.xml" rel="alternate" type="application/atom+xml">
+<link href="//cdn.mervine.net/bootstrap/favicon.ico" rel="shortcut icon">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon.png" rel="apple-touch-icon">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon-72x72.png" rel="apple-touch-icon" sizes="72x72">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon-114x114.png" rel="apple-touch-icon" sizes="114x114">
+<title>Sinatra - mervine.net</title>
+</head>
+<body style="padding-top: 10px !important">
+    <div class="container">
+      <div class="navbar navbar-default navbar-top" style="margin-bottom: 0px !important">
+        <div class="navbar-header">
+          <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse" type="button">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Home</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+<li class="">
+              <a href="http://mervine.net/categories">Category List</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/projects">My Projects</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/notes">Notes</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/hacks">Hacks</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/quotes">Quotes</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/archive">Archives</a>
+            </li>
+          </ul>
+<ul class="nav navbar-nav navbar-right visible-xs">
+<li>
+              <a href="http://twitter.com/mervinej">Twitter</a>
+            </li>
+            <li>
+              <a href="http://linkedin.com/in/mervinej">Linkedin</a>
+            </li>
+            <li>
+              <a href="http://github.com/jmervine">Github</a>
+            </li>
+            <li>
+              <a href="http://www.gittip.com/jmervine">Gittip</a>
+            </li>
+          </ul>
+</div>
+      </div>
+      <div class="container">
+        <div class="page-header" style="margin-top: 0px !important;">
+          <img src="http://www.gravatar.com/avatar/ed808193b8c2c8516715816f90a005b2.jpg?s=75" style="padding:5px 15px 15px; float:left"><a href="http://mervine.net/">
+            <h1>mervine.net</h1>
+          </a><small>Lessons learned, code written, hacks, etc.</small>
+        </div>
+      </div>
+      <div class="container">
+        <div class="col-sm-12 col-md-9">
+          <div class="page_content container">
+  <div class="page_content">
+    <h1>Sinatra</h1>
+    
+    <blockquote><p><a href="http://sinatrarb.com/">Sinatrarb</a> is classy web-development dressed in a DSL.</p></blockquote>
+    <hr class="article_seperator">
+<header><h2>Articles on Sinatra</h2>
+    </header><div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/simple-rules-for-stable-apps">Simple Rules for Stable, Performant and Maintainable Apps</a>
+    </h2>
+  </header><p>Here are some simple and basic rules I've found for building applications that are maintainable and perform well, both in speed and stability. These rules, at one level or another, can apply to smaller modules and libraries, scripts, as well as fully featured large scale applications (both web and otherwise). In this post I will focus more on web applications, since that's where I've spent most of my time. At a higher level, they should apply to almost all areas of software development.</p>
+  <p class="read_more">
+    <a href="http://mervine.net/simple-rules-for-stable-apps">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+    Published
+    on
+    <time datetime="2013-07-08T08:00:00+00:00" pubdate>08 July 2013</time>
+    in
+    <a href="http://mervine.net/express">Express</a>,
+    <a href="http://mervine.net/httperf">Httperf</a>,
+    <a href="http://mervine.net/linux">Linux</a>,
+    <a href="http://mervine.net/projects">My Projects</a>,
+    <a href="http://mervine.net/nodejs">Node.js</a>,
+    <a href="http://mervine.net/python">Python</a>,
+    <a href="http://mervine.net/ruby">Ruby</a>,
+    <a href="http://mervine.net/sinatra">Sinatra</a>
+  </p>
+</footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/notes/sinatra-vs-express">Hello World: Sinatra vs. Node.js</a>
+    </h2>
+  </header><h3><a href="/sinatra">Sinatra</a></h3>
+
+<pre class="twilight"><span class="Keyword">require</span> <span class="String"><span class="String">'</span>sinatra<span class="String">'</span></span>
+get <span class="String"><span class="String">'</span>/<span class="String">'</span></span> <span class="Keyword">do</span>
+  <span class="String"><span class="String">"</span>Hello World<span class="String">"</span></span>
+<span class="Keyword">end</span>
+</pre>
+
+<h3><a href="/express">Express</a></h3>
+
+<pre class="twilight"><span class="Storage">var</span> app <span class="Keyword">=</span> require(<span class="String"><span class="String">'</span>express<span class="String">'</span></span>);
+app.get(<span class="String"><span class="String">'</span>/<span class="String">'</span></span>, <span class="Storage">function</span>(req, res) {
+    res.<span class="SupportFunction">send</span>(<span class="String"><span class="String">"</span>Hello World!<span class="String">"</span></span>);
+});
+app.listen(<span class="Constant">8000</span>);
+</pre>
+  <footer><p class="meta">
+    Published
+    on
+    <time datetime="2013-06-26T12:30:00+00:00" pubdate>26 June 2013</time>
+    in
+    <a href="http://mervine.net/express">Express</a>,
+    <a href="http://mervine.net/nodejs">Node.js</a>,
+    <a href="http://mervine.net/notes">Notes</a>,
+    <a href="http://mervine.net/ruby">Ruby</a>,
+    <a href="http://mervine.net/sinatra">Sinatra</a>
+  </p>
+</footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/syntax-highlighting-on-nesta">Syntax Highlighting on Nesta</a>
+    </h2>
+  </header><p>I recently went through setting up syntax highlighting on Nesta for this site. I started with "Setting up rack-codehighlighter" from the Nesta site, but wasn't loving what Coderay had to offer. Looking at 'rack-codehighlighter' and it's other formatter options and decided to use Ultraviolet.<br><br>While this is geared towards Nesta, this will also work for all Rack applications, especially those built on Sinatra.</p>
+  <p class="read_more">
+    <a href="http://mervine.net/syntax-highlighting-on-nesta">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-09-21T00:00:00+00:00" pubdate>21 September 2012</time>
+      in
+      <a href="http://mervine.net/nesta">Nesta</a>,
+      <a href="http://mervine.net/rack">Rack</a>,
+      <a href="http://mervine.net/ruby">Ruby</a>,
+      <a href="http://mervine.net/sinatra">Sinatra</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/diskcached-simple-disk-cacheing-for-ruby">Diskcached: Simple Disk Cacheing for Ruby</a>
+    </h2>
+  </header><p>I created <a href="https://github.com/rubyops/diskcached/wiki">Diskcached</a> as a simple cacheing layer for things like html fragments and database calls. I thought about using <a href="http://memcached.org/">memcached</a>, but as <a href="http://ditty.mervine.net/">Ditty</a> is running on a single server, it seemed overkill. Additionally, I looked at using <a href="http://rtomayko.github.com/rack-cache/">rack-cache</a>, but I felt it was a bit more complex then I was looking for. So Diskcached was born (although it was origiionally released as "simple_disk_cache" -- for about 12 hours).</p>
+  <p class="read_more">
+    <a href="http://mervine.net/diskcached-simple-disk-cacheing-for-ruby">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-07-06T13:58:00+00:00" pubdate>06 July 2012</time>
+      in
+      <a href="http://mervine.net/httperf">Httperf</a>,
+      <a href="http://mervine.net/ruby">Ruby</a>,
+      <a href="http://mervine.net/sinatra">Sinatra</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/setting-up-newrelic-on-sinatra">Setting up NewRelic on Sinatra</a>
+    </h2>
+  </header><p>This week I spent some time setting a <a href="http://newrelic.com/">NewRelic</a> application on a <a href="/sinatra">Sinatra</a> app. It actually turned out to be so simple that I almost hesitate to do a post on it, but hey, here it is any way.</p>
+  <p class="read_more">
+    <a href="http://mervine.net/setting-up-newrelic-on-sinatra">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-06-16T15:48:00+00:00" pubdate>16 June 2012</time>
+      in
+      <a href="http://mervine.net/rack">Rack</a>,
+      <a href="http://mervine.net/ruby">Ruby</a>,
+      <a href="http://mervine.net/sinatra">Sinatra</a>,
+      <a href="http://mervine.net/unicorn">Unicorn</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/configurable-template-engine-in-sinatra">Configurable Template Engine in Sinatra</a>
+    </h2>
+  </header><p>A lot of people have taken to using HAML, example "sinatra-authentication" uses it by default. I personally don't like it, but I don't judge either. So that said, I wish that more apps out there would steer away from implicitly defining haml calls in their apps. Here's an easy way to allow the template engine to be configurable in Sinatra</p>
+  <p class="read_more">
+    <a href="http://mervine.net/configurable-template-engine-in-sinatra">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-05-30T00:32:00+00:00" pubdate>30 May 2012</time>
+      in
+      <a href="http://mervine.net/ruby">Ruby</a>,
+      <a href="http://mervine.net/sinatra">Sinatra</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/sinatra-mobile-dection---rack-mobile-detect">Sinatra Mobile Dection - rack-mobile-detect</a>
+    </h2>
+  </header><p>I was looking for a simple way to detect mobile devices for this blog, a Sinatra application, and found <a href="https://github.com/talison/rack-mobile-detect">rack-mobile-detect</a>.</p>
+  <p class="read_more">
+    <a href="http://mervine.net/sinatra-mobile-dection---rack-mobile-detect">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-05-29T20:19:00+00:00" pubdate>29 May 2012</time>
+      in
+      <a href="http://mervine.net/rack">Rack</a>,
+      <a href="http://mervine.net/ruby">Ruby</a>,
+      <a href="http://mervine.net/sinatra">Sinatra</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/deploy-sinatra-with-vlad-and-git">Deploy Sinatra with Vlad and Git</a>
+    </h2>
+  </header><p>Deploying <a href="http://sinatrarb.com/">Sinatra</a> with <a href="http://rubyhitsquad.com/Vlad_the_Deployer.html">Vlad the Deployer</a> and <a href="http://github.com/">Git</a> is basically just deploying with Vlad.</p>
+  <p class="read_more">
+    <a href="http://mervine.net/deploy-sinatra-with-vlad-and-git">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2012-05-29T18:40:00+00:00" pubdate>29 May 2012</time>
+      in
+      <a href="http://mervine.net/ruby">Ruby</a>,
+      <a href="http://mervine.net/sinatra">Sinatra</a>,
+      <a href="http://mervine.net/unicorn">Unicorn</a>
+    </p>
+  </footer>
+</div>
+    
+    <hr class="article_seperator">
+<br><div id="disqus_thread">
+      <script async src="http://rubyops.disqus.com/embed.js" type="text/javascript"></script><noscript>
+        <a href="http://rubyops.disqus.com/embed.js?url=ref">View comments.</a>
+      </noscript>
+    </div>
+  </div>
+</div>
+        </div>
+        <div class="col-md-3 visible-md visible-lg">
+          <div class="sidebar-nav">
+              <ul class="share-buttons">
+<li>
+                  <a href="https://www.facebook.com/sharer/sharer.php?u=http://mervine.net/sinatra" target="_blank">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Facebook.png"></a>
+                </li>
+                <li>
+                  <a href="https://twitter.com/intent/tweet?url=http://mervine.net/sinatra&amp;text=Sinatra%20-%20mervine.net%20-%20&amp;via=mervinej" target="_blank" title="Tweet">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Twitter.png"></a>
+                </li>
+                <li>
+                  <a href="https://plus.google.com/share?url=http://mervine.net/sinatra" target="_blank" title="Share on Google+">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Google.png"></a>
+                </li>
+                <li>
+                  <a href="http://www.reddit.com/submit?url=http://mervine.net/sinatra&amp;title=Sinatra%20-%20mervine.net" target="_blank" title="Submit to Reddit">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Reddit.png"></a>
+                </li>
+                <li>
+                  <a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=http://mervine.net/sinatra&amp;title=Sinatra%20-%20mervine.net&amp;source=http://mervine.net/sinatra" target="_blank" title="Share on LinkedIn">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/LinkedIn.png"></a>
+                </li>
+              </ul>
+<div class="list-group">
+<a class="list-group-item active" href="http://joshua.mervine.net/">
+                  <h4 class="list-group-item-heading">Joshua P. Mervine</h4>
+                </a><a class="list-group-item" href="http://twitter.com/mervinej">Twitter</a>
+            <a class="list-group-item" href="http://linkedin.com/in/mervinej">Linkedin</a>
+            <a class="list-group-item" href="http://github.com/jmervine">Github</a>
+            <a class="list-group-item" href="http://www.gittip.com/jmervine">Gittip</a>
+              </div>
+            </div>
+        </div>
+      </div>
+      <center>
+        <br><div id="footer">
+            <div class="container">
+              <p class="muted credit">
+                Powered by Nesta, a
+                <a href="http://nestacms.com">Ruby CMS</a>.
+              </p>
+            </div>
+          </div>
+      </center>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script><script async src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js" type="text/javascript"></script><script>
+      var searchElement = 'input[name=q]';
+    </script><script async src="//cdn.jsdelivr.net/jquery.webpage-vim/0.1/vim.min.js" type="text/javascript"></script><script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-32343843-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+      </script>
+</body>
+</html>

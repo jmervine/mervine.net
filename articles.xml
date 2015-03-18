@@ -1,0 +1,538 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<feed xmlns='http://www.w3.org/2005/Atom'>
+  <title type='text'>mervine.net</title>
+  <generator uri='http://nestacms.com'>Nesta</generator>
+  <id>tag:mervine.net,2009:/</id>
+  <link href='http://mervine.net/articles.xml' rel='self' />
+  <link href='http://mervine.net/' rel='alternate' />
+  <subtitle type='text'>Lessons learned, code written, hacks, etc.</subtitle>
+  <updated>2015-03-10T13:25:00+00:00</updated>
+  <author>
+    <name>Joshua P. Mervine</name>
+    <uri>http://joshua.mervine.net/</uri>
+    <email>joshua@mervine.net</email>
+  </author>
+  <entry>
+    <title>Testing with Docker</title>
+    <link href='http://mervine.net/notes/testing-with-docker' rel='alternate' type='text/html' />
+    <id>tag:mervine.net,2015-03-10:/notes/testing-with-docker</id>
+    <content type='html'>&lt;p&gt;Docker, amoung it's many strengths, allows for easily testing applications or application code on various different version's of that codes interperter.&lt;/p&gt;
+
+&lt;h2&gt;Examples&lt;/h2&gt;
+
+&lt;h3&gt;Node.js / io.js&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;:::shell&amp;#x000A;host $ docker pull node:latest&amp;#x000A;host $ cd /path/to/project&amp;#x000A;host $ docker run --rm -it -v $(pwd):/src node:latest \&amp;#x000A;        bash -lc 'cd /src &amp;amp;&amp;amp; rm -rf node_modules &amp;amp;&amp;amp; npm install &amp;amp;&amp;amp; npm test'&amp;#x000A;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;Ruby&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;:::shell&amp;#x000A;host $ docker pull ruby:latest&amp;#x000A;host $ cd /path/to/project&amp;#x000A;host $ docker run --rm -it -v $(pwd):/src node:latest \&amp;#x000A;        bash -lc 'cd /src &amp;amp;&amp;amp; bundle install &amp;amp;&amp;amp; bundle exec rake test'&amp;#x000A;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;These examples can easily be repeated for anything from Go, to Python, to Perl, etc., etc.&lt;/p&gt;
+
+&lt;p&gt;Enjoy!&lt;/p&gt;</content>
+    <published>2015-03-10T13:25:00+00:00</published>
+    <updated>2015-03-10T13:25:00+00:00</updated>
+    <category term='linux'></category>
+    <category term='notes'></category>
+  </entry>
+  <entry>
+    <title>Docker Tips</title>
+    <link href='http://mervine.net/notes/docker-tips' rel='alternate' type='text/html' />
+    <id>tag:mervine.net,2015-02-21:/notes/docker-tips</id>
+    <content type='html'>&lt;p&gt;Here are a few tips that I've found useful while delving in to &lt;a href=&quot;https://www.docker.com/&quot;&gt;Docker&lt;/a&gt;. For an introduction to Docker, see my post on the &lt;a href=&quot;http://engineering.yp.com/post/intro-to-docker&quot;&gt;YP Engineering Blog&lt;/a&gt;. Enjoy!&lt;/p&gt;
+
+&lt;h3&gt;Making smaller images.&lt;/h3&gt;
+
+&lt;p&gt;Docker image size does matter. The larger your image, that more unweildy it starts to feel. Pulling a 50MB image is far preferable to pulling a 2G image. Some tips on building smaller images:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Use the smallest linux distro which meets your needs; &lt;code&gt;busybox&lt;/code&gt; &amp;lt; &lt;code&gt;debian&lt;/code&gt; &amp;lt; &lt;code&gt;centos&lt;/code&gt; &amp;lt; &lt;code&gt;ubuntu&lt;/code&gt;. I try to use &lt;code&gt;progrium/busybox&lt;/code&gt; whenever possible (which isn't all that often without serious work), otherwise, I tend to use &lt;code&gt;debian&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Install as little as possible to meet your needs -- &lt;code&gt;apt-get build-essential&lt;/code&gt; is going to bloat your image, don't use it unless absolutly necessary.&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Do as much as you can in a single &lt;code&gt;RUN&lt;/code&gt;, as opposed to breaking things up. The downside to this is longer builds with less caching. However, it can make a huge difference in resulting image size. I once took an image from 1.3G to 555MB, just by collapsing all my commands to a single &lt;code&gt;RUN&lt;/code&gt;. Additionally, clean up after yourself in that same &lt;code&gt;RUN&lt;/code&gt; if possible. Example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  # BAD&amp;#x000A;  RUN apt-get install git&amp;#x000A;  RUN apt-get install wget&amp;#x000A;  RUN apt-get install build-essential&amp;#x000A;  COPY http://somesite.com/somefile.tgz&amp;#x000A;  RUN tar xzf somefile.tgz&amp;#x000A;  RUN cd somefile&amp;#x000A;  RUN ./configure &amp;amp;&amp;amp; make &amp;amp;&amp;amp; install&amp;#x000A;&amp;#x000A;  # GOOD&amp;#x000A;  RUN \&amp;#x000A;      apt-get install -y git wget build-essential &amp;amp;&amp;amp; \&amp;#x000A;      curl -sSL -O http://somesite.com/somefile.tgz &amp;amp;&amp;amp; \&amp;#x000A;      tar xzf somefile.tgz &amp;amp;&amp;amp; \ &amp;#x000A;      cd somefile &amp;amp;&amp;amp; ./configure &amp;amp;&amp;amp; make &amp;amp;&amp;amp; install &amp;amp;&amp;amp; \&amp;#x000A;      cd - &amp;amp;&amp;amp; rm -rf somefile somefile.tgz &amp;amp;&amp;amp; \&amp;#x000A;      apt-get remove -y build-essential &amp;amp;&amp;amp; \&amp;#x000A;      apt-get autoremove -y &amp;amp;&amp;amp; apt-get clean&amp;#x000A;&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h3&gt;Search private registry.&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;:::shell&amp;#x000A;sudo docker search &amp;lt;private domain&amp;gt;/&amp;lt;term&amp;gt;&amp;#x000A;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;Removing images and containers in bulk.&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;:::shell&amp;#x000A;# remove all containers&amp;#x000A;sudo docker rm $(sudo docker ps -a -q)&amp;#x000A;#... or ...&amp;#x000A;sudo docker ps -aq | xargs sudo docker rm&amp;#x000A;&amp;#x000A;# remove all images&amp;#x000A;sudo docker rmi $(sudo docker images -q)&amp;#x000A;#... or ...&amp;#x000A;sudo docker images -q | xargs sudo docker rmi&amp;#x000A;&amp;#x000A;# remove specific images in bulk&amp;#x000A;sudo docker rmi myimage:{tagone,tagtwo,tagfive}&amp;#x000A;&amp;#x000A;# remove image containing TERM&amp;#x000A;sudo docker rmi $(sudo docker images | grep TERM | awk '{ print $3 }')&amp;#x000A;#... or ...&amp;#x000A;sudo docker images | grep TERM | awk '{ print $3 }' | xargs sudo docker rmi&amp;#x000A;&amp;#x000A;# remove all non-running containers&amp;#x000A;sudo docker ps -a | grep Exited | awk '{ print $NF }' | xargs sudo docker rm&amp;#x000A;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;Interacting with the most recent continer started.&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;:::shell&amp;#x000A;# view last container&amp;#x000A;sudo docker ps -l &amp;#x000A;&amp;#x000A;# view last container sha only&amp;#x000A;sudo docker ps -lq&amp;#x000A;&amp;#x000A;# stop, start, attach, logs, etc. last container&amp;#x000A;#&amp;#x000A;# $ sudo docker &amp;lt;action&amp;gt; $(sudo docker ps -lq)&amp;#x000A;sudo docker start $(sudo docker ps -lq)&amp;#x000A;sudo docker stop $(sudo docker ps -lq)&amp;#x000A;sudo docker logs $(sudo docker ps -lq)&amp;#x000A;sudo docker attach $(sudo docker ps -lq)&amp;#x000A;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;Pushing to a private registry.&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;:::shell&amp;#x000A;# assuming image 'jmervine/centos6-nodejs'&amp;#x000A;#&amp;#x000A;#               &amp;lt;current image name&amp;gt;    &amp;lt;private registry&amp;gt;:&amp;lt;port&amp;gt;/&amp;lt;image name&amp;gt;&amp;#x000A;sudo docker tag jmervine/centos6-nodejs docker.myregstry.com:5000/jmervine/centos6-nodejs&amp;#x000A;sudo docker push docker.myregstry.com:5000/jmervine/centos6-nodejs&amp;#x000A;&amp;#x000A;# I then recommend removing your old image to avoid accidentally pushing it to the public registry.&amp;#x000A;sudo docker rmi jmervine/centos6-nodejs&amp;#x000A;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;Ports&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;:::shell&amp;#x000A;# running randomly assigning host port&amp;#x000A;sudo docker run -d -p 3000 image/name&amp;#x000A;&amp;#x000A;# running with exposed ports randomly assigned on host&amp;#x000A;sudo docker run -d -P image/name&amp;#x000A;&amp;#x000A;# printing randomly assigned ports (only)&amp;#x000A;sudo docker port image_name | awk -F':' '{ print $NF }'&amp;#x000A;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;Copying Files TO Containers&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;:::shell&amp;#x000A;# Directly in to a running container.&amp;#x000A;sudo docker exec -it &amp;lt;container_name|name&amp;gt; \&amp;#x000A;    bash -c &quot;echo \&quot;$(cat /path/to/host/file.txt)\&quot; &amp;gt; /path/to/container/file.txt&quot;&amp;#x000A;&amp;#x000A;# When running a container.&amp;#x000A;sudo docker run -i &amp;lt;container_id|name&amp;gt; \&amp;#x000A;    bash -c &quot;echo \&quot;$(cat /path/to/host/file.txt)\&quot; &amp;gt; /path/to/container/file.txt; /bin/bash ./start.sh&quot;&amp;#x000A;&amp;#x000A;# Via Docker volume.&amp;#x000A;# - where 'file.txt' is /path/to/host/dir/file.txt&amp;#x000A;sudo docker run -v /path/to/host/dir:/path/to/container/dir &amp;lt;container_id|name&amp;gt;&amp;#x000A;&amp;#x000A;#... or ...&amp;#x000A;sudo docker run -v /path/to/host/dir:/path/to/container/dir &amp;lt;container_id|name&amp;gt;&amp;#x000A;cp /path/to/host/file.txt /path/to/host/dir/file.txt&amp;#x000A;&amp;#x000A;# Via file system -- untested as of yet.&amp;#x000A;sudo cp -v /path/to/host/file.txt \&amp;#x000A;    /var/lib/docker/aufs/mnt/**$(sudo docker inspect -f '{{.Id}}' &amp;lt;container_id|name&amp;gt;)**/root/path/to/container/file.txt&amp;#x000A;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;&lt;p&gt;Based on comments in &lt;a href=&quot;http://stackoverflow.com/questions/22907231/copying-files-from-host-to-docker-container&quot;&gt;http://stackoverflow.com/questions/22907231/copying-files-from-host-to-docker-container&lt;/a&gt;&lt;/p&gt;&lt;/blockquote&gt;</content>
+    <published>2015-02-21T15:20:00+00:00</published>
+    <updated>2015-02-21T15:20:00+00:00</updated>
+    <category term='linux'></category>
+    <category term='notes'></category>
+  </entry>
+  <entry>
+    <title>Building Docker Machine</title>
+    <link href='http://mervine.net/notes/building-docker-machine' rel='alternate' type='text/html' />
+    <id>tag:mervine.net,2015-02-18:/notes/building-docker-machine</id>
+    <content type='html'>&lt;blockquote&gt;&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://github.com/docker/machine&quot;&gt;What's Docker Machine?&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Machine makes it really easy to create Docker hosts on local hypervisors and cloud providers. It creates servers, installs Docker on them, then configures the Docker client to talk to them&lt;/p&gt;&lt;/blockquote&gt;
+
+&lt;p&gt;This wasn't as clear as I was hoping, so here's what I did.&lt;/p&gt;
+
+&lt;h3&gt;Mac&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;:::shell&amp;#x000A;$ uname -sm&amp;#x000A;Darwin x86_64&amp;#x000A;&amp;#x000A;$ docker version&amp;#x000A;Client version: 1.3.0&amp;#x000A;Client API version: 1.15&amp;#x000A;Go version (client): go1.3.3&amp;#x000A;Git commit (client): c78088f&amp;#x000A;OS/Arch (client): darwin/amd64&amp;#x000A;Server version: 1.4.1&amp;#x000A;Server API version: 1.16&amp;#x000A;Go version (server): go1.3.3&amp;#x000A;Git commit (server): 5bc2ff8&amp;#x000A;&amp;#x000A;$ mkdir -p $GOPATH/src/github.com/docker&amp;#x000A;$ cd $GOPATH/src/github.com/docker&amp;#x000A;$ git clone https://github.com/docker/machine.git&amp;#x000A;$ cd machine&amp;#x000A;&amp;#x000A;$ make test&amp;#x000A;$ ./script/build -os=darwin -arch=amd64&amp;#x000A;$ mv docker-machine_darwin-amd64 $GOBIN/docker-machine&amp;#x000A;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;Linux&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;:::shell&amp;#x000A;$ uname -sio&amp;#x000A;Linux x86_64 GNU/Linux&amp;#x000A;&amp;#x000A;$ sudo docker version&amp;#x000A;Client version: 1.4.1&amp;#x000A;Client API version: 1.16&amp;#x000A;Go version (client): go1.3.3&amp;#x000A;Git commit (client): 5bc2ff8&amp;#x000A;OS/Arch (client): linux/amd64&amp;#x000A;Server version: 1.4.1&amp;#x000A;Server API version: 1.16&amp;#x000A;Go version (server): go1.3.3&amp;#x000A;Git commit (server): 5bc2ff8&amp;#x000A;&amp;#x000A;$ mkdir -p $GOPATH/src/github.com/docker&amp;#x000A;$ cd $GOPATH/src/github.com/docker&amp;#x000A;$ git clone https://github.com/docker/machine.git&amp;#x000A;$ cd machine&amp;#x000A;&amp;#x000A;$ sudo make test&amp;#x000A;$ sudo ./script/build -os=linux -arch=amd64&amp;#x000A;$ sudo chown $USER: docker-machine_linux-amd64&amp;#x000A;$ mv docker-machine_linux-amd64 $GOBIN/docker-machine&amp;#x000A;&lt;/code&gt;&lt;/pre&gt;</content>
+    <published>2015-02-18T11:20:00+00:00</published>
+    <updated>2015-02-18T11:20:00+00:00</updated>
+    <category term='linux'></category>
+    <category term='notes'></category>
+  </entry>
+  <entry>
+    <title>Ruby / RoR... Why not?</title>
+    <link href='http://mervine.net/ror_why_not' rel='alternate' type='text/html' />
+    <id>tag:mervine.net,2014-08-13:/ror_why_not</id>
+    <content type='html'>
+              &lt;h5&gt;In response to common question from recruiters:&lt;/h5&gt;
+              
+              &lt;blockquote&gt;&lt;p&gt;&quot;I'd be curious as to why your friends want to move away from the RoR/Ruby space...&quot;&lt;/p&gt;&lt;/blockquote&gt;
+              
+              &lt;h5&gt;On 08/13/14 10:31 AM&lt;/h5&gt;
+              
+              &lt;blockquote&gt;&lt;p&gt;Hey,&lt;/p&gt;
+              
+              &lt;p&gt;RE Ruby/RoR; I really should type this up and post it on my blog. I will say, take this as one persons opinion.&lt;/p&gt;
+              
+              &lt;p&gt;Ruby, while being a fantastic and powerful language, is not a fast executing language. Given that most Ruby development tools and frameworks are written in Ruby, they also tend to be slow which slows down development. Additionally, Ruby is a synchronous language &amp;ndash; which (simply put) means it does one thing at a time. Today, there are other options, which grant you the same, similar or more power and flexibility that Ruby does, while be asynchronous &amp;ndash; (simply put) doing multiple things at a time. Some examples of other options include Golang, Node.js, Erlang, etc. Of these, I personally find Node.js to be most suited for web development, while I lean towards Golang for API, CLI and other more server-side development.&lt;/p&gt;
+              
+              &lt;p&gt;People (I know) are moving away from Rails, for those reason, plus the fact that Rails isn't really Ruby. It's a collection of helpers and utilities built using Ruby. Rails was originally designed for rapid prototyping and scaffolding of &lt;a href=&quot;http://en.wikipedia.org/wiki/Create,_read,_update_and_delete&quot;&gt;CRUD&lt;/a&gt; application based on relational data (e.g. MySQL, Postgres, etc.). I've been away from Rails for a while, so this may have changed in some respects, but typically what I've seen is that Rails developers are not necessarily Ruby developers. While pure Ruby developers tend to want to bang their heads against the wall when working in Rails. RoR has added itself the .NET and PHP stigma of today's web world. That is to say, people who are new or newer to the development path learn the framework and tout themselves as developers, while only really understanding Rails alone.&lt;/p&gt;
+              
+              &lt;p&gt;It's important to note that this is not universally true. Some of the best engineers I know work heavily in Rails. It's more of a general observation, especially in regards to recruiters are looking to push on hiring managers.&lt;/p&gt;
+              
+              &lt;p&gt;Cheers,&lt;/p&gt;
+              
+              &lt;p&gt;J&lt;/p&gt;&lt;/blockquote&gt;
+              
+              &lt;h5&gt;Note:&lt;/h5&gt;
+              
+              &lt;p&gt;I know that my definition's of &quot;synchronous&quot; and &quot;asynchronous&quot; are gross over simplifications for the non-technical target audience. See the following for more complete understanding of those concepts:&lt;/p&gt;
+              
+              &lt;ul&gt;
+              &lt;li&gt;&lt;a href=&quot;http://en.wikipedia.org/wiki/Synchronous_programming_language&quot;&gt;Wikipedia: Synchronous Programming Language&lt;/a&gt;&lt;/li&gt;
+              &lt;li&gt;&lt;a href=&quot;http://www.i-programmer.info/programming/theory/6040-what-is-asynchronous-programming.html&quot;&gt;What is Asynchronous Programming&lt;/a&gt;&lt;/li&gt;
+              &lt;/ul&gt;
+            </content>
+    <published>2014-08-13T10:30:00+00:00</published>
+    <updated>2014-08-13T10:30:00+00:00</updated>
+    <category term='ruby'></category>
+  </entry>
+  <entry>
+    <title>Notes on Performance Testing</title>
+    <link href='http://mervine.net/notes-on-performance-testing' rel='alternate' type='text/html' />
+    <id>tag:mervine.net,2014-05-10:/notes-on-performance-testing</id>
+    <content type='html'>&lt;p&gt;A couple weeks ago I did an ad hoc talk at the &lt;a href=&quot;http://www.meetup.com/LAWebSpeed/events/174808092/&quot;&gt;LAWebSpeed Meetup&lt;/a&gt;, hosted by &lt;a href=&quot;http://www.maxcdn.com/&quot;&gt;MaxCDN&lt;/a&gt;, on general performance testing in the web world. I was asked to put together a list of the tools I spoke about and some brief notes on them, so here goes.&lt;/p&gt;
+
+&lt;h2&gt;TL;DR&lt;/h2&gt;
+
+&lt;p&gt;Here's a brief list of the tools I mentioned in my talk, for those that were there.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Server Side Tools&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://mervine.net/httperf&quot;&gt;httperf&lt;/a&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.hpl.hp.com/research/linux/httperf/&quot;&gt;main site&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/jmervine/httperf&quot;&gt;my fork&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://mervine.net/projects/gems/autoperf&quot;&gt;Autoperf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://mervine.net/projects/gems/httperfrb&quot;&gt;HTTPerf.rb&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;HTTPerf.rb ports:
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://mervine.net/projects/npms/httperfjs&quot;&gt;HTTPerf.js&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/jmervine/httperfpy&quot;&gt;HTTPerf.py&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/jmervine/php-httperf&quot;&gt;HTTPerf.php&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/jmervine/gohttperf&quot;&gt;gohttperf&lt;/a&gt; (&lt;em&gt;experimental&lt;/em&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;&lt;strong&gt;Client Side Tools&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.igvita.com/2012/04/04/measuring-site-speed-with-navigation-timing/&quot;&gt;W3C Navigation Timing&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.webpagetest.org/&quot;&gt;WebPageTest.org&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://developers.google.com/speed/pagespeed/&quot;&gt;Google PageSpeed&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://yslow.org/&quot;&gt;YSlow&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://phantomjs.org/&quot;&gt;PhantomJS&lt;/a&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://mervine.net/projects/npms/yslowjs&quot;&gt;YSlow.js&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/macbre/phantomas&quot;&gt;phantomas&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h2&gt;Server Side Testing&lt;/h2&gt;
+
+&lt;p&gt;In general, I use server side load / performance testing with two goals. The first is break testing, finding your applications break point and monitoring it's behavior on the way to breaking. The second is for a solid understanding of current state capacity, both for the purpose of future planning and to avoid critical failures.&lt;/p&gt;
+
+&lt;p&gt;When running break tests, I run multiple tests, increasing the load in each until a break point is found, which is what &lt;a href=&quot;http://mervine.net/projects/gems/autoperf&quot;&gt;Autoperf&lt;/a&gt; (see below) was designed for. These tests can often be done in short controlled bursts as opposed to long running break tests, although depending on your platform (i.e. Java) there are exceptions. Additionally, I tend to point these kinds of tests a a single endpoint or a few select higher priority endpoints as opposed to a more general traffic log. Again, the effectiveness depends greatly on platform and application design.&lt;/p&gt;
+
+&lt;p&gt;In testing for capacity, I take the sweet spot from the break tests mentioned above and I run those over long periods of time, and attempt to more closely reproduce real production traffic (the closer the better). Once I've validated the sweet spot, I'll use that to determine capacity.&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;p&gt;&lt;strong&gt;Note on capacity planning.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;This will greatly depend on your traffic patterns and application designed. As such, there's no real formula out there. My typical rule of thumb is &quot;400% peak&quot;, with a minimum of &quot;250% peak&quot;. How &quot;peak&quot; is defined will vary almost from site to site, however, if you're familiar with your sites traffic patterns, it shouldn't be too hard to figure out.&lt;/p&gt;&lt;/blockquote&gt;
+
+&lt;h3&gt;Tools&lt;/h3&gt;
+
+&lt;h3&gt;httperf&lt;/h3&gt;
+
+&lt;p&gt;For both break testing and capacity testing, I use &lt;a href=&quot;http://mervine.net/httperf&quot;&gt;httperf&lt;/a&gt; - a command line tool for Linux which is designed to generate load at a controlled rate. There are &lt;a href=&quot;http://pkgs.org/search/?query=httperf&amp;amp;type=name&quot;&gt;rpm's and deb's for it&lt;/a&gt;, but I use my own fork with more verbose output, which I'll talk about more later. For more information, see &lt;a href=&quot;http://mervine.net/performance-testing-with-httperf&quot;&gt;Performance Testing with Httperf&lt;/a&gt; and &lt;a href=&quot;http://mervine.net/httperf-0-9-1-with-individual-connection-times&quot;&gt;httperf-0.9.1 with individual connection times&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Some other popular options for generating load are &lt;a href=&quot;http://www.joedog.org/siege-home/&quot;&gt;Siege&lt;/a&gt;, and &lt;a href=&quot;http://httpd.apache.org/docs/2.2/programs/ab.html&quot;&gt;Apache Bench&lt;/a&gt; (aka Ab). Siege is designed for time based break testing and is good at it, but has limited results data and I've found it to be less predictable the httperf, that said I haven't used it too much. I haven't personally played with Ab, as in my initial inspection it appeared to require the install of Apache, which I had no interest in doing and as I already have a tool to meet my needs, I didn't spend too much time digging deeper.&lt;/p&gt;
+
+&lt;h3&gt;Autoperf&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://mervine.net/projects/gems/autoperf&quot;&gt;Autoperf&lt;/a&gt; is a ruby driver for &lt;a href=&quot;http://mervine.net/httperf&quot;&gt;httperf&lt;/a&gt;, designed to help you automate load and performance testing of any web application - for a single end point, or through log replay.&lt;/p&gt;
+
+&lt;p&gt;This has been refactored from the original -- github.com/igrigorik/autoperf -- to include &lt;a href=&quot;http://mervine.net/projects/gems/httperfrb&quot;&gt;HTTPerf.rb&lt;/a&gt; as a simplification and to include additional features. This has been refactored and released with permission from Ilya Grigorik, the original author.&lt;/p&gt;
+
+&lt;h3&gt;HTTPerf.rb&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://mervine.net/projects/gems/httperfrb&quot;&gt;HTTPerf.rb&lt;/a&gt; is a simple ruby interface for &lt;a href=&quot;http://mervine.net/httperf&quot;&gt;httperf&lt;/a&gt;, which is used under the hood of &lt;a href=&quot;http://mervine.net/projects/gems/autoperf&quot;&gt;Autoperf&lt;/a&gt;. It can also be very useful on it's own for running individual tests with &lt;a href=&quot;http://mervine.net/httperf&quot;&gt;httperf&lt;/a&gt; and manipulating the results programmaticly.&lt;/p&gt;
+
+&lt;p&gt;I have also ported &lt;a href=&quot;http://mervine.net/projects/gems/httperfrb&quot;&gt;HTTPerf.rb&lt;/a&gt; to several other languages, although not always with all the time, care and features that the original ruby implementation had.&lt;/p&gt;
+
+&lt;p&gt;HTTPerf.rb ports:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Node.js: &lt;a href=&quot;http://mervine.net/projects/npms/httperfjs&quot;&gt;HTTPerf.js&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Python: &lt;a href=&quot;https://github.com/jmervine/httperfpy&quot;&gt;HTTPerf.py&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;PHP: &lt;a href=&quot;https://github.com/jmervine/php-httperf&quot;&gt;HTTPerf.php&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Golang: &lt;a href=&quot;https://github.com/jmervine/gohttperf&quot;&gt;gohttperf&lt;/a&gt; (&lt;em&gt;experimental&lt;/em&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;For more information on &lt;a href=&quot;http://mervine.net/projects/gems/httperfrb&quot;&gt;HTTPerf.rb&lt;/a&gt; see &lt;a href=&quot;http://mervine.net/automating-performance-testing-with-httperfrb&quot;&gt;Automating Performance Testing with HTTPerf.rb&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2&gt;Client Side Testing&lt;/h2&gt;
+
+&lt;p&gt;Although some may disagree with me, I consider client side performance testing about as far from an exact science and you can get in the world of automated testing. There are too many external variables, possible data points and decisions to make on what's important to your business model.&lt;/p&gt;
+
+&lt;p&gt;A great read on this topic is &lt;a href=&quot;https://blog.twitter.com/2012/improving-performance-on-twittercom&quot;&gt;Improving performance on twitter.com&lt;/a&gt;, which while more targeted at overall performance improvements and monitoring, has some good ideas that can carry over to what to look for when client side performance testing -- namely the &quot;Time to First Tweet&quot;.&lt;/p&gt;
+
+&lt;h3&gt;Tools&lt;/h3&gt;
+
+&lt;h4&gt;WebKit's Navigation Timing API&lt;/h4&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.igvita.com/2012/04/04/measuring-site-speed-with-navigation-timing/&quot;&gt;W3C Navigation Timing&lt;/a&gt; is a collection of performance data generated by most modern browsers which contains timing for key events of the page load.&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;p&gt;Note: I've linked to an article on it by &lt;a href=&quot;https://www.igvita.com/&quot;&gt;Ilya Grigorik&lt;/a&gt; because reading spec's is just no damn fun.&lt;/p&gt;&lt;/blockquote&gt;
+
+&lt;h4&gt;WebPageTest.org&lt;/h4&gt;
+
+&lt;p&gt;With &lt;a href=&quot;http://www.webpagetest.org/&quot;&gt;WebPageTest.org&lt;/a&gt; run a free website speed test from multiple locations around the globe using real browsers (IE and Chrome) and at real consumer connection speeds. You can run simple tests or perform advanced testing including multi-step transactions, video capture, content blocking and much more. Your results will provide rich diagnostic information including resource loading waterfall charts, Page Speed optimization checks and suggestions for improvements.&lt;/p&gt;
+
+&lt;h4&gt;Google PageSpeed&lt;/h4&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://developers.google.com/speed/pagespeed/&quot;&gt;Google PageSpeed&lt;/a&gt; is a collection of client side testing tools from &lt;a href=&quot;https://www.google.com&quot;&gt;Google&lt;/a&gt;.&lt;/p&gt;
+
+&lt;blockquote&gt;&lt;p&gt;&quot;Analyze and optimize your website with PageSpeed tools to implement the web performance best practices.&lt;/p&gt;
+
+&lt;p&gt;Fast and optimized pages lead to higher visitor engagement, retention, and conversions. The PageSpeed family of tools is designed to help you optimize the performance of your website. PageSpeed Insights products will help you identify performance best practices that can be applied to your site, and PageSpeed optimization tools can help you automate the process.&quot;&lt;/p&gt;&lt;/blockquote&gt;
+
+&lt;h4&gt;YSlow&lt;/h4&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://yslow.org/&quot;&gt;YSlow&lt;/a&gt; from &lt;a href=&quot;http://www.yahoo.com&quot;&gt;Yahoo!&lt;/a&gt; analyzes web pages and why they're slow based on Yahoo!'s rules for high performance web sites.&lt;/p&gt;
+
+&lt;h4&gt;PhantomJS&lt;/h4&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://phantomjs.org/&quot;&gt;PhantomJS&lt;/a&gt; is a headless WebKit scriptable with a JavaScript API. It has fast and native support for various web standards: DOM handling, CSS selector, JSON, Canvas, and SVG. With it, you can easily and headlessly automate and collect data about your sites client side performance.&lt;/p&gt;
+
+&lt;p&gt;A few tools that leverage &lt;a href=&quot;http://phantomjs.org/&quot;&gt;PhantomJS&lt;/a&gt; include:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://mervine.net/projects/npms/yslowjs&quot;&gt;YSlow.js&lt;/a&gt;: a simple Node.js wrapper for programmaticaly running &lt;a href=&quot;http://yslow.org/phantomjs/&quot;&gt;PhantomJS yslow.js&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/macbre/phantomas&quot;&gt;phantomas&lt;/a&gt;: PhantomJS-based modular web performance metrics collector.&lt;/li&gt;
+&lt;/ul&gt;</content>
+    <published>2014-05-10T14:00:00+00:00</published>
+    <updated>2014-05-10T14:00:00+00:00</updated>
+    <category term='httperf'></category>
+    <category term='phantomjs'></category>
+  </entry>
+  <entry>
+    <title>Node.js Hello Framework</title>
+    <link href='http://mervine.net/node-hello-framework' rel='alternate' type='text/html' />
+    <id>tag:mervine.net,2014-03-23:/node-hello-framework</id>
+    <content type='html'></content>
+    <published>2014-03-23T12:30:00+00:00</published>
+    <updated>2014-03-23T12:30:00+00:00</updated>
+    <category term='express'></category>
+    <category term='nodejs'></category>
+  </entry>
+  <entry>
+    <title>YSlow.js: Release 0.3.1</title>
+    <link href='http://mervine.net/projects/npms/yslowjs-release' rel='alternate' type='text/html' />
+    <id>tag:mervine.net,2014-03-22:/projects/npms/yslowjs-release</id>
+    <content type='html'>&lt;h4&gt;Links: &lt;a href=&quot;http://mervine.net/projects/npms/yslowjs&quot;&gt;readme&lt;/a&gt; | &lt;a href=&quot;https://npmjs.org/package/yslowjs&quot;&gt;package&lt;/a&gt; | &lt;a href=&quot;https://github.com/jmervine/node-yslowjs&quot;&gt;source&lt;/a&gt; | &lt;a href=&quot;https://travis-ci.org/jmervine/node-yslowjs&quot;&gt;tests&lt;/a&gt;&lt;/h4&gt;
+
+&lt;h3&gt;0.3.2&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Upping &lt;a href=&quot;http://yslow.org/phantomjs/&quot;&gt;yslow&lt;/a&gt; version.&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h3&gt;Previous Version&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;0.3.1
+
+&lt;ul&gt;
+&lt;li&gt;Locking &lt;a href=&quot;http://mervine.net/projects/npms/phapper&quot;&gt;Phapper&lt;/a&gt; version.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;0.3.0
+
+&lt;ul&gt;
+&lt;li&gt;Fixing error handling in &lt;code&gt;run&lt;/code&gt;. Now passes both &lt;code&gt;error&lt;/code&gt; and &lt;code&gt;results&lt;/code&gt; to callback. See README examples for details. &lt;strong&gt;This update is not backwards compatabile with previous releases.&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;0.2.1
+
+&lt;ul&gt;
+&lt;li&gt;Removing unused dependainces.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;0.2.0
+
+&lt;ul&gt;
+&lt;li&gt;Top down refactor using updated &lt;a href=&quot;http://mervine.net/projects/npms/phapper&quot;&gt;Phapper&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Includes better pathing support for finding included &lt;a href=&quot;http://yslow.org/phantomjs&quot;&gt;yslow.js&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Downloads and install &lt;a href=&quot;http://yslow.org/phantomjs&quot;&gt;yslow.js&lt;/a&gt; if it can't be found, which should never happen.&lt;/li&gt;
+&lt;li&gt;Adding limited support for &lt;a href=&quot;https://github.com/jmervine/node-yslowjs/blob/master/NOTES.mdown&quot;&gt;Windows&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;0.1.2
+
+&lt;ul&gt;
+&lt;li&gt;Fixing critical issue in NODE_PATH search when working with global installations.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;0.1.1
+
+&lt;ul&gt;
+&lt;li&gt;Refactored to use &lt;a href=&quot;http://mervine.net/projects/npms/phapper&quot;&gt;Phapper&lt;/a&gt;, way cleaner and less code.&lt;/li&gt;
+&lt;li&gt;Refactored tests for change to Phapper.&lt;/li&gt;
+&lt;li&gt;Refactored stubs..&lt;/li&gt;
+&lt;li&gt;Adding functional tests.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;0.0.1
+
+&lt;ul&gt;
+&lt;li&gt;Initial release.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</content>
+    <published>2014-03-22T14:40:00+00:00</published>
+    <updated>2014-03-22T14:40:00+00:00</updated>
+    <category term='npms'></category>
+    <category term='nodejs'></category>
+    <category term='phapper'></category>
+    <category term='yslowjs'></category>
+  </entry>
+  <entry>
+    <title>Phapper.js: Release 0.1.9</title>
+    <link href='http://mervine.net/projects/npms/phapper-release' rel='alternate' type='text/html' />
+    <id>tag:mervine.net,2014-03-22:/projects/npms/phapper-release</id>
+    <content type='html'>&lt;h4&gt;Links: &lt;a href=&quot;http://mervine.net/projects/npms/phapper&quot;&gt;readme&lt;/a&gt; | &lt;a href=&quot;https://npmjs.org/package/phapper&quot;&gt;package&lt;/a&gt; | &lt;a href=&quot;https://github.com/jmervine/phapper&quot;&gt;source&lt;/a&gt; | &lt;a href=&quot;https://travis-ci.org/jmervine/phapper&quot;&gt;tests&lt;/a&gt;&lt;/h4&gt;
+
+&lt;h3&gt;0.1.9&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Fixing a minor bug with the install script.&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h3&gt;Previous Versions&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;0.1.8
+
+&lt;ul&gt;
+&lt;li&gt;Updating PhantomJS version to 1.9.7.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;0.1.6
+
+&lt;ul&gt;
+&lt;li&gt;Replacing exec-sync with execSync for easier Mac installation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;0.1.5
+
+&lt;ul&gt;
+&lt;li&gt;Removing unused dependancies.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;0.1.4
+
+&lt;ul&gt;
+&lt;li&gt;Fixing small issue with passed in arguments on init.&lt;/li&gt;
+&lt;li&gt;Added ability to pass exec object, see readme examples.&lt;/li&gt;
+&lt;li&gt;Cleaned up tests, added more.&lt;/li&gt;
+&lt;li&gt;Cleaned up make test / npm test.&lt;/li&gt;
+&lt;li&gt;Allowing for passing of cwd to sync function.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;0.1.3
+
+&lt;ul&gt;
+&lt;li&gt;Adding windows handling and phantomjs version overide.&lt;/li&gt;
+&lt;li&gt;Updating &lt;a href=&quot;http://mervine.net/projects/npms/phapper&quot;&gt;readme&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;0.1.2
+
+&lt;ul&gt;
+&lt;li&gt;Adding phantomjs install.&lt;/li&gt;
+&lt;li&gt;Adding better phantomjs path support.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;0.1.1
+
+&lt;ul&gt;
+&lt;li&gt;Refactored to not require JSON stdout parse.&lt;/li&gt;
+&lt;li&gt;Refactored run and runSync return values, see &lt;a href=&quot;http://mervine.net/projects/npms/phapper&quot;&gt;readme&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;0.0.1
+
+&lt;ul&gt;
+&lt;li&gt;Initial release.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</content>
+    <published>2014-03-22T14:30:00+00:00</published>
+    <updated>2014-03-22T14:30:00+00:00</updated>
+    <category term='npms'></category>
+    <category term='nodejs'></category>
+    <category term='phapper'></category>
+  </entry>
+  <entry>
+    <title>Github Webhooks with git-fish</title>
+    <link href='http://mervine.net/github-webhooks-with-git-fish' rel='alternate' type='text/html' />
+    <id>tag:mervine.net,2014-03-15:/github-webhooks-with-git-fish</id>
+    <content type='html'>&lt;p&gt;I wrote &lt;a href=&quot;http://mervine.net/projects/npms/git-fish&quot;&gt;git-fish&lt;/a&gt; &amp;ndash; a &lt;a href=&quot;http://developer.github.com/webhooks/&quot;&gt;Github Webhook&lt;/a&gt; listener &amp;ndash; to provide a simple and modular method for executing an autodeployment on &lt;a href=&quot;http://mervine.net/&quot;&gt;mervine.net&lt;/a&gt; when adding or updating a post. I designed it to as simple and as modular as possible. While written in &lt;a href=&quot;http://mervine.net/nodejs&quot;&gt;Node.js&lt;/a&gt;, I tend to use it execute simple &lt;a href=&quot;http://mervine.net/bash&quot;&gt;bash&lt;/a&gt; scripts, like the &lt;a href=&quot;http://mervine.net/&quot;&gt;mervine.net&lt;/a&gt; deployment script:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#!/bin/bash&amp;#x000A;&amp;#x000A;cd /home/jmervine/mervine.net&amp;#x000A;make deploy/soft&amp;#x000A;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;With this combination, I can use [Github] as my psudo-CMS, to create and update posts and when I save an addition or change, it becomes visable on the site in seconds (including, updating code and purging cache).&lt;/p&gt;
+
+&lt;p&gt;For detailed information on setting up and using &lt;a href=&quot;http://mervine.net/projects/npms/git-fish&quot;&gt;git-fish&lt;/a&gt; or my other see &lt;a href=&quot;http://mervine.net/projects/npms/git-fish&quot;&gt;my git-fish project page&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Enjoy!&lt;/p&gt;</content>
+    <published>2014-03-15T15:30:00+00:00</published>
+    <updated>2014-03-15T15:30:00+00:00</updated>
+    <category term='git-fish'></category>
+    <category term='npms'></category>
+    <category term='nodejs'></category>
+  </entry>
+  <entry>
+    <title>HTTPerf.js: Release 0.1.0</title>
+    <link href='http://mervine.net/projects/npms/httperfjs-release' rel='alternate' type='text/html' />
+    <id>tag:mervine.net,2014-02-27:/projects/npms/httperfjs-release</id>
+    <content type='html'>&lt;h4&gt;Links: &lt;a href=&quot;http://mervine.net/projects/npms/httperfjs&quot;&gt;readme&lt;/a&gt; | &lt;a href=&quot;https://npmjs.org/package/httperfjs&quot;&gt;package&lt;/a&gt; | &lt;a href=&quot;http://github.com/jmervine/httperfjs&quot;&gt;source&lt;/a&gt; | &lt;a href=&quot;https://travis-ci.org/jmervine/httperfjs&quot;&gt;tests&lt;/a&gt;&lt;/h4&gt;
+
+&lt;h3&gt;0.1.0&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Removing &lt;code&gt;runSync&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Refactoring &lt;code&gt;run&lt;/code&gt; to support sending spawned process &lt;code&gt;SIGINT&lt;/code&gt; to capture current report from httperf and exit.&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h3&gt;Pre 0.1&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;0.0.7
+
+&lt;ul&gt;
+&lt;li&gt;Exporting 'Parser' via 'HTTPerf'&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;0.0.6
+
+&lt;ul&gt;
+&lt;li&gt;Fixing a bug in calculating percentile's when using verbose mode.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;0.0.5
+
+&lt;ul&gt;
+&lt;li&gt;Switching &lt;code&gt;exec-sync&lt;/code&gt; for &lt;code&gt;execSync&lt;/code&gt; to support easier compiles on Mac's.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;0.0.4
+
+&lt;ul&gt;
+&lt;li&gt;Fixing bug with arguments that do not have values (e.g. &lt;code&gt;--verbose&lt;/code&gt; and &lt;code&gt;--hog&lt;/code&gt;). These should now be set like so: &lt;code&gt;verbose: true&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;0.0.3
+
+&lt;ul&gt;
+&lt;li&gt;Updating README&lt;/li&gt;
+&lt;li&gt;Adding functional tests&lt;/li&gt;
+&lt;li&gt;Removing persistant results &lt;code&gt;httperf.results&lt;/code&gt;, as it's really not necessary for any real usecases.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;0.0.2
+
+&lt;ul&gt;
+&lt;li&gt;Changing run to runSync for future async support.&lt;/li&gt;
+&lt;li&gt;Adding #run (async).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;0.0.1
+
+&lt;ul&gt;
+&lt;li&gt;Initial release.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</content>
+    <published>2014-02-27T16:30:00+00:00</published>
+    <updated>2014-02-27T16:30:00+00:00</updated>
+    <category term='benchmarking-with-httperfjs-and-nodeunit'></category>
+    <category term='httperfjs'></category>
+    <category term='npms'></category>
+    <category term='projects'></category>
+    <category term='nodejs'></category>
+  </entry>
+</feed>

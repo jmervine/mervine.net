@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta content="testing with docker, docker tips, building docker machine, mosh iptable rule, pretty sleep using nodejs, disable ssh string host checking, simple rules for stable apps, finding older files, hp folio 13 wifi hack, installing nodejs from source, nginx with lua module, installing mysql on centos6, curl https inscure, https self signed certs, installing nodejs on centos, securing redis, kill capslock, zsh known hosts completion, bash version checking, hp folio backlight, rvm readline on ubutnu, gistcli, iptables rules examples, fixing wireless on the hp folio 13 when using linux, bash arrays" name="keywords">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="" name="author">
+<link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/spacelab/bootstrap.min.css" media="screen" rel="stylesheet">
+<link href="//cdn.mervine.net/bootstrap/master.css" media="screen" rel="stylesheet">
+<!--[if lte IE 6]>
+      <link href='http://universal-ie6-css.googlecode.com/files/ie6.1.1.css' media='screen, projection' rel='stylesheet'>
+    <![endif]--><!--[if lt IE 9]>
+      <script src='//html5shim.googlecode.com/svn/trunk/html5.js'></script>
+    <![endif]--><link href="/articles.xml" rel="alternate" type="application/atom+xml">
+<link href="//cdn.mervine.net/bootstrap/favicon.ico" rel="shortcut icon">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon.png" rel="apple-touch-icon">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon-72x72.png" rel="apple-touch-icon" sizes="72x72">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon-114x114.png" rel="apple-touch-icon" sizes="114x114">
+<title>Linux - mervine.net</title>
+</head>
+<body style="padding-top: 10px !important">
+    <div class="container">
+      <div class="navbar navbar-default navbar-top" style="margin-bottom: 0px !important">
+        <div class="navbar-header">
+          <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse" type="button">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Home</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+<li class="">
+              <a href="http://mervine.net/categories">Category List</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/projects">My Projects</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/notes">Notes</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/hacks">Hacks</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/quotes">Quotes</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/archive">Archives</a>
+            </li>
+          </ul>
+<ul class="nav navbar-nav navbar-right visible-xs">
+<li>
+              <a href="http://twitter.com/mervinej">Twitter</a>
+            </li>
+            <li>
+              <a href="http://linkedin.com/in/mervinej">Linkedin</a>
+            </li>
+            <li>
+              <a href="http://github.com/jmervine">Github</a>
+            </li>
+            <li>
+              <a href="http://www.gittip.com/jmervine">Gittip</a>
+            </li>
+          </ul>
+</div>
+      </div>
+      <div class="container">
+        <div class="page-header" style="margin-top: 0px !important;">
+          <img src="http://www.gravatar.com/avatar/ed808193b8c2c8516715816f90a005b2.jpg?s=75" style="padding:5px 15px 15px; float:left"><a href="http://mervine.net/">
+            <h1>mervine.net</h1>
+          </a><small>Lessons learned, code written, hacks, etc.</small>
+        </div>
+      </div>
+      <div class="container">
+        <div class="col-sm-12 col-md-9">
+          <div class="page_content container">
+  <div class="page_content">
+    <h1>Linux</h1>
+    
+    <blockquote><p>Linux is a Unix-like computer operating system assembled under the model of free and open source software development and distribution. The defining component of Linux is the Linux kernel, an operating system kernel first released 5 October 1991 by Linus Torvalds.</p></blockquote>
+    <hr class="article_seperator">
+<header><h2>Articles on Linux</h2>
+    </header><div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/notes/testing-with-docker">Testing with Docker</a>
+    </h2>
+  </header><p>Here are a few tips that I've found useful while delving in to Docker.</p>
+  <p class="read_more">
+    <a href="http://mervine.net/notes/testing-with-docker">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2015-03-10T13:25:00+00:00" pubdate>10 March 2015</time>
+      in
+      <a href="http://mervine.net/linux">Linux</a>,
+      <a href="http://mervine.net/notes">Notes</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/notes/docker-tips">Docker Tips</a>
+    </h2>
+  </header><p>Here are a few tips that I've found useful while delving in to <a href="https://www.docker.com/">Docker</a>. For an introduction to Docker, see my post on the <a href="http://engineering.yp.com/post/intro-to-docker">YP Engineering Blog</a>. Enjoy!</p>
+
+<h3>Making smaller images.</h3>
+
+<p>Docker image size does matter. The larger your image, that more unweildy it starts to feel. Pulling a 50MB image is far preferable to pulling a 2G image. Some tips on building smaller images:</p>
+
+<ul>
+<li>Use the smallest linux distro which meets your needs; <code>busybox</code> &lt; <code>debian</code> &lt; <code>centos</code> &lt; <code>ubuntu</code>. I try to use <code>progrium/busybox</code> whenever possible (which isn't all that often without serious work), otherwise, I tend to use <code>debian</code>.</li>
+<li>Install as little as possible to meet your needs -- <code>apt-get build-essential</code> is going to bloat your image, don't use it unless absolutly necessary.</li>
+<li>
+<p>Do as much as you can in a single <code>RUN</code>, as opposed to breaking things up. The downside to this is longer builds with less caching. However, it can make a huge difference in resulting image size. I once took an image from 1.3G to 555MB, just by collapsing all my commands to a single <code>RUN</code>. Additionally, clean up after yourself in that same <code>RUN</code> if possible. Example:</p>
+
+<pre class="twilight">  # BAD
+  RUN apt-get install git
+  RUN apt-get install wget
+  RUN apt-get install build-essential
+  COPY http://somesite.com/somefile.tgz
+  RUN tar xzf somefile.tgz
+  RUN cd somefile
+  RUN ./configure &amp;&amp; make &amp;&amp; install
+
+  # GOOD
+  RUN \
+      apt-get install -y git wget build-essential &amp;&amp; \
+      curl -sSL -O http://somesite.com/somefile.tgz &amp;&amp; \
+      tar xzf somefile.tgz &amp;&amp; \ 
+      cd somefile &amp;&amp; ./configure &amp;&amp; make &amp;&amp; install &amp;&amp; \
+      cd - &amp;&amp; rm -rf somefile somefile.tgz &amp;&amp; \
+      apt-get remove -y build-essential &amp;&amp; \
+      apt-get autoremove -y &amp;&amp; apt-get clean
+</pre>
+</li>
+</ul>
+<h3>Search private registry.</h3>
+
+<pre class="twilight">sudo docker search <span class="Keyword">&lt;</span>private domain<span class="Keyword">&gt;</span>/<span class="Keyword">&lt;</span>term<span class="Keyword">&gt;</span>
+</pre>
+
+<h3>Removing images and containers in bulk.</h3>
+
+<pre class="twilight"><span class="Comment"><span class="Comment">#</span> remove all containers</span>
+sudo docker rm <span class="String"><span class="String">$(</span>sudo docker ps -a -q<span class="String">)</span></span>
+<span class="Comment"><span class="Comment">#</span>... or ...</span>
+sudo docker ps -aq <span class="Keyword">|</span> xargs sudo docker rm
+
+<span class="Comment"><span class="Comment">#</span> remove all images</span>
+sudo docker rmi <span class="String"><span class="String">$(</span>sudo docker images -q<span class="String">)</span></span>
+<span class="Comment"><span class="Comment">#</span>... or ...</span>
+sudo docker images -q <span class="Keyword">|</span> xargs sudo docker rmi
+
+<span class="Comment"><span class="Comment">#</span> remove specific images in bulk</span>
+sudo docker rmi myimage:{tagone,tagtwo,tagfive}
+
+<span class="Comment"><span class="Comment">#</span> remove image containing TERM</span>
+sudo docker rmi <span class="String"><span class="String">$(</span>sudo docker images <span class="Keyword">|</span> grep TERM <span class="Keyword">|</span> awk <span class="String"><span class="String">'</span>{ print $3 }<span class="String">'</span></span><span class="String">)</span></span>
+<span class="Comment"><span class="Comment">#</span>... or ...</span>
+sudo docker images <span class="Keyword">|</span> grep TERM <span class="Keyword">|</span> awk <span class="String"><span class="String">'</span>{ print $3 }<span class="String">'</span></span> <span class="Keyword">|</span> xargs sudo docker rmi
+
+<span class="Comment"><span class="Comment">#</span> remove all non-running containers</span>
+sudo docker ps -a <span class="Keyword">|</span> grep Exited <span class="Keyword">|</span> awk <span class="String"><span class="String">'</span>{ print $NF }<span class="String">'</span></span> <span class="Keyword">|</span> xargs sudo docker rm
+</pre>
+
+<h3>Interacting with the most recent continer started.</h3>
+
+<pre class="twilight"><span class="Comment"><span class="Comment">#</span> view last container</span>
+sudo docker ps -l 
+
+<span class="Comment"><span class="Comment">#</span> view last container sha only</span>
+sudo docker ps -lq
+
+<span class="Comment"><span class="Comment">#</span> stop, start, attach, logs, etc. last container</span>
+<span class="Comment"><span class="Comment">#</span></span>
+<span class="Comment"><span class="Comment">#</span> $ sudo docker &lt;action&gt; $(sudo docker ps -lq)</span>
+sudo docker start <span class="String"><span class="String">$(</span>sudo docker ps -lq<span class="String">)</span></span>
+sudo docker stop <span class="String"><span class="String">$(</span>sudo docker ps -lq<span class="String">)</span></span>
+sudo docker logs <span class="String"><span class="String">$(</span>sudo docker ps -lq<span class="String">)</span></span>
+sudo docker attach <span class="String"><span class="String">$(</span>sudo docker ps -lq<span class="String">)</span></span>
+</pre>
+
+<h3>Pushing to a private registry.</h3>
+
+<pre class="twilight"><span class="Comment"><span class="Comment">#</span> assuming image 'jmervine/centos6-nodejs'</span>
+<span class="Comment"><span class="Comment">#</span></span>
+<span class="Comment"><span class="Comment">#</span>               &lt;current image name&gt;    &lt;private registry&gt;:&lt;port&gt;/&lt;image name&gt;</span>
+sudo docker tag jmervine/centos6-nodejs docker.myregstry.com:5000/jmervine/centos6-nodejs
+sudo docker push docker.myregstry.com:5000/jmervine/centos6-nodejs
+
+<span class="Comment"><span class="Comment">#</span> I then recommend removing your old image to avoid accidentally pushing it to the public registry.</span>
+sudo docker rmi jmervine/centos6-nodejs
+</pre>
+
+<h3>Ports</h3>
+
+<pre class="twilight"><span class="Comment"><span class="Comment">#</span> running randomly assigning host port</span>
+sudo docker run -d -p 3000 image/name
+
+<span class="Comment"><span class="Comment">#</span> running with exposed ports randomly assigned on host</span>
+sudo docker run -d -P image/name
+
+<span class="Comment"><span class="Comment">#</span> printing randomly assigned ports (only)</span>
+sudo docker port image_name <span class="Keyword">|</span> awk -F<span class="String"><span class="String">'</span>:<span class="String">'</span></span> <span class="String"><span class="String">'</span>{ print $NF }<span class="String">'</span></span>
+</pre>
+
+<h3>Copying Files TO Containers</h3>
+
+<pre class="twilight"><span class="Comment"><span class="Comment">#</span> Directly in to a running container.</span>
+sudo docker exec -it <span class="Keyword">&lt;</span>container_name<span class="Keyword">|</span>name<span class="Keyword">&gt;</span> \
+    bash -c <span class="String"><span class="String">"</span>echo <span class="StringConstant">\"</span><span class="String"><span class="String">$(</span>cat /path/to/host/file.txt<span class="String">)</span></span><span class="StringConstant">\"</span> &gt; /path/to/container/file.txt<span class="String">"</span></span>
+
+<span class="Comment"><span class="Comment">#</span> When running a container.</span>
+sudo docker run -i <span class="Keyword">&lt;</span>container_id<span class="Keyword">|</span>name<span class="Keyword">&gt;</span> \
+    bash -c <span class="String"><span class="String">"</span>echo <span class="StringConstant">\"</span><span class="String"><span class="String">$(</span>cat /path/to/host/file.txt<span class="String">)</span></span><span class="StringConstant">\"</span> &gt; /path/to/container/file.txt; /bin/bash ./start.sh<span class="String">"</span></span>
+
+<span class="Comment"><span class="Comment">#</span> Via Docker volume.</span>
+<span class="Comment"><span class="Comment">#</span> - where 'file.txt' is /path/to/host/dir/file.txt</span>
+sudo docker run -v /path/to/host/dir:/path/to/container/dir <span class="Keyword">&lt;</span>container_id<span class="Keyword">|</span>name<span class="Keyword">&gt;</span>
+
+<span class="Comment"><span class="Comment">#</span>... or ...</span>
+sudo docker run -v /path/to/host/dir:/path/to/container/dir <span class="Keyword">&lt;</span>container_id<span class="Keyword">|</span>name<span class="Keyword">&gt;</span>
+cp /path/to/host/file.txt /path/to/host/dir/file.txt
+
+<span class="Comment"><span class="Comment">#</span> Via file system -- untested as of yet.</span>
+sudo cp -v /path/to/host/file.txt \
+    /var/lib/docker/aufs/mnt/**<span class="String"><span class="String">$(</span>sudo docker inspect -f <span class="String"><span class="String">'</span>{{.Id}}<span class="String">'</span></span> <span class="Keyword">&lt;</span>container_id<span class="Keyword">|</span>name<span class="Keyword">&gt;</span><span class="String">)</span></span>**/root/path/to/container/file.txt
+</pre>
+
+<blockquote><p>Based on comments in <a href="http://stackoverflow.com/questions/22907231/copying-files-from-host-to-docker-container">http://stackoverflow.com/questions/22907231/copying-files-from-host-to-docker-container</a></p></blockquote>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2015-02-21T15:20:00+00:00" pubdate>21 February 2015</time>
+      in
+      <a href="http://mervine.net/linux">Linux</a>,
+      <a href="http://mervine.net/notes">Notes</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/notes/building-docker-machine">Building Docker Machine</a>
+    </h2>
+  </header><blockquote>
+<p><strong><a href="https://github.com/docker/machine">What's Docker Machine?</a></strong></p>
+
+<p>Machine makes it really easy to create Docker hosts on local hypervisors and cloud providers. It creates servers, installs Docker on them, then configures the Docker client to talk to them</p>
+</blockquote>
+
+<p>This wasn't as clear as I was hoping, so here's what I did.</p>
+
+<h3>Mac</h3>
+
+<pre class="twilight">$ uname -sm
+Darwin x86_64
+
+$ docker version
+Client version: 1.3.0
+Client API version: 1.15
+Go version (client): go1.3.3
+Git commit (client): c78088f
+OS/Arch (client): darwin/amd64
+Server version: 1.4.1
+Server API version: 1.16
+Go version (server): go1.3.3
+Git commit (server): 5bc2ff8
+
+$ mkdir -p <span class="Variable"><span class="Variable">$</span>GOPATH</span>/src/github.com/docker
+$ cd <span class="Variable"><span class="Variable">$</span>GOPATH</span>/src/github.com/docker
+$ git clone https://github.com/docker/machine.git
+$ cd machine
+
+$ make test
+$ ./script/build -os=darwin -arch=amd64
+$ mv docker-machine_darwin-amd64 <span class="Variable"><span class="Variable">$</span>GOBIN</span>/docker-machine
+</pre>
+
+<h3>Linux</h3>
+
+<pre class="twilight">$ uname -sio
+Linux x86_64 GNU/Linux
+
+$ sudo docker version
+Client version: 1.4.1
+Client API version: 1.16
+Go version (client): go1.3.3
+Git commit (client): 5bc2ff8
+OS/Arch (client): linux/amd64
+Server version: 1.4.1
+Server API version: 1.16
+Go version (server): go1.3.3
+Git commit (server): 5bc2ff8
+
+$ mkdir -p <span class="Variable"><span class="Variable">$</span>GOPATH</span>/src/github.com/docker
+$ cd <span class="Variable"><span class="Variable">$</span>GOPATH</span>/src/github.com/docker
+$ git clone https://github.com/docker/machine.git
+$ cd machine
+
+$ sudo make test
+$ sudo ./script/build -os=linux -arch=amd64
+$ sudo chown <span class="Variable"><span class="Variable">$</span>USER</span>: docker-machine_linux-amd64
+$ mv docker-machine_linux-amd64 <span class="Variable"><span class="Variable">$</span>GOBIN</span>/docker-machine
+</pre>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2015-02-18T11:20:00+00:00" pubdate>18 February 2015</time>
+      in
+      <a href="http://mervine.net/linux">Linux</a>,
+      <a href="http://mervine.net/notes">Notes</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/notes/mosh-iptable-rule">Notes: Mosh IPTable Rules</a>
+    </h2>
+  </header><p>I recently picked up a <a href="http://www.samsung.com/us/mobile/cell-phones/SM-N900AZKEATT">Note 3</a> and with the larger screen I found myself want to use it for shelling in to my machines. So I started playing with <a href="http://mosh.mit.edu/">Mosh</a> on one of my boxes. I (like hopefully most of you) set strick IPTable rules to keep things locked down as much as possible. I quickly found that (obviously) things weren't working due to this.</p>
+
+<p>To make things work, I added this line to <code>/etc/sysconfig/iptables</code>:</p>
+
+<pre class="twilight">-A INPUT -p udp -m udp --dport 60001:61000 -j ACCEPT
+</pre>
+
+<p>Here's the diff:</p>
+
+<pre class="twilight">diff --git a/tmp/iptables.old b/etc/sysconfig/iptables
+index d4229ca..b950f1f 100644
+<span class="DiffHeader"><span class="DiffHeader">---</span> a/tmp/iptables.old</span>
+<span class="DiffHeader"><span class="DiffHeader">+++</span> b/etc/sysconfig/iptables</span>
+<span class="DiffHeader"><span class="DiffHeader">@@</span> <span class="DiffHeader">-8,6 +8,7</span> <span class="DiffHeader">@@</span></span>
+ -A INPUT -p icmp -j ACCEPT 
+ -A INPUT -i lo -j ACCEPT 
+ -A INPUT -p tcp -m state --state NEW -m tcp --dport 22 -j ACCEPT 
+<span class="DiffInserted"><span class="DiffInserted">+</span>-A INPUT -p udp -m udp --dport 60001:61000 -j ACCEPT</span>
+ -A INPUT -j REJECT --reject-with icmp-host-prohibited 
+ -A FORWARD -j REJECT --reject-with icmp-host-prohibited 
+ COMMIT
+</pre>
+
+<p>Once you've added the line, simply restart IPTables like so:</p>
+
+<pre class="twilight">sudo /etc/init.d/iptables condrestart 
+</pre>
+
+<p>Enjoy!</p>
+  <footer><p class="meta">
+      Published
+      on
+      <time datetime="2013-10-17T09:30:00+00:00" pubdate>17 October 2013</time>
+      in
+      <a href="http://mervine.net/linux">Linux</a>,
+      <a href="http://mervine.net/notes">Notes</a>
+    </p>
+  </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/hacks/pretty-sleep-using-nodejs">Pretty Sleep using Node.js</a>
+    </h2>
+  </header><pre class="twilight"><span class="Keyword">$</span> node <span class="Keyword">-</span>e <span class="String"><span class="String">'</span>n=0; setInterval(function(){n++;if(n&gt;=20){console.log(".");process.exit(0);}process.stdout.write(".");},1000);<span class="String">'</span></span>
+</pre>
+  <footer><p class="meta">
+        Published
+        on
+        <time datetime="2013-08-16T10:30:00+00:00" pubdate>16 August 2013</time>
+        in
+        <a href="http://mervine.net/bash">Bash</a>,
+        <a href="http://mervine.net/hacks">Hacks</a>,
+        <a href="http://mervine.net/linux">Linux</a>,
+        <a href="http://mervine.net/nodejs">Node.js</a>
+      </p>
+    </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/notes/disable-ssh-string-host-checking">Notes: Disable SSH Strict Host Checking</a>
+    </h2>
+  </header><p>What automating tasks with ssh, it can be annoying to be prompted to confirm the <code>authenticity of host</code>.</p>
+
+<pre class="twilight">The authenticity of host 'host.example.com (NN.NN.NN.NN)' can't be established.
+RSA key fingerprint is af:78:f8:fb:8a:ae:dd:55:f0:40:51:29:68:27:7e:7c.
+Are you sure you want to continue connecting (yes/no)? 
+</pre>
+
+<p>Here's a simple way around that:</p>
+
+<pre class="twilight"><span class="Comment"><span class="Comment">#</span> This automatically adds the fingerprint to </span>
+<span class="Comment"><span class="Comment">#</span> ~/.ssh/known_hosts</span>
+ssh -o StrictHostKeyChecking=no host.example.com
+
+<span class="Comment"><span class="Comment">#</span> This doesn't add fingerprint</span>
+ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no host.example.com
+</pre>
+  <footer><p class="meta">
+        Published
+        on
+        <time datetime="2013-07-11T10:30:00+00:00" pubdate>11 July 2013</time>
+        in
+        <a href="http://mervine.net/linux">Linux</a>,
+        <a href="http://mervine.net/notes">Notes</a>
+      </p>
+    </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/simple-rules-for-stable-apps">Simple Rules for Stable, Performant and Maintainable Apps</a>
+    </h2>
+  </header><p>Here are some simple and basic rules I've found for building applications that are maintainable and perform well, both in speed and stability. These rules, at one level or another, can apply to smaller modules and libraries, scripts, as well as fully featured large scale applications (both web and otherwise). In this post I will focus more on web applications, since that's where I've spent most of my time. At a higher level, they should apply to almost all areas of software development.</p>
+  <p class="read_more">
+    <a href="http://mervine.net/simple-rules-for-stable-apps">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+    Published
+    on
+    <time datetime="2013-07-08T08:00:00+00:00" pubdate>08 July 2013</time>
+    in
+    <a href="http://mervine.net/express">Express</a>,
+    <a href="http://mervine.net/httperf">Httperf</a>,
+    <a href="http://mervine.net/linux">Linux</a>,
+    <a href="http://mervine.net/projects">My Projects</a>,
+    <a href="http://mervine.net/nodejs">Node.js</a>,
+    <a href="http://mervine.net/python">Python</a>,
+    <a href="http://mervine.net/ruby">Ruby</a>,
+    <a href="http://mervine.net/sinatra">Sinatra</a>
+  </p>
+</footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/notes/finding-older-files">Notes: Finding Older Files</a>
+    </h2>
+  </header><p>In this example, I'm finding all files older then 14 days and removing them.</p>
+
+<pre class="twilight">$ find . -type f -mtime +14 <span class="Keyword">|</span> xargs rm
+</pre>
+
+<p>In this example, I'm finding top level directoies in <code>/foo/bar/bah</code> that are more then 30 days old and removing them.</p>
+
+<pre class="twilight">$ find /foo/bar/bah -type d -mtime +30 -maxdepth 0 <span class="Keyword">|</span> xargs rm -rf
+</pre>
+
+<p>I typically use this for removing, which is why I've used that as an example. This type of thing is great for a cronjob...</p>
+
+<pre class="twilight"><span class="Comment"><span class="Comment">#</span> remove old files daily at 1am</span>
+* 1 * * * find /foo/bar/bah -type d -mtime +30 -maxdepth 0 <span class="Keyword">|</span> xargs rm -rf
+</pre>
+  <footer><p class="meta">
+        Published
+        on
+        <time datetime="2013-07-06T11:30:00+00:00" pubdate>06 July 2013</time>
+        in
+        <a href="http://mervine.net/bash">Bash</a>,
+        <a href="http://mervine.net/linux">Linux</a>,
+        <a href="http://mervine.net/notes">Notes</a>
+      </p>
+    </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/hacks/hp-folio-13-wifi-hack">WiFi/Bluetooth Hack for the HP Folio 13</a>
+    </h2>
+  </header><p>Someone asked for this recently, I'm not going to go in to great detail at this time, but I found it while looking through <a href="http://gist.github.com/jmervine">my gists</a> and thought I would share.</p>
+
+<p>Simple replace your <code>/etc/rc.local</code> with the following and it should unlock the hardware airplane mode on startup.</p>
+
+<pre class="twilight"><span class="Comment"><span class="Comment">#</span>!/bin/sh -e</span>
+<span class="Comment"><span class="Comment">#</span></span>
+<span class="Comment"><span class="Comment">#</span> rc.local</span>
+<span class="Comment"><span class="Comment">#</span></span>
+<span class="Comment"><span class="Comment">#</span> This script is executed at the end of each multiuser runlevel.</span>
+<span class="Comment"><span class="Comment">#</span> Make sure that the script will "exit 0" on success or any other</span>
+<span class="Comment"><span class="Comment">#</span> value on error.</span>
+<span class="Comment"><span class="Comment">#</span></span>
+<span class="Comment"><span class="Comment">#</span> In order to enable or disable this script just change the execution</span>
+<span class="Comment"><span class="Comment">#</span> bits.</span>
+<span class="Comment"><span class="Comment">#</span></span>
+<span class="Comment"><span class="Comment">#</span> By default this script does nothing.</span>
+
+rfkill unblock wifi
+sleep 5
+rmmod -w -s hp-wmi
+<span class="Comment"><span class="Comment">#</span>modprobe -r -s hp-wmi</span>
+
+exit 0
+</pre>
+
+<p><a href="https://gist.github.com/jmervine/4077523">get the gist</a></p>
+  <footer><p class="meta">
+        Published
+        on
+        <time datetime="2013-06-29T11:30:00+00:00" pubdate>29 June 2013</time>
+        in
+        <a href="http://mervine.net/hacks">Hacks</a>,
+        <a href="http://mervine.net/linux">Linux</a>,
+        <a href="http://mervine.net/notes">Notes</a>
+      </p>
+    </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/notes/installing-nodejs-from-source">Installing Node.js from Source</a>
+    </h2>
+  </header><blockquote><p>Note: This has been tested on Ubuntu 12.01. It should also work on most CentOS (Redhat) version and Mac's, but I haven't personally tested it.</p></blockquote>
+
+<p>Copy and save this to a script called something like <code>install_node.sh</code> and run <code>bash install_node.sh</code>. It expects <code>sudo</code> access.</p>
+
+<pre class="twilight"><span class="Comment"><span class="Comment">#</span>!/usr/bin/env bash</span>
+set -x
+cd /tmp
+rm -rf node
+
+set -ue
+git clone git://github.com/joyent/node.git
+
+cd node
+git checkout v0.10.20
+
+./configure --prefix=/usr
+make
+sudo make install
+
+<span class="Comment"><span class="Comment">#</span> vim: ft=sh:</span>
+</pre>
+
+<p><a href="https://gist.github.com/jmervine/5874395">Get the gist.</a></p>
+  <footer><p class="meta">
+        Published
+        on
+        <time datetime="2013-06-26T21:30:00+00:00" pubdate>26 June 2013</time>
+        in
+        <a href="http://mervine.net/linux">Linux</a>,
+        <a href="http://mervine.net/nodejs">Node.js</a>,
+        <a href="http://mervine.net/notes">Notes</a>
+      </p>
+    </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/nginx-with-lua-module">Installing Nginx with Lua Module</a>
+    </h2>
+  </header><p><a href="https://gist.github.com/jmervine/5407622/raw/nginx_w_lua.bash">Download the script.</a></p>
+
+<p>Or run the following command:</p>
+
+<pre class="twilight">bash <span class="Keyword">&lt;</span> <span class="String"><span class="String">&lt;(</span>curl -s https://gist.github.com/jmervine/5407622/raw/nginx_w_lua.bash<span class="String">)</span></span>
+</pre>
+
+<blockquote>
+<p>Note: This script has been tested on <code>Ubuntu 12.04.2 LTS</code> but should work on just about any unix based distro, as everything is compiled from source.</p>
+
+<p>Requires wget and basic build essentials.</p>
+</blockquote>
+
+<h3>What's it do?</h3>
+
+<ul>
+<li>Download LuaJIT 2.0.1</li>
+<li>Install LuaJIT 2.0.1</li>
+<li>Download Nginx Development Kit (NDK)</li>
+<li>Download lua-nginx-module</li>
+<li>Download Nginx 1.2.8</li>
+<li>
+<code>configure</code> Nginx with lua-nginx-module</li>
+<li>Install Nginx</li>
+</ul>
+<p>Binary Results:</p>
+
+<ul>
+<li><code>/opt/nginx/sbin/nginx</code></li>
+<li><code>/usr/local/bin/lua</code></li>
+<li><code>/usr/local/bin/luajit</code></li>
+</ul>
+<p>Lib Results:</p>
+
+<ul>
+<li><code>/usr/local/lib/*lua*</code></li>
+</ul>
+<p>Include Results:</p>
+
+<ul>
+<li><code>/usr/local/include/luajit-2.0/*</code></li>
+</ul>
+<h3>Starting Nginx</h3>
+
+<pre class="twilight">LD_LIBRARY_PATH=/usr/local/lib:<span class="Variable"><span class="Variable">$</span>LD_LIBRARY_PATH</span> /opt/nginx/sbin/nginx -c /path/to/nginx.conf
+</pre>
+
+<h3>Update existing Nginx init:</h3>
+
+<p>Stop Nginx: <code>sudo /etc/init.d/nginx stop</code></p>
+
+<p>Patch <a href="https://gist.github.com/jmervine/5407622#file-nginx-init-sh"><code>/etc/init.d/nginx</code></a> like so:</p>
+
+<pre class="twilight"><span class="DiffHeader">13,14c13,18</span>
+<span class="DiffDeleted"><span class="DiffDeleted">&lt;</span> PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin</span>
+<span class="DiffDeleted"><span class="DiffDeleted">&lt;</span> DAEMON=/usr/sbin/nginx</span>
+<span class="DiffHeader"><span class="DiffHeader">---</span></span>
+<span class="DiffInserted"><span class="DiffInserted">&gt;</span> export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH</span>
+<span class="DiffInserted"><span class="DiffInserted">&gt;</span> </span>
+<span class="DiffInserted"><span class="DiffInserted">&gt;</span> # ensure default configuration location</span>
+<span class="DiffInserted"><span class="DiffInserted">&gt;</span> test "$DAEMON_OPTS" || DAEMON_OPTS="-c /etc/nginx/nginx.conf"</span>
+<span class="DiffInserted"><span class="DiffInserted">&gt;</span> PATH=/opt/nginx/sbin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin</span>
+<span class="DiffInserted"><span class="DiffInserted">&gt;</span> DAEMON=/opt/nginx/sbin/nginx`</span>
+</pre>
+
+<blockquote><p>Note: the above may not be the best way, but it's what I had to do to get it to work and I didn't have a ton of time to mess with it.</p></blockquote>
+  <footer><p class="meta">
+        Published
+        on
+        <time datetime="2013-04-18T08:00:00+00:00" pubdate>18 April 2013</time>
+        in
+        <a href="http://mervine.net/linux">Linux</a>,
+        <a href="http://mervine.net/nginx">Nginx</a>,
+        <a href="http://mervine.net/ruby">Ruby</a>
+      </p>
+    </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/hacks/installing-mysql-on-centos6">Install MySQL on CentOS 6</a>
+    </h2>
+  </header><p>A simple script to install MySQL on CentOS 6.</p>
+
+<pre class="twilight"><span class="Comment"><span class="Comment">#</span>!/usr/bin/bash</span>
+<span class="Comment"><span class="Comment">#</span></span>
+<span class="Comment"><span class="Comment">#</span> sudo bash &lt; &lt;(curl -s https://gist.github.com/jmervine/5373441/raw/)</span>
+
+set -x
+cd /tmp
+wget http://dev.mysql.com/get/Downloads/MySQL-5.6/MySQL-shared-5.6.10-1.el6.x86_64.rpm/from/http://cdn.mysql.com/
+wget http://dev.mysql.com/get/Downloads/MySQL-5.6/MySQL-client-5.6.10-1.el6.x86_64.rpm/from/http://cdn.mysql.com/
+wget http://dev.mysql.com/get/Downloads/MySQL-5.6/MySQL-server-5.6.10-1.el6.x86_64.rpm/from/http://cdn.mysql.com/
+wget http://dev.mysql.com/get/Downloads/MySQL-5.6/MySQL-devel-5.6.10-1.el6.i686.rpm/from/http://cdn.mysql.com/
+
+rpm -qa <span class="Keyword">|</span> grep mysql-libs <span class="Keyword">&amp;&amp;</span> yum remove -y mysql-libs
+
+yum install -y MySQL-shared-5.6.10-1.el6.x86_64.rpm
+yum install -y MySQL-client-5.6.10-1.el6.x86_64.rpm
+yum install -y MySQL-server-5.6.10-1.el6.x86_64.rpm
+yum install -y MySQL-devel-5.6.10-1.el6.i686.rpm
+</pre>
+
+<p><a href="https://gist.github.com/jmervine/5373441">Link to gist.</a></p>
+  <footer><p class="meta">
+        Published
+        on
+        <time datetime="2013-04-12T10:00:00+00:00" pubdate>12 April 2013</time>
+        in
+        <a href="http://mervine.net/hacks">Hacks</a>,
+        <a href="http://mervine.net/linux">Linux</a>,
+        <a href="http://mervine.net/notes">Notes</a>
+      </p>
+    </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/hacks/curl-https-inscure">Using curl to Test HTTPS with Self Signed Certs</a>
+    </h2>
+  </header><pre class="twilight">$ curl https://<span class="Keyword">&lt;</span>domain<span class="Keyword">&gt;</span>/path/to.html --insecure
+</pre>
+
+<blockquote><p>Also see: <a href="/https-self-signed-certs">HTTPS: Creating Slef-signed Certs</a>.</p></blockquote>
+  <footer><p class="meta">
+        Published
+        on
+        <time datetime="2013-03-28T16:00:00+00:00" pubdate>28 March 2013</time>
+        in
+        <a href="http://mervine.net/bash">Bash</a>,
+        <a href="http://mervine.net/hacks">Hacks</a>,
+        <a href="http://mervine.net/linux">Linux</a>
+      </p>
+    </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/https-self-signed-certs">HTTPS: Creating Self-signed Certs</a>
+    </h2>
+  </header><p>Occasionally, I need to create self-signed certs when testing application through https. This isn't really the best way to do it, as it will require anyone visiting to confirm a security exception, but it's useful in a pinch.</p>
+  <p class="read_more">
+    <a href="http://mervine.net/https-self-signed-certs">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+        Published
+        on
+        <time datetime="2013-02-20T09:51:00+00:00" pubdate>20 February 2013</time>
+        in
+        <a href="http://mervine.net/linux">Linux</a>,
+        <a href="http://mervine.net/nginx">Nginx</a>
+      </p>
+    </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/installing-nodejs-on-centos">Installing Node.js on CentOS</a>
+    </h2>
+  </header><p>I wrote the following script to install <a href="http://nodejs.org/">Node.js</a> on <a href="http://www.centos.org/">CentOS</a> to handle a <a href="http://rubyonrails.org/">Rails</a> missing a JavaScript runtime environment error.</p>
+
+<pre class="twilight"><span class="Comment"><span class="Comment">#</span>!/usr/bin/env bash</span>
+set -ue
+sudo echo <span class="String"><span class="String">"</span>Ensure sudo access.<span class="String">"</span></span>
+sudo touch /etc/yum.repos.d/naulinux-extras.repo
+sudo sh -c <span class="String"><span class="String">"</span>echo '[naulinux-extras]</span>
+<span class="String">name=NauLinux Extras</span>
+<span class="String">baseurl=http://downloads.naulinux.ru/pub/NauLinux/6.2/<span class="StringConstant">\$</span>basearch/Extras/RPMS/</span>
+<span class="String">enabled=0</span>
+<span class="String">gpgcheck=1</span>
+<span class="String">gpgkey=http://downloads.naulinux.ru/pub/NauLinux/RPM-GPG-KEY-linux-ink</span>
+<span class="String">' &gt; /etc/yum.repos.d/naulinux-extras.repo<span class="String">"</span></span>
+sudo yum --enablerepo=naulinux-extras install nodejs
+</pre>
+  <footer><p class="meta">
+        Published
+        on
+        <time datetime="2013-02-03T00:00:00+00:00" pubdate>03 February 2013</time>
+        in
+        <a href="http://mervine.net/linux">Linux</a>,
+        <a href="http://mervine.net/nodejs">Node.js</a>
+      </p>
+    </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/securing-redis">Securing Redis via IPTables</a>
+    </h2>
+  </header><p>Here's a simple script to secure Redis via IPTables (tested on CentOS 6.3):</p>
+
+<pre class="twilight"><span class="Comment"><span class="Comment">#</span>!/usr/bin/env bash</span>
+
+<span class="Comment"><span class="Comment">#</span> redis_secure.sh</span>
+
+<span class="Comment"><span class="Comment">#</span> this script will add an ip address to iptables</span>
+<span class="Comment"><span class="Comment">#</span> allowing the ip address to connect to redis</span>
+
+<span class="Comment"><span class="Comment">#</span> should be run with localhost first</span>
+
+IPADDRESS=<span class="String"><span class="String">"</span><span class="StringVariable"><span class="StringVariable">$</span>1</span><span class="String">"</span></span>
+<span class="Keyword">if</span> <span class="Keyword">!</span> test <span class="String"><span class="String">"</span><span class="StringVariable"><span class="StringVariable">$</span>IPADDRESS</span><span class="String">"</span></span><span class="Keyword">;</span> <span class="Keyword">then</span>
+    echo <span class="String"><span class="String">"</span>Please enter the IP Address you want to be able to connection to Redis.<span class="String">"</span></span>
+    exit 1
+<span class="Keyword">fi</span>
+
+sudo iptables -A INPUT -s <span class="Variable"><span class="Variable">$</span>IPADDRESS</span> -p tcp -m tcp --dport 6379 -j ACCEPT
+sudo bash -c <span class="String"><span class="String">'</span>iptables-save &gt; /etc/sysconfig/iptables<span class="String">'</span></span>
+</pre>
+
+<p>Then run as follows:</p>
+
+<pre class="twilight">$ ./redis_secure.sh localhost
+$ ./redis_secure.sh 555.555.555.555 <span class="Comment"><span class="Comment">#</span> &lt; your ip goes here</span>
+</pre>
+  <footer><p class="meta">
+        Published
+        on
+        <time datetime="2013-02-02T23:30:00+00:00" pubdate>02 February 2013</time>
+        in
+        <a href="http://mervine.net/linux">Linux</a>
+      </p>
+    </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/hacks/kill-capslock">Killing Caps Lock on Ubuntu</a>
+    </h2>
+  </header><ol>
+<li>
+<p>Create <code>xmodmap</code> file:</p>
+
+<pre class="twilight"> $ xmodmap -pke &gt; ~/.xmodmap
+</pre>
+</li>
+<li>
+<p>Edit the newly created <code>~/.xmodmap</code> file, changing the line starting with <code>keycode 66 =</code> to map to a key of your choice. Here's an example where I'm mapping Caps Lock to the Escape key:</p>
+
+<pre class="twilight"> keycode  66 = Escape NoSymbol Escape
+</pre>
+</li>
+<li>
+<p>Load your new map, disabling Caps Lock:</p>
+
+<pre class="twilight"> xmodmap ~/.xmodmap
+</pre>
+</li>
+<li>
+<p>(optionally) You can set this to autostart when you launch Unity by creating the following file:</p>
+
+<pre class="twilight"> $ cat .config/autostart/xmodmap.desktop
+ [Desktop Entry]
+ Type=Application
+ Exec=xmodmap ~/.xmodmap
+ Hidden=false
+ NoDisplay=false
+ X-GNOME-Autostart-enabled=true
+ Name[en_US]=xmodmap
+ Name=xmodmap
+ Comment[en_US]=
+ Comment=
+</pre>
+</li>
+</ol>
+<footer><p class="meta">
+        Published
+        on
+        <time datetime="2012-11-14T22:00:00+00:00" pubdate>14 November 2012</time>
+        in
+        <a href="http://mervine.net/hacks">Hacks</a>,
+        <a href="http://mervine.net/linux">Linux</a>
+      </p>
+    </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/hacks/zsh-known-hosts-completion">Fast Hostname Completion with ZSH</a>
+    </h2>
+  </header><blockquote><p>Credit goes to this post for this: <a href="http://nion.modprobe.de/blog/archives/521-hostname-completion-with-zsh.html">http://nion.modprobe.de/blog/archives/521-hostname-completion-with-zsh.html</a></p></blockquote>
+
+<p>In your ~/.zshrc</p>
+
+<pre class="twilight">local knownhosts
+knownhosts=( ${${${${(f)"$(&lt;$HOME/.ssh/known_hosts)"}:#[0-9]*}%%\ *}%%,*} )
+zstyle ':completion:*:(ssh|scp|sftp):*' hosts $knownhosts
+</pre>
+
+<p>In your ~/.ssh/config</p>
+
+<pre class="twilight">HashKnownHosts no
+</pre>
+  <footer><p class="meta">
+        Published
+        on
+        <time datetime="2012-10-23T18:30:00+00:00" pubdate>23 October 2012</time>
+        in
+        <a href="http://mervine.net/hacks">Hacks</a>,
+        <a href="http://mervine.net/linux">Linux</a>,
+        <a href="http://mervine.net/zsh">ZSH</a>
+      </p>
+    </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/hacks/bash-version-checking">Minimum Version Checking with BASH/ZSH</a>
+    </h2>
+  </header><h4>Thanks to <a href="https://twitter.com/retr0h">@retr0h</a>:</h4>
+
+<pre class="twilight">[[ <span class="String"><span class="String">$(</span>zsh --version <span class="Keyword">|</span> awk <span class="String"><span class="String">'</span>{print $2}<span class="String">'</span></span><span class="String">)</span></span> <span class="Keyword">&gt;</span> 4.3.17 ]]
+
+<span class="Comment"><span class="Comment">#</span> usage</span>
+
+<span class="Keyword">if</span> [[ <span class="String"><span class="String">$(</span>zsh --version <span class="Keyword">|</span> awk <span class="String"><span class="String">'</span>{print $2}<span class="String">'</span></span><span class="String">)</span></span> <span class="Keyword">&gt;</span> 4.3.17 ]]<span class="Keyword">;</span> <span class="Keyword">then</span>
+    <span class="Comment"><span class="Comment">#</span> do someting that only higher zsh versions support</span>
+<span class="Keyword">else</span>
+    <span class="Comment"><span class="Comment">#</span> do something else for low versions</span>
+<span class="Keyword">fi</span>
+</pre>
+
+<hr>
+<blockquote>
+<p>This was my origitional (not so sexy solution).</p>
+
+<p>The following line will print <code>zsh</code> version information if the version is greater then or equal to 4.3.17, otherwise it will return blank:</p>
+
+<pre class="twilight">zsh --version <span class="Keyword">|</span> awk <span class="String"><span class="String">'</span>{print $2}<span class="String">'</span></span> <span class="Keyword">|</span> awk -F<span class="String"><span class="String">'</span>.<span class="String">'</span></span> <span class="String"><span class="String">'</span> ( $1 &gt; 4 || ( $1 == 4 &amp;&amp; $2 &gt; 3 ) || ( $1 == 4 &amp;&amp; $2 == 3 &amp;&amp; $3 &gt;= 17 ) ) <span class="String">'</span></span>
+</pre>
+
+<p>An example usage would be something like:</p>
+
+<pre class="twilight"><span class="Comment"><span class="Comment">#</span>!/usr/bin/env bash</span>
+<span class="Keyword">if</span> test <span class="String"><span class="String">"</span><span class="String"><span class="String">$(</span> zsh --version <span class="Keyword">|</span> awk <span class="String"><span class="String">'</span>{print $2}<span class="String">'</span></span> <span class="Keyword">|</span> awk -F<span class="String"><span class="String">'</span>.<span class="String">'</span></span> <span class="String"><span class="String">'</span> ( $1 &gt; 4 || ( $1 == 4 &amp;&amp; $2 &gt; 3 ) || ( $1 == 4 &amp;&amp; $2 == 3 &amp;&amp; $3 &gt;= 17 ) ) <span class="String">'</span></span> <span class="String">)</span></span><span class="String">"</span></span>
+<span class="Keyword">then</span>
+    <span class="Comment"><span class="Comment">#</span> do someting that only higher zsh versions support</span>
+<span class="Keyword">else</span>
+    <span class="Comment"><span class="Comment">#</span> do something else for low versions</span>
+<span class="Keyword">fi</span>
+</pre>
+</blockquote>
+  <footer><p class="meta">
+        Published
+        on
+        <time datetime="2012-10-19T12:00:00+00:00" pubdate>19 October 2012</time>
+        in
+        <a href="http://mervine.net/bash">Bash</a>,
+        <a href="http://mervine.net/hacks">Hacks</a>,
+        <a href="http://mervine.net/linux">Linux</a>,
+        <a href="http://mervine.net/zsh">ZSH</a>
+      </p>
+    </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/hp-folio-backlight">Fixing Backlight on the HP Folio 13 when using Linux</a>
+    </h2>
+  </header><p>This is something I ran in to when origionally setting up my Folio, which I did not post on. However, today a co-worker asked me how to solve this problem, so I thought I should jot it down for future reference.</p>
+
+<ol>
+<li>Open your grub config: <code>sudo vi /etc/default/grub</code>.</li>
+<li>
+<p>Update the line containing <code>GRUB_CMDLINE_LINUX_DEFAULT</code>, adding <code>acpi_backlight=vendor</code> to the end. It should look something like this when you're done:</p>
+
+<p> </p>
+<pre class="twilight">
+ # file: /etc/default/grub
+ # ...
+ GRUB_CMDLINE_LINUX_DEFAULT="quiet splash acpi=on acpi_backlight=vendor"
+ # ...</pre>
+</li>
+<li><p>Save and update grub with <code>sudo update-grub</code>.</p></li>
+<li>Reboot and you should have a display.</li>
+</ol>
+<blockquote><p>Note: You will need to use an external monitor or drop in to grub's preboot command line and add the above to be able to see your screen before adding the above option.</p></blockquote>
+  <footer><p class="meta">
+        Published
+        on
+        <time datetime="2012-10-02T12:30:00+00:00" pubdate>02 October 2012</time>
+        in
+        <a href="http://mervine.net/linux">Linux</a>
+      </p>
+    </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/rvm-readline-on-ubutnu">RVM, irb, readline and Ubuntu</a>
+    </h2>
+  </header><p>It's as easy as:</p>
+
+<pre class="twilight">sudo apt-get install libreadline-gplv2-dev
+rvm remove ruby-1.9.3-p194
+rvm install ruby-1.9.3-p194
+</pre>
+
+<p>Done.</p>
+
+<h3>Notes:</h3>
+
+<ol>
+<li>Do not use <code>rvm pkg install readline</code>.</li>
+<li>"1.9.3-p194" is an example, should work with most versions.</li>
+</ol>
+<footer><p class="meta">
+        Published
+        on
+        <time datetime="2012-09-25T13:30:00+00:00" pubdate>25 September 2012</time>
+        in
+        <a href="http://mervine.net/linux">Linux</a>,
+        <a href="http://mervine.net/ruby">Ruby</a>
+      </p>
+    </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/hacks/gistcli">Web Pasting with "gistcli"</a>
+    </h2>
+  </header><p><a href="https://github.com/pranavk/gist-cli">Found this simple Python script which allows for cli gist posts</a> -- (thanks to <a href="http://github.com/pranavk">pranavk</a>).</p>
+
+<p>You can install it like so</p>
+
+<pre class="twilight">$ mkdir ~/bin
+$ echo "export PATH=~/bin:$PATH" &gt;&gt; ~/.zshrc
+$ cd ~/bin
+$ wget https://raw.github.com/pranavk/gist-cli/master/gistcli
+$ chmod 755 gistcli
+$ source ~/.zshrc
+</pre>
+
+<p>Usage examples</p>
+
+<pre class="twilight"><span class="Comment"><span class="Comment">#</span> simple echo to gist</span>
+echo <span class="String"><span class="String">"</span>test gist<span class="String">"</span></span> <span class="Keyword">|</span> gistcli
+
+<span class="Comment"><span class="Comment">#</span> file to gist</span>
+gistcli -f myfile.txt
+
+<span class="Comment"><span class="Comment">#</span> private</span>
+echo <span class="String"><span class="String">"</span>ssssh, don't tell anyone!<span class="String">"</span></span> <span class="Keyword">|</span> gistcli -p
+
+<span class="Comment"><span class="Comment">#</span> from tty, EOF from '.' on it's own line</span>
+gistcli -
+Foo, bar bah bing<span class="Keyword">!</span>
+.
+</pre>
+
+<blockquote><p>Note:
+There's also a slightly more mature <a href="/ruby">Ruby</a> gist cli tool at <a href="https://github.com/defunkt/gist">github.com/defunkt/gist</a> but I had issues getting it to work with my RMV setup.</p></blockquote>
+  <footer><p class="meta">
+        Published
+        on
+        <time datetime="2012-09-23T17:35:00+00:00" pubdate>23 September 2012</time>
+        in
+        <a href="http://mervine.net/hacks">Hacks</a>,
+        <a href="http://mervine.net/linux">Linux</a>
+      </p>
+    </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/iptables-rules-examples">IPTables Rules Examples</a>
+    </h2>
+  </header><h4>
+<a href="http://www.thegeekstuff.com/2011/06/iptables-rules-examples/">25 Most Frequently Used Linux IPTables Rules Examples</a> (external)</h4>
+
+<blockquote><p>"At a first glance, IPTables rules might look cryptic.
+In this article, I’ve given 25 practical IPTables rules that you can copy/paste and use it for your needs.
+These examples will act as a basic templates for you to tweak these rules to suite your specific requirement."</p></blockquote>
+
+<h4>
+<a href="http://www.debuntu.org/how-to-redirecting-network-traffic-a-new-ip-using-iptables">How-To: Redirecting network traffic to a new IP using IPtables</a>  (external)</h4>
+
+<blockquote><p>"While doing a server migration, it happens that some traffic still go to the old machine because the DNS servers are not yet synced or simply because some people are using the IP address instead of the domain name....
+By using iptables and its masquerade feature, it is possible to forward all traffic to the old server to the new IP.
+This tutorial will show which command lines are required to make this possible.
+In this article, it is assumed that you do not have iptables running, or at least no nat table rules for chain PREROUTING and POSTROUTING."</p></blockquote>
+  <footer><p class="meta">
+        Published
+        on
+        <time datetime="2012-09-18T18:08:00+00:00" pubdate>18 September 2012</time>
+        in
+        <a href="http://mervine.net/linux">Linux</a>
+      </p>
+    </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/fixing-wireless-on-the-hp-folio-13-when-using-linux">Fixing Wireless on the HP Folio 13 when using Linux</a>
+    </h2>
+  </header><p>Okay, this post is a bit off topic but I spent almost two days non-stop working on this to figure it out and it's nowhere out there on the web.</p>
+  <p class="read_more">
+    <a href="http://mervine.net/fixing-wireless-on-the-hp-folio-13-when-using-linux">Continue reading</a>
+  </p>
+  <footer><p class="meta">
+        Published
+        on
+        <time datetime="2012-08-27T04:35:00+00:00" pubdate>27 August 2012</time>
+        in
+        <a href="http://mervine.net/linux">Linux</a>
+      </p>
+    </footer>
+</div>
+<div class="well" style="padding-top: 0px; padding-bottom: 0px">
+  <header><h2>
+      <a href="http://mervine.net/bash-arrays">BASH Arrays</a>
+    </h2>
+  </header><p>Basic Array handling in BASH, because I always forget.</p>
+
+<pre class="twilight"><span class="Comment"><span class="Comment">#</span> basic itteration</span>
+items=( a b c d e )
+
+<span class="Keyword">for</span> i <span class="Keyword">in</span> <span class="String"><span class="String">"</span><span class="StringVariable"><span class="StringVariable">${</span>items[@]<span class="StringVariable">}</span></span><span class="String">"</span></span>
+<span class="Keyword">do</span>
+    echo -n <span class="Variable"><span class="Variable">$</span>i</span>
+<span class="Keyword">done</span>
+
+<span class="Comment"><span class="Comment">#</span>=&gt; abcde</span>
+
+<span class="Comment"><span class="Comment">#</span> update specific array slot</span>
+items[1]=<span class="String"><span class="String">"</span>foo<span class="String">"</span></span>
+
+<span class="Comment"><span class="Comment">#</span> access specific array slot</span>
+echo <span class="Variable"><span class="Variable">${</span>items[1]<span class="Variable">}</span></span>
+
+<span class="Comment"><span class="Comment">#</span>=&gt; foo</span>
+</pre>
+  <footer><p class="meta">
+        Published
+        on
+        <time datetime="2012-05-30T00:32:00+00:00" pubdate>30 May 2012</time>
+        in
+        <a href="http://mervine.net/bash">Bash</a>,
+        <a href="http://mervine.net/hacks">Hacks</a>,
+        <a href="http://mervine.net/linux">Linux</a>
+      </p>
+    </footer>
+</div>
+    
+    <hr class="article_seperator">
+<br><div id="disqus_thread">
+      <script async src="http://rubyops.disqus.com/embed.js" type="text/javascript"></script><noscript>
+        <a href="http://rubyops.disqus.com/embed.js?url=ref">View comments.</a>
+      </noscript>
+    </div>
+  </div>
+</div>
+        </div>
+        <div class="col-md-3 visible-md visible-lg">
+          <div class="sidebar-nav">
+              <ul class="share-buttons">
+<li>
+                  <a href="https://www.facebook.com/sharer/sharer.php?u=http://mervine.net/linux" target="_blank">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Facebook.png"></a>
+                </li>
+                <li>
+                  <a href="https://twitter.com/intent/tweet?url=http://mervine.net/linux&amp;text=Linux%20-%20mervine.net%20-%20&amp;via=mervinej" target="_blank" title="Tweet">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Twitter.png"></a>
+                </li>
+                <li>
+                  <a href="https://plus.google.com/share?url=http://mervine.net/linux" target="_blank" title="Share on Google+">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Google.png"></a>
+                </li>
+                <li>
+                  <a href="http://www.reddit.com/submit?url=http://mervine.net/linux&amp;title=Linux%20-%20mervine.net" target="_blank" title="Submit to Reddit">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Reddit.png"></a>
+                </li>
+                <li>
+                  <a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=http://mervine.net/linux&amp;title=Linux%20-%20mervine.net&amp;source=http://mervine.net/linux" target="_blank" title="Share on LinkedIn">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/LinkedIn.png"></a>
+                </li>
+              </ul>
+<div class="list-group">
+                <a class="list-group-item active" href="#">
+                  <h4 class="list-group-item-heading">More on This</h4>
+                </a>
+                <a class="list-group-item" href="/bash-one-liners">Bash One Liners</a>
+                <a class="list-group-item" href="/notes/bind-mysql-to-localhost">Bind MySQL to localhost</a>
+                <a class="list-group-item" href="/notes/install-nginx-via-yum">Install Nginx via yum</a>
+                <a class="list-group-item" href="/notes/install-script-list">List of Install Scripts</a>
+              </div>
+              <div class="list-group">
+<a class="list-group-item active" href="http://joshua.mervine.net/">
+                  <h4 class="list-group-item-heading">Joshua P. Mervine</h4>
+                </a><a class="list-group-item" href="http://twitter.com/mervinej">Twitter</a>
+            <a class="list-group-item" href="http://linkedin.com/in/mervinej">Linkedin</a>
+            <a class="list-group-item" href="http://github.com/jmervine">Github</a>
+            <a class="list-group-item" href="http://www.gittip.com/jmervine">Gittip</a>
+              </div>
+            </div>
+        </div>
+      </div>
+      <center>
+        <br><div id="footer">
+            <div class="container">
+              <p class="muted credit">
+                Powered by Nesta, a
+                <a href="http://nestacms.com">Ruby CMS</a>.
+              </p>
+            </div>
+          </div>
+      </center>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script><script async src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js" type="text/javascript"></script><script>
+      var searchElement = 'input[name=q]';
+    </script><script async src="//cdn.jsdelivr.net/jquery.webpage-vim/0.1/vim.min.js" type="text/javascript"></script><script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-32343843-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+      </script>
+</body>
+</html>

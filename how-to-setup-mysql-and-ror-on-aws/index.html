@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta content="I have been working on setting up RoR with MySQL on an AWS instance and ran in to some oddities, so I decided to document the steps I took and lay it all out real nice and pretty." name="description">
+<meta content="nginx, ruby, unicorn" name="keywords">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="" name="author">
+<link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/spacelab/bootstrap.min.css" media="screen" rel="stylesheet">
+<link href="//cdn.mervine.net/bootstrap/master.css" media="screen" rel="stylesheet">
+<!--[if lte IE 6]>
+      <link href='http://universal-ie6-css.googlecode.com/files/ie6.1.1.css' media='screen, projection' rel='stylesheet'>
+    <![endif]--><!--[if lt IE 9]>
+      <script src='//html5shim.googlecode.com/svn/trunk/html5.js'></script>
+    <![endif]--><link href="/articles.xml" rel="alternate" type="application/atom+xml">
+<link href="//cdn.mervine.net/bootstrap/favicon.ico" rel="shortcut icon">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon.png" rel="apple-touch-icon">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon-72x72.png" rel="apple-touch-icon" sizes="72x72">
+<link href="//cdn.mervine.net/bootstrap/images/apple-touch-icon-114x114.png" rel="apple-touch-icon" sizes="114x114">
+<title>How-to: Setup MySQL and RoR on AWS</title>
+</head>
+<body style="padding-top: 10px !important">
+    <div class="container">
+      <div class="navbar navbar-default navbar-top" style="margin-bottom: 0px !important">
+        <div class="navbar-header">
+          <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse" type="button">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Home</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+<li class="">
+              <a href="http://mervine.net/categories">Category List</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/projects">My Projects</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/notes">Notes</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/hacks">Hacks</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/quotes">Quotes</a>
+            </li>
+            <li class="">
+              <a href="http://mervine.net/archive">Archives</a>
+            </li>
+          </ul>
+<ul class="nav navbar-nav navbar-right visible-xs">
+<li>
+              <a href="http://twitter.com/mervinej">Twitter</a>
+            </li>
+            <li>
+              <a href="http://linkedin.com/in/mervinej">Linkedin</a>
+            </li>
+            <li>
+              <a href="http://github.com/jmervine">Github</a>
+            </li>
+            <li>
+              <a href="http://www.gittip.com/jmervine">Gittip</a>
+            </li>
+          </ul>
+</div>
+      </div>
+      <div class="container">
+        <div class="page-header" style="margin-top: 0px !important;">
+          <img src="http://www.gravatar.com/avatar/ed808193b8c2c8516715816f90a005b2.jpg?s=75" style="padding:5px 15px 15px; float:left"><a href="http://mervine.net/">
+            <h1>mervine.net</h1>
+          </a><small>Lessons learned, code written, hacks, etc.</small>
+        </div>
+      </div>
+      <div class="container">
+        <div class="col-sm-12 col-md-9">
+          <div class="page_content container">
+  <div class="page_content">
+    <h1>How-to: Setup MySQL and RoR on AWS</h1>
+
+<h3>Warning!!</h3>
+
+<p>When I wrote this, I misunderstood the AWS pricing models when I was originally putting this together. The following configuration would run you about $8 per month for the first year and around $16 per month each following year. Please see <a href="http://aws.amazon.com/pricing/ec2/">Amazon's AWS Pricing page</a> for details.</p>
+
+<h3>Introduction</h3>
+
+<p>I have been working on setting up RoR with MySQL on an AWS instance and ran in to some oddities, so I decided to document the steps I took and lay it all out real nice and pretty.</p>
+
+<h4>First, these are some details about the setup I wanted</h4>
+
+<ul>
+<li>MySQL on it's own host</li>
+<li>RoR app on it's own host</li>
+<li>ruby 1.9.2p280</li>
+<li>git</li>
+<li>sans rvm</li>
+<li>bundler with gems installed in an app specific vendor/bundle director</li>
+<li>AMI: ubuntu/images/ebs/ubuntu-oneiric-11.10-amd64-server-20120222 (ami-baba68d3)
+
+<ul>
+<li>I used this for both the mysql and application host</li>
+</ul>
+</li>
+</ul>
+<h4>Assumptions</h4>
+
+<ol>
+<li>You've already created the AWS images.</li>
+<li>MySQL host: mysql.hostname</li>
+<li>App Host: app.hostname</li>
+<li>Username: myuser</li>
+<li>Project name: project</li>
+</ol>
+<h4>Prep your AWS images</h4>
+
+<p>For both machines, I create a new user, as not to use 'ubuntu' or 'root' as my main user.</p>
+
+<pre class="twilight">desktop~$ ssh -i ~/.ssh/my_aws.pem ubuntu@&lt;aws_host&gt;
+awshost~$ sudo su -
+awshost~$ useradd -G sudo -m -r --shell /bin/bash myuser \
+   &amp;&amp; mkdir -p /home/myuser/.ssh \
+   &amp;&amp; cp /home/ubuntu/.ssh/authorized_keys /home/myuser/.ssh/ \
+   &amp;&amp; chown -R myuser: /home/myuser/.ssh \
+   &amp;&amp; passwd myuser
+... enter new password ...
+awshost~$ exit
+desktop~$ ssh -i ~/.ssh/my_aws.pem myuser@&lt;aws_host&gt;
+awshost~$ sudo userdel ubuntu
+</pre>
+
+<h2>MySQL</h2>
+
+<p>Install MySQL:</p>
+
+<pre class="twilight">$ sudo apt-get install mysql-server mysql-client
+... output omitted ...
+</pre>
+
+<p>Setup MySQL's basic permissions:</p>
+
+<pre class="twilight">$ sudo mysqladmin -u root -h localhost password 'password'
+... output omitted ...
+$ mysql -u root -p
+... output omitted ...
+mysql&gt; GRANT ALL PRIVILEGES ON *.* TO 'myuser'@'%' 
+     &gt; IDENTIFIED BY "password";
+Query OK, 0 rows affected (0.00 sec)
+
+mysql&gt; FLUSH PRIVILEGES;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql&gt; exit
+Bye
+</pre>
+
+<p>Update MySQL config to allow for external connectivity:</p>
+
+<pre class="twilight">$ sudo vi /etc/mysql/my.cnf
+</pre>
+
+<blockquote><p>Change: <code>bind-address    = 127.0.0.1</code>
+To: <code>bind-address    = &lt;your ip address&gt;</code></p></blockquote>
+
+<p>Update iptables:</p>
+
+<pre class="twilight">$ sudo /sbin/iptables -A INPUT -i eth0 -p tcp --destination-port 3306 -j ACCEPT
+$ sudo iptables-save
+$ sudo iptables-apply
+$ sudo service mysql restart
+</pre>
+
+<p>You should now be able to connect to <em>mysql.hostname</em> from an external mysql client... <code>desktop~$ mysql -u myuser -h mysql.hostname -p</code></p>
+
+<h4>Reminder: Create Rails Database Tables</h4>
+
+<pre class="twilight">$ mysql -u myuser -h mysql.hostname -p
+
+mysql&gt; CREATE DATABASE 'project_development';
+... output omitted ...
+
+mysql&gt; CREATE DATABASE 'project_test';
+... output omitted ...
+
+mysql&gt; CREATE DATABASE 'project_production';
+... output omitted ...
+</pre>
+
+<h2>Ruby and Rails Setup</h2>
+
+<p>Install Ruby, Rubygems and dependancies:</p>
+
+<pre class="twilight">$ sudo su -
+$ apt-get -y update \
+  &amp;&amp; apt-get -y install git-core \
+  &amp;&amp; apt-get -y install ruby1.9.1 \
+  &amp;&amp; apt-get -y install ruby1.9.1-dev \
+  &amp;&amp; apt-get -y install build-essential \
+  &amp;&amp; apt-get -y install mysql-client \
+  &amp;&amp; apt-get -y install libmysqlclient-dev \
+  &amp;&amp; gem install rubygems-update --no-ri --no-rdoc \
+  &amp;&amp; update_rubygems \
+  &amp;&amp; gem install bundler --no-ri --no-rdoc
+</pre>
+
+<p>Checkout your Rails project:</p>
+
+<pre class="twilight">$ cd ~
+$ git clone git@github.com:mygituser/project.git
+$ cd project
+</pre>
+
+<p>Configure and run Bundler:</p>
+
+<pre class="twilight">$ bundle config build.mysql --with-mysql-config=/usr/bin/mysql_config
+$ bundle install --path ./vendor/bundle
+... output omitted ...
+</pre>
+
+<p>Run tests:</p>
+
+<pre class="twilight">$ bundle exec rake test
+... output omitted ...
+</pre>
+
+<blockquote><p>Note: This should validate that everything is setup and working correctly, including your database connections.</p></blockquote>
+
+<h4>Reminder: Don't forget to update your database configs:</h4>
+
+<pre class="twilight">$ vi config/database.yml 
+</pre>
+
+<p>Example configuration:</p>
+
+<pre class="twilight"><span class="MetaTagAll"><span class="MetaTagInline">development</span><span class="MetaTagAll">:</span></span>
+  <span class="String"><span class="MetaTagInline">adapter<span class="MetaTagInline">:</span></span> <span class="String">mysql</span></span>
+  <span class="String"><span class="MetaTagInline">database<span class="MetaTagInline">:</span></span> <span class="String">project_development</span></span>
+  <span class="String"><span class="MetaTagInline">encoding<span class="MetaTagInline">:</span></span> <span class="String">utf8</span></span>
+  <span class="String"><span class="MetaTagInline">username<span class="MetaTagInline">:</span></span> <span class="String">myuser</span></span>
+  <span class="String"><span class="MetaTagInline">password<span class="MetaTagInline">:</span></span> <span class="String">password</span></span>
+  <span class="String"><span class="MetaTagInline">host<span class="MetaTagInline">:</span></span> <span class="String">mysql.hostname</span></span>
+
+<span class="MetaTagAll"><span class="MetaTagInline">test</span><span class="MetaTagAll">:</span></span>
+  <span class="String"><span class="MetaTagInline">adapter<span class="MetaTagInline">:</span></span> <span class="String">mysql</span></span>
+  <span class="String"><span class="MetaTagInline">database<span class="MetaTagInline">:</span></span> <span class="String">project_test</span></span>
+  <span class="String"><span class="MetaTagInline">encoding<span class="MetaTagInline">:</span></span> <span class="String">utf8</span></span>
+  <span class="String"><span class="MetaTagInline">username<span class="MetaTagInline">:</span></span> <span class="String">myuser</span></span>
+  <span class="String"><span class="MetaTagInline">password<span class="MetaTagInline">:</span></span> <span class="String">password</span></span>
+  <span class="String"><span class="MetaTagInline">host<span class="MetaTagInline">:</span></span> <span class="String">mysql.hostname</span></span>
+
+<span class="MetaTagAll"><span class="MetaTagInline">production</span><span class="MetaTagAll">:</span></span>
+  <span class="String"><span class="MetaTagInline">adapter<span class="MetaTagInline">:</span></span> <span class="String">mysql</span></span>
+  <span class="String"><span class="MetaTagInline">database<span class="MetaTagInline">:</span></span> <span class="String">project_production</span></span>
+  <span class="String"><span class="MetaTagInline">encoding<span class="MetaTagInline">:</span></span> <span class="String">utf8</span></span>
+  <span class="String"><span class="MetaTagInline">username<span class="MetaTagInline">:</span></span> <span class="String">myuser</span></span>
+  <span class="String"><span class="MetaTagInline">password<span class="MetaTagInline">:</span></span> <span class="String">password</span></span>
+  <span class="String"><span class="MetaTagInline">host<span class="MetaTagInline">:</span></span> <span class="String">mysql.hostname</span></span>
+</pre>
+
+<p>Start Rails:</p>
+
+<pre class="twilight">$ sudo bundle exec rails s -p 80
+</pre>
+
+<blockquote><p>Note: I've only opened port 80 on my AWS image, which is why I'm using both 'sudo' and the '-p 80' flag. If you have port 3000 open, you can start rails with... <code>bundle exec rails s</code></p></blockquote>
+
+<h2>Serving for Real</h2>
+
+<p>In the real world, you aren’t going to be using WEBrick, or at least I would hope not. My personal preference is to use Nginx and Unicorn (although there are lots of options out there). So here’s a quick how to on Nginx and Unicorn for those that are interest.</p>
+
+<h4>Unicorn</h4>
+
+<p>Install Unicorn using Bundler:</p>
+
+<pre class="twilight">$ vi /home/myuser/project/Gemfile
+</pre>
+
+<p>Add the following line:</p>
+
+<pre class="twilight">gem 'unicorn'
+</pre>
+
+<p>Update installed gems:</p>
+
+<blockquote><p>Note: this assumes you've already do the <em>bundle install --path ./vendor/bundle</em> step mentioned above.</p></blockquote>
+
+<pre class="twilight">$ cd /home/myuser/project
+$ bundle
+... output omitted ...
+</pre>
+
+<blockquote><p>Note: you can install Unicorn directly, without Bundler, by running the following: <code>$ sudo gem install unicorn</code></p></blockquote>
+
+<p>Configure Unicorn:</p>
+
+<p>To configure unicorn, you’re going to want to create a config file for it. By default, it doesn’t need one and you can simply start it with bundle exec unicorn -p 3000 from within your project directory, exactly like WEBrick. However, this isn’t really ideal for real systems.</p>
+
+<p>Create a config file:</p>
+
+<pre class="twilight">$ vi /home/myuser/project/config/unicorn.conf
+</pre>
+
+<p>Example file:</p>
+
+<pre class="twilight">worker_processes 8
+listen "0.0.0.0:3000"
+pid "/home/myuser/project/log/unicorn.pid"
+stderr_path "/home/myuser/project/log/unicorn_stderr.log"
+stdout_path "/home/myuser/log/unicorn_stdout.log"
+</pre>
+
+<h6><a href="https://gist.github.com/2127559">example file gist</a></h6>
+
+<p>Start Unicorn:</p>
+
+<pre class="twilight">$ cd /home/myuser/project &amp;&amp; \ 
+bundle exec unicorn -c /home/myuser/project/config/unicorn.conf -D
+</pre>
+
+<blockquote><p>Stopping Unicorn (the dirty way): <code>ps aux | grep unicorn | grep project | cut -d" " -f2 | xargs kill</code></p></blockquote>
+
+<h4>Nginx</h4>
+
+<p>Install Nginx:</p>
+
+<pre class="twilight">$ sudo apt-get install -y nginx
+</pre>
+
+<p>Configure Nginx:</p>
+
+<pre class="twilight">$ sudo vi /etc/nginx/sites-available/default
+</pre>
+
+<blockquote><p>Note, I have removed all commented lines from the default configuration, except the lines I commented out myself.</p></blockquote>
+
+<pre class="twilight">server {
+
+  #root /usr/share/nginx/www;
+  root /home/myuser/blog/public;
+  index index.html index.htm;
+
+  server_name app.hostname;
+
+  location ~ ^/assets/ {
+    root /home/myuser/blog/app/assets/$1;
+  }
+
+  location / {
+    proxy_pass http://127.0.0.1:3000;
+  }
+
+  #location /doc {
+  # root /usr/share;
+  # autoindex on;
+  # allow 127.0.0.1;
+  # deny all;
+  #}
+
+  #location /images {
+  # root /usr/share;
+  # autoindex off;
+  #}
+}
+</pre>
+
+<h6><a href="https://gist.github.com/2127051">example file gist</a></h6>
+
+<p>Additionally, you can update your log directories to point to the rails log directory if you want, by editing /etc/nginx/nginx.conf and changing the following lines:</p>
+
+<pre class="twilight">access_log /var/log/nginx/access.log;
+error_log /var/log/nginx/error.log;
+</pre>
+
+<h2>In Closing</h2>
+
+<p>This is my guide on setting up Ruby and Rails with MySQL, using Nginx and Unicorn. I don't claim to be the foremost expert on any of these technologies, but this should work pretty well for most sites. I highly recommend running this on something better then an AWS t1.micro, however, that should get you started. Enjoy!</p>
+
+<h2>References</h2>
+
+<ul>
+<li><a href="http://aws.amazon.com/">Amazon AWS</a></li>
+<li><a href="http://gembundler.com/">Bundler</a></li>
+<li><a href="http://github.com/">git</a></li>
+<li><a href="http://mysql.com/">MySQL</a></li>
+<li><a href="http://nginx.org/">Nginx</a></li>
+<li><a href="http://rubyonrails.org/">Rails</a></li>
+<li><a href="http://www.ruby-lang.org/en/">Ruby</a></li>
+<li><a href="http://rubygems.org/">Rubygems</a></li>
+<li><a href="http://www.ubuntu.com/">Ubuntu</a></li>
+<li><a href="http://unicorn.bogomips.org/">Unicorn</a></li>
+</ul>
+<footer><p class="meta">
+        Published
+        on
+        <time datetime="2012-05-29T17:39:00+00:00" pubdate>29 May 2012</time>
+        in
+        <a href="http://mervine.net/nginx">Nginx</a>,
+        <a href="http://mervine.net/ruby">Ruby</a>,
+        <a href="http://mervine.net/unicorn">Unicorn</a>
+      </p>
+    </footer><hr class="article_seperator">
+<br><div id="disqus_thread">
+      <script async src="http://rubyops.disqus.com/embed.js" type="text/javascript"></script><noscript>
+        <a href="http://rubyops.disqus.com/embed.js?url=ref">View comments.</a>
+      </noscript>
+    </div>
+  </div>
+</div>
+        </div>
+        <div class="col-md-3 visible-md visible-lg">
+          <div class="sidebar-nav">
+              <ul class="share-buttons">
+<li>
+                  <a href="https://www.facebook.com/sharer/sharer.php?u=http://mervine.net/how-to-setup-mysql-and-ror-on-aws" target="_blank">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Facebook.png"></a>
+                </li>
+                <li>
+                  <a href="https://twitter.com/intent/tweet?url=http://mervine.net/how-to-setup-mysql-and-ror-on-aws&amp;text=How-to:%20Setup%20MySQL%20and%20RoR%20on%20AWS%20-%20&amp;via=mervinej" target="_blank" title="Tweet">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Twitter.png"></a>
+                </li>
+                <li>
+                  <a href="https://plus.google.com/share?url=http://mervine.net/how-to-setup-mysql-and-ror-on-aws" target="_blank" title="Share on Google+">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Google.png"></a>
+                </li>
+                <li>
+                  <a href="http://www.reddit.com/submit?url=http://mervine.net/how-to-setup-mysql-and-ror-on-aws&amp;title=How-to:%20Setup%20MySQL%20and%20RoR%20on%20AWS" target="_blank" title="Submit to Reddit">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/Reddit.png"></a>
+                </li>
+                <li>
+                  <a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=http://mervine.net/how-to-setup-mysql-and-ror-on-aws&amp;title=How-to:%20Setup%20MySQL%20and%20RoR%20on%20AWS&amp;source=http://mervine.net/how-to-setup-mysql-and-ror-on-aws" target="_blank" title="Share on LinkedIn">
+                    <img src="//cdn.mervine.net/bootstrap/images/simple_icons/LinkedIn.png"></a>
+                </li>
+              </ul>
+<div class="list-group">
+<a class="list-group-item active" href="http://joshua.mervine.net/">
+                  <h4 class="list-group-item-heading">Joshua P. Mervine</h4>
+                </a><a class="list-group-item" href="http://twitter.com/mervinej">Twitter</a>
+            <a class="list-group-item" href="http://linkedin.com/in/mervinej">Linkedin</a>
+            <a class="list-group-item" href="http://github.com/jmervine">Github</a>
+            <a class="list-group-item" href="http://www.gittip.com/jmervine">Gittip</a>
+              </div>
+            </div>
+        </div>
+      </div>
+      <center>
+        <br><div id="footer">
+            <div class="container">
+              <p class="muted credit">
+                Powered by Nesta, a
+                <a href="http://nestacms.com">Ruby CMS</a>.
+              </p>
+            </div>
+          </div>
+      </center>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script><script async src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js" type="text/javascript"></script><script>
+      var searchElement = 'input[name=q]';
+    </script><script async src="//cdn.jsdelivr.net/jquery.webpage-vim/0.1/vim.min.js" type="text/javascript"></script><script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-32343843-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+      </script>
+</body>
+</html>
