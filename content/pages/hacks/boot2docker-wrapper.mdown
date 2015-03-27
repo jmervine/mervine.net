@@ -1,0 +1,88 @@
+Date: 27 March 2015 12:00
+Title: boot2docker Wrapper Script
+Categories: hacks, bash, linux, docker
+
+# boot2docker Wrapper Script
+
+I put together this simple wrapper function for simplifying [`boot2docker`](http://boot2docker.io/) interactions on my Macbook Air.
+
+> Note: I refer to `.bashrc` as the target as it's the more common shell. However, this has been tested and I personally use it within zsh.
+
+### Basic Usage
+
+    :::shell
+    $ b2d reset
+    # purge current boot2docker environment
+    
+    $ b2d up
+    # start boot2docker and export environment
+    
+    $ b2d reup|restart
+    # stop and restart boot2docker
+    
+    $ b2d [etc]
+    # all other arguements are passed directly passed through to boot2docker
+
+### The Functions
+
+    :::shell
+    # file: ~/.bashrc
+    
+    #############################################################
+    # Function -- Boot2Docker
+    #############################################################
+    if test "$(which boot2docker 2> /dev/null)"; then
+        function docker_reset {
+            puts "+ clearing docker variables"
+            unset DOCKER_HOST
+            unset DOCKER_CERT_PATH
+            unset DOCKER_TLS_VERIFY
+            echo "" > ~/.boot2dockerrc
+        }
+
+        function docker_up {
+            docker_reset
+            puts "+ starting boot2docker"
+            boot2docker up | grep "export DOCKER_" | tee ~/.boot2dockerrc
+            b2dSTATUS=$?
+            . ~/.boot2dockerrc
+            return $b2dSTATUS
+        }
+
+        function docker_down {
+            puts "+ stopping boot2docker"
+            boot2docker down
+            return 0
+        }
+
+        function docker_reup {
+            docker_down
+            docker_up
+            return $?
+        }
+
+        function b2d {
+            if [[ "$@" = "reset" ]]; then
+                docker_reset
+                return 0
+            fi
+
+            if [[ "$@" = "up" ]]; then
+                docker_up
+                return $?
+            fi
+
+            if [[ "$@" = "reup" || "$@" = "restart" ]]; then
+                docker_reup
+                return $?
+            fi
+
+            # pass on to docker by default
+            boot2docker $@
+        }
+    fi
+
+### Installation
+
+    :::shell
+    $ curl -s https://gist.githubusercontent.com/jmervine/6713d10ab05fecd6e1aa/raw/5c5f7020696e23dffa6f046816239574f42767ee/boot2dockerrc.sh >> ~/.bashrc
