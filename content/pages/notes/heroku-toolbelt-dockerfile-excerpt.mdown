@@ -1,3 +1,6 @@
+Title: Dockerfile Excerpt for Installing Heroku Toolbelt
+Categories: notes, docker, heroku, linux
+
 # Dockerfile Excerpt for Installing Heroku Toolbelt
 
     RUN wget -qO- https://toolbelt.heroku.com/install.sh | \
