@@ -1,0 +1,5 @@
+# Dockerfile Excerpt for Installing Heroku Toolbelt
+
+    RUN wget -qO- https://toolbelt.heroku.com/install.sh | \
+          sed 's@sudo -k@#sudo -k@g' | sed 's@sudo sh@sh@g' | sh && \
+        echo 'PATH="/usr/local/heroku/bin:$PATH"' >> /root/.profile
