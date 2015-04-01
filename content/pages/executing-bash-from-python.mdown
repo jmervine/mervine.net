@@ -1,4 +1,4 @@
-Date: 15 September 2012 13:08
+Date: 1 April 2015 10:15
 Title: Executing BASH from Python
 Categories: bash, off topic, python
 Summary: Recently, I've been playing with [Python], I thought I would toss up this writeup I found on executing commands via [Python] I found as a follow up to my [Executing BASH Commmands in Ruby](http://mervine.net/2012/09/05/executing_bash_from_ruby) post.
@@ -36,3 +36,17 @@ In addition the to five above, there's one more worth noting. [pexpect](http://w
     child.interact() # gives control to the user
 
 [python]: http://www.python.org/
+
+---------
+
+> Updated: April 1, 2015
+
+I just found [`sh`](http://amoffat.github.io/sh/), which is awesome! It allows you to execute most shell commands as native python fuctions.
+
+** Example: **
+
+    :::python
+    import sh
+    sh.cd('/path/to/Development')
+    print(sh.pwd())
+    # => /path/to/Development
