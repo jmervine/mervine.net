@@ -1,27 +1,30 @@
-Date: 27 March 2015 12:00
+Date: 13 May 2015 12:00
 Title: boot2docker Wrapper Script
 Categories: hacks, bash, linux, docker
 
 # boot2docker Wrapper Script
 
-I put together this simple wrapper function for simplifying [`boot2docker`](http://boot2docker.io/) interactions on my Macbook Air.
+I put together this simple wrapper function for simplifying [`boot2docker`](http://boot2docker.io/) interactions on my Macbook.
 
 > Note: I refer to `.bashrc` as the target as it's the more common shell. However, this has been tested and I personally use it within zsh.
 
 ### Basic Usage
 
     :::shell
-    $ b2d reset
+    $ docker reload
     # purge current boot2docker environment
     
-    $ b2d up
+    $ docker up
     # start boot2docker and export environment
     
-    $ b2d reup|restart
+    $ docker reset|restart|reup
     # stop and restart boot2docker
     
-    $ b2d [etc]
-    # all other arguements are passed directly passed through to boot2docker
+    $ docker clean
+    # remove all orphaned image shards and all containers that aren't running - DANGEROUS
+    
+    $ docker [etc]
+    # all other arguements are passed directly passed through to docker
 
 ### The Functions
 
@@ -29,58 +32,100 @@ I put together this simple wrapper function for simplifying [`boot2docker`](http
     # file: ~/.bashrc
     
     #############################################################
-    # Function -- Boot2Docker
+    # Function -- Docker/Boot2Docker
     #############################################################
-    if test "$(which boot2docker 2> /dev/null)"; then
-        function docker_reset {
-            echo "+ clearing docker variables"
-            unset DOCKER_HOST
-            unset DOCKER_CERT_PATH
-            unset DOCKER_TLS_VERIFY
-            echo "" > ~/.boot2dockerrc
-        }
+    function docker_shellinit {
+      local _shellinit="$(boot2docker shellinit)"
+      eval "$(echo ${_shellinit})"
+      echo "${_shellinit}" > ~/.boot2dockerrc
+    }
 
-        function docker_up {
-            docker_reset
-            echo "+ starting boot2docker"
-            boot2docker up | grep "export DOCKER_" | tee ~/.boot2dockerrc
-            b2dSTATUS=$?
-            . ~/.boot2dockerrc
-            return $b2dSTATUS
-        }
+    function docker_reup {
+      echo "+ running vpn fix"
+      docker_down
 
-        function docker_down {
-            echo "+ stopping boot2docker"
-            boot2docker down
-            return 0
-        }
+      echo "+ resetting vbox route"
 
-        function docker_reup {
-            docker_down
-            docker_up
-            return $?
-        }
+      local _iface="$(VBoxManage showvminfo boot2docker-vm --machinereadable | grep hostonlyadapter | cut -d '"' -f 2)"
+      echo "++ sudo route -n add -net 192.168.59.0/24 -interface ${_iface}"
 
-        function b2d {
-            if [[ "$@" = "reset" ]]; then
-                docker_reset
-                return 0
-            fi
+      sudo route -n add -net 192.168.59.0/24 -interface ${_iface} && \
+        docker_up
+    }
 
-            if [[ "$@" = "up" ]]; then
-                docker_up
-                return $?
-            fi
+    function docker_reset {
+      echo "+ clearing docker variables"
+      unset DOCKER_HOST
+      unset DOCKER_CERT_PATH
+      unset DOCKER_TLS_VERIFY
+      docker_shellinit
+    }
 
-            if [[ "$@" = "reup" || "$@" = "restart" ]]; then
-                docker_reup
-                return $?
-            fi
+    function docker_up {
+      echo "+ starting boot2docker"
+      boot2docker up
+      b2dSTATUS=$?
+      docker_reset
+      return $b2dSTATUS
+    }
 
-            # pass on to docker by default
-            boot2docker $@
-        }
-    fi
+    function docker_down {
+      echo "+ stopping boot2docker"
+      boot2docker down
+      return 0
+    }
+
+    function docker_clean {
+      echo "+ clean containers"
+      docker ps -a | grep 'Exited ' | awk '{ print $NF }' | xargs docker rm
+      docker ps -a | grep -v 'Up ' | awk '{ print $NF }' | xargs docker rm
+
+      echo "+ clean images"
+      docker images | grep '^<none>' | awk '{ print $3 }' | xargs docker rmi
+    }
+
+    function b2d {
+      case "$@" in
+      reload)
+        docker_reset
+        return 0;;
+      reset|fix|reup|fuck)
+        docker_reup
+        return $?;;
+      up)
+        docker_up
+        return $?;;
+      down)
+        docker_down
+        return $?;;
+      clean)
+        docker_clean
+        return $?;;
+      esac
+      boot2docker $@
+    }
+
+    docker_exec="$(which docker)"
+    function docker {
+      case "$@" in
+      reload)
+        docker_reset
+        return 0;;
+      reset|fix|reup|fuck)
+        docker_reup
+        return $?;;
+      up)
+        docker_up
+        return $?;;
+      down)
+        docker_down
+        return $?;;
+      clean)
+        docker_clean
+        return $?;;
+      esac
+      $docker_exec $@
+    }
 
 ### Installation
 
