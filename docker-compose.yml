@@ -1,0 +1,12 @@
+# based development environment
+web:
+  image: heroku/ruby
+  environment:
+    - RACK_ENV=development
+    - RAILS_ENV=development
+  ports:
+    - "3000:3000"
+  volumes:
+    - .:/app/user
+  working_dir: /app/user
+  entrypoint: ["bash", "-c"] # override default entrypoint
