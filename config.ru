@@ -12,6 +12,7 @@ require 'rack/host_redirect'
 
 use Rack::HostRedirect, {
   'mervine-net.herokuapp.com' => 'www.mervine.net',
+  'mervine.net' => 'www.mervine.net',
   'joshua.mervine.net' => {host: 'www.mervine.net', path: '/resume', query: nil},
   'josh.mervine.net' => {host: 'www.mervine.net', path: '/resume', query: nil}
 }
