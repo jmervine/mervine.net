@@ -44,6 +44,8 @@ GEM
     rack-hard-copy (0.0.3)
       mime-types (>= 1.22)
       rack (>= 1.5.2)
+    rack-host-redirect (1.2.1)
+      rack
     rack-protection (1.5.0)
       rack
     rack-test (0.6.2)
@@ -82,6 +84,7 @@ DEPENDENCIES
   puma
   rack-codehighlighter
   rack-hard-copy
+  rack-host-redirect
   rack-test
   rake
   shotgun

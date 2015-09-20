@@ -8,12 +8,20 @@ Nesta::Env.root = ::File.expand_path('.', ::File.dirname(__FILE__))
 
 require 'nesta/app'
 
+require 'rack/host_redirect'
+
+use Rack::HostRedirect, {
+  'mervine-net.herokuapp.com' => 'www.mervine.net',
+  'joshua.mervine.net' => {host: 'www.mervine.net', path: '/resume', query: nil}
+}
+
 if ENV['RACK_ENV'] == "production"
   begin
     require 'newrelic_rpm'
     NewRelic::Agent.after_fork(:force_reconnect => true)
   rescue LoadError
   end
+
 
   require 'rack/hard/copy'
   use Rack::Hard::Copy, :store   => "./_static",
