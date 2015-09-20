@@ -45,6 +45,11 @@ module Nesta
     def self.domain
       ENV['DOMAIN'] || from_yaml("domain") || ''
     end
+
+    @settings += %w[ sharethis ]
+    def self.sharethis
+      ENV['SHARETHIS'] || from_yaml("sharethis") || ''
+    end
   end
 
   class App

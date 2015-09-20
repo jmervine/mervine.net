@@ -1,10 +1,8 @@
 .sidebar-nav
-  - if Nesta::Config.sharethis || Nesta::Config.twitter
+
+  - if Nesta::Config.sharethis
     %center.well
-      - if Nesta::Config.sharethis
-        = sharethis_buttons
-      - if Nesta::Config.twitter
-        %span.st_twitterfollow_large{:displayText=>'Twitter Follow', :st_username=>Nesta::Config.twitter}
+      = sharethis_buttons
 
   - unless @page.pages.empty? || @page.flagged_as?('landing_page');
     .list-group
