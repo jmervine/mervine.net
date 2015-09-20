@@ -1,0 +1,58 @@
+!!!
+%html{:lang=>'en'}
+  %head
+    %meta{:charset=>'utf-8'}
+    - if @description
+      %meta{:name=>'description', :content=>@description}
+    - if @keywords
+      %meta{:name=>'keywords', :content=>@keywords}
+    %meta{:content=>'width=device-width, initial-scale=1.0', :name=>'viewport'}
+    %meta{:content=>'', :name=>'author'}/
+    %link{:href=>Nesta::Config.bootstrap, :rel=>"stylesheet", :media=>"screen"}
+    %link{:href=>asset('/bootstrap/master.css'), :media=>'screen', :rel=>'stylesheet'}
+    /[if lte IE 6]
+      %link{:rel=>'stylesheet', :href=>'http://universal-ie6-css.googlecode.com/files/ie6.1.1.css', :media=>'screen, projection'}
+    /[if lt IE 9]
+      %script{:src=>'//html5shim.googlecode.com/svn/trunk/html5.js'}
+    %link{:href=>'/articles.xml', :rel=>'alternate', :type=>'application/atom+xml'}
+    %link{:href=>asset('/bootstrap/favicon.ico'), :rel=>'shortcut icon'}
+    %link{:href=>asset('/bootstrap/images/apple-touch-icon.png'), :rel=>'apple-touch-icon'}
+    %link{:href=>asset('/bootstrap/images/apple-touch-icon-72x72.png'), :rel=>'apple-touch-icon', :sizes=>'72x72'}
+    %link{:href=>asset('/bootstrap/images/apple-touch-icon-114x114.png'), :rel=>'apple-touch-icon', :sizes=>'114x114'}/
+
+    %title= @title
+  %body(style="padding-top: 10px !important")
+    .container
+      = haml :header, :layout=>false
+
+      .container
+        .page-header{:style=>"margin-top: 0px !important;"}
+          - if Nesta::Config.gravatar
+            %img{:src=>Nesta::Config.gravatar, :style=>"padding:5px 15px 15px; float:left"}
+          %a{:href=>"#{Nesta::Config.domain}/"}>
+            %h1= Nesta::Config.title
+          %small= Nesta::Config.subtitle
+
+      .container
+        .col-sm-12.col-md-9
+          = yield
+
+        .col-md-3.visible-md.visible-lg
+          = haml :sidebar, :layout=>false
+
+      %center
+        %br
+        = haml :footer, :layout=>false
+
+    - if Nesta::Config.sharethis
+      %script{:type=>"text/javascript", :src=>"http://w.sharethis.com/button/buttons.js"}
+      %script{:type=>"text/javascript"}="stLight.options({publisher: #{Nesta::Config.sharethis}, doNotHash: false, doNotCopy: false, hashAddressBar: false});"
+
+    %script{:src=>"//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"}
+    %script{:src=>"//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js", :async=>true, :type=>"text/javascript"}
+    %script
+      :plain
+        var searchElement = 'input[name=q]';
+    %script{:src=>"//cdn.jsdelivr.net/jquery.webpage-vim/0.1/vim.min.js", :async=>true, :type=>"text/javascript"}
+
+    = haml :analytics, :layout=>false

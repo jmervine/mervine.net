@@ -1,0 +1,29 @@
+.navbar.navbar-default.navbar-top(style="margin-bottom: 0px !important")
+  .navbar-header
+    %button.navbar-toggle{:type=>"button", "data-toggle"=>"collapse", "data-target"=>".navbar-collapse"}
+      %span.icon-bar
+      %span.icon-bar
+      %span.icon-bar
+
+    %a.navbar-brand{:href=>"/"} Home
+
+  .navbar-collapse.collapse
+    %ul.nav.navbar-nav
+      - Nesta::Menu.top_level.each do |item|
+        %li{:class=>(active?(item)?'active':'')}
+          %a{:href=>Nesta::Config.domain+item.abspath}= item.title.split(' - ').first
+      - if forkpath = @page.metadata('forkme')
+        %li
+          %a{:href=>"https://github.com/jmervine/#{forkpath}"} Fork me on Github
+
+
+    %form.navbar-form.navbar-right{:role=>"search",:action=>"/search",:method=>"GET"}
+      .form-group
+        %input.form-control{:type=>"text",:name=>"q",:placeholder=>"search"}
+
+    %ul.nav.navbar-nav.navbar-right.visible-xs
+      - Nesta::SOCIAL.keys.each do |name|
+        - value = Nesta::Config.send(name.to_sym)
+        - if value
+          %li
+            %a{:href=>Nesta::SOCIAL[name]+value}= name.capitalize

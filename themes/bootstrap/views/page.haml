@@ -1,0 +1,21 @@
+.page_content.container
+  .page_content
+    - if readme_path = @page.metadata('readme')
+      = gitmd readme_path
+    - else
+      ~ @page.to_html(self)
+
+    - if @page.flagged_as?('landing_page');
+      = article_summaries(@page.pages)
+
+    - unless @page.articles.empty?
+      %hr.article_seperator
+      %header
+        %h2= articles_heading
+      = article_summaries(@page.articles)
+
+    = haml :page_meta, :layout => false, :locals => { :page => @page }
+
+    %hr.article_seperator
+    %br
+    = haml :comments, :layout => false

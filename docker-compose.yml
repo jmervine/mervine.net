@@ -4,6 +4,7 @@ web:
   environment:
     - RACK_ENV=development
     - RAILS_ENV=development
+    - LANG=en_US.UTF-8
   ports:
     - "3000:3000"
   volumes:

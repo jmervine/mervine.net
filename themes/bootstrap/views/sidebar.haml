@@ -1,0 +1,23 @@
+.sidebar-nav
+  - if Nesta::Config.sharethis || Nesta::Config.twitter
+    %center.well
+      - if Nesta::Config.sharethis
+        = sharethis_buttons
+      - if Nesta::Config.twitter
+        %span.st_twitterfollow_large{:displayText=>'Twitter Follow', :st_username=>Nesta::Config.twitter}
+
+  - unless @page.pages.empty? || @page.flagged_as?('landing_page');
+    .list-group
+      %a.list-group-item.active{:href=>"#"}
+        %h4.list-group-item-heading More on This
+      - @page.pages.each do |page|
+        %a.list-group-item{:href=>page.abspath}= page.title
+
+  .list-group
+    %a.list-group-item.active{:href=>Nesta::Config.author['uri']}>
+      %h4.list-group-item-heading= Nesta::Config.author['name']
+    - Nesta::SOCIAL.keys.each do |name|
+      - value = Nesta::Config.send(name.to_sym)
+      - if value
+        %a.list-group-item{:href=>Nesta::SOCIAL[name]+value}= name.capitalize
+
