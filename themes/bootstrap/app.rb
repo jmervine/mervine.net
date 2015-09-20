@@ -13,6 +13,7 @@ module Nesta
 
   class Config
     @settings += %w[ exclude_from_search ]
+    @settings += SOCIAL.keys
 
     def self.exclude_from_search
       from_yaml("exclude_from_search") || [ "/", "/search" ]
@@ -21,22 +22,26 @@ module Nesta
     SOCIAL.keys.each do |social|
       @settings += [ social ]
       self.send(:define_method, social.to_sym) do
-        from_yaml(social) || false
+        ENV[social.upcase] || from_yaml(social) || false
       end
     end
 
+    @settings += %w[ bootstrap ]
     def self.bootstrap
       from_yaml("bootstrap") || "//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"
     end
 
+    @settings += %w[ gravatar ]
     def self.gravatar
       from_yaml("gravatar") || false
     end
 
+    @settings += %w[ cdn_host ]
     def self.cdn
       ENV['CDN_HOST'] || from_yaml("cdn_host") || ''
     end
 
+    @settings += %w[ domain ]
     def self.domain
       ENV['DOMAIN'] || from_yaml("domain") || ''
     end
