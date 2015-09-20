@@ -16,7 +16,7 @@ if ENV['RACK_ENV'] == "production"
   end
 
   require 'rack/hard/copy'
-  use Rack::Hard::Copy, :store   => "./public/static",
+  use Rack::Hard::Copy, :store   => "./_static",
                         :ignores => [ "search", "js", "png", "gif" ],
                         :headers => false,
                         :timeout => false
