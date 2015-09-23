@@ -16,6 +16,7 @@ gem 'nesta-plugin-smartmeta'
 #gem 'nesta-plugin-diskcached'
 
 gem 'rack-host-redirect'
+gem 'rack-rewrite'
 
 #gem 'coderay'
 gem "ultraviolet", :require => "uv"

@@ -8,14 +8,20 @@ Nesta::Env.root = ::File.expand_path('.', ::File.dirname(__FILE__))
 
 require 'nesta/app'
 
+# host redirection
 require 'rack/host_redirect'
-
 use Rack::HostRedirect, {
   'mervine-net.herokuapp.com' => 'www.mervine.net',
-  'mervine.net' => 'www.mervine.net',
-  'joshua.mervine.net' => {host: 'www.mervine.net', path: '/resume', query: nil},
-  'josh.mervine.net' => {host: 'www.mervine.net', path: '/resume', query: nil}
+  'mervine.net'               => 'www.mervine.net',
+  'joshua.mervine.net'        => {host: 'www.mervine.net', path: '/resume', query: nil},
+  'josh.mervine.net'          => {host: 'www.mervine.net', path: '/resume', query: nil}
 }
+
+# uri rewrite
+require 'rack/rewrite'
+use Rack::Rewrite do
+  r301 '/json2struct', 'http://json2struct.mervine.net/'
+end
 
 if ENV['RACK_ENV'] == "production"
   begin

@@ -48,6 +48,7 @@ GEM
       rack
     rack-protection (1.5.0)
       rack
+    rack-rewrite (1.5.1)
     rack-test (0.6.2)
       rack (>= 1.0)
     rake (10.0.4)
@@ -85,6 +86,7 @@ DEPENDENCIES
   rack-codehighlighter
   rack-hard-copy
   rack-host-redirect
+  rack-rewrite
   rack-test
   rake
   shotgun
