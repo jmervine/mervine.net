@@ -1,6 +1,7 @@
 Title: Docker and UFW
 Categories: notes, docker, security, localhost, linux
 Date: 11 February 2016 14:10
+Flags: draft
 
 # Docker and UFW
 
