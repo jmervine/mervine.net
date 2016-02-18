@@ -15,6 +15,15 @@ module Nesta
     @settings += %w[ exclude_from_search ]
     @settings += SOCIAL.keys
 
+    class << self
+      alias orig_from_yaml from_yaml
+      def from_yaml cfg
+        orig_from_yaml cfg
+      rescue
+        nil
+      end
+    end
+
     def self.exclude_from_search
       from_yaml("exclude_from_search") || [ "/", "/search" ]
     end

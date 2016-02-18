@@ -86,6 +86,11 @@ gittip: jmervine
 gravatar: "http://www.gravatar.com/avatar/ed808193b8c2c8516715816f90a005b2.jpg?s=75"
 
 diskcached: false
+
+development:
+  domain: "http://localhost:3000"
+  cdn_host: "//localhost:3000"
+
 production:
   domain: "http://mervine.net"
   cdn_host: "//cdn.mervine.net"
