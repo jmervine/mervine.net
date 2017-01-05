@@ -90,7 +90,7 @@ module Nesta
       end
 
       def gitmd path
-        uri = (path.start_with?("https://") ? URI.parse(path) : URI.parse("https://raw.github.com/jmervine/"+path))
+        uri = (path.start_with?("https://") ? URI.parse(path) : URI.parse("https://raw.githubusercontent.com/jmervine/"+path))
         http = Net::HTTP.new(uri.host, uri.port)
         http.use_ssl = true
         body = http.request(Net::HTTP::Get.new(uri.request_uri)).body
