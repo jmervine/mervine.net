@@ -1,5 +1,5 @@
 Description: Technical professional with over fifteen years of experience. Currently focused on performance, stability and automation by day and open source tools and blogging about the aforementioned by night. Experience includes developer management, process management, project management, web application development, release engineering and systems engineering. Strengths include communication, collaboration, problem solving, as well as mentoring and managing technical staff.
-Keywords: Linux (Gentoo, RedHat, Ubuntu, CentOS), Solaris, Mac OS X,Ruby, Python, JavaScript, Perl, PHP, Git, Nginx, Unicorn, Rack, Rake, RSpec, Apache/Tomcat, MySQL, MongoDB, Redis, DPKG, RPM, TPKG, JIRA, Bamboo, Hudson/Jenkins, Splunk, Gomez, NewRelic, Sparc, Intel, AMD, F5 BigIP, Agile/Scrum
+Keywords: Linux, Golang, Ruby, Python, JavaScript, Git, Nginx, Agile/Scrum
 
 ## Joshua P. Mervine
 
@@ -25,8 +25,8 @@ If you're looking for all the buzz words, I'm probably not the right candidate f
 That said, if you need the buzz words, here's a few.
 
 * Operating Systems: Ubuntu/Debian, CentOS, Redhat, etc.
-* Languages: Node.js, Ruby, Python, JavaScript (Node.js), Golang, etc.
-* Applications/Tools: Docker, Git, Nginx, Bamboo, etc., etc., etc.
+* Languages: Ruby, Golang, JavaScript (Node.js and client), Python, etc.
+* Applications/Tools: Docker, Git, Nginx, etc., etc., etc.
 * Development Processes: Agile/Scrum
 
 ### Experience - Open Source (a.k.a Nights and Weekends)
@@ -47,7 +47,12 @@ I have written and maintain several libraries and tools for integration with [Ma
 
 ### Experience - Day Job
 
-#### Site Reliability Engineer - [Heroku](https://www.heroku.com/about)
+#### Lead SRE - [Heroku](https://www.heroku.com/about)
+
+- Incident Commander - https://blog.heroku.com/incident-response-at-heroku
+- Building tooling to help developers who build tooling to help developers.
+- Splunk ingestion reliability
+- HIPPA / PCI operational remediations
 
 ###### May 2015 – present
 
@@ -112,4 +117,3 @@ Researched and developed a teen focused sub-site of EarthLink’s main site; Tee
 ----
 
 [download pdf version](https://github.com/jmervine/me/raw/master/JoshuaMervine.pdf)
-
