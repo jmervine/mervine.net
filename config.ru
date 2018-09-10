@@ -13,8 +13,8 @@ require 'rack/host_redirect'
 use Rack::HostRedirect, {
   'mervine-net.herokuapp.com' => 'www.mervine.net',
   'mervine.net'               => 'www.mervine.net',
-  'joshua.mervine.net'        => {host: 'www.mervine.net', path: '/resume', query: nil},
-  'josh.mervine.net'          => {host: 'www.mervine.net', path: '/resume', query: nil}
+  'joshua.mervine.net'        => {host: 'github.com', path: '/jmervine/me', query: nil},
+  'josh.mervine.net'          => {host: 'github.com', path: '/jmervine/me', query: nil},
 }
 
 # uri rewrite
